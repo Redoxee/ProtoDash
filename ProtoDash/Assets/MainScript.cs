@@ -33,7 +33,7 @@ public class MainScript : MonoBehaviour {
 	private float propulsionImpulse = 0.5f;
 	[SerializeField]
 	private float maxPropulsion = 15.0f;
-	
+
 	[SerializeField]
 	private float airBreakFactor = .85f;
 	[SerializeField]
@@ -47,23 +47,23 @@ public class MainScript : MonoBehaviour {
 	[SerializeField]
 	private float dashDuration = .7f;
 
+	public float dashCoolDown = 1.5f;
+
 	private Rigidbody characterRB;
 	private CharacterScript characterS;
 	private Rect cameraRect;
 	
 	private Vector3 floorTapPosition;
-	private bool hasFloortaped;
-	private float tapTimer;
 
 	private Vector3 currentFacingVector;
-	private Vector3 airTapPosition;
 	private bool hasAirBreak;
-	private bool hasReleaseAirTouch;
-	private bool hasDashed = false;
 	private float squareSwipeInputTrigger;
-	private float dashTimer = -1.0f;
+	private float dashProgression = -1.0f;
 	private Vector3 dashVector;
 	private State currentState;
+
+	private Vector3 tapPosition;
+	public float dashTimer;
 
 	private void _InitializeStates()
 	{
@@ -100,7 +100,7 @@ public class MainScript : MonoBehaviour {
 		newVelocity = currentState.gameplay(newVelocity);
 
 		characterRB.velocity = newVelocity;
-
+		updateDashInput();
 	}
 
 	private bool IsSwipping(Vector3 startPoint, Vector3 endPoint)
@@ -111,13 +111,33 @@ public class MainScript : MonoBehaviour {
 		return squareSwipeInputTrigger < sv.sqrMagnitude; 
 	}
 
+	private void updateDashInput()
+	{
+		if (dashTimer > 0.0f) {
+			dashTimer -= Time.fixedDeltaTime;
+		}
+		Vector3 mp = Input.mousePosition;
+		if (Input.GetMouseButtonDown(0))
+		{
+			tapPosition = Input.mousePosition;
+		}
+		else if (Input.GetMouseButton(0))
+		{
+			if (IsSwipping(tapPosition, mp) && dashTimer <= 0.0f)
+			{
+				Vector3 swipePosition = (mp - tapPosition).normalized;
+				SetDashVector(swipePosition);
+				_SetState(Dash);
+			}
+		}
+	}
+
 	/**
 	* Idle
 	**/
 
 	private void _StartIdle()
 	{
-		hasDashed = false;
 	}
 	private Vector2 _GameplayIdle(Vector2 currentVelocity) {
 
@@ -126,39 +146,9 @@ public class MainScript : MonoBehaviour {
 			float d = currentFacingVector.x * propulsionImpulse;
 			currentVelocity.x = Mathf.Clamp(currentVelocity.x + d, -maxPropulsion, maxPropulsion);
 
-			if (Input.GetMouseButtonUp(0))
+			if (Input.GetMouseButtonDown(0))
 			{
 				currentVelocity.y += jumpImpulse;
-			}
-			else
-			{
-				if (Input.GetMouseButtonDown(0))
-				{
-					hasFloortaped = true;
-					floorTapPosition = Input.mousePosition;
-				}
-				else if (Input.GetMouseButton(0))
-				{
-					if (IsSwipping(floorTapPosition,Input.mousePosition))
-					{
-						Vector3 swipeVector = (Input.mousePosition - floorTapPosition);
-
-						swipeVector.Normalize();
-						floorTapPosition = Input.mousePosition;
-						/***
-						if (swipeVector.x > swipeDeadZone)
-						{
-							currentFacingVector.x = 1;
-						}
-						else if (swipeVector.x < -swipeDeadZone)
-						{
-							currentFacingVector.x = -1;
-						}
-						**/
-						SetDashVector(swipeVector);
-						_SetState(Dash);
-					}
-				}
 			}
 		}else
 		{
@@ -169,7 +159,6 @@ public class MainScript : MonoBehaviour {
 
 	private void _EndIdle()
 	{
-		hasFloortaped = false;
 	}
 
 	private void SetDashVector(Vector3 inVec)
@@ -198,41 +187,20 @@ public class MainScript : MonoBehaviour {
 	private void _StartJump()
 	{
 		hasAirBreak = false;
-		hasReleaseAirTouch = false;
 	}
 
 	private Vector2 _GameplayJump(Vector2 currentVelocity)
 	{
-
-		if (hasAirBreak)
-		{
-			if (IsSwipping(airTapPosition,Input.mousePosition) && !hasDashed)
-			{
-				Vector3 swipeVector = (Input.mousePosition - airTapPosition);
-				swipeVector.Normalize();
-				SetDashVector(swipeVector);
-
-				_SetState(Dash);
-			}
-			if (Input.GetMouseButtonUp(0))
-			{
-				hasReleaseAirTouch = true;
-			}
-		}
+		
 		if (Input.GetMouseButtonDown(0) && !hasAirBreak)
 		{
 			hasAirBreak = true;
-			airTapPosition = Input.mousePosition;
 			currentVelocity *= airBreakFactor;
-		}
-		else if (Input.GetMouseButtonUp(0))
-		{
 		}
 
 		if (characterS.FloorCounter > 0)
 		{
 			_SetState(Idle);
-			hasAirBreak = false;
 		}
 		return currentVelocity;
 	}
@@ -248,8 +216,8 @@ public class MainScript : MonoBehaviour {
 
 	private void _StartDash()
 	{
-		hasDashed = true;
-		dashTimer = dashDuration;
+		dashTimer = dashCoolDown;
+		dashProgression = dashDuration;
 		if (dashVector.x > 0)
 		{
 			currentFacingVector.x = 1;
@@ -263,10 +231,10 @@ public class MainScript : MonoBehaviour {
 	private Vector2 _GameplayDash(Vector2 currentVelocity)
 	{
 		float dt = Time.fixedDeltaTime;
-		dashTimer -= dt;
-		if (dashTimer > 0)
+		dashProgression -= dt;
+		if (dashProgression > 0)
 		{
-			float progression = 1.0f - dashTimer / dashDuration;
+			float progression = 1.0f - dashProgression / dashDuration;
 			float v = dashCurve.Evaluate(progression) * dashMaxSpeed;
 			currentVelocity = dashVector * v;
 		}
