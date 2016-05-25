@@ -51,7 +51,11 @@ public class MainScript : MonoBehaviour {
 
 	private Rigidbody characterRB;
 	private CharacterScript characterS;
-	private Rect cameraRect;
+
+	private float screenRatio;
+
+	private bool isMouseDown = false;
+	private bool isMousePressed = false;
 	
 	private Vector3 floorTapPosition;
 
@@ -71,7 +75,15 @@ public class MainScript : MonoBehaviour {
 		Jump = new State(_StartJump, _GameplayJump, _EndJump);
 		Dash = new State(_StartDash, _GameplayDash, _EndDash);
 
-		cameraRect = mainCamera.pixelRect;
+		Rect cameraRect = mainCamera.pixelRect;
+		if (cameraRect.width < cameraRect.height)
+		{
+			screenRatio = 1.0f / cameraRect.width;
+		}
+		else
+		{
+			screenRatio = 1.0f / cameraRect.height;
+		}
 
 		currentFacingVector = new Vector3(1, 0, 0);
 		currentState = Idle;
@@ -93,6 +105,15 @@ public class MainScript : MonoBehaviour {
 		newState.start();
 	}
 
+	void Update()
+	{
+		if (Input.GetMouseButtonDown(0))
+		{
+			isMouseDown = true;
+		}
+		isMousePressed = Input.GetMouseButton(0);
+	}
+
 	void FixedUpdate() {
 
 		Vector3 newVelocity = characterRB.velocity;
@@ -101,13 +122,14 @@ public class MainScript : MonoBehaviour {
 
 		characterRB.velocity = newVelocity;
 		updateDashInput();
+		isMouseDown = false;
 	}
 
 	private bool IsSwipping(Vector3 startPoint, Vector3 endPoint)
 	{
 		Vector3 sv = endPoint - startPoint;
-		sv.x /= cameraRect.width;
-		sv.y /= cameraRect.height;
+		sv.x *= screenRatio;
+		sv.y *= screenRatio;
 		return squareSwipeInputTrigger < sv.sqrMagnitude; 
 	}
 
@@ -117,14 +139,16 @@ public class MainScript : MonoBehaviour {
 			dashTimer -= Time.fixedDeltaTime;
 		}
 		Vector3 mp = Input.mousePosition;
-		if (Input.GetMouseButtonDown(0))
+		if (isMouseDown)
 		{
 			tapPosition = Input.mousePosition;
+			Debug.Log("Start down " + tapPosition);
 		}
-		else if (Input.GetMouseButton(0))
+		else if (isMousePressed)
 		{
 			if (IsSwipping(tapPosition, mp) && dashTimer <= 0.0f)
 			{
+				Debug.Log("Dashing " + tapPosition + " mPosition " + mp);
 				Vector3 swipePosition = (mp - tapPosition).normalized;
 				SetDashVector(swipePosition);
 				_SetState(Dash);
@@ -146,7 +170,7 @@ public class MainScript : MonoBehaviour {
 			float d = currentFacingVector.x * propulsionImpulse;
 			currentVelocity.x = Mathf.Clamp(currentVelocity.x + d, -maxPropulsion, maxPropulsion);
 
-			if (Input.GetMouseButtonDown(0))
+			if (isMouseDown)
 			{
 				currentVelocity.y += jumpImpulse;
 			}
@@ -192,7 +216,7 @@ public class MainScript : MonoBehaviour {
 	private Vector2 _GameplayJump(Vector2 currentVelocity)
 	{
 		
-		if (Input.GetMouseButtonDown(0) && !hasAirBreak)
+		if (isMouseDown && !hasAirBreak)
 		{
 			hasAirBreak = true;
 			currentVelocity *= airBreakFactor;
@@ -254,5 +278,6 @@ public class MainScript : MonoBehaviour {
 
 	private void _EndDash()
 	{
+		tapPosition = Input.mousePosition;
 	}
 }
