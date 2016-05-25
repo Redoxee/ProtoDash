@@ -119,7 +119,6 @@ public class MainScript : MonoBehaviour {
 		Vector3 newVelocity = characterRB.velocity;
 
 		newVelocity = currentState.gameplay(newVelocity);
-
 		characterRB.velocity = newVelocity;
 		updateDashInput();
 		isMouseDown = false;
@@ -142,13 +141,11 @@ public class MainScript : MonoBehaviour {
 		if (isMouseDown)
 		{
 			tapPosition = Input.mousePosition;
-			Debug.Log("Start down " + tapPosition);
 		}
 		else if (isMousePressed)
 		{
 			if (IsSwipping(tapPosition, mp) && dashTimer <= 0.0f)
 			{
-				Debug.Log("Dashing " + tapPosition + " mPosition " + mp);
 				Vector3 swipePosition = (mp - tapPosition).normalized;
 				SetDashVector(swipePosition);
 				_SetState(Dash);
@@ -204,6 +201,7 @@ public class MainScript : MonoBehaviour {
 		{
 			dashVector.y -= 1;
 		}
+		dashVector.Normalize();
 	}
 	/**
 	* Jump

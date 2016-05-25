@@ -12,6 +12,12 @@ public class CharacterScript : MonoBehaviour {
 		if (col.gameObject.tag == "Floor") {
 			FloorCounter += 1;
 		}
+		int i = 0;
+		foreach (ContactPoint c in col.contacts)
+		{
+			//Debug.Log("c [" + i + "] n " + c.normal);
+			i++;
+		}
 	}
 
 	public void OnCollisionExit(Collision col)
