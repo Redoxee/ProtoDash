@@ -37,6 +37,11 @@ public class MainScript : MonoBehaviour {
 	[SerializeField]
 	private float airBreakFactor = .85f;
 	[SerializeField]
+	private Vector2 wallJumpVector = new Vector2(1, 1);
+	[SerializeField]
+	private float wallJumpForce = 15.0f;
+
+	[SerializeField]
 	private float swipeInputDistance = .25f;
 	[SerializeField]
 	private float swipeDeadZone = .4f;
@@ -61,6 +66,7 @@ public class MainScript : MonoBehaviour {
 
 	private Vector3 currentFacingVector;
 	private bool hasAirBreak;
+	private Vector2 mirrorWallJumpVector;
 	private float squareSwipeInputTrigger;
 	private float dashProgression = -1.0f;
 	private Vector3 dashVector;
@@ -84,6 +90,9 @@ public class MainScript : MonoBehaviour {
 		{
 			screenRatio = 1.0f / cameraRect.height;
 		}
+
+		wallJumpVector.Normalize();
+		mirrorWallJumpVector = new Vector2(-wallJumpVector.x, wallJumpVector.y);
 
 		currentFacingVector = new Vector3(1, 0, 0);
 		currentState = Idle;
@@ -122,6 +131,7 @@ public class MainScript : MonoBehaviour {
 		characterRB.velocity = newVelocity;
 		updateDashInput();
 		isMouseDown = false;
+		characterS.notifyColisionConsumed();
 	}
 
 	private bool IsSwipping(Vector3 startPoint, Vector3 endPoint)
@@ -162,7 +172,7 @@ public class MainScript : MonoBehaviour {
 	}
 	private Vector2 _GameplayIdle(Vector2 currentVelocity) {
 
-		if (characterS.FloorCounter > 0)
+		if (characterS.downCollision)
 		{
 			float d = currentFacingVector.x * propulsionImpulse;
 			currentVelocity.x = Mathf.Clamp(currentVelocity.x + d, -maxPropulsion, maxPropulsion);
@@ -171,7 +181,17 @@ public class MainScript : MonoBehaviour {
 			{
 				currentVelocity.y += jumpImpulse;
 			}
-		}else
+
+			//if (characterS.rightCollision)
+			//{
+			//	currentFacingVector.x = -1;
+			//}
+			//else if (characterS.leftCollision)
+			//{
+			//	currentFacingVector.x = 1;
+			//}
+		}
+		else
 		{
 			_SetState(Jump);
 		}
@@ -213,14 +233,26 @@ public class MainScript : MonoBehaviour {
 
 	private Vector2 _GameplayJump(Vector2 currentVelocity)
 	{
-		
-		if (isMouseDown && !hasAirBreak)
-		{
-			hasAirBreak = true;
-			currentVelocity *= airBreakFactor;
-		}
 
-		if (characterS.FloorCounter > 0)
+		if (isMouseDown)
+		{
+			if (!hasAirBreak)
+			{
+				hasAirBreak = true;
+				currentVelocity *= airBreakFactor;
+			}
+			if (characterS.leftCollision)
+			{
+				currentVelocity = wallJumpVector * wallJumpForce;
+				currentFacingVector.x =  1;
+			}
+			else if (characterS.rightCollision)
+			{
+				currentVelocity = mirrorWallJumpVector * wallJumpForce;
+				currentFacingVector.x = -1;
+			}
+		}
+		if (characterS.downCollision)
 		{
 			_SetState(Idle);
 		}
@@ -262,7 +294,7 @@ public class MainScript : MonoBehaviour {
 		}
 		else
 		{
-			if (characterS.FloorCounter > 0)
+			if (characterS.downCollision)
 			{
 				_SetState(Idle);
 			} else

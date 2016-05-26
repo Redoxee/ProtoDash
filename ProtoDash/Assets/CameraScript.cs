@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using Assets;
 
 public class CameraScript : MonoBehaviour {
 	[SerializeField]
@@ -25,6 +25,6 @@ public class CameraScript : MonoBehaviour {
 	{
 		Vector3 tp = target.transform.position + offset;
 		tp.z = originalZoom;
-		transform.position = _Damping(transform.position, tp, dampingFactor, Time.deltaTime);
+		transform.position = FuctionUtils.damping(dampingFactor, transform.position, tp, Time.deltaTime);
 	}
 }
