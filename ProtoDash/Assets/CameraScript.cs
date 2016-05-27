@@ -21,7 +21,7 @@ public class CameraScript : MonoBehaviour {
 		return p + (t - p) / d * dt;
 	}
 
-	void Update()
+	void LateUpdate()
 	{
 		Vector3 tp = target.transform.position + offset;
 		tp.z = originalZoom;
