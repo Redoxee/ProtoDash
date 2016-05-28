@@ -52,7 +52,17 @@ public class MainScript : MonoBehaviour {
 	[SerializeField]
 	private float dashDuration = .7f;
 
-	public float dashCoolDown = 1.5f;
+	[SerializeField]
+	public float maxEnergyPoints = 100.0f;
+	[SerializeField]
+	private float floorEnergyPointsRecovery = 75.0f;
+	[SerializeField]
+	private float airEnergyRecoveryPoints = 50.0f;
+	[SerializeField]
+	private float dashEnergyCost = 100.0f;
+	
+	[HideInInspector]
+	public float currentEnergy = 100.0f;
 
 	private Rigidbody characterRB;
 	private CharacterScript characterS;
@@ -61,6 +71,7 @@ public class MainScript : MonoBehaviour {
 
 	private bool isMouseDown = false;
 	private bool isMousePressed = false;
+	private bool isSweeping = false;
 	
 	private Vector3 floorTapPosition;
 
@@ -73,7 +84,6 @@ public class MainScript : MonoBehaviour {
 	private State currentState;
 
 	private Vector3 tapPosition;
-	public float dashTimer;
 
 	private void _InitializeStates()
 	{
@@ -121,6 +131,11 @@ public class MainScript : MonoBehaviour {
 			isMouseDown = true;
 		}
 		isMousePressed = Input.GetMouseButton(0);
+
+		Vector3 sv = tapPosition - Input.mousePosition;
+		sv.x *= screenRatio;
+		sv.y *= screenRatio;
+		isSweeping = squareSwipeInputTrigger < sv.sqrMagnitude;
 	}
 
 	void FixedUpdate() {
@@ -134,19 +149,8 @@ public class MainScript : MonoBehaviour {
 		characterS.notifyColisionConsumed();
 	}
 
-	private bool IsSwipping(Vector3 startPoint, Vector3 endPoint)
-	{
-		Vector3 sv = endPoint - startPoint;
-		sv.x *= screenRatio;
-		sv.y *= screenRatio;
-		return squareSwipeInputTrigger < sv.sqrMagnitude; 
-	}
-
 	private void updateDashInput()
 	{
-		if (dashTimer > 0.0f) {
-			dashTimer -= Time.fixedDeltaTime;
-		}
 		Vector3 mp = Input.mousePosition;
 		if (isMouseDown)
 		{
@@ -154,8 +158,9 @@ public class MainScript : MonoBehaviour {
 		}
 		else if (isMousePressed)
 		{
-			if (IsSwipping(tapPosition, mp) && dashTimer <= 0.0f)
+			if (isSweeping && dashEnergyCost <= currentEnergy)
 			{
+				currentEnergy = Mathf.Max(0, currentEnergy - dashEnergyCost);
 				Vector3 swipePosition = (mp - tapPosition).normalized;
 				SetDashVector(swipePosition);
 				_SetState(Dash);
@@ -171,7 +176,10 @@ public class MainScript : MonoBehaviour {
 	{
 	}
 	private Vector2 _GameplayIdle(Vector2 currentVelocity) {
-
+		if (currentEnergy < maxEnergyPoints)
+		{
+			currentEnergy = Mathf.Min(currentEnergy + floorEnergyPointsRecovery * Time.fixedDeltaTime,maxEnergyPoints);
+		}
 		if (characterS.downCollision)
 		{
 			float d = currentFacingVector.x * propulsionImpulse;
@@ -233,7 +241,10 @@ public class MainScript : MonoBehaviour {
 
 	private Vector2 _GameplayJump(Vector2 currentVelocity)
 	{
-
+		if (currentEnergy < maxEnergyPoints)
+		{
+			currentEnergy = Mathf.Min(currentEnergy + airEnergyRecoveryPoints * Time.fixedDeltaTime, maxEnergyPoints);
+		}
 		if (isMouseDown)
 		{
 			if (!hasAirBreak)
@@ -270,7 +281,6 @@ public class MainScript : MonoBehaviour {
 
 	private void _StartDash()
 	{
-		dashTimer = dashCoolDown;
 		dashProgression = dashDuration;
 		if (dashVector.x > 0)
 		{

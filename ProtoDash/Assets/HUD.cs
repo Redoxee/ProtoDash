@@ -11,7 +11,7 @@ public class HUD : MonoBehaviour {
 
 	private float baseLength;
 
-	private float displayedDash = 0.0f;
+	private float displayedDash = 1.0f;
 
 	void Start()
 	{
@@ -20,8 +20,8 @@ public class HUD : MonoBehaviour {
 
 	void Update()
 	{
-		float prog = 1.0f - mainScript.dashTimer / mainScript.dashCoolDown;
-		displayedDash = FuctionUtils.damping(.05f, displayedDash, prog, Time.deltaTime);
+		float prog = mainScript.currentEnergy / mainScript.maxEnergyPoints;
+		displayedDash = prog;
 		dashBar.rectTransform.sizeDelta = new Vector2(baseLength * displayedDash, dashBar.rectTransform.sizeDelta.y);
 	}
 }
