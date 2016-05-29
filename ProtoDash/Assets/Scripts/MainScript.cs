@@ -28,6 +28,8 @@ public class MainScript : MonoBehaviour {
 	private Camera mainCamera;
 
 	[SerializeField]
+	private float jumpDelay = .5f;
+	[SerializeField]
 	private float jumpImpulse = 5;
 	[SerializeField]
 	private float propulsionImpulse = 0.5f;
@@ -40,6 +42,11 @@ public class MainScript : MonoBehaviour {
 	private Vector2 wallJumpVector = new Vector2(1, 1);
 	[SerializeField]
 	private float wallJumpForce = 15.0f;
+
+	[SerializeField]
+	private float magnetRadius = .6f;
+	[SerializeField]
+	private float magnetForce = .5f;
 
 	[SerializeField]
 	private float swipeInputDistance = .25f;
@@ -70,10 +77,13 @@ public class MainScript : MonoBehaviour {
 	private float screenRatio;
 
 	private bool isMouseDown = false;
+	private bool isMouseUp = false;
 	private bool isMousePressed = false;
 	private bool isSweeping = false;
-	
-	private Vector3 floorTapPosition;
+
+	private bool hasStartedJumping = false;
+	private bool hasJumped = false;
+	private float floorButtonDownTimer;
 
 	private Vector3 currentFacingVector;
 	private bool hasAirBreak;
@@ -131,7 +141,10 @@ public class MainScript : MonoBehaviour {
 			isMouseDown = true;
 		}
 		isMousePressed = Input.GetMouseButton(0);
-
+		if (Input.GetMouseButtonUp(0))
+		{
+			isMouseUp = true;
+		}
 		Vector3 sv = tapPosition - Input.mousePosition;
 		sv.x *= screenRatio;
 		sv.y *= screenRatio;
@@ -143,9 +156,11 @@ public class MainScript : MonoBehaviour {
 		Vector3 newVelocity = characterRB.velocity;
 
 		newVelocity = currentState.gameplay(newVelocity);
+
 		characterRB.velocity = newVelocity;
 		updateDashInput();
 		isMouseDown = false;
+		isMouseUp = false;
 		characterS.notifyColisionConsumed();
 	}
 
@@ -174,6 +189,8 @@ public class MainScript : MonoBehaviour {
 
 	private void _StartIdle()
 	{
+		hasStartedJumping = false;
+		hasJumped = false;
 	}
 	private Vector2 _GameplayIdle(Vector2 currentVelocity) {
 		if (currentEnergy < maxEnergyPoints)
@@ -187,17 +204,25 @@ public class MainScript : MonoBehaviour {
 
 			if (isMouseDown)
 			{
-				currentVelocity.y += jumpImpulse;
+				//currentVelocity.y += jumpImpulse;
+				floorButtonDownTimer = jumpDelay;
+				hasStartedJumping = true;
 			}
-
-			//if (characterS.rightCollision)
-			//{
-			//	currentFacingVector.x = -1;
-			//}
-			//else if (characterS.leftCollision)
-			//{
-			//	currentFacingVector.x = 1;
-			//}
+			else if (hasStartedJumping && isMousePressed)
+			{
+				floorButtonDownTimer -= Time.fixedDeltaTime;
+				if (floorButtonDownTimer < 0 && !hasJumped)
+				{
+					hasJumped = true;
+					currentVelocity.y += jumpImpulse;
+					_SetState(Jump);
+				}
+			}
+			else if (hasStartedJumping && isMouseUp)
+			{
+				currentVelocity.y += jumpImpulse;
+				_SetState(Jump);
+			}
 		}
 		else
 		{
@@ -231,6 +256,8 @@ public class MainScript : MonoBehaviour {
 		}
 		dashVector.Normalize();
 	}
+
+
 	/**
 	* Jump
 	**/
@@ -267,6 +294,20 @@ public class MainScript : MonoBehaviour {
 		{
 			_SetState(Idle);
 		}
+		else
+		{
+			if (magnetRadius > .0f)
+			{
+				if (Physics.Raycast(characterRB.position, Vector3.right, magnetRadius))
+				{
+					currentVelocity.x += magnetForce;
+				}
+				else if (Physics.Raycast(characterRB.position, Vector3.left, magnetRadius))
+				{
+					currentVelocity.x -= magnetForce;
+				}
+			}
+		}
 		return currentVelocity;
 	}
 
@@ -289,6 +330,10 @@ public class MainScript : MonoBehaviour {
 		else if (dashVector.x < 0)
 		{
 			currentFacingVector.x = -1;
+		}
+		else if (dashVector == Vector3.down)
+		{
+			currentFacingVector.x *= -1;
 		}
 	}
 
