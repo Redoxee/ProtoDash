@@ -6,15 +6,18 @@ public class MainScript : MonoBehaviour {
 	private delegate void startStateDelegate();
 	private delegate void endStateDelegate();
 	struct State {
-		public State(startStateDelegate d1, gameplayDelegate d2, endStateDelegate d3)
+		public State(string name,startStateDelegate d1, gameplayDelegate d2, endStateDelegate d3)
 		{
 			start = d1;
 			gameplay = d2;
 			end = d3;
+			this.name = name;
+
 		}
 		public startStateDelegate start;
 		public gameplayDelegate gameplay;
 		public endStateDelegate end;
+		public string name;
 	};
 
 
@@ -97,9 +100,9 @@ public class MainScript : MonoBehaviour {
 
 	private void _InitializeStates()
 	{
-		Idle = new State(_StartIdle, _GameplayIdle, _EndIdle);
-		Jump = new State(_StartJump, _GameplayJump, _EndJump);
-		Dash = new State(_StartDash, _GameplayDash, _EndDash);
+		Idle = new State("Idle", _StartIdle, _GameplayIdle, _EndIdle);
+		Jump = new State("Jump", _StartJump, _GameplayJump, _EndJump);
+		Dash = new State("Dash", _StartDash, _GameplayDash, _EndDash);
 
 		Rect cameraRect = mainCamera.pixelRect;
 		if (cameraRect.width < cameraRect.height)
@@ -364,5 +367,11 @@ public class MainScript : MonoBehaviour {
 	private void _EndDash()
 	{
 		tapPosition = Input.mousePosition;
+	}
+
+
+	public string getState()
+	{
+		return currentState.name;
 	}
 }

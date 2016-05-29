@@ -7,6 +7,8 @@ public class HUD : MonoBehaviour {
 	[SerializeField]
 	private Image dashBar;
 	[SerializeField]
+	private Text stateText;
+	[SerializeField]
 	private MainScript mainScript;
 
 	private float baseLength;
@@ -23,5 +25,7 @@ public class HUD : MonoBehaviour {
 		float prog = mainScript.currentEnergy / mainScript.maxEnergyPoints;
 		displayedDash = prog;
 		dashBar.rectTransform.sizeDelta = new Vector2(baseLength * displayedDash, dashBar.rectTransform.sizeDelta.y);
+
+		stateText.text = mainScript.getState();
 	}
 }
