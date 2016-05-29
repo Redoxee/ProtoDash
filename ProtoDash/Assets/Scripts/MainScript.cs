@@ -38,6 +38,10 @@ public class MainScript : MonoBehaviour {
 	private float propulsionImpulse = 0.5f;
 	[SerializeField]
 	private float maxPropulsion = 15.0f;
+	[SerializeField]
+	private float jumpHeightAllowance = .6f;
+	[SerializeField]
+	private float lateJumpAllowance = 1.0f;
 
 	[SerializeField]
 	private float airBreakFactor = .85f;
@@ -83,12 +87,16 @@ public class MainScript : MonoBehaviour {
 	private bool isMouseUp = false;
 	private bool isMousePressed = false;
 	private bool isSweeping = false;
+	private Vector3 currentFacingVector;
 
 	private bool hasStartedJumping = false;
 	private bool hasJumped = false;
 	private float floorButtonDownTimer;
 
-	private Vector3 currentFacingVector;
+
+	private bool preventLateJump = true;
+	private float lateJumpTimer = 0.0f;
+
 	private bool hasAirBreak;
 	private Vector2 mirrorWallJumpVector;
 	private float squareSwipeInputTrigger;
@@ -219,17 +227,20 @@ public class MainScript : MonoBehaviour {
 					hasJumped = true;
 					currentVelocity.y += jumpImpulse;
 					_SetState(Jump);
+					preventLateJump = true;
 				}
 			}
 			else if (hasStartedJumping && isMouseUp)
 			{
 				currentVelocity.y += jumpImpulse;
 				_SetState(Jump);
+				preventLateJump = true;
 			}
 		}
 		else
 		{
 			_SetState(Jump);
+			preventLateJump = false;
 		}
 		return currentVelocity;
 	}
@@ -267,6 +278,7 @@ public class MainScript : MonoBehaviour {
 	private void _StartJump()
 	{
 		hasAirBreak = false;
+		lateJumpTimer = lateJumpAllowance;
 	}
 
 	private Vector2 _GameplayJump(Vector2 currentVelocity)
@@ -275,9 +287,26 @@ public class MainScript : MonoBehaviour {
 		{
 			currentEnergy = Mathf.Min(currentEnergy + airEnergyRecoveryPoints * Time.fixedDeltaTime, maxEnergyPoints);
 		}
+		if (!preventLateJump && lateJumpTimer > 0)
+		{
+			lateJumpTimer -= Time.fixedDeltaTime;
+			if (isMouseDown || isMouseUp || isMousePressed)
+			{
+				currentVelocity.y = jumpImpulse;
+				_SetState(Jump);
+				return currentVelocity;
+			}
+		}
+
 		if (isMouseDown)
 		{
-			if (!hasAirBreak)
+			if (currentVelocity.y < 0 && Physics.Raycast(characterRB.position, Vector3.down, jumpHeightAllowance))
+			{
+				currentVelocity.y = jumpImpulse;
+				_SetState(Jump);
+				return currentVelocity;
+			}
+			else if (!hasAirBreak)
 			{
 				hasAirBreak = true;
 				currentVelocity *= airBreakFactor;
@@ -293,7 +322,7 @@ public class MainScript : MonoBehaviour {
 				currentFacingVector.x = -1;
 			}
 		}
-		if (characterS.downCollision)
+		if (characterS.downCollision && currentVelocity.y <= 0)
 		{
 			_SetState(Idle);
 		}
@@ -316,7 +345,7 @@ public class MainScript : MonoBehaviour {
 
 	private void _EndJump()
 	{
-
+		preventLateJump = true;
 	}
 
 	/**
@@ -358,7 +387,8 @@ public class MainScript : MonoBehaviour {
 			} else
 			{
 				_SetState(Jump);
- 			}
+				preventLateJump = true;
+			}
 			currentVelocity = dashVector * dashCurve.Evaluate(1.0f) * dashMaxSpeed;
 		}
 		return currentVelocity;
