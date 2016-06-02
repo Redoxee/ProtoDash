@@ -46,9 +46,15 @@ public class MainScript : MonoBehaviour {
 	[SerializeField]
 	private float airBreakFactor = .85f;
 	[SerializeField]
+	private float wallSlideSpeed = 5.0f;
+
+	[SerializeField]
 	private Vector2 wallJumpVector = new Vector2(1, 1);
 	[SerializeField]
 	private float wallJumpForce = 15.0f;
+
+	[SerializeField]
+	private float airPropulsion = 1.0f;
 
 	[SerializeField]
 	private float magnetRadius = .6f;
@@ -314,7 +320,7 @@ public class MainScript : MonoBehaviour {
 			if (characterS.leftCollision)
 			{
 				currentVelocity = wallJumpVector * wallJumpForce;
-				currentFacingVector.x =  1;
+				currentFacingVector.x = 1;
 			}
 			else if (characterS.rightCollision)
 			{
@@ -322,21 +328,39 @@ public class MainScript : MonoBehaviour {
 				currentFacingVector.x = -1;
 			}
 		}
+		else if (characterS.leftCollision || characterS.rightCollision)
+		{
+			currentVelocity.y = Mathf.Max(currentVelocity.y, -wallSlideSpeed);
+		}
+
 		if (characterS.downCollision && currentVelocity.y <= 0)
 		{
 			_SetState(Idle);
 		}
 		else
 		{
+			bool hasMagneted = false;
+			Vector2 magnetVector = Vector2.zero;
 			if (magnetRadius > .0f)
 			{
 				if (Physics.Raycast(characterRB.position, Vector3.right, magnetRadius))
 				{
-					currentVelocity.x += magnetForce;
+					magnetVector.x += magnetForce;
+					hasMagneted = true;
 				}
 				else if (Physics.Raycast(characterRB.position, Vector3.left, magnetRadius))
 				{
-					currentVelocity.x -= magnetForce;
+					magnetVector.x -= magnetForce;
+					hasMagneted = true;
+				}
+				currentVelocity += magnetVector;
+			}
+			if (!hasMagneted)
+			{
+				float d = currentFacingVector.x * airPropulsion;
+				if (Mathf.Abs(currentVelocity.x + d) < maxPropulsion)
+				{
+					currentVelocity.x = currentVelocity.x + d;
 				}
 			}
 		}
