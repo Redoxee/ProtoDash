@@ -31,7 +31,7 @@ public class MainScript : MonoBehaviour {
 	private Camera mainCamera;
 	
 	[SerializeField]
-	private float turnBackDelay = .5f;
+	private float turnBackTapTime = .5f;
 	[SerializeField]
 	private float propulsionImpulse = 0.5f;
 	[SerializeField]
@@ -67,11 +67,11 @@ public class MainScript : MonoBehaviour {
 	[SerializeField]
 	public float maxEnergyPoints = 100.0f;
 	[SerializeField]
-	private float floorEnergyPointsRecovery = 75.0f;
+	private float floorEnergyPointsRecovery = 200.0f;
+	[SerializeField]
+	private float wallEnergyRecoveryPoints = 100.0f;
 	[SerializeField]
 	private float airEnergyRecoveryPoints = 50.0f;
-	[SerializeField]
-	private float dashEnergyCost = 100.0f;
 	
 	[HideInInspector]
 	public float currentEnergy = 100.0f;
@@ -99,11 +99,41 @@ public class MainScript : MonoBehaviour {
 	private Vector3 tapPosition;
 	private float dashTimer = 0.0f;
 
+	private float upDashCost = 75.0f;
+	private float diagonalUpDashCost = 40.0f;
+	private float lateralDashCost = 40.0f;
+	private float diagonalDownDashCost = 25.0f;
+	private float downDashCost = 0.0f;
+
+	private float[] energyCostTable = new float[11];
+
 	private void _InitializeStates()
 	{
 		Idle = new State("Idle", _StartIdle, _GameplayIdle, _EndIdle);
 		Jump = new State("Jump", _StartJump, _GameplayJump, _EndJump);
 		Dash = new State("Dash", _StartDash, _GameplayDash, _EndDash);
+	}
+
+	private void _InitializeDashCosts()
+	{
+		energyCostTable[0] = 0;
+		energyCostTable[1] = lateralDashCost;
+		energyCostTable[2] = lateralDashCost;
+		energyCostTable[3] = 0;
+		energyCostTable[4] = upDashCost;
+		energyCostTable[5] = diagonalUpDashCost;
+		energyCostTable[6] = diagonalUpDashCost;
+		energyCostTable[7] = 0;
+		energyCostTable[8] = downDashCost;
+		energyCostTable[9] = diagonalDownDashCost;
+		energyCostTable[10] = diagonalDownDashCost;
+	}
+
+	void Start() {
+		squareSwipeInputTrigger = swipeInputDistance * swipeInputDistance;
+
+		characterRB = mainCharacter.GetComponent<Rigidbody>();
+		characterS = mainCharacter.GetComponent<CharacterScript>();
 
 		Rect cameraRect = mainCamera.pixelRect;
 		if (cameraRect.width < cameraRect.height)
@@ -116,16 +146,9 @@ public class MainScript : MonoBehaviour {
 		}
 
 		currentFacingVector = new Vector3(1, 0, 0);
-		currentState = Idle;
-	}
-
-	void Start() {
-		squareSwipeInputTrigger = swipeInputDistance * swipeInputDistance;
-
-		characterRB = mainCharacter.GetComponent<Rigidbody>();
-		characterS = mainCharacter.GetComponent<CharacterScript>();
-
+		_InitializeDashCosts();
 		_InitializeStates();
+		currentState = Idle;
 	}
 
 	private void _SetState(State newState)
@@ -159,6 +182,7 @@ public class MainScript : MonoBehaviour {
 		newVelocity = currentState.gameplay(newVelocity);
 
 		characterRB.velocity = newVelocity;
+		refillEnergy();
 		updateDashInput();
 		isMouseDown = false;
 		isMouseUp = false;
@@ -180,12 +204,28 @@ public class MainScript : MonoBehaviour {
 		{
 			if (dashTimer <= 0)
 			{
-				if (isSweeping && dashEnergyCost <= currentEnergy)
+				Vector3 dv = getDashVectorFromSwipe((mp - tapPosition).normalized);
+				bool dashingIntoWall = (dv.x > 0 && characterS.rightCollision) || (dv.x < 0 && characterS.leftCollision) && ! characterS.downCollision;
+				if (dv.sqrMagnitude > 0 && !dashingIntoWall)
 				{
-					currentEnergy = Mathf.Max(0, currentEnergy - dashEnergyCost);
-					Vector3 swipePosition = (mp - tapPosition).normalized;
-					SetDashVector(swipePosition);
-					_SetState(Dash);
+					dv.Normalize();
+					System.UInt16 dashDirection = 0x0;
+					if (dv.x > 0)
+						dashDirection |= 0x1;
+					else if (dv.x < 0)
+						dashDirection |= 0x2;
+					if (dv.y > 0)
+						dashDirection |= 0x4;
+					else if (dv.y < 0)
+						dashDirection |= 0x8;
+					float dCost = energyCostTable[dashDirection];
+					if (isSweeping && dCost <= currentEnergy)
+					{
+						dashVector = dv;
+						currentEnergy = Mathf.Max(0, currentEnergy - dCost);
+
+						_SetState(Dash);
+					}
 				}
 			}
 			else
@@ -195,34 +235,41 @@ public class MainScript : MonoBehaviour {
 		}
 	}
 
+	private void refillEnergy()
+	{
+		float refillRate = airEnergyRecoveryPoints;
+		if (characterS.downCollision)
+			refillRate = floorEnergyPointsRecovery;
+		else if (characterS.rightCollision || characterS.leftCollision)
+			refillRate = wallEnergyRecoveryPoints;
+		currentEnergy = Mathf.Min(maxEnergyPoints, currentEnergy + refillRate * Time.fixedDeltaTime);
+	}
+
 	/**
 	* Idle
 	**/
 
 	private void _StartIdle()
 	{
-		floorButtonDownTimer = turnBackDelay * 4;
+		floorButtonDownTimer = -1;
 	}
 	private Vector2 _GameplayIdle(Vector2 currentVelocity) {
-		if (currentEnergy < maxEnergyPoints)
-		{
-			currentEnergy = Mathf.Min(currentEnergy + floorEnergyPointsRecovery * Time.fixedDeltaTime,maxEnergyPoints);
-		}
 		if (characterS.downCollision)
 		{
 
 			if (isMouseDown)
 			{
-				floorButtonDownTimer = turnBackDelay;
+				floorButtonDownTimer = turnBackTapTime;
 			}
-			else if (isMousePressed)
+			else if (isMouseUp)
 			{
-				floorButtonDownTimer -= Time.fixedDeltaTime;
-				if (floorButtonDownTimer < 0)
+				if (floorButtonDownTimer >= 0)
 				{
-					floorButtonDownTimer = turnBackDelay;
 					currentFacingVector.x *= -1;
 				}
+			}else if (floorButtonDownTimer > 0)
+			{
+				floorButtonDownTimer -= Time.fixedDeltaTime;
 			}
 
 			float d = currentFacingVector.x * propulsionImpulse;
@@ -239,29 +286,27 @@ public class MainScript : MonoBehaviour {
 	{
 	}
 
-	private void SetDashVector(Vector3 inVec)
+	private Vector3 getDashVectorFromSwipe(Vector3 sw)
 	{
-		dashVector = new Vector3(0, 0, 0);
-		if (inVec.x > swipeDeadZone)
+		Vector3 res = new Vector3(0, 0, 0);
+		if (sw.x > swipeDeadZone)
 		{
-			dashVector.x += 1;
+			res.x += 1;
 		}
-		else if (inVec.x < -swipeDeadZone)
+		else if (sw.x < -swipeDeadZone)
 		{
-			dashVector.x -= 1;
+			res.x -= 1;
 		}
-		if (inVec.y > swipeDeadZone)
+		if (sw.y > swipeDeadZone)
 		{
-			dashVector.y += 1;
+			res.y += 1;
 		}
-		else if (inVec.y < -swipeDeadZone)
+		else if (sw.y < -swipeDeadZone)
 		{
-			dashVector.y -= 1;
+			res.y -= 1;
 		}
-		dashVector.Normalize();
+		return res;
 	}
-
-
 	/**
 	* Jump
 	**/
@@ -272,19 +317,6 @@ public class MainScript : MonoBehaviour {
 
 	private Vector2 _GameplayJump(Vector2 currentVelocity)
 	{
-		if (currentEnergy < maxEnergyPoints)
-		{
-			float recovery;
-			if (characterS.leftCollision || characterS.rightCollision)
-			{
-				recovery = floorEnergyPointsRecovery;
-			}
-			else
-			{
-				recovery = airEnergyRecoveryPoints;
-			}
-			currentEnergy = Mathf.Min(currentEnergy + recovery * Time.fixedDeltaTime, maxEnergyPoints);
-		}
 
 		if (isMouseDown)
 		{
