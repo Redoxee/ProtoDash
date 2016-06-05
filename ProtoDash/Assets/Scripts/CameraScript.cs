@@ -19,7 +19,7 @@ public class CameraScript : MonoBehaviour {
 
 	private Vector3 _Damping(Vector3 p, Vector3 t, float d, float dt)
 	{
-		return p + (t - p) / d * dt;
+		return p + (t - p) / Mathf.Max(d,float.Epsilon) * dt;
 	}
 
 	void LateUpdate()

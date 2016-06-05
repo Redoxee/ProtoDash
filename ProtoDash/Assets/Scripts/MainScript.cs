@@ -31,11 +31,24 @@ public class MainScript : MonoBehaviour {
 	private Camera mainCamera;
 	
 	[SerializeField]
-	private float turnBackTapTime = .5f;
-	[SerializeField]
 	private float propulsionImpulse = 0.5f;
 	[SerializeField]
 	private float maxPropulsion = 15.0f;
+
+
+	[SerializeField]
+	private float jumpInputFloorDelay = .125f;
+	[SerializeField]
+	private float jumpForce = 15.0f;
+	[SerializeField]
+	private float earlyJumpDistance = .65f;
+	[SerializeField]
+	private float lateJumpDuration = .25f;
+	[SerializeField]
+	private float wallJumpAngle = 55.0f;
+	[SerializeField]
+	private float wallJumpForce = 15.0f;
+
 
 	[SerializeField]
 	private float airBreakFactor = .85f;
@@ -43,7 +56,7 @@ public class MainScript : MonoBehaviour {
 	private float wallSlideSpeed = 5.0f;
 
 	[SerializeField]
-	private float airPropulsion = 1.0f;
+	private float airPropulsion = 0.125f;
 
 	[SerializeField]
 	private float magnetRadius = .6f;
@@ -69,9 +82,9 @@ public class MainScript : MonoBehaviour {
 	[SerializeField]
 	private float floorEnergyPointsRecovery = 200.0f;
 	[SerializeField]
-	private float wallEnergyRecoveryPoints = 100.0f;
+	private float wallEnergyRecoveryPoints = 80.0f;
 	[SerializeField]
-	private float airEnergyRecoveryPoints = 50.0f;
+	private float airEnergyRecoveryPoints = 30.0f;
 	
 	[HideInInspector]
 	public float currentEnergy = 100.0f;
@@ -87,10 +100,16 @@ public class MainScript : MonoBehaviour {
 	private bool isSweeping = false;
 	private Vector3 currentFacingVector;
 
-	private float floorButtonDownTimer;
-	
+	private bool hasStartedFloorInput = false;
 
+	private float floorButtonDownTimer;
+	private bool canLateJump = false;
+	private float jumpTimer = .0f;
+
+	private Vector2 wallJumpVector;
+	private Vector2 mirroredWallJumpVector;
 	private bool hasAirBreak;
+
 	private float squareSwipeInputTrigger;
 	private float dashProgression = -1.0f;
 	private Vector3 dashVector;
@@ -99,10 +118,15 @@ public class MainScript : MonoBehaviour {
 	private Vector3 tapPosition;
 	private float dashTimer = 0.0f;
 
+	//[SerializeField]
 	private float upDashCost = 75.0f;
-	private float diagonalUpDashCost = 40.0f;
-	private float lateralDashCost = 40.0f;
-	private float diagonalDownDashCost = 25.0f;
+	//[SerializeField]
+	private float diagonalUpDashCost = 60.0f;
+	//[SerializeField]
+	private float lateralDashCost = 50.0f;
+	//[SerializeField]
+	private float diagonalDownDashCost = 40.0f;
+	//[SerializeField]
 	private float downDashCost = 0.0f;
 
 	private float[] energyCostTable = new float[11];
@@ -129,6 +153,13 @@ public class MainScript : MonoBehaviour {
 		energyCostTable[10] = diagonalDownDashCost;
 	}
 
+	private void _InitializeWallJumpVectors()
+	{
+		float a = wallJumpAngle / 360.0f * Mathf.PI * 2.0f;
+		wallJumpVector = new Vector2(Mathf.Cos(a), Mathf.Sin(a));
+		mirroredWallJumpVector = wallJumpVector; mirroredWallJumpVector.x *= -1;
+	}
+
 	void Start() {
 		squareSwipeInputTrigger = swipeInputDistance * swipeInputDistance;
 
@@ -148,6 +179,7 @@ public class MainScript : MonoBehaviour {
 		currentFacingVector = new Vector3(1, 0, 0);
 		_InitializeDashCosts();
 		_InitializeStates();
+		_InitializeWallJumpVectors();
 		currentState = Idle;
 	}
 
@@ -205,8 +237,7 @@ public class MainScript : MonoBehaviour {
 			if (dashTimer <= 0)
 			{
 				Vector3 dv = getDashVectorFromSwipe((mp - tapPosition).normalized);
-				bool dashingIntoWall = (dv.x > 0 && characterS.rightCollision) || (dv.x < 0 && characterS.leftCollision) && ! characterS.downCollision;
-				if (dv.sqrMagnitude > 0 && !dashingIntoWall)
+				if (dv.sqrMagnitude > 0)
 				{
 					dv.Normalize();
 					System.UInt16 dashDirection = 0x0;
@@ -223,6 +254,11 @@ public class MainScript : MonoBehaviour {
 					{
 						dashVector = dv;
 						currentEnergy = Mathf.Max(0, currentEnergy - dCost);
+
+						if (dashDirection == 8) // dashDirection down
+						{
+							currentFacingVector.x *= -1;
+						}
 
 						_SetState(Dash);
 					}
@@ -252,6 +288,8 @@ public class MainScript : MonoBehaviour {
 	private void _StartIdle()
 	{
 		floorButtonDownTimer = -1;
+		hasStartedFloorInput = false;
+		canLateJump = false;
 	}
 	private Vector2 _GameplayIdle(Vector2 currentVelocity) {
 		if (characterS.downCollision)
@@ -259,17 +297,22 @@ public class MainScript : MonoBehaviour {
 
 			if (isMouseDown)
 			{
-				floorButtonDownTimer = turnBackTapTime;
+				floorButtonDownTimer = 0;
+				hasStartedFloorInput = true;
 			}
-			else if (isMouseUp)
+			else if (isMouseUp && hasStartedFloorInput)
 			{
-				if (floorButtonDownTimer >= 0)
+				currentVelocity.y = jumpForce;
+				_SetState(Jump);
+			}
+			else if (isMousePressed && hasStartedFloorInput)
+			{
+				floorButtonDownTimer += Time.fixedDeltaTime;
+				if (floorButtonDownTimer >= jumpInputFloorDelay)
 				{
-					currentFacingVector.x *= -1;
+					currentVelocity.y = jumpForce;
+					_SetState(Jump);
 				}
-			}else if (floorButtonDownTimer > 0)
-			{
-				floorButtonDownTimer -= Time.fixedDeltaTime;
 			}
 
 			float d = currentFacingVector.x * propulsionImpulse;
@@ -277,6 +320,7 @@ public class MainScript : MonoBehaviour {
 		}
 		else
 		{
+			canLateJump = true;
 			_SetState(Jump);
 		}
 		return currentVelocity;
@@ -307,30 +351,59 @@ public class MainScript : MonoBehaviour {
 		}
 		return res;
 	}
+
 	/**
 	* Jump
 	**/
 	private void _StartJump()
 	{
 		hasAirBreak = false;
+		jumpTimer = .0f;
 	}
 
 	private Vector2 _GameplayJump(Vector2 currentVelocity)
 	{
-
+		if (characterS.leftCollision || characterS.rightCollision)
+		{
+			currentVelocity.y = Mathf.Max(currentVelocity.y, -wallSlideSpeed);
+			if (isMouseDown)
+			{
+				currentVelocity = characterS.leftCollision ? wallJumpVector : mirroredWallJumpVector;
+				currentFacingVector.x = characterS.leftCollision ? 1 : -1;
+				currentVelocity *= wallJumpForce;
+				return currentVelocity;
+			}
+		}
+		if (canLateJump)
+		{
+			jumpTimer += Time.fixedDeltaTime;
+			if (jumpTimer < lateJumpDuration)
+			{
+				if (isMouseDown || isMousePressed)
+				{
+					currentVelocity.y = jumpForce;
+					_SetState(Jump);
+					return currentVelocity;
+				}
+			}
+			else
+			{
+				canLateJump = false;
+			}
+		}
 		if (isMouseDown)
 		{
-
-			if (!hasAirBreak)
+			if (currentVelocity.y < 0 && Physics.Raycast(characterRB.position,Vector3.down,earlyJumpDistance))
+			{
+				currentVelocity.y = jumpForce;
+				_SetState(Jump);
+				return currentVelocity;
+			}
+			else if (!hasAirBreak)
 			{
 				hasAirBreak = true;
 				currentVelocity *= airBreakFactor;
 			}
-		}
-
-		if (characterS.leftCollision || characterS.rightCollision)
-		{
-			currentVelocity.y = Mathf.Max(currentVelocity.y, -wallSlideSpeed);
 		}
 
 		if (characterS.downCollision && currentVelocity.y <= 0)
@@ -369,6 +442,7 @@ public class MainScript : MonoBehaviour {
 
 	private void _EndJump()
 	{
+		canLateJump = false;
 	}
 
 	/**
@@ -422,5 +496,10 @@ public class MainScript : MonoBehaviour {
 	public string getState()
 	{
 		return currentState.name;
+	}
+
+	public float getFacingSign()
+	{
+		return currentFacingVector.x;
 	}
 }
