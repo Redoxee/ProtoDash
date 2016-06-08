@@ -3,25 +3,14 @@ using System.Collections;
 
 public class CharacterScript : MonoBehaviour {
 
-	[HideInInspector]
-	public uint FloorCounter = 0;
-
-
-	public void OnCollisionEnter(Collision col)
-	{
-		if (col.gameObject.tag == "Floor") {
-			FloorCounter += 1;
-		}
-	}
-
 	public bool downCollision = false;
 	public bool upCollision = false;
 	public bool rightCollision = false;
 	public bool leftCollision = false;
 
-	public void OnCollisionStay(Collision col)
+	public void OnCollisionStay2D(Collision2D col)
 	{
-		foreach(ContactPoint c in col.contacts)
+		foreach(ContactPoint2D c in col.contacts)
 		{
 			Vector2 norm = (new Vector2(c.normal.x, c.normal.y)).normalized;
 			if (norm.x > .5)
@@ -49,12 +38,5 @@ public class CharacterScript : MonoBehaviour {
 		rightCollision = false;
 		upCollision = false;
 		downCollision = false;
-	}
-	public void OnCollisionExit(Collision col)
-	{
-		if (col.gameObject.tag == "Floor")
-		{
-			FloorCounter -= 1;
-		}
 	}
 }

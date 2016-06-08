@@ -89,7 +89,7 @@ public class MainScript : MonoBehaviour {
 	[HideInInspector]
 	public float currentEnergy = 100.0f;
 
-	private Rigidbody characterRB;
+	private Rigidbody2D characterRB;
 	private CharacterScript characterS;
 
 	private float screenRatio;
@@ -163,7 +163,7 @@ public class MainScript : MonoBehaviour {
 	void Start() {
 		squareSwipeInputTrigger = swipeInputDistance * swipeInputDistance;
 
-		characterRB = mainCharacter.GetComponent<Rigidbody>();
+		characterRB = mainCharacter.GetComponent<Rigidbody2D>();
 		characterS = mainCharacter.GetComponent<CharacterScript>();
 
 		Rect cameraRect = mainCamera.pixelRect;
@@ -393,7 +393,7 @@ public class MainScript : MonoBehaviour {
 		}
 		if (isMouseDown)
 		{
-			if (currentVelocity.y < 0 && Physics.Raycast(characterRB.position,Vector3.down,earlyJumpDistance))
+			if (currentVelocity.y < 0 && Physics2D.Raycast(characterRB.position,Vector3.down,earlyJumpDistance))
 			{
 				currentVelocity.y = jumpForce;
 				_SetState(Jump);
@@ -416,12 +416,12 @@ public class MainScript : MonoBehaviour {
 			Vector2 magnetVector = Vector2.zero;
 			if (magnetRadius > .0f)
 			{
-				if (Physics.Raycast(characterRB.position, Vector3.right, magnetRadius))
+				if (Physics2D.Raycast(characterRB.position, Vector3.right, magnetRadius))
 				{
 					magnetVector.x += magnetForce;
 					hasMagneted = true;
 				}
-				else if (Physics.Raycast(characterRB.position, Vector3.left, magnetRadius))
+				else if (Physics2D.Raycast(characterRB.position, Vector3.left, magnetRadius))
 				{
 					magnetVector.x -= magnetForce;
 					hasMagneted = true;
