@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿//#define DEBUG_RAY
+
+using UnityEngine;
 using System.Collections;
 
 public class MainScript : MonoBehaviour {
@@ -34,7 +36,6 @@ public class MainScript : MonoBehaviour {
 	private float propulsionImpulse = 0.5f;
 	[SerializeField]
 	private float maxPropulsion = 15.0f;
-
 
 	[SerializeField]
 	private float jumpInputFloorDelay = .125f;
@@ -90,7 +91,8 @@ public class MainScript : MonoBehaviour {
 	public float currentEnergy = 100.0f;
 
 	private Rigidbody2D characterRB;
-	private CharacterScript characterS;
+	[SerializeField]
+	private GameObject beak;
 
 	private float screenRatio;
 
@@ -128,8 +130,23 @@ public class MainScript : MonoBehaviour {
 	private float diagonalDownDashCost = 40.0f;
 	//[SerializeField]
 	private float downDashCost = 0.0f;
-
 	private float[] energyCostTable = new float[11];
+
+
+
+	private float probDistance = 2.0f;
+	private float skinDistance = .65f;
+	[SerializeField]
+	private bool isTouchingDown = false;
+	[SerializeField]
+	private bool isTouchingRight = false;
+	[SerializeField]
+	private bool isTouchingLeft = false;
+	private bool isInMagnetRight = false;
+	private bool isInMagnetLeft = false;
+	private bool isInEarlyJumpRange = false;
+
+	private float originalBeakX = 0.0f;
 
 	private void _InitializeStates()
 	{
@@ -164,7 +181,8 @@ public class MainScript : MonoBehaviour {
 		squareSwipeInputTrigger = swipeInputDistance * swipeInputDistance;
 
 		characterRB = mainCharacter.GetComponent<Rigidbody2D>();
-		characterS = mainCharacter.GetComponent<CharacterScript>();
+
+		originalBeakX = beak.transform.localPosition.x;
 
 		Rect cameraRect = mainCamera.pixelRect;
 		if (cameraRect.width < cameraRect.height)
@@ -205,9 +223,12 @@ public class MainScript : MonoBehaviour {
 		sv.x *= screenRatio;
 		sv.y *= screenRatio;
 		isSweeping = squareSwipeInputTrigger < sv.sqrMagnitude;
+
+		updateBeak();
 	}
 
 	void FixedUpdate() {
+		updateRayCasts();
 
 		Vector3 newVelocity = characterRB.velocity;
 
@@ -218,7 +239,57 @@ public class MainScript : MonoBehaviour {
 		updateDashInput();
 		isMouseDown = false;
 		isMouseUp = false;
-		characterS.notifyColisionConsumed();
+	}
+
+	private void updateRayCasts()
+	{
+		isTouchingDown = false;
+		isTouchingLeft = false;
+		isTouchingRight = false;
+		isInEarlyJumpRange = false;
+		isInMagnetLeft = false;
+		isInMagnetRight = false;
+		RaycastHit2D rayDown = Physics2D.Raycast(characterRB.position, Vector2.down, probDistance);
+		RaycastHit2D rayRight = Physics2D.Raycast(characterRB.position, Vector2.right, probDistance);
+		RaycastHit2D rayLeft = Physics2D.Raycast(characterRB.position, Vector2.left, probDistance);
+#if DEBUG_RAY
+		Debug.DrawRay(characterRB.position, Vector2.down * probDistance, Color.red);
+		Debug.DrawRay(characterRB.position, Vector2.right * probDistance, Color.red);
+		Debug.DrawRay(characterRB.position, Vector2.left * probDistance, Color.red);
+#endif
+		if (rayDown.collider)
+		{
+			if (rayDown.distance <= earlyJumpDistance)
+			{
+				isInEarlyJumpRange = true;
+				if (rayDown.distance <= skinDistance)
+				{
+					isTouchingDown = true;
+				}
+			}
+		}
+		if (rayRight.collider)
+		{
+			if (rayRight.distance <= magnetRadius)
+			{
+				isInMagnetRight = true;
+				if (rayRight.distance <= skinDistance)
+				{
+					isTouchingRight = true;
+				}
+			}
+		}
+		if (rayLeft.collider)
+		{
+			if (rayLeft.distance <= magnetRadius)
+			{
+				isInMagnetLeft = true;
+				if (rayLeft.distance <= skinDistance)
+				{
+					isTouchingLeft = true;
+				}
+			}
+		}
 	}
 
 	private void updateDashInput()
@@ -274,11 +345,22 @@ public class MainScript : MonoBehaviour {
 	private void refillEnergy()
 	{
 		float refillRate = airEnergyRecoveryPoints;
-		if (characterS.downCollision)
+		if (isTouchingDown)// characterS.downCollision)
 			refillRate = floorEnergyPointsRecovery;
-		else if (characterS.rightCollision || characterS.leftCollision)
+		else if (isTouchingRight || isTouchingLeft)// characterS.rightCollision || characterS.leftCollision)
 			refillRate = wallEnergyRecoveryPoints;
 		currentEnergy = Mathf.Min(maxEnergyPoints, currentEnergy + refillRate * Time.fixedDeltaTime);
+	}
+
+	private void updateBeak()
+	{
+		float bPos = originalBeakX * currentFacingVector.x;
+		Vector3 cPos = beak.transform.localPosition;
+		if (cPos.x != bPos)
+		{
+			cPos.x = bPos;
+			beak.transform.localPosition = cPos;
+		}
 	}
 
 	/**
@@ -292,7 +374,7 @@ public class MainScript : MonoBehaviour {
 		canLateJump = false;
 	}
 	private Vector2 _GameplayIdle(Vector2 currentVelocity) {
-		if (characterS.downCollision)
+		if (isTouchingDown)// characterS.downCollision)
 		{
 
 			if (isMouseDown)
@@ -363,13 +445,15 @@ public class MainScript : MonoBehaviour {
 
 	private Vector2 _GameplayJump(Vector2 currentVelocity)
 	{
-		if (characterS.leftCollision || characterS.rightCollision)
+
+
+		if (isTouchingRight || isTouchingLeft)
 		{
 			currentVelocity.y = Mathf.Max(currentVelocity.y, -wallSlideSpeed);
 			if (isMouseDown)
 			{
-				currentVelocity = characterS.leftCollision ? wallJumpVector : mirroredWallJumpVector;
-				currentFacingVector.x = characterS.leftCollision ? 1 : -1;
+				currentVelocity = isTouchingLeft ? wallJumpVector : mirroredWallJumpVector;
+				currentFacingVector.x = isTouchingLeft ? 1 : -1;
 				currentVelocity *= wallJumpForce;
 				return currentVelocity;
 			}
@@ -379,7 +463,7 @@ public class MainScript : MonoBehaviour {
 			jumpTimer += Time.fixedDeltaTime;
 			if (jumpTimer < lateJumpDuration)
 			{
-				if (isMouseDown || isMousePressed)
+				if (isMouseDown || isMousePressed || isMouseUp)
 				{
 					currentVelocity.y = jumpForce;
 					_SetState(Jump);
@@ -391,9 +475,15 @@ public class MainScript : MonoBehaviour {
 				canLateJump = false;
 			}
 		}
+
+		if (isTouchingDown && currentVelocity.y <= 0)
+		{
+			_SetState(Idle);
+			return currentVelocity;
+		}
 		if (isMouseDown)
 		{
-			if (currentVelocity.y < 0 && Physics2D.Raycast(characterRB.position,Vector3.down,earlyJumpDistance))
+			if (currentVelocity.y < 0 && isInEarlyJumpRange)
 			{
 				currentVelocity.y = jumpForce;
 				_SetState(Jump);
@@ -406,22 +496,18 @@ public class MainScript : MonoBehaviour {
 			}
 		}
 
-		if (characterS.downCollision && currentVelocity.y <= 0)
-		{
-			_SetState(Idle);
-		}
-		else
+		
 		{
 			bool hasMagneted = false;
 			Vector2 magnetVector = Vector2.zero;
 			if (magnetRadius > .0f)
 			{
-				if (Physics2D.Raycast(characterRB.position, Vector3.right, magnetRadius))
+				if (isInMagnetRight)
 				{
 					magnetVector.x += magnetForce;
 					hasMagneted = true;
 				}
-				else if (Physics2D.Raycast(characterRB.position, Vector3.left, magnetRadius))
+				if (isInMagnetLeft)
 				{
 					magnetVector.x -= magnetForce;
 					hasMagneted = true;
@@ -475,7 +561,7 @@ public class MainScript : MonoBehaviour {
 		}
 		else
 		{
-			if (characterS.downCollision)
+			if (isTouchingDown)
 			{
 				_SetState(Idle);
 			} else
