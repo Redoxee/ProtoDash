@@ -50,9 +50,6 @@ public class MainScript : MonoBehaviour {
 	[SerializeField]
 	private float wallJumpForce = 15.0f;
 
-
-	[SerializeField]
-	private float airBreakFactor = .85f;
 	[SerializeField]
 	private float wallSlideSpeed = 5.0f;
 
@@ -93,6 +90,10 @@ public class MainScript : MonoBehaviour {
 	private Rigidbody2D characterRB;
 	[SerializeField]
 	private GameObject beak;
+	[SerializeField]
+	private GameObject body;
+	[SerializeField]
+	private AnimationCurve dashSquish;
 
 	private float screenRatio;
 
@@ -110,11 +111,12 @@ public class MainScript : MonoBehaviour {
 
 	private Vector2 wallJumpVector;
 	private Vector2 mirroredWallJumpVector;
-	private bool hasAirBreak;
 
 	private float squareSwipeInputTrigger;
 	private float dashProgression = -1.0f;
 	private Vector3 dashVector;
+	private float dashAngle;
+	private Quaternion dashRotation;
 	private State currentState;
 
 	private Vector3 tapPosition;
@@ -324,6 +326,8 @@ public class MainScript : MonoBehaviour {
 					if (isSweeping && dCost <= currentEnergy)
 					{
 						dashVector = dv;
+						dashAngle = Mathf.Acos(dv.x) * Mathf.Sign(dv.y) / Mathf.PI * 180;
+						dashRotation = Quaternion.Euler(0, 0, dashAngle);
 						currentEnergy = Mathf.Max(0, currentEnergy - dCost);
 
 						if (dashDirection == 8) // dashDirection down
@@ -439,7 +443,6 @@ public class MainScript : MonoBehaviour {
 	**/
 	private void _StartJump()
 	{
-		hasAirBreak = false;
 		jumpTimer = .0f;
 	}
 
@@ -488,11 +491,6 @@ public class MainScript : MonoBehaviour {
 				currentVelocity.y = jumpForce;
 				_SetState(Jump);
 				return currentVelocity;
-			}
-			else if (!hasAirBreak)
-			{
-				hasAirBreak = true;
-				currentVelocity *= airBreakFactor;
 			}
 		}
 
@@ -547,6 +545,8 @@ public class MainScript : MonoBehaviour {
 		{
 			currentFacingVector.x = -1;
 		}
+
+		body.transform.localRotation = dashRotation;
 	}
 
 	private Vector2 _GameplayDash(Vector2 currentVelocity)
@@ -558,6 +558,9 @@ public class MainScript : MonoBehaviour {
 			float progression = 1.0f - dashProgression / dashDuration;
 			float v = dashCurve.Evaluate(progression) * dashMaxSpeed;
 			currentVelocity = dashVector * v;
+			Vector3 squishedScale = Vector3.one;
+			squishedScale.y = dashSquish.Evaluate(progression);
+			body.transform.localScale = squishedScale;
 		}
 		else
 		{
@@ -576,6 +579,7 @@ public class MainScript : MonoBehaviour {
 	private void _EndDash()
 	{
 		tapPosition = Input.mousePosition;
+		body.transform.localScale = Vector3.one;
 	}
 
 
