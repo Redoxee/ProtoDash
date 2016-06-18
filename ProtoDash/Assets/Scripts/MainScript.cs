@@ -1,4 +1,4 @@
-﻿//#define DEBUG_RAY
+﻿#define DEBUG_RAY
 
 using UnityEngine;
 using System.Collections;
@@ -31,6 +31,9 @@ public class MainScript : MonoBehaviour {
 	private MonoBehaviour mainCharacter;
 	[SerializeField]
 	private Camera mainCamera;
+
+	//[SerializeField]
+	private Vector3 fakeGravity = new Vector3(0.0f, -55.0f,0.0f);
 	
 	[SerializeField]
 	private float propulsionImpulse = 0.5f;
@@ -125,11 +128,11 @@ public class MainScript : MonoBehaviour {
 	//[SerializeField]
 	private float upDashCost = 75.0f;
 	//[SerializeField]
-	private float diagonalUpDashCost = 60.0f;
+	private float diagonalUpDashCost = 75.0f;
 	//[SerializeField]
-	private float lateralDashCost = 50.0f;
+	private float lateralDashCost = 40.0f;
 	//[SerializeField]
-	private float diagonalDownDashCost = 40.0f;
+	private float diagonalDownDashCost = 30.0f;
 	//[SerializeField]
 	private float downDashCost = 0.0f;
 	private float[] energyCostTable = new float[11];
@@ -234,14 +237,36 @@ public class MainScript : MonoBehaviour {
 
 		Vector3 newVelocity = characterRB.velocity;
 
+		newVelocity += fakeGravity * Time.fixedDeltaTime;
 		newVelocity = currentState.gameplay(newVelocity);
-
 		characterRB.velocity = newVelocity;
 		refillEnergy();
 		updateDashInput();
 		isMouseDown = false;
 		isMouseUp = false;
 	}
+
+	const uint  NB_RAYCHECK = 3;
+	const float RAY_RANGE = .3f;
+	private RaycastHit2D _MultipleRayCasts(Vector2 direction, Vector2 normal)
+	{
+		RaycastHit2D result = new RaycastHit2D();
+		result.distance = Mathf.Infinity;
+		for (int i = 0; i < NB_RAYCHECK; ++i)
+		{
+			RaycastHit2D rt = Physics2D.Raycast(characterRB.position + normal * (i - NB_RAYCHECK / 2) * RAY_RANGE, direction, probDistance);
+#if DEBUG_RAY
+			Vector2 start = characterRB.position + normal * (i - NB_RAYCHECK / 2) * RAY_RANGE;
+			Debug.DrawRay(start, direction * probDistance, Color.red);
+#endif
+			if (rt.collider && rt.distance < result.distance)
+			{
+				result = rt;
+			}
+		}
+		return result;
+	}
+
 
 	private void updateRayCasts()
 	{
@@ -251,14 +276,9 @@ public class MainScript : MonoBehaviour {
 		isInEarlyJumpRange = false;
 		isInMagnetLeft = false;
 		isInMagnetRight = false;
-		RaycastHit2D rayDown = Physics2D.Raycast(characterRB.position, Vector2.down, probDistance);
-		RaycastHit2D rayRight = Physics2D.Raycast(characterRB.position, Vector2.right, probDistance);
-		RaycastHit2D rayLeft = Physics2D.Raycast(characterRB.position, Vector2.left, probDistance);
-#if DEBUG_RAY
-		Debug.DrawRay(characterRB.position, Vector2.down * probDistance, Color.red);
-		Debug.DrawRay(characterRB.position, Vector2.right * probDistance, Color.red);
-		Debug.DrawRay(characterRB.position, Vector2.left * probDistance, Color.red);
-#endif
+		RaycastHit2D rayDown = _MultipleRayCasts(Vector2.down,Vector2.right);
+		RaycastHit2D rayRight = _MultipleRayCasts(Vector2.right,Vector2.up);
+		RaycastHit2D rayLeft = _MultipleRayCasts(Vector2.left, Vector2.up);
 		if (rayDown.collider)
 		{
 			if (rayDown.distance <= earlyJumpDistance)
@@ -580,6 +600,7 @@ public class MainScript : MonoBehaviour {
 	{
 		tapPosition = Input.mousePosition;
 		body.transform.localScale = Vector3.one;
+		body.transform.localRotation = Quaternion.identity;
 	}
 
 
