@@ -5,8 +5,6 @@
 		_MainTex("Texture", 2D) = "white" {}
 		_FillColor("Fill Color", Color) = (.9,.9,.9,1.)
 		_ThresholdValue("Threshold Value",Range(0,1)) = .75
-		_ThresholdColor("Threshold Color", Color) = (.9,.9,.1,1.)
-
 		_BorderColor("Border Color",Color) = (1.,1.,0.,1.)
 		_GaugeProgression("Gauge Progression", Range(0,1)) = 1
 	}
@@ -49,7 +47,6 @@
 #define BORDER_THIKNESS .05
 			float4	_FillColor;
 			float	_ThresholdValue;
-			float4	_ThresholdColor;
 
 			float4	_BorderColor;
 			sampler2D _MainTex;
