@@ -33,7 +33,7 @@ public class MainScript : MonoBehaviour {
 	private Camera mainCamera;
 
 	//[SerializeField]
-	private Vector3 fakeGravity = new Vector3(0.0f, -55.0f,0.0f);
+	private Vector3 fakeGravity = new Vector3(0.0f, -60.0f,0.0f);
 	
 	[SerializeField]
 	private float propulsionImpulse = 0.5f;
