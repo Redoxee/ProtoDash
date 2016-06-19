@@ -41,7 +41,6 @@ public class CameraScript : MonoBehaviour {
             lastOrientation = mainScriptRef.getFacingSign();
             timerPosX = timeToPosX;
             lastOffsetX = transform.position.x - target.transform.position.x;
-            Debug.Log("cpx = " + transform.position.x + "| tpx = " + target.transform.position.x + " | cox  = " + lastOffsetX + "| facing = " + lastOrientation);
         }
         if (timerPosX > 0)
         {

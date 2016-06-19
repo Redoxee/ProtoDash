@@ -10,7 +10,11 @@
 	}
 	SubShader
 	{
-		Tags{ "Queue" = "Transparent" "RenderType" = "Transparent" }
+		Tags{
+			"Queue" = "Geometry"
+			"RenderType" = "Opaque"
+			"ForceNoShadowCasting" = "True"
+			"IgnoreProjector" = "True" }
 		Blend SrcAlpha OneMinusSrcAlpha
 
 		Pass

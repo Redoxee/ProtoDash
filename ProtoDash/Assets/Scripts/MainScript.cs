@@ -1,7 +1,7 @@
 ﻿#define DEBUG_RAY
 
 using UnityEngine;
-using System.Collections;
+using Assets;
 
 public class MainScript : MonoBehaviour {
 	private delegate Vector2 gameplayDelegate(Vector2 currentVelocity);
@@ -95,8 +95,6 @@ public class MainScript : MonoBehaviour {
 	private GameObject beak;
 	[SerializeField]
 	private GameObject body;
-	[SerializeField]
-	private AnimationCurve dashSquish;
 
 	private float screenRatio;
 
@@ -128,7 +126,7 @@ public class MainScript : MonoBehaviour {
 	//[SerializeField]
 	private float upDashCost = 75.0f;
 	//[SerializeField]
-	private float diagonalUpDashCost = 75.0f;
+	private float diagonalUpDashCost = 65.0f;
 	//[SerializeField]
 	private float lateralDashCost = 40.0f;
 	//[SerializeField]
@@ -152,6 +150,11 @@ public class MainScript : MonoBehaviour {
 	private bool isInEarlyJumpRange = false;
 
 	private float originalBeakX = 0.0f;
+
+
+	private float squishDampingFactor = .15f;
+	private float currentSquishX = 1.0f;
+	private float currentSquishY = 1.0f;
 
 	private void _InitializeStates()
 	{
@@ -228,7 +231,7 @@ public class MainScript : MonoBehaviour {
 		sv.x *= screenRatio;
 		sv.y *= screenRatio;
 		isSweeping = squareSwipeInputTrigger < sv.sqrMagnitude;
-
+		updateSquish(Time.deltaTime);
 		updateBeak();
 	}
 
@@ -387,6 +390,13 @@ public class MainScript : MonoBehaviour {
 		}
 	}
 
+	private void updateSquish(float dt)
+	{
+		currentSquishX = FuctionUtils.damping(squishDampingFactor, currentSquishX, 1.0f, dt);
+		currentSquishY = FuctionUtils.damping(squishDampingFactor, currentSquishY, 1.0f, dt);
+		body.transform.localScale = new Vector3(currentSquishX, currentSquishY, 1.0f);
+	}
+
 	/**
 	* Idle
 	**/
@@ -463,6 +473,8 @@ public class MainScript : MonoBehaviour {
 	**/
 	private void _StartJump()
 	{
+
+		currentSquishY = .8f;
 		jumpTimer = .0f;
 	}
 
@@ -478,6 +490,7 @@ public class MainScript : MonoBehaviour {
 				currentVelocity = isTouchingLeft ? wallJumpVector : mirroredWallJumpVector;
 				currentFacingVector.x = isTouchingLeft ? 1 : -1;
 				currentVelocity *= wallJumpForce;
+				currentSquishX = .85f;
 				return currentVelocity;
 			}
 		}
@@ -567,6 +580,7 @@ public class MainScript : MonoBehaviour {
 		}
 
 		body.transform.localRotation = dashRotation;
+		currentSquishY = .35f;
 	}
 
 	private Vector2 _GameplayDash(Vector2 currentVelocity)
@@ -578,9 +592,6 @@ public class MainScript : MonoBehaviour {
 			float progression = 1.0f - dashProgression / dashDuration;
 			float v = dashCurve.Evaluate(progression) * dashMaxSpeed;
 			currentVelocity = dashVector * v;
-			Vector3 squishedScale = Vector3.one;
-			squishedScale.y = dashSquish.Evaluate(progression);
-			body.transform.localScale = squishedScale;
 		}
 		else
 		{
@@ -599,7 +610,7 @@ public class MainScript : MonoBehaviour {
 	private void _EndDash()
 	{
 		tapPosition = Input.mousePosition;
-		body.transform.localScale = Vector3.one;
+
 		body.transform.localRotation = Quaternion.identity;
 	}
 
