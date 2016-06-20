@@ -39,9 +39,12 @@ public class MainScript : MonoBehaviour {
 	private float propulsionImpulse = 0.5f;
 	[SerializeField]
 	private float maxPropulsion = 15.0f;
-
+	
 	[SerializeField]
-	private float jumpInputFloorDelay = .125f;
+	private int idleJumpFarmeCount = 1;
+	[SerializeField]
+	private float jumpDeadZone = .05f;
+
 	[SerializeField]
 	private float jumpForce = 15.0f;
 	[SerializeField]
@@ -105,8 +108,9 @@ public class MainScript : MonoBehaviour {
 	private Vector3 currentFacingVector;
 
 	private bool hasStartedFloorInput = false;
+	private Vector3 mouseDownPosition;
+	private int currentFrameCount = 0;
 
-	private float floorButtonDownTimer;
 	private bool canLateJump = false;
 	private float jumpTimer = .0f;
 
@@ -403,32 +407,33 @@ public class MainScript : MonoBehaviour {
 
 	private void _StartIdle()
 	{
-		floorButtonDownTimer = -1;
 		hasStartedFloorInput = false;
 		canLateJump = false;
 	}
+
 	private Vector2 _GameplayIdle(Vector2 currentVelocity) {
-		if (isTouchingDown)// characterS.downCollision)
+		if (isTouchingDown)
 		{
 
 			if (isMouseDown)
 			{
-				floorButtonDownTimer = 0;
 				hasStartedFloorInput = true;
+				mouseDownPosition = Input.mousePosition;
+				currentFrameCount = idleJumpFarmeCount;
 			}
 			else if (isMouseUp && hasStartedFloorInput)
 			{
 				currentVelocity.y = jumpForce;
 				_SetState(Jump);
 			}
-			else if (isMousePressed && hasStartedFloorInput)
+			else if (isMousePressed && hasStartedFloorInput && currentFrameCount > 0)
 			{
-				floorButtonDownTimer += Time.fixedDeltaTime;
-				if (floorButtonDownTimer >= jumpInputFloorDelay)
+				if (Vector3.Distance(mouseDownPosition, Input.mousePosition) <= jumpDeadZone)
 				{
 					currentVelocity.y = jumpForce;
 					_SetState(Jump);
 				}
+				currentFrameCount -= 1;
 			}
 
 			float d = currentFacingVector.x * propulsionImpulse;
