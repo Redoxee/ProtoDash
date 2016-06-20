@@ -24,6 +24,8 @@ public class CameraScript : MonoBehaviour {
     [SerializeField]
     private AnimationCurve repositionXCurve;
 
+	private float maxVerticalOffset = 9f;
+
 	private float originalZoom;
     private float lastOffsetX = 0.0f;
     private float lastOrientation = 0.0f;
@@ -75,6 +77,11 @@ public class CameraScript : MonoBehaviour {
         tpy = FuctionUtils.damping(yDampingFactor, transform.position.y, tpy, Time.deltaTime);
         _DrawCross(p.x + wantedXOffset * orientation, p.y + cameraYOffset, Color.gray);
         _DrawCross(tpx, tpy, Color.cyan);
+
+		if (transform.position.y - p.y > maxVerticalOffset)
+		{
+			tpy = p.y + maxVerticalOffset;
+		}
 
         transform.position = new Vector3(tpx, tpy, transform.position.z);
 	}
