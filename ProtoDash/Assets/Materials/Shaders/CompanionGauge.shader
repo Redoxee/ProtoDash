@@ -15,7 +15,12 @@
 			"RenderType" = "Opaque"
 			"ForceNoShadowCasting" = "True"
 			"IgnoreProjector" = "True" }
+
 		Blend SrcAlpha OneMinusSrcAlpha
+		Cull Off
+		Lighting Off
+		ZWrite Off
+		ZTest[unity_GUIZTestMode]
 
 		Pass
 		{

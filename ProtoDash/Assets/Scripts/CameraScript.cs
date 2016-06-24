@@ -6,7 +6,11 @@ public class CameraScript : MonoBehaviour {
 	private GameObject target;
 
     [SerializeField]
-    MainScript mainScriptRef;
+    private MainScript mainScriptRef;
+
+	[SerializeField]
+	private GameObject background;
+	private Renderer bgRendrer;
 
 	[SerializeField]
 	private float xDampingFactor = 0.5f;
@@ -25,15 +29,15 @@ public class CameraScript : MonoBehaviour {
     private AnimationCurve repositionXCurve;
 
 	private float maxVerticalOffset = 9f;
-
-	private float originalZoom;
+	
     private float lastOffsetX = 0.0f;
     private float lastOrientation = 0.0f;
     private float timerPosX = 0.0f;
 
 
 	void Start () {
-		originalZoom = transform.position.z;
+		bgRendrer = background.GetComponent<Renderer>();
+		
 	}
 
     void Update()
@@ -84,5 +88,11 @@ public class CameraScript : MonoBehaviour {
 		}
 
         transform.position = new Vector3(tpx, tpy, transform.position.z);
+
+		Vector3 bgPos = background.transform.position;
+		bgPos.x = transform.position.x;
+		bgPos.y = transform.position.y;
+		background.transform.position = bgPos;
+		bgRendrer.material.SetVector("_CurrentPosition", new Vector4(bgPos.x  / background.transform.localScale.x, bgPos.y / background.transform.localScale.y, 0, 0));
 	}
 }
