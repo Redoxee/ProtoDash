@@ -433,6 +433,10 @@ public class MainScript : MonoBehaviour {
 					currentVelocity.y = jumpForce;
 					_SetState(Jump);
 				}
+				else
+				{
+					mouseDownPosition = Input.mousePosition;
+				}
 				currentFrameCount -= 1;
 			}
 

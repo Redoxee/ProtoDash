@@ -74,23 +74,28 @@
 				return f1 + (f2 - f1) * frac(x*d);
 			}
 
+			void applyMountain(inout float4 col, float height, float xCoord, float4 mColor)
+			{
+				float m = mountain(xCoord);
+				col = lerp(col, mColor, step(height, m));
+			}
+
+
 			fixed4 frag (v2f_img  i) : SV_Target
 			{
 
 				init();
-				float2 uv = (i.uv + _CurrentPosition.xy*32.) ;
+				float2 uv = (i.uv + _CurrentPosition.xy*32.)*3. ;
 				uv.y *= .5;
 				
-				//return float4(uv.x, uv.y, 0., 1.);
-				
 				uv.x += floor(uv.y / 1.2) * 3.;
-				uv.y = uv.y % 1.;
+				uv.y = uv.y % 1.25;
 
 				float4 col = mColors[NB_COLORS - 1];
-				for (int i = 0; i < NB_COLORS; ++i)
-				{
-					col = lerp(col, mColors[i], step(uv.y + float(i)*.2, mountain(uv.x + pow(float(i), 1.1) * 30.14)));
-				}
+				applyMountain(col, uv.y, uv.x, mColors[0]);
+				applyMountain(col, uv.y + .25, uv.x + 7.6, mColors[1]);
+				applyMountain(col, uv.y + .5, uv.x + 62.2, mColors[2]);
+				applyMountain(col, uv.y + .75, uv.x + 1413.7, mColors[3]);
 
 				return col;
 			}
