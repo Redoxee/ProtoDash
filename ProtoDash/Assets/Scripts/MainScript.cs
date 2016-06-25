@@ -190,6 +190,8 @@ public class MainScript : MonoBehaviour {
 	}
 
 	void Start() {
+		Application.targetFrameRate = 60;
+
 		squareSwipeInputTrigger = swipeInputDistance * swipeInputDistance;
 
 		characterRB = mainCharacter.GetComponent<Rigidbody2D>();

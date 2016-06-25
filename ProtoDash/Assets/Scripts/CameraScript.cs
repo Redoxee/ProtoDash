@@ -22,6 +22,9 @@ public class CameraScript : MonoBehaviour {
 	[SerializeField]
 	private float wantedXOffset = 6;
 
+	[SerializeField]
+	private float centerXoffset = 0.0f;
+
 
     [SerializeField]
     private float timeToPosX = 1.5f;
@@ -74,7 +77,7 @@ public class CameraScript : MonoBehaviour {
         }
 
         Vector3 p = target.transform.position;
-        float tpx = p.x + currentOffsetX;
+        float tpx = p.x + currentOffsetX + centerXoffset;
         float tpy = p.y + cameraYOffset;
         _DrawCross(tpx, tpy, Color.yellow);
         tpx = FuctionUtils.damping(xDampingFactor, transform.position.x, tpx, Time.deltaTime);
@@ -90,8 +93,8 @@ public class CameraScript : MonoBehaviour {
         transform.position = new Vector3(tpx, tpy, transform.position.z);
 
 		Vector3 bgPos = background.transform.position;
-		bgPos.x = transform.position.x;
-		bgPos.y = transform.position.y;
+		bgPos.x = tpx;
+		bgPos.y = tpy;
 		background.transform.position = bgPos;
 		bgRendrer.material.SetVector("_CurrentPosition", new Vector4(bgPos.x  / background.transform.localScale.x, bgPos.y / background.transform.localScale.y, 0, 0));
 	}

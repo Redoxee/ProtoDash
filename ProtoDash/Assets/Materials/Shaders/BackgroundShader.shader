@@ -3,6 +3,7 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
+		_MainColor ("Main Color", Color) = (0.3, .00, .50, 1.)
 		_CurrentPosition("Current Position", Vector) = (0,0,0,0)
 	}
 	SubShader
@@ -34,6 +35,7 @@
 			float4 _MainTex_ST;
 			
 			float2 _CurrentPosition;
+			float4 _MainColor;
 			
 			//FRAGMENT
 			float4x4 _CameraToWorld;
@@ -43,16 +45,6 @@
 
 #define bsin(x) (sin(x) * .5 + .5)
 
-#define NB_COLORS 4
-
-			float4 mColors[NB_COLORS];
-			void init()
-			{
-				mColors[0] = float4(0.3, .00, .50, 1.)*.9;
-				mColors[1] = float4(0.3, .01, .50, 1.)*.8;
-				mColors[2] = float4(0.3, .00, .49, 1.)*.7;
-				mColors[3] = float4(0.3, .00, .49, 1.)*.6;
-			}
 
 			float fbm(float x)
 			{
@@ -83,19 +75,17 @@
 
 			fixed4 frag (v2f_img  i) : SV_Target
 			{
-
-				init();
-				float2 uv = (i.uv + _CurrentPosition.xy*32.)*3. ;
+				float2 uv = (i.uv + _CurrentPosition.xy*32.);
 				uv.y *= .5;
 				
 				uv.x += floor(uv.y / 1.2) * 3.;
 				uv.y = uv.y % 1.25;
 
-				float4 col = mColors[NB_COLORS - 1];
-				applyMountain(col, uv.y, uv.x, mColors[0]);
-				applyMountain(col, uv.y + .25, uv.x + 7.6, mColors[1]);
-				applyMountain(col, uv.y + .5, uv.x + 62.2, mColors[2]);
-				applyMountain(col, uv.y + .75, uv.x + 1413.7, mColors[3]);
+				float4 col = _MainColor;
+				applyMountain(col, uv.y			, uv.x			,	_MainColor * .8);
+				applyMountain(col, uv.y + .25	, uv.x + 7.6	,	_MainColor * .7);
+				applyMountain(col, uv.y + .5	, uv.x + 62.2	,	_MainColor * .6);
+				applyMountain(col, uv.y + .75	, uv.x + 1413.7	,	_MainColor);
 
 				return col;
 			}

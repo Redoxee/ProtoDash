@@ -66,12 +66,8 @@
 				float f = ((_GaugeProgression - uv.y) *NB_SECTIONS - uv.x)*NB_SECTIONS;
 				f = clamp(f, 0., 1.);
 
-				float b = step(.5 - BORDER_THIKNESS, abs(i.uv.x - .5)) + step(.5 - BORDER_THIKNESS, abs(i.uv.y - .5));
-				
-				float4 fc = lerp(_FillColor, _BorderColor, step(_ThresholdValue, _GaugeProgression));
+				fixed4 col = float4(_FillColor.rgb,f);
 
-				fixed4 col = float4(fc.rgb,f * fc.a);
-				col = lerp(col, _BorderColor, b);
 				return col;
 			}
 			ENDCG
