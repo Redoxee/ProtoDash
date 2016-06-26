@@ -66,9 +66,11 @@
     <Compile Include="Assets\Scripts\CameraScript.cs" />
     <Compile Include="Assets\Scripts\CharacterScript.cs" />
     <Compile Include="Assets\Scripts\CompanionsScript.cs" />
+    <Compile Include="Assets\Scripts\FPSMeter.cs" />
     <Compile Include="Assets\Scripts\FuctionUtils.cs" />
     <Compile Include="Assets\Scripts\GaugeScript.cs" />
     <Compile Include="Assets\Scripts\MainScript.cs" />
+    <Compile Include="Assets\Scripts\TraceManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Materials\Shaders\BackgroundShader.shader" />
