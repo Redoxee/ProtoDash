@@ -75,8 +75,9 @@
 
 			fixed4 frag (v2f_img  i) : SV_Target
 			{
-				float2 uv = (i.uv + _CurrentPosition.xy*32.);
-				uv.y *= .5;
+				float2 uv = (i.uv - _CurrentPosition.xy*.9 );
+				uv.y += 20000.;
+				uv *= 2.;
 				
 				uv.x += floor(uv.y / 1.2) * 3.;
 				uv.y = uv.y % 1.25;

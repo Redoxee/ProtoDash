@@ -10,6 +10,7 @@ public class CameraScript : MonoBehaviour {
 
 	[SerializeField]
 	private GameObject background;
+	[SerializeField]
 	private Renderer bgRendrer;
 
 	[SerializeField]
@@ -39,8 +40,6 @@ public class CameraScript : MonoBehaviour {
 
 
 	void Start () {
-		bgRendrer = background.GetComponent<Renderer>();
-		
 	}
 
     void Update()
