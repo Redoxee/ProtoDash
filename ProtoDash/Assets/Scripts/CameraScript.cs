@@ -9,11 +9,6 @@ public class CameraScript : MonoBehaviour {
     private MainScript mainScriptRef;
 
 	[SerializeField]
-	private GameObject background;
-	[SerializeField]
-	private Renderer bgRendrer;
-
-	[SerializeField]
 	private float xDampingFactor = 0.5f;
 	[SerializeField]
 	private float yDampingFactor = 0.25f;
@@ -90,11 +85,5 @@ public class CameraScript : MonoBehaviour {
 		}
 
         transform.position = new Vector3(tpx, tpy, transform.position.z);
-
-		Vector3 bgPos = background.transform.position;
-		bgPos.x = tpx;
-		bgPos.y = tpy;
-		background.transform.position = bgPos;
-		bgRendrer.material.SetVector("_CurrentPosition", new Vector4(bgPos.x  / background.transform.localScale.x, bgPos.y / background.transform.localScale.y, 0, 0));
 	}
 }
