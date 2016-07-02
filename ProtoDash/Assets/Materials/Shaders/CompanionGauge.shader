@@ -4,9 +4,13 @@
 	{
 		_MainTex("Texture", 2D) = "white" {}
 		_FillColor("Fill Color", Color) = (.9,.9,.9,1.)
-		_ThresholdValue("Threshold Value",Range(0,1)) = .75
-		_BorderColor("Border Color",Color) = (1.,1.,0.,1.)
+		_ThresholdValue1("Threshold Value 1",Range(0,1)) = .75
+		_ThresholdColor1("Threshold Color 1", Color) = (1.,1.,1.,1.)
+		_ThresholdValue2("Threshold Value 2",Range(0,1)) = .75
+		_ThresholdColor2("Threshold Color 2", Color) = (1.,1.,1.,1.)
+
 		_GaugeProgression("Gauge Progression", Range(0,1)) = 1
+
 	}
 	SubShader
 	{
@@ -53,20 +57,26 @@
 			}
 
 #define NB_SECTIONS 15.
-#define BORDER_THIKNESS .05
 			float4	_FillColor;
-			float	_ThresholdValue;
+			float4	_ThresholdColor1;
+			float	_ThresholdValue1;
+			float4	_ThresholdColor2;
+			float	_ThresholdValue2;
 
-			float4	_BorderColor;
 			sampler2D _MainTex;
 
 			fixed4 frag(v2f i) : SV_Target
 			{
 				float2 uv = floor(i.uv * NB_SECTIONS) / NB_SECTIONS;
+
+				float4 col = _FillColor;
+				col = lerp(col, _ThresholdColor1, step(_ThresholdValue1, _GaugeProgression));
+				col = lerp(col, _ThresholdColor2, step(_ThresholdValue2, _GaugeProgression));
+
 				float f = ((_GaugeProgression - uv.y) *NB_SECTIONS - uv.x)*NB_SECTIONS;
 				f = clamp(f, 0., 1.);
 
-				fixed4 col = float4(_FillColor.rgb,f);
+				col.a *= f;
 
 				return col;
 			}
