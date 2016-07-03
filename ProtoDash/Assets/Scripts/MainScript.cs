@@ -93,11 +93,14 @@ public class MainScript : MonoBehaviour {
 	[HideInInspector]
 	public float currentEnergy = 100.0f;
 
+
 	private Rigidbody2D characterRB;
 	[SerializeField]
 	private GameObject beak;
 	[SerializeField]
 	private GameObject body;
+	[SerializeField]
+	private TraceManager traceManager;
 
 	private float screenRatio;
 
@@ -363,6 +366,7 @@ public class MainScript : MonoBehaviour {
 						}
 
 						_SetState(Dash);
+						traceManager.NotifyDash(characterRB.transform.position,dashRotation);
 					}
 				}
 			}
@@ -425,6 +429,7 @@ public class MainScript : MonoBehaviour {
 			{
 				currentVelocity.y = jumpForce;
 				_SetState(Jump);
+				traceManager.NotifyJump(characterRB.transform.position);
 			}
 			else if (isMousePressed && hasStartedFloorInput && currentFrameCount > 0)
 			{
@@ -432,6 +437,7 @@ public class MainScript : MonoBehaviour {
 				{
 					currentVelocity.y = jumpForce;
 					_SetState(Jump);
+					traceManager.NotifyJump(characterRB.transform.position);
 				}
 				else
 				{
@@ -500,6 +506,7 @@ public class MainScript : MonoBehaviour {
 				currentFacingVector.x = isTouchingLeft ? 1 : -1;
 				currentVelocity *= wallJumpForce;
 				currentSquishX = .85f;
+				traceManager.NotifyJump(characterRB.transform.position);
 				return currentVelocity;
 			}
 		}
@@ -512,6 +519,7 @@ public class MainScript : MonoBehaviour {
 				{
 					currentVelocity.y = jumpForce;
 					_SetState(Jump);
+					traceManager.NotifyJump(characterRB.transform.position);
 					return currentVelocity;
 				}
 			}
@@ -532,6 +540,7 @@ public class MainScript : MonoBehaviour {
 			{
 				currentVelocity.y = jumpForce;
 				_SetState(Jump);
+				traceManager.NotifyJump(characterRB.transform.position);
 				return currentVelocity;
 			}
 		}
