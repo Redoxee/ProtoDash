@@ -39,11 +39,6 @@ public class MainScript : MonoBehaviour {
 	private float propulsionImpulse = 0.5f;
 	[SerializeField]
 	private float maxPropulsion = 15.0f;
-	
-	[SerializeField]
-	private int idleJumpFarmeCount = 1;
-	[SerializeField]
-	private float jumpDeadZone = .05f;
 
 	[SerializeField]
 	private float jumpForce = 15.0f;
@@ -109,10 +104,6 @@ public class MainScript : MonoBehaviour {
 	private bool isMousePressed = false;
 	private bool isSweeping = false;
 	private Vector3 currentFacingVector;
-
-	private bool hasStartedFloorInput = false;
-	private Vector3 mouseDownPosition;
-	private int currentFrameCount = 0;
 
 	private bool canLateJump = false;
 	private float jumpTimer = .0f;
@@ -411,7 +402,6 @@ public class MainScript : MonoBehaviour {
 
 	private void _StartIdle()
 	{
-		hasStartedFloorInput = false;
 		canLateJump = false;
 	}
 
@@ -421,29 +411,9 @@ public class MainScript : MonoBehaviour {
 
 			if (isMouseDown)
 			{
-				hasStartedFloorInput = true;
-				mouseDownPosition = Input.mousePosition;
-				currentFrameCount = idleJumpFarmeCount;
-			}
-			else if (isMouseUp && hasStartedFloorInput)
-			{
 				currentVelocity.y = jumpForce;
 				_SetState(Jump);
 				traceManager.NotifyJump(characterRB.transform.position);
-			}
-			else if (isMousePressed && hasStartedFloorInput && currentFrameCount > 0)
-			{
-				if (Vector3.Distance(mouseDownPosition, Input.mousePosition) <= jumpDeadZone)
-				{
-					currentVelocity.y = jumpForce;
-					_SetState(Jump);
-					traceManager.NotifyJump(characterRB.transform.position);
-				}
-				else
-				{
-					mouseDownPosition = Input.mousePosition;
-				}
-				currentFrameCount -= 1;
 			}
 
 			float d = currentFacingVector.x * propulsionImpulse;
@@ -506,6 +476,7 @@ public class MainScript : MonoBehaviour {
 				currentFacingVector.x = isTouchingLeft ? 1 : -1;
 				currentVelocity *= wallJumpForce;
 				currentSquishX = .85f;
+				canLateJump = false;
 				traceManager.NotifyJump(characterRB.transform.position);
 				return currentVelocity;
 			}
