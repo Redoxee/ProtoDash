@@ -3,55 +3,67 @@ using System.Collections.Generic;
 
 public class TraceManager : MonoBehaviour {
 
+	private struct Trace
+	{
+		public GameObject obj;
+		public SpriteRenderer sprite;
+		public float timer;
+	}
+
 	[SerializeField]
 	private GameObject JumpTraceHolder;
 	[SerializeField]
 	private GameObject DashTraceHolder;
 
-	private List<GameObject> JumpObjectList = new List<GameObject>();
-	private int CurrentJumpIndex = -1;
+	[SerializeField]
+	private float animationTime = 1;
+	
+	private List<Trace> TraceList = new List<Trace>();
+	private int currentIndex = 0;
 
-	private List<GameObject> DashObjectList = new List<GameObject>();
-	private int CurrentDashIndex = -1;
+	[SerializeField]
+	private Sprite JumpSprite;
+	[SerializeField]
+	private Sprite DashSprite;
 
 	// Use this for initialization
 	void Start () {
 
-		for (int i = 0; i < JumpTraceHolder.transform.childCount; ++i)
+		for (int i = 0; i < transform.childCount; ++i)
 		{
-			GameObject go = JumpTraceHolder.transform.GetChild(i).gameObject;
+			GameObject go = transform.GetChild(i).gameObject;
 			go.SetActive(false);
-			JumpObjectList.Add(go);
+			Trace t = new Trace();
+			t.obj = go;
+			t.sprite = go.GetComponent<SpriteRenderer>();
+			t.timer = 0;
+			TraceList.Add(t);
 		}
-
-		for (int i = 0; i < DashTraceHolder.transform.childCount; ++i)
-		{
-			GameObject go = DashTraceHolder.transform.GetChild(i).gameObject;
-			go.SetActive(false);
-			DashObjectList.Add(go);
-		}
+		
 	}
 
 
 	public void NotifyJump(Vector3 pos)
 	{
-		CurrentJumpIndex++;
-		CurrentJumpIndex %= JumpObjectList.Count;
+		currentIndex++;
+		currentIndex %= TraceList.Count;
 
-		GameObject trace = JumpObjectList[CurrentJumpIndex];
-		trace.SetActive(true);
-		trace.transform.position = pos;
+		Trace t = TraceList[currentIndex];
+		t.obj.SetActive(true);
+		t.sprite.sprite = JumpSprite;
+		t.obj.transform.position = pos;
 	}
 
 	public void NotifyDash(Vector3 pos, Quaternion orientation)
 	{
-		CurrentDashIndex++;
-		CurrentDashIndex %= DashObjectList.Count;
+		currentIndex++;
+		currentIndex %= TraceList.Count;
 
-		GameObject trace = DashObjectList[CurrentDashIndex];
-		trace.SetActive(true);
-		trace.transform.position = pos;
-		trace.transform.localRotation = orientation;
+		Trace t = TraceList[currentIndex];
+		t.obj.SetActive(true);
+		t.sprite.sprite = DashSprite;
+		t.obj.transform.position = pos;
+		t.obj.transform.localRotation = orientation;
 	}
 	
 }
