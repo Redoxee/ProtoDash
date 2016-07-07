@@ -11,5 +11,10 @@ namespace Assets
 		{
 			return (t - p) / k * dt + p;
 		}
+
+		public static float mod(float a, float b)
+		{
+			return a - b * Mathf.Floor(a / b);
+		}
 	}
 }

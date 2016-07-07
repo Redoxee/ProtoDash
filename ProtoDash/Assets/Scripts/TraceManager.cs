@@ -11,15 +11,13 @@ public class TraceManager : MonoBehaviour {
 	}
 
 	[SerializeField]
-	private GameObject JumpTraceHolder;
+	private float popAnimationTime = 1;
 	[SerializeField]
-	private GameObject DashTraceHolder;
-
-	[SerializeField]
-	private float animationTime = 1;
+	private AnimationCurve popAnimationCurve;
 	
 	private List<Trace> TraceList = new List<Trace>();
 	private int currentIndex = 0;
+	private int currentAnimatedCount = 0;
 
 	[SerializeField]
 	private Sprite JumpSprite;
@@ -43,15 +41,43 @@ public class TraceManager : MonoBehaviour {
 	}
 
 
+	void Update()
+	{
+		int c = currentAnimatedCount;
+		for (int i = c; i > 0; --i)
+		{
+			int index = currentIndex - i + 1;
+			if (index < 0)
+			{ 
+				index += TraceList.Count;
+			}
+			Trace t = TraceList[index];
+			
+			t.timer -= Time.deltaTime;
+
+			TraceList[index] = t;
+			float progression = Mathf.Clamp(1.0f - t.timer / popAnimationTime, 0.0f,1.0f);
+			t.obj.transform.localScale = Vector3.one * popAnimationCurve.Evaluate(progression);
+			if (t.timer <= 0)
+			{
+				currentAnimatedCount--;
+			}
+		}
+	}
+
 	public void NotifyJump(Vector3 pos)
 	{
 		currentIndex++;
 		currentIndex %= TraceList.Count;
-
 		Trace t = TraceList[currentIndex];
 		t.obj.SetActive(true);
 		t.sprite.sprite = JumpSprite;
 		t.obj.transform.position = pos;
+		t.obj.transform.localScale = Vector3.zero;
+		t.timer = popAnimationTime;
+
+		TraceList[currentIndex] = t;
+		currentAnimatedCount = currentAnimatedCount + 1;
 	}
 
 	public void NotifyDash(Vector3 pos, Quaternion orientation)
@@ -64,6 +90,11 @@ public class TraceManager : MonoBehaviour {
 		t.sprite.sprite = DashSprite;
 		t.obj.transform.position = pos;
 		t.obj.transform.localRotation = orientation;
+		t.obj.transform.localScale = Vector3.zero;
+		t.timer = popAnimationTime;
+
+		TraceList[currentIndex] = t;
+		currentAnimatedCount = currentAnimatedCount + 1;
 	}
 	
 }
