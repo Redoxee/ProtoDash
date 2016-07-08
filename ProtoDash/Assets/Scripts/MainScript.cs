@@ -351,10 +351,10 @@ public class MainScript : MonoBehaviour {
 						dashRotation = Quaternion.Euler(0, 0, dashAngle);
 						currentEnergy = Mathf.Max(0, currentEnergy - dCost);
 
-						if (dashDirection == 8) // dashDirection down
-						{
-							currentFacingVector.x *= -1;
-						}
+						//if (dashDirection == 8) // dashDirection down
+						//{
+						//	currentFacingVector.x *= -1;
+						//}
 
 						_SetState(Dash);
 						traceManager.NotifyDash(characterRB.transform.position,dashRotation);
