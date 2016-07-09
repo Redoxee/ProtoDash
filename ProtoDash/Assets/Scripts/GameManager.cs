@@ -27,7 +27,8 @@ public class GameManager : MonoBehaviour {
 
 	void switchToGame()
 	{
-		SceneManager.LoadScene("MainScene",LoadSceneMode.Single);
+		SceneManager.LoadScene("GameSetupScene", LoadSceneMode.Single);
+		SceneManager.LoadScene("Level1", LoadSceneMode.Additive);
 		gameState = GameState.InGame;
 	}
 }
