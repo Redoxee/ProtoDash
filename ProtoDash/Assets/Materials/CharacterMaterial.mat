@@ -131,6 +131,18 @@ Material:
         first:
           name: _Metallic
         second: 0
+      data:
+        first:
+          name: _ThresholdValue1
+        second: 0.6
+      data:
+        first:
+          name: _ThresholdValue2
+        second: 0.75
+      data:
+        first:
+          name: _Progression
+        second: 1
     m_Colors:
       data:
         first:
@@ -139,4 +151,12 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 1, g: 0.8553753, b: 0.5441177, a: 1}
+        second: {r: 0.9439148, g: 1, b: 0.41911763, a: 1}
+      data:
+        first:
+          name: _ThresholdColor1
+        second: {r: 0.5735294, g: 0.84117633, b: 1, a: 1}
+      data:
+        first:
+          name: _ThresholdColor2
+        second: {r: 0.9485294, g: 0.46729022, b: 0.51707363, a: 1}

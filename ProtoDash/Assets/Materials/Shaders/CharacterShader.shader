@@ -4,6 +4,12 @@
 	{
 		_MainTex ("Texture", 2D) = "white" {}
 		_Color("Color", Color) = (1.,1.,1.,1.)
+		_ThresholdValue1("Threshold Value 1",Range(0,1)) = .75
+		_ThresholdColor1("Threshold Color 1", Color) = (1.,1.,1.,1.)
+		_ThresholdValue2("Threshold Value 2",Range(0,1)) = .75
+		_ThresholdColor2("Threshold Color 2", Color) = (1.,1.,1.,1.)
+		_Progression("Progression", Range(0,1)) = .5
+
 	}
 	SubShader
 	{
@@ -40,12 +46,28 @@
 			
 			sampler2D _MainTex;
 			float4 _Color;
+			float4	_ThresholdColor1;
+			float	_ThresholdValue1;
+			float4	_ThresholdColor2;
+			float	_ThresholdValue2;
+			float _Progression;
+#define B .4
+
 
 			fixed4 frag (v2f i) : SV_Target
 			{
-				fixed4 col = _Color;
 
-				col *= 1.-smoothstep(.49,.51, distance(i.uv, float2(.5, .5)));
+				float d = distance(i.uv, float2(.5, .5));
+				
+				float f = 1. - smoothstep(.49, .51, d);
+				f -= 1. - smoothstep(B, B + .02, d);
+				float p = (_Progression * B);
+				f += 1. - smoothstep(p, p + .02, d);
+
+				float4 col = _ThresholdColor1;
+				col = lerp(col, _ThresholdColor2, step(_ThresholdValue1, _Progression));
+				col = lerp(col, _Color, step(_ThresholdValue2, _Progression));
+				col *= f;
 
 				return col;
 			}

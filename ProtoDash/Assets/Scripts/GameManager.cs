@@ -1,34 +1,60 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
-	enum GameState { MainMenu, InGame}
+	private static GameManager singleInstance;
 
-	GameState gameState = GameState.MainMenu;
-
-	// Use this for initialization
-	void Start () {
-		DontDestroyOnLoad(this);
-
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (gameState == GameState.MainMenu)
-		{
-			if (Input.GetMouseButtonDown(0))
-			{
-				switchToGame();
-			}
-		}
-	}
-
-	void switchToGame()
+	public static GameManager GetInstance()
 	{
-		SceneManager.LoadScene("GameSetupScene", LoadSceneMode.Single);
-		SceneManager.LoadScene("Level1", LoadSceneMode.Additive);
-		gameState = GameState.InGame;
+		return singleInstance;
+	}
+
+	enum GameState { MainMenu, InGame }
+	GameState gameState = GameState.MainMenu;
+	string currentLevel;
+
+	void Awake()
+	{
+		//Check if instance already exists
+		if (singleInstance == null)
+
+			//if not, set instance to this
+			singleInstance = this;
+
+		//If instance already exists and it's not this:
+		else if (singleInstance != this)
+
+			//Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
+			Destroy(gameObject);
+
+		//Sets this to not be destroyed when reloading scene
+		DontDestroyOnLoad(gameObject);
+	}
+
+	public void SwitchToHome()
+	{
+		SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+	}
+
+	public void LaunchLevel(string levelName)
+	{
+		if (gameState != GameState.InGame)
+		{
+			SceneManager.LoadScene("GameSetupScene", LoadSceneMode.Single);
+		}
+		else
+		{
+			SceneManager.UnloadScene(currentLevel);
+		}
+
+		SceneManager.LoadScene(levelName, LoadSceneMode.Additive);
+		currentLevel = levelName;
+	}
+
+	public void RelaunchLevel()
+	{
+		LaunchLevel(currentLevel);
 	}
 }

@@ -39,6 +39,11 @@ public class CameraScript : MonoBehaviour {
 
     void Update()
     {
+		if (mainScriptRef.isPaused)
+		{
+			return;
+		}
+
         if (lastOrientation != mainScriptRef.getFacingSign())
         {
             lastOrientation = mainScriptRef.getFacingSign();
@@ -59,7 +64,13 @@ public class CameraScript : MonoBehaviour {
 
 	void LateUpdate()
 	{
-        float orientation =  mainScriptRef.getFacingSign();
+
+		if (mainScriptRef.isPaused)
+		{
+			return;
+		}
+
+		float orientation =  mainScriptRef.getFacingSign();
         float currentOffsetX = wantedXOffset * orientation;
         if (timerPosX > 0)
         {

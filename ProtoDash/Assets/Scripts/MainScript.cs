@@ -32,6 +32,8 @@ public class MainScript : MonoBehaviour {
 	[SerializeField]
 	private Camera mainCamera;
 
+	public bool isPaused = false;
+
 	//[SerializeField]
 	private Vector3 fakeGravity = new Vector3(0.0f, -60.0f,0.0f);
 	
@@ -94,6 +96,9 @@ public class MainScript : MonoBehaviour {
 	private GameObject beak;
 	[SerializeField]
 	private GameObject body;
+
+	private Renderer bodyRenderer;
+
 	[SerializeField]
 	private TraceManager traceManager;
 
@@ -154,6 +159,8 @@ public class MainScript : MonoBehaviour {
 	private float currentSquishX = 1.0f;
 	private float currentSquishY = 1.0f;
 
+	private Vector3 savedVelocity = Vector3.zero;
+
 	private void _InitializeStates()
 	{
 		Idle = new State("Idle", _StartIdle, _GameplayIdle, _EndIdle);
@@ -188,6 +195,8 @@ public class MainScript : MonoBehaviour {
 
 		characterRB = mainCharacter.GetComponent<Rigidbody2D>();
 
+		bodyRenderer = body.GetComponent<Renderer>();
+
 		originalBeakX = beak.transform.localPosition.x;
 
 		Rect cameraRect = mainCamera.pixelRect;
@@ -216,6 +225,11 @@ public class MainScript : MonoBehaviour {
 
 	void Update()
 	{
+		if (isPaused)
+		{
+			return;
+		}
+
 		if (Input.GetMouseButtonDown(0))
 		{
 			isMouseDown = true;
@@ -234,6 +248,12 @@ public class MainScript : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
+
+		if (isPaused)
+		{
+			return;
+		}
+
 		updateRayCasts();
 
 		Vector3 newVelocity = characterRB.velocity;
@@ -245,6 +265,8 @@ public class MainScript : MonoBehaviour {
 		updateDashInput();
 		isMouseDown = false;
 		isMouseUp = false;
+
+		bodyRenderer.material.SetFloat("_Progression", currentEnergy / maxEnergyPoints);
 	}
 
 	const uint  NB_RAYCHECK = 3;
@@ -612,5 +634,23 @@ public class MainScript : MonoBehaviour {
 	public float getFacingSign()
 	{
 		return currentFacingVector.x;
+	}
+
+	public void PauseGame(bool value)
+	{
+		if (isPaused != value)
+		{
+			isPaused = value;
+			if (isPaused)
+			{
+				savedVelocity = characterRB.velocity;
+				characterRB.isKinematic = true;
+			}
+			else
+			{
+				characterRB.isKinematic = false;
+				characterRB.velocity = savedVelocity;
+			}
+		}
 	}
 }
