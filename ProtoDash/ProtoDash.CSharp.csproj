@@ -63,22 +63,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\CameraScript.cs" />
-    <Compile Include="Assets\Scripts\CharacterScript.cs" />
-    <Compile Include="Assets\Scripts\CompanionsScript.cs" />
     <Compile Include="Assets\Scripts\FPSMeter.cs" />
     <Compile Include="Assets\Scripts\FuctionUtils.cs" />
-    <Compile Include="Assets\Scripts\GUIManager.cs" />
+    <Compile Include="Assets\Scripts\Game\CameraScript.cs" />
+    <Compile Include="Assets\Scripts\Game\CharacterScript.cs" />
+    <Compile Include="Assets\Scripts\Game\GUIManager.cs" />
+    <Compile Include="Assets\Scripts\Game\GaugeScript.cs" />
+    <Compile Include="Assets\Scripts\Game\MainScript.cs" />
+    <Compile Include="Assets\Scripts\Game\MainScriptStates\MainScriptDash.cs" />
+    <Compile Include="Assets\Scripts\Game\MainScriptStates\MainScriptIdle.cs" />
+    <Compile Include="Assets\Scripts\Game\MainScriptStates\MainScriptJump.cs" />
+    <Compile Include="Assets\Scripts\Game\TraceManager.cs" />
+    <Compile Include="Assets\Scripts\Game\World\EndNode.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\GaugeScript.cs" />
     <Compile Include="Assets\Scripts\MainMenuScript.cs" />
-    <Compile Include="Assets\Scripts\MainScript.cs" />
-    <Compile Include="Assets\Scripts\TraceManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Materials\Shaders\BackgroundShader.shader" />
     <None Include="Assets\Materials\Shaders\CharacterShader.shader" />
     <None Include="Assets\Materials\Shaders\CompanionGauge.shader" />
+    <None Include="Assets\Materials\Shaders\EndNodeLevel.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

@@ -3,7 +3,7 @@
 using UnityEngine;
 using Assets;
 
-public class MainScript : MonoBehaviour {
+public partial class MainScript : MonoBehaviour {
 	private delegate Vector2 gameplayDelegate(Vector2 currentVelocity);
 	private delegate void startStateDelegate();
 	private delegate void endStateDelegate();
@@ -26,6 +26,20 @@ public class MainScript : MonoBehaviour {
 	State Idle;
 	State Jump;
 	State Dash;
+
+	private void _InitializeStates()
+	{
+		Idle = new State("Idle", _StartIdle, _GameplayIdle, _EndIdle);
+		Jump = new State("Jump", _StartJump, _GameplayJump, _EndJump);
+		Dash = new State("Dash", _StartDash, _GameplayDash, _EndDash);
+	}
+
+	private void _SetState(State newState)
+	{
+		currentState.end();
+		currentState = newState;
+		newState.start();
+	}
 
 	[SerializeField]
 	private MonoBehaviour mainCharacter;
@@ -161,13 +175,6 @@ public class MainScript : MonoBehaviour {
 
 	private Vector3 savedVelocity = Vector3.zero;
 
-	private void _InitializeStates()
-	{
-		Idle = new State("Idle", _StartIdle, _GameplayIdle, _EndIdle);
-		Jump = new State("Jump", _StartJump, _GameplayJump, _EndJump);
-		Dash = new State("Dash", _StartDash, _GameplayDash, _EndDash);
-	}
-
 	private void _InitializeDashCosts()
 	{
 		energyCostTable[0] = 0;
@@ -214,13 +221,6 @@ public class MainScript : MonoBehaviour {
 		_InitializeStates();
 		_InitializeWallJumpVectors();
 		currentState = Idle;
-	}
-
-	private void _SetState(State newState)
-	{
-		currentState.end();
-		currentState = newState;
-		newState.start();
 	}
 
 	void Update()
@@ -337,59 +337,6 @@ public class MainScript : MonoBehaviour {
 		}
 	}
 
-	private void updateDashInput()
-	{
-		Vector3 mp = Input.mousePosition;
-		if (dashTimer > 0)
-		{
-			dashTimer -= Time.fixedDeltaTime;
-		}
-		if (isMouseDown)
-		{
-			tapPosition = mp;
-		}
-		else if (isMousePressed)
-		{
-			if (dashTimer <= 0)
-			{
-				Vector3 dv = getDashVectorFromSwipe((mp - tapPosition).normalized);
-				if (dv.sqrMagnitude > 0)
-				{
-					dv.Normalize();
-					System.UInt16 dashDirection = 0x0;
-					if (dv.x > 0)
-						dashDirection |= 0x1;
-					else if (dv.x < 0)
-						dashDirection |= 0x2;
-					if (dv.y > 0)
-						dashDirection |= 0x4;
-					else if (dv.y < 0)
-						dashDirection |= 0x8;
-					float dCost = energyCostTable[dashDirection];
-					if (isSweeping && dCost <= currentEnergy)
-					{
-						dashVector = dv;
-						dashAngle = Mathf.Acos(dv.x) * Mathf.Sign(dv.y) / Mathf.PI * 180;
-						dashRotation = Quaternion.Euler(0, 0, dashAngle);
-						currentEnergy = Mathf.Max(0, currentEnergy - dCost);
-
-						//if (dashDirection == 8) // dashDirection down
-						//{
-						//	currentFacingVector.x *= -1;
-						//}
-
-						_SetState(Dash);
-						traceManager.NotifyDash(characterRB.transform.position,dashRotation);
-					}
-				}
-			}
-			else
-			{
-				tapPosition = mp;
-			}
-		}
-	}
-
 	private void refillEnergy()
 	{
 		float refillRate = airEnergyRecoveryPoints;
@@ -416,219 +363,6 @@ public class MainScript : MonoBehaviour {
 		currentSquishX = FuctionUtils.damping(squishDampingFactor, currentSquishX, 1.0f, dt);
 		currentSquishY = FuctionUtils.damping(squishDampingFactor, currentSquishY, 1.0f, dt);
 		body.transform.localScale = new Vector3(currentSquishX, currentSquishY, 1.0f);
-	}
-
-	/**
-	* Idle
-	**/
-
-	private void _StartIdle()
-	{
-		canLateJump = false;
-	}
-
-	private Vector2 _GameplayIdle(Vector2 currentVelocity) {
-		if (isTouchingDown)
-		{
-
-			if (isMouseDown)
-			{
-				currentVelocity.y = jumpForce;
-				_SetState(Jump);
-				traceManager.NotifyJump(characterRB.transform.position);
-			}
-
-			float d = currentFacingVector.x * propulsionImpulse;
-			currentVelocity.x = Mathf.Clamp(currentVelocity.x + d, -maxPropulsion, maxPropulsion);
-		}
-		else
-		{
-			canLateJump = true;
-			_SetState(Jump);
-		}
-		return currentVelocity;
-	}
-
-	private void _EndIdle()
-	{
-	}
-
-	private Vector3 getDashVectorFromSwipe(Vector3 sw)
-	{
-		Vector3 res = new Vector3(0, 0, 0);
-		if (sw.x > swipeDeadZone)
-		{
-			res.x += 1;
-		}
-		else if (sw.x < -swipeDeadZone)
-		{
-			res.x -= 1;
-		}
-		if (sw.y > swipeDeadZone)
-		{
-			res.y += 1;
-		}
-		else if (sw.y < -swipeDeadZone)
-		{
-			res.y -= 1;
-		}
-		return res;
-	}
-
-	/**
-	* Jump
-	**/
-	private void _StartJump()
-	{
-
-		currentSquishY = .8f;
-		jumpTimer = .0f;
-	}
-
-	private Vector2 _GameplayJump(Vector2 currentVelocity)
-	{
-
-
-		if (isTouchingRight || isTouchingLeft)
-		{
-			currentVelocity.y = Mathf.Max(currentVelocity.y, -wallSlideSpeed);
-			if (isMouseDown)
-			{
-				currentVelocity = isTouchingLeft ? wallJumpVector : mirroredWallJumpVector;
-				currentFacingVector.x = isTouchingLeft ? 1 : -1;
-				currentVelocity *= wallJumpForce;
-				currentSquishX = .85f;
-				canLateJump = false;
-				traceManager.NotifyJump(characterRB.transform.position);
-				return currentVelocity;
-			}
-		}
-		if (canLateJump)
-		{
-			jumpTimer += Time.fixedDeltaTime;
-			if (jumpTimer < lateJumpDuration)
-			{
-				if (isMouseDown || isMousePressed || isMouseUp)
-				{
-					currentVelocity.y = jumpForce;
-					_SetState(Jump);
-					traceManager.NotifyJump(characterRB.transform.position);
-					return currentVelocity;
-				}
-			}
-			else
-			{
-				canLateJump = false;
-			}
-		}
-
-		if (isTouchingDown && currentVelocity.y <= 0)
-		{
-			_SetState(Idle);
-			return currentVelocity;
-		}
-		if (isMouseDown)
-		{
-			if (currentVelocity.y < 0 && isInEarlyJumpRange)
-			{
-				currentVelocity.y = jumpForce;
-				_SetState(Jump);
-				traceManager.NotifyJump(characterRB.transform.position);
-				return currentVelocity;
-			}
-		}
-
-		
-		{
-			bool hasMagneted = false;
-			Vector2 magnetVector = Vector2.zero;
-			if (magnetRadius > .0f)
-			{
-				if (isInMagnetRight)
-				{
-					magnetVector.x += magnetForce;
-					hasMagneted = true;
-				}
-				if (isInMagnetLeft)
-				{
-					magnetVector.x -= magnetForce;
-					hasMagneted = true;
-				}
-				currentVelocity += magnetVector;
-			}
-			if (!hasMagneted)
-			{
-				float d = currentFacingVector.x * airPropulsion;
-				if (Mathf.Abs(currentVelocity.x + d) < maxPropulsion)
-				{
-					currentVelocity.x = currentVelocity.x + d;
-				}
-			}
-		}
-		return currentVelocity;
-	}
-
-	private void _EndJump()
-	{
-		canLateJump = false;
-	}
-
-	/**
-	* Dash
-	**/
-
-	private void _StartDash()
-	{
-		dashTimer = dashCoolDown;
-		dashProgression = dashDuration;
-		if (dashVector.x > 0)
-		{
-			currentFacingVector.x = 1;
-		}
-		else if (dashVector.x < 0)
-		{
-			currentFacingVector.x = -1;
-		}
-
-		body.transform.localRotation = dashRotation;
-		currentSquishY = .35f;
-	}
-
-	private Vector2 _GameplayDash(Vector2 currentVelocity)
-	{
-		float dt = Time.fixedDeltaTime;
-		dashProgression -= dt;
-		if (dashProgression > 0)
-		{
-			float progression = 1.0f - dashProgression / dashDuration;
-			float v = dashCurve.Evaluate(progression) * dashMaxSpeed;
-			currentVelocity = dashVector * v;
-		}
-		else
-		{
-			if (isTouchingDown)
-			{
-				_SetState(Idle);
-			} else
-			{
-				_SetState(Jump);
-			}
-			currentVelocity = dashVector * dashCurve.Evaluate(1.0f) * dashMaxSpeed;
-		}
-		return currentVelocity;
-	}
-
-	private void _EndDash()
-	{
-		tapPosition = Input.mousePosition;
-
-		body.transform.localRotation = Quaternion.identity;
-	}
-
-
-	public string getState()
-	{
-		return currentState.name;
 	}
 
 	public float getFacingSign()

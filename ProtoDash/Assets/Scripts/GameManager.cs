@@ -57,4 +57,18 @@ public class GameManager : MonoBehaviour {
 	{
 		LaunchLevel(currentLevel);
 	}
+
+	private GUIManager currentGUI;
+	public void registerGUIManager(GUIManager gui)
+	{
+		currentGUI = gui;
+	}
+	public void unregisterGUI()
+	{ 
+		currentGUI = null;
+	}
+	public GUIManager getCurrentGUI()
+	{
+		return currentGUI;
+	}
 }

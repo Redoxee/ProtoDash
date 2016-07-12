@@ -16,8 +16,14 @@ public class GUIManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gameManagerRef = GameManager.GetInstance();
+		gameManagerRef.registerGUIManager(this);
 	}
-	
+
+	void OnDisable()
+	{
+		gameManagerRef.unregisterGUI();
+	}
+
 	// Update is called once per frame
 	void Update () {
 	
