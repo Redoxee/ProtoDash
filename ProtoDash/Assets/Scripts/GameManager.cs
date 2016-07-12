@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+
 
 public class GameManager : MonoBehaviour {
 
@@ -11,8 +12,12 @@ public class GameManager : MonoBehaviour {
 		return singleInstance;
 	}
 
+
+
 	enum GameState { MainMenu, InGame }
 	GameState gameState = GameState.MainMenu;
+
+	public List<string> Levels ;
 	string currentLevel;
 
 	void Awake()
@@ -31,6 +36,8 @@ public class GameManager : MonoBehaviour {
 
 		//Sets this to not be destroyed when reloading scene
 		DontDestroyOnLoad(gameObject);
+
+		Levels = new List<string>{"Level1", "Level2" , "Level3"};
 	}
 
 	public void SwitchToHome()
@@ -56,6 +63,19 @@ public class GameManager : MonoBehaviour {
 	public void RelaunchLevel()
 	{
 		LaunchLevel(currentLevel);
+	}
+
+	public void LaunchNextLevel()
+	{
+		int levelIndex = Levels.IndexOf(currentLevel);
+		if (levelIndex < 0 || levelIndex + 1 == Levels.Count)
+		{
+			SwitchToHome();
+		}
+		else
+		{
+			LaunchLevel(Levels[levelIndex + 1]);
+		}
 	}
 
 	private GUIManager currentGUI;

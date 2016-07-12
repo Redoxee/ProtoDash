@@ -12,6 +12,8 @@ public class GUIManager : MonoBehaviour {
 	private Canvas mainCanvas;
 	[SerializeField]
 	private Canvas pauseCanvas;
+	[SerializeField]
+	private Canvas endLevelCanvas;
 
 	// Use this for initialization
 	void Start () {
@@ -43,11 +45,23 @@ public class GUIManager : MonoBehaviour {
 		pauseCanvas.gameObject.SetActive(false);
 	}
 
+	public void NotifyEndLevelReached()
+	{
+		mainScriptRef.PauseGame(true);
+		mainCanvas.gameObject.SetActive(false);
+		endLevelCanvas.gameObject.SetActive(true);
+	}
+
 	public void GoHome()
 	{
 		mainCanvas.gameObject.SetActive(false);
 		pauseCanvas.gameObject.SetActive(false);
 		gameManagerRef.SwitchToHome();
+	}
+
+	public void NextLevel()
+	{
+		gameManagerRef.LaunchNextLevel();
 	}
 
 	public void RetryLevel()
