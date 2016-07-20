@@ -8,13 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
   - enabled: 1
-    path: Assets/Scenes/GameSetupScene.unity
+    path: Assets/Scenes/Levels/GameSetupScene.unity
   - enabled: 1
     path: Assets/Scenes/Levels/Level1.unity
   - enabled: 1
     path: Assets/Scenes/Levels/Level2.unity
   - enabled: 1
     path: Assets/Scenes/Levels/Level3.unity
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level4.unity
   - enabled: 1
     path: Assets/Scenes/Levels/GymLevel.unity
   - enabled: 1

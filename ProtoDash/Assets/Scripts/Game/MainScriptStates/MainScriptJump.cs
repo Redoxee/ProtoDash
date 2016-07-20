@@ -36,7 +36,7 @@ public partial class MainScript {
 			jumpTimer += Time.fixedDeltaTime;
 			if (jumpTimer < lateJumpDuration)
 			{
-				if (isMouseDown || isMousePressed || isMouseUp)
+				if (isMouseDown)
 				{
 					currentVelocity.y = jumpForce;
 					_SetState(Jump);
