@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour {
 		//Sets this to not be destroyed when reloading scene
 		DontDestroyOnLoad(gameObject);
 
-		Levels = new List<string>{"Level1", "Level2" , "Level3"};
+		Levels = new List<string>{"Level1", "Level2", "Level3", "GymLevel", "GymLevel", "GymLevel", "GymLevel" };
 	}
 
 	public void SwitchToHome()

@@ -3,12 +3,14 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
-		_Color("Color", Color) = (1.,1.,1.,1.)
 		_ThresholdValue1("Threshold Value 1",Range(0,1)) = .75
 		_ThresholdColor1("Threshold Color 1", Color) = (1.,1.,1.,1.)
 		_ThresholdValue2("Threshold Value 2",Range(0,1)) = .75
 		_ThresholdColor2("Threshold Color 2", Color) = (1.,1.,1.,1.)
-		_Progression("Progression", Range(0,1)) = .5
+		_ThresholdValue3("Threshold Value 3",Range(0,1)) = .75
+		_ThresholdColor3("Threshold Color 3", Color) = (1.,1.,1.,1.)
+		_Color("Color", Color) = (1.,1.,1.,1.)
+	_Progression("Progression", Range(0,1)) = .5
 
 	}
 	SubShader
@@ -50,6 +52,8 @@
 			float	_ThresholdValue1;
 			float4	_ThresholdColor2;
 			float	_ThresholdValue2;
+			float4	_ThresholdColor3;
+			float	_ThresholdValue3;
 			float _Progression;
 #define B .4
 
@@ -66,7 +70,8 @@
 
 				float4 col = _ThresholdColor1;
 				col = lerp(col, _ThresholdColor2, step(_ThresholdValue1, _Progression));
-				col = lerp(col, _Color, step(_ThresholdValue2, _Progression));
+				col = lerp(col, _ThresholdColor3, step(_ThresholdValue2, _Progression));
+				col = lerp(col, _Color, step(_ThresholdValue3, _Progression));
 				col *= f;
 
 				return col;

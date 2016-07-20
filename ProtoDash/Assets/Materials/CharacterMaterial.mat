@@ -134,10 +134,14 @@ Material:
       data:
         first:
           name: _ThresholdValue1
-        second: 0.6
+        second: 0.341
       data:
         first:
           name: _ThresholdValue2
+        second: 0.588
+      data:
+        first:
+          name: _ThresholdValue3
         second: 0.75
       data:
         first:
@@ -151,12 +155,16 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0.9439148, g: 1, b: 0.41911763, a: 1}
+        second: {r: 0.4627451, g: 1, b: 0.36862746, a: 1}
       data:
         first:
           name: _ThresholdColor1
-        second: {r: 0.5735294, g: 0.84117633, b: 1, a: 1}
+        second: {r: 1, g: 0.23529412, b: 0.07450981, a: 1}
       data:
         first:
           name: _ThresholdColor2
-        second: {r: 0.9485294, g: 0.46729022, b: 0.51707363, a: 1}
+        second: {r: 0.9098039, g: 0.83137256, b: 0.5372549, a: 1}
+      data:
+        first:
+          name: _ThresholdColor3
+        second: {r: 0.6509804, g: 0.9019608, b: 0.9098039, a: 1}
