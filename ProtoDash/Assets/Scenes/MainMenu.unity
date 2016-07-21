@@ -295,7 +295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
   m_MinWidth: -1
-  m_MinHeight: 100
+  m_MinHeight: 150
   m_PreferredWidth: -1
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
@@ -1063,6 +1063,8 @@ MonoBehaviour:
   - Level2
   - Level3
   - Level4
+  - Level5
+  - Level6
   - GymLevel
 --- !u!4 &1405762166
 Transform:
@@ -1321,7 +1323,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 161260621}
   m_HandleRect: {fileID: 161260620}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
