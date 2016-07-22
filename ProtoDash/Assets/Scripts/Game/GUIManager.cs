@@ -6,7 +6,7 @@ public class GUIManager : MonoBehaviour {
 	[SerializeField]
 	private MainScript mainScriptRef;
 
-	private GameManager gameManagerRef;
+	private MainProcess gameManagerRef;
 
 	[SerializeField]
 	private Canvas mainCanvas;
@@ -17,7 +17,7 @@ public class GUIManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		gameManagerRef = GameManager.GetInstance();
+		gameManagerRef = MainProcess.GetInstance();
 		gameManagerRef.registerGUIManager(this);
 	}
 

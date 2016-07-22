@@ -12,7 +12,7 @@ public class MainMenuScript : MonoBehaviour {
 
 	public void Start()
 	{
-		GameManager gm = GameManager.GetInstance();
+		MainProcess gm = MainProcess.GetInstance();
 
 		
 
@@ -42,7 +42,7 @@ public class MainMenuScript : MonoBehaviour {
 
 	public void StartLevel(string levelName)
 	{
-		GameManager.GetInstance().LaunchLevel(levelName);
+		MainProcess.GetInstance().LaunchLevel(levelName);
 	}
 	
 }

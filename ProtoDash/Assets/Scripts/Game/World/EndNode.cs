@@ -15,7 +15,7 @@ public class EndNode : MonoBehaviour {
 	{
 		if (col.gameObject.tag == "Player")
 		{
-			GameManager.GetInstance().getCurrentGUI().NotifyEndLevelReached();
+			MainProcess.GetInstance().getCurrentGUI().NotifyEndLevelReached();
 		}
 	}
 }

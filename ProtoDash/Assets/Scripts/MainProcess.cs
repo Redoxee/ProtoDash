@@ -3,11 +3,11 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 
-public class GameManager : MonoBehaviour {
+public class MainProcess : MonoBehaviour {
 
-	private static GameManager singleInstance;
+	private static MainProcess singleInstance;
 
-	public static GameManager GetInstance()
+	public static MainProcess GetInstance()
 	{
 		return singleInstance;
 	}
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour {
 		//If instance already exists and it's not this:
 		else if (singleInstance != this)
 
-			//Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
+			//Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a MainProcess.
 			Destroy(gameObject);
 
 		//Sets this to not be destroyed when reloading scene

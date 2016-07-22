@@ -75,8 +75,8 @@
     <Compile Include="Assets\Scripts\Game\MainScriptStates\MainScriptJump.cs" />
     <Compile Include="Assets\Scripts\Game\TraceManager.cs" />
     <Compile Include="Assets\Scripts\Game\World\EndNode.cs" />
-    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\MainMenuScript.cs" />
+    <Compile Include="Assets\Scripts\MainProcess.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Materials\Shaders\BackgroundShader.shader" />
