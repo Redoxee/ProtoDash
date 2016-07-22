@@ -3,7 +3,7 @@
 using UnityEngine;
 using Assets;
 
-public partial class MainScript : MonoBehaviour {
+public partial class Character : MonoBehaviour {
 	private delegate Vector2 gameplayDelegate(Vector2 currentVelocity);
 	private delegate void startStateDelegate();
 	private delegate void endStateDelegate();

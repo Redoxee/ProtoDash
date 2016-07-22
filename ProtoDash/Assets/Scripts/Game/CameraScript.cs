@@ -6,7 +6,7 @@ public class CameraScript : MonoBehaviour {
 	private GameObject target;
 
     [SerializeField]
-    private MainScript mainScriptRef;
+    private Character mainScriptRef;
 
 	[SerializeField]
 	private float xDampingFactor = 0.5f;

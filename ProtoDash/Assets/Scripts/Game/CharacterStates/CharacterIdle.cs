@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public partial class MainScript {
+public partial class Character {
 
 	/**
 	* Idle

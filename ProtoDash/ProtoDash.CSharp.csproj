@@ -66,13 +66,13 @@
     <Compile Include="Assets\Scripts\FPSMeter.cs" />
     <Compile Include="Assets\Scripts\FuctionUtils.cs" />
     <Compile Include="Assets\Scripts\Game\CameraScript.cs" />
+    <Compile Include="Assets\Scripts\Game\Character.cs" />
     <Compile Include="Assets\Scripts\Game\CharacterScript.cs" />
+    <Compile Include="Assets\Scripts\Game\CharacterStates\CharacterDash.cs" />
+    <Compile Include="Assets\Scripts\Game\CharacterStates\CharacterIdle.cs" />
+    <Compile Include="Assets\Scripts\Game\CharacterStates\CharacterJump.cs" />
     <Compile Include="Assets\Scripts\Game\GUIManager.cs" />
     <Compile Include="Assets\Scripts\Game\GaugeScript.cs" />
-    <Compile Include="Assets\Scripts\Game\MainScript.cs" />
-    <Compile Include="Assets\Scripts\Game\MainScriptStates\MainScriptDash.cs" />
-    <Compile Include="Assets\Scripts\Game\MainScriptStates\MainScriptIdle.cs" />
-    <Compile Include="Assets\Scripts\Game\MainScriptStates\MainScriptJump.cs" />
     <Compile Include="Assets\Scripts\Game\TraceManager.cs" />
     <Compile Include="Assets\Scripts\Game\World\EndNode.cs" />
     <Compile Include="Assets\Scripts\MainMenuScript.cs" />

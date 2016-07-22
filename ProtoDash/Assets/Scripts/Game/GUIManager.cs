@@ -4,7 +4,7 @@ using System.Collections;
 public class GUIManager : MonoBehaviour {
 
 	[SerializeField]
-	private MainScript mainScriptRef;
+	private Character mainScriptRef;
 
 	private MainProcess gameManagerRef;
 

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class GaugeScript : MonoBehaviour {
 
 	[SerializeField]
-	private MainScript watchedScript;
+	private Character watchedScript;
 	
 	private Material gaugeMaterial;
 
