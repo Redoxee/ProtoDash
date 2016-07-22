@@ -67,7 +67,6 @@
     <Compile Include="Assets\Scripts\FuctionUtils.cs" />
     <Compile Include="Assets\Scripts\Game\CameraScript.cs" />
     <Compile Include="Assets\Scripts\Game\Character.cs" />
-    <Compile Include="Assets\Scripts\Game\CharacterScript.cs" />
     <Compile Include="Assets\Scripts\Game\CharacterStates\CharacterDash.cs" />
     <Compile Include="Assets\Scripts\Game\CharacterStates\CharacterIdle.cs" />
     <Compile Include="Assets\Scripts\Game\CharacterStates\CharacterJump.cs" />

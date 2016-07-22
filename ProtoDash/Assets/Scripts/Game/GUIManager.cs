@@ -4,7 +4,7 @@ using System.Collections;
 public class GUIManager : MonoBehaviour {
 
 	[SerializeField]
-	private Character mainScriptRef;
+	private Character characterRef;
 
 	private MainProcess gameManagerRef;
 
@@ -33,21 +33,21 @@ public class GUIManager : MonoBehaviour {
 
 	public void PauseGame()
 	{
-		mainScriptRef.PauseGame(true);
+		characterRef.PauseGame(true);
 		mainCanvas.gameObject.SetActive(false);
 		pauseCanvas.gameObject.SetActive(true);
 	}
 
 	public void ResumeGame()
 	{
-		mainScriptRef.PauseGame(false);
+		characterRef.PauseGame(false);
 		mainCanvas.gameObject.SetActive(true);
 		pauseCanvas.gameObject.SetActive(false);
 	}
 
 	public void NotifyEndLevelReached()
 	{
-		mainScriptRef.PauseGame(true);
+		characterRef.PauseGame(true);
 		mainCanvas.gameObject.SetActive(false);
 		endLevelCanvas.gameObject.SetActive(true);
 	}

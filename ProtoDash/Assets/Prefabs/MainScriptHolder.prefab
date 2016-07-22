@@ -8,7 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 427212}
-  - 114: {fileID: 11443388}
+  - 114: {fileID: 11441164}
   m_Layer: 0
   m_Name: MainScriptHolder
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11443388
+--- !u!114 &11441164
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -37,54 +37,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 132670}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c876cc2d107223442adf4d4f2519da9d, type: 3}
+  m_Script: {fileID: 11500000, guid: 81c5e9ad073e63a4da49fb046a8c1aaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCharacter: {fileID: 0}
-  mainCamera: {fileID: 0}
-  propulsionImpulse: 2
-  maxPropulsion: 7
-  jumpForce: 18
-  earlyJumpDistance: 0.65
-  lateJumpDuration: 0.15
-  wallJumpAngle: 55
-  wallJumpForce: 18
-  wallSlideSpeed: 6
-  airPropulsion: 0.125
-  magnetRadius: 0.6
-  magnetForce: 0.6
-  swipeInputDistance: 0.1
-  swipeDeadZone: 0.35
-  dashCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 0.19999999
-      inSlope: -2.528959
-      outSlope: -2.528959
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  dashMaxSpeed: 35
-  dashDuration: 0.16
-  dashCoolDown: 0.25
-  maxEnergyPoints: 100
-  floorEnergyPointsRecovery: 200
-  wallEnergyRecoveryPoints: 60
-  airEnergyRecoveryPoints: 30
-  currentEnergy: 100
-  beak: {fileID: 0}
-  body: {fileID: 0}
-  traceManager: {fileID: 0}
-  isTouchingDown: 0
-  isTouchingRight: 0
-  isTouchingLeft: 0
+  characterRef: {fileID: 0}
+  mainCanvas: {fileID: 0}
+  pauseCanvas: {fileID: 0}
+  endLevelCanvas: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

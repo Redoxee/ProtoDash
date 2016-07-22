@@ -42,7 +42,7 @@ GameObject:
   - 4: {fileID: 493952}
   - 50: {fileID: 5096572}
   - 58: {fileID: 5839080}
-  - 114: {fileID: 11406238}
+  - 114: {fileID: 11461896}
   m_Layer: 2
   m_Name: Character
   m_TagString: Player
@@ -144,7 +144,7 @@ CircleCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 127442}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 28590e10d2515d74e8cacb67136518d6, type: 2}
   m_IsTrigger: 0
@@ -174,7 +174,7 @@ PolygonCollider2D:
       - {x: 0.006870027, y: -0.93019915}
       - {x: -0.88754576, y: -0.8971296}
       - {x: -0.9350744, y: -0.0015746222}
---- !u!114 &11406238
+--- !u!114 &11461896
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -182,9 +182,52 @@ MonoBehaviour:
   m_GameObject: {fileID: 127442}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cb6cdddf9754c847a4488362e1c40c7, type: 3}
+  m_Script: {fileID: 11500000, guid: c876cc2d107223442adf4d4f2519da9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
+  isPaused: 0
+  propulsionImpulse: 2
+  maxPropulsion: 7
+  jumpForce: 18
+  earlyJumpDistance: 0.65
+  lateJumpDuration: 0.15
+  wallJumpAngle: 55
+  wallJumpForce: 18
+  wallSlideSpeed: 6
+  airPropulsion: 0.125
+  magnetRadius: 0.6
+  magnetForce: 0.6
+  swipeInputDistance: 0.1
+  swipeDeadZone: 0.35
+  dashCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0.19999999
+      inSlope: -2.528959
+      outSlope: -2.528959
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  dashMaxSpeed: 35
+  dashDuration: 0.16
+  dashCoolDown: 0.25
+  maxEnergyPoints: 100
+  floorEnergyPointsRecovery: 200
+  wallEnergyRecoveryPoints: 60
+  airEnergyRecoveryPoints: 30
+  currentEnergy: 100
+  traceManager: {fileID: 0}
+  isTouchingDown: 0
+  isTouchingRight: 0
+  isTouchingLeft: 0
 --- !u!212 &21223802
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -40,9 +40,7 @@ public partial class Character : MonoBehaviour {
 		currentState = newState;
 		newState.start();
 	}
-
-	[SerializeField]
-	private MonoBehaviour mainCharacter;
+	
 	[SerializeField]
 	private Camera mainCamera;
 
@@ -106,9 +104,9 @@ public partial class Character : MonoBehaviour {
 
 
 	private Rigidbody2D characterRB;
-	[SerializeField]
+
 	private GameObject beak;
-	[SerializeField]
+
 	private GameObject body;
 
 	private Renderer bodyRenderer;
@@ -119,7 +117,7 @@ public partial class Character : MonoBehaviour {
 	private float screenRatio;
 
 	private bool isMouseDown = false;
-	private bool isMouseUp = false;
+	//private bool isMouseUp = false;
 	private bool isMousePressed = false;
 	private bool isSweeping = false;
 	private Vector3 currentFacingVector;
@@ -200,8 +198,11 @@ public partial class Character : MonoBehaviour {
 	void Start() {
 		squareSwipeInputTrigger = swipeInputDistance * swipeInputDistance;
 
-		characterRB = mainCharacter.GetComponent<Rigidbody2D>();
+		characterRB = GetComponent<Rigidbody2D>();
 
+
+		body = transform.Find("Body").gameObject;
+		beak = body.transform.Find("Beak").gameObject;
 		bodyRenderer = body.GetComponent<Renderer>();
 
 		originalBeakX = beak.transform.localPosition.x;
@@ -235,10 +236,10 @@ public partial class Character : MonoBehaviour {
 			isMouseDown = true;
 		}
 		isMousePressed = Input.GetMouseButton(0);
-		if (Input.GetMouseButtonUp(0))
-		{
-			isMouseUp = true;
-		}
+		//if (Input.GetMouseButtonUp(0))
+		//{
+		//	isMouseUp = true;
+		//}
 		Vector3 sv = tapPosition - Input.mousePosition;
 		sv.x *= screenRatio;
 		sv.y *= screenRatio;
@@ -264,7 +265,7 @@ public partial class Character : MonoBehaviour {
 		refillEnergy();
 		updateDashInput();
 		isMouseDown = false;
-		isMouseUp = false;
+		//isMouseUp = false;
 
 		bodyRenderer.material.SetFloat("_Progression", currentEnergy / maxEnergyPoints);
 	}

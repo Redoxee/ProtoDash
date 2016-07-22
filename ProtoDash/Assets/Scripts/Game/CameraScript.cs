@@ -2,11 +2,9 @@
 using Assets;
 
 public class CameraScript : MonoBehaviour {
-	[SerializeField]
-	private GameObject target;
 
     [SerializeField]
-    private Character mainScriptRef;
+    private Character character;
 
 	[SerializeField]
 	private float xDampingFactor = 0.5f;
@@ -39,16 +37,16 @@ public class CameraScript : MonoBehaviour {
 
     void Update()
     {
-		if (mainScriptRef.isPaused)
+		if (character.isPaused)
 		{
 			return;
 		}
 
-        if (lastOrientation != mainScriptRef.getFacingSign())
+        if (lastOrientation != character.getFacingSign())
         {
-            lastOrientation = mainScriptRef.getFacingSign();
+            lastOrientation = character.getFacingSign();
             timerPosX = timeToPosX;
-            lastOffsetX = transform.position.x - target.transform.position.x;
+            lastOffsetX = transform.position.x - character.transform.position.x;
         }
         if (timerPosX > 0)
         {
@@ -65,12 +63,12 @@ public class CameraScript : MonoBehaviour {
 	void LateUpdate()
 	{
 
-		if (mainScriptRef.isPaused)
+		if (character.isPaused)
 		{
 			return;
 		}
 
-		float orientation =  mainScriptRef.getFacingSign();
+		float orientation =  character.getFacingSign();
         float currentOffsetX = wantedXOffset * orientation;
         if (timerPosX > 0)
         {
@@ -81,7 +79,7 @@ public class CameraScript : MonoBehaviour {
 
         }
 
-        Vector3 p = target.transform.position;
+        Vector3 p = character.transform.position;
         float tpx = p.x + currentOffsetX + centerXoffset;
         float tpy = p.y + cameraYOffset;
         _DrawCross(tpx, tpy, Color.yellow);
