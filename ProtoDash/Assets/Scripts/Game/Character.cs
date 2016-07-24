@@ -222,6 +222,21 @@ public partial class Character : MonoBehaviour {
 		_InitializeStates();
 		_InitializeWallJumpVectors();
 		currentState = Idle;
+
+		MainProcess mp = MainProcess.GetInstance();
+		if (mp != null)
+		{
+			mp.notifyCharacterStart(this);
+		}
+	}
+
+	public void Disable()
+	{
+		MainProcess mp = MainProcess.GetInstance();
+		if (mp != null)
+		{
+			mp.notifyCharacterDisable(this);
+		}
 	}
 
 	void Update()

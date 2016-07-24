@@ -11,6 +11,11 @@ public class TraceManager : MonoBehaviour {
 	}
 
 	[SerializeField]
+	GameObject traceObject;
+	[SerializeField]
+	int tracePoolSize = 50;
+
+	[SerializeField]
 	private float popAnimationTime = 1;
 	[SerializeField]
 	private AnimationCurve popAnimationCurve;
@@ -27,9 +32,10 @@ public class TraceManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		for (int i = 0; i < transform.childCount; ++i)
+		for (int i = 0; i < tracePoolSize; ++i)
 		{
-			GameObject go = transform.GetChild(i).gameObject;
+			GameObject go = Instantiate<GameObject>(traceObject);
+			go.transform.SetParent(transform);
 			go.SetActive(false);
 			Trace t = new Trace();
 			t.obj = go;

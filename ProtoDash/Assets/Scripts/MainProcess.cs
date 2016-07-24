@@ -18,7 +18,7 @@ public class MainProcess : MonoBehaviour {
 	GameState gameState = GameState.MainMenu;
 
 	[SerializeField]
-	public List<string> Levels ;
+	public List<string> Levels;
 	string currentLevel;
 
 	void Awake()
@@ -37,7 +37,7 @@ public class MainProcess : MonoBehaviour {
 
 		//Sets this to not be destroyed when reloading scene
 		DontDestroyOnLoad(gameObject);
-		
+
 	}
 
 	public void SwitchToHome()
@@ -84,11 +84,21 @@ public class MainProcess : MonoBehaviour {
 		currentGUI = gui;
 	}
 	public void unregisterGUI()
-	{ 
+	{
 		currentGUI = null;
 	}
 	public GUIManager getCurrentGUI()
 	{
 		return currentGUI;
+	}
+
+	public void notifyCharacterStart(Character character)
+	{
+		currentGUI.NotifyCharacterStart(character);
+	}
+
+	public void notifyCharacterDisable(Character character)
+	{
+		currentGUI.notifyCharacterDisable(character);
 	}
 }

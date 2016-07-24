@@ -2,8 +2,7 @@
 using System.Collections;
 
 public class GUIManager : MonoBehaviour {
-
-	[SerializeField]
+	
 	private Character characterRef;
 
 	private MainProcess gameManagerRef;
@@ -19,6 +18,16 @@ public class GUIManager : MonoBehaviour {
 	void Start () {
 		gameManagerRef = MainProcess.GetInstance();
 		gameManagerRef.registerGUIManager(this);
+	}
+
+	public void NotifyCharacterStart(Character c)
+	{
+		characterRef = c;
+	}
+
+	public void notifyCharacterDisable(Character character)
+	{
+		characterRef = null;
 	}
 
 	void OnDisable()
