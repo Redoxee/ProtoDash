@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\Game\GUIManager.cs" />
     <Compile Include="Assets\Scripts\Game\GaugeScript.cs" />
     <Compile Include="Assets\Scripts\Game\TraceManager.cs" />
+    <Compile Include="Assets\Scripts\Game\TutorialAnimator.cs" />
     <Compile Include="Assets\Scripts\Game\World\EndNode.cs" />
     <Compile Include="Assets\Scripts\MainMenuScript.cs" />
     <Compile Include="Assets\Scripts\MainProcess.cs" />
