@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class TutorialAnimator : MonoBehaviour {
 
@@ -10,6 +10,13 @@ public class TutorialAnimator : MonoBehaviour {
 
 	[SerializeField]
 	private bool xOnly;
+
+	[SerializeField]
+	private List<ExpandableCircle> animatedCircles;
+	[SerializeField]
+	private float animatedTimeStart = 0f;
+
+	private bool hasNotifiedCircles = false;
 
 	private Vector3 originalScale;
 
@@ -23,11 +30,17 @@ public class TutorialAnimator : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		animationTimer = (animationTimer + Time.deltaTime) % animationTime;
+		animationTimer = (animationTimer + Time.deltaTime);
+		if (animationTimer > animationTime)
+		{
+			hasNotifiedCircles = false;
+			animationTimer %= animationTime;
+		}
 		Vector3 nextScale;
 		if (!xOnly)
 		{
 			nextScale = originalScale * scaleAnimation.Evaluate(animationTimer / animationTime);
+
 		}
 		else
 		{
@@ -35,5 +48,14 @@ public class TutorialAnimator : MonoBehaviour {
 			nextScale.x *= scaleAnimation.Evaluate(animationTimer / animationTime);
 		}
 		gameObject.transform.localScale = nextScale;
+
+		if (animationTimer >= animatedTimeStart && !hasNotifiedCircles)
+		{
+			for (int i = 0; i < animatedCircles.Count; ++i)
+			{
+				animatedCircles[i].StartAnimation();
+			}
+			hasNotifiedCircles = true;
+		}
 	}
 }

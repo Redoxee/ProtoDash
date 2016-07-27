@@ -405,7 +405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   traceObject: {fileID: 139350, guid: ebce38a67f572de48b3c83f083fb91a0, type: 2}
-  tracePoolSize: 50
+  tracePoolSize: 20
   popAnimationTime: 0.4
   popAnimationCurve:
     serializedVersion: 2

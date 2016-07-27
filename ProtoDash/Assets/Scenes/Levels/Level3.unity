@@ -403,6 +403,80 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a118d73aa8b0a8340a69a5665e2be1f8, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &471432553
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 63.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0.38268346
+      objectReference: {fileID: 0}
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.9238795
+      objectReference: {fileID: 0}
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 104914, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_Name
+      value: StretchableCircle (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: objectColor.r
+      value: 0.03529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: objectColor.g
+      value: 0.09411765
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: objectColor.b
+      value: 0.2901961
+      objectReference: {fileID: 0}
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: shiftLength
+      value: 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &487316352
 Prefab:
   m_ObjectHideFlags: 0
@@ -496,27 +570,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76598c4935470ef4985a37b2e686a52e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationTime: 2
+  animationTime: 3
   scaleAnimation:
     serializedVersion: 2
     m_Curve:
     - time: 0
-      value: 0.0013404825
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 0.39999998
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 0.93
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
     - time: 1
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -524,6 +588,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 0
   xOnly: 1
+  animatedCircles:
+  - {fileID: 1842865887}
+  animatedTimeStart: 0
 --- !u!114 &539219681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,7 +620,7 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 0
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: SWIPE
@@ -983,6 +1050,90 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 71eb9fabb2cd20247b19ddd7bd42ed65, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &829657530
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 28.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: objectColor.r
+      value: 0.03529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: objectColor.g
+      value: 0.09411765
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: objectColor.b
+      value: 0.2901961
+      objectReference: {fileID: 0}
+    - target: {fileID: 21206648, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21206648, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21206648, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: shiftLength
+      value: 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+  m_IsPrefabParent: 0
+--- !u!114 &914832945 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071,
+    type: 2}
+  m_PrefabInternal: {fileID: 471432553}
+  m_Script: {fileID: 11500000, guid: c03deca6bddb8c24b9aaaa14f9275fdd, type: 3}
 --- !u!4 &925517126 stripped
 Transform:
   m_PrefabParentObject: {fileID: 429572, guid: 71eb9fabb2cd20247b19ddd7bd42ed65, type: 2}
@@ -1078,7 +1229,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 495460, guid: a118d73aa8b0a8340a69a5665e2be1f8, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 153542, guid: a118d73aa8b0a8340a69a5665e2be1f8, type: 2}
       propertyPath: m_Name
@@ -1186,7 +1337,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -399.69, y: -259.97}
+  m_AnchoredPosition: {x: -400.86, y: -259.97}
   m_SizeDelta: {x: 500, y: 250}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1338758702
@@ -1200,27 +1351,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76598c4935470ef4985a37b2e686a52e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationTime: 2
+  animationTime: 3
   scaleAnimation:
     serializedVersion: 2
     m_Curve:
     - time: 0
-      value: 0.0013404825
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 0.39999998
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 0.93
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
     - time: 1
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1228,6 +1369,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 0
   xOnly: 1
+  animatedCircles:
+  - {fileID: 914832945}
+  animatedTimeStart: 0
 --- !u!114 &1338758703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1581,6 +1725,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 71eb9fabb2cd20247b19ddd7bd42ed65, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1842865887 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071,
+    type: 2}
+  m_PrefabInternal: {fileID: 829657530}
+  m_Script: {fileID: 11500000, guid: c03deca6bddb8c24b9aaaa14f9275fdd, type: 3}
 --- !u!1001 &1930148122
 Prefab:
   m_ObjectHideFlags: 0

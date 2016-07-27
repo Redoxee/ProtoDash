@@ -54,7 +54,7 @@
 			uv.x = min(uv.x,.5) * step(i.uv.x,.5) + (max(1/_Ratio - .5, uv.x ) + (1. - 1./_Ratio)) * step(.5,i.uv.x);
 			float d = distance(uv, float2(.5, .5));
 			float f = smoothstep(RADIUS - SMOOTH, RADIUS + SMOOTH, d);
-			return float4(_Color.rgb,1. - f);
+			return float4(_Color.rgb,(1. - f) * _Color.a);
 		}
 			ENDCG
 		}
