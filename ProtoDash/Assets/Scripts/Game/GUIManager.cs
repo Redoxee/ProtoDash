@@ -58,11 +58,15 @@ public class GUIManager : MonoBehaviour {
 
 	public void ResumeGame()
 	{
-		characterRef.PauseGame(false);
 		guiAnimator.SetTrigger("ResumeGame");
 		//gameCanvas.gameObject.SetActive(true);
 		//pauseCanvas.gameObject.SetActive(false);
 
+	}
+
+	public void OnResumeAnimationEnd()
+	{
+		characterRef.PauseGame(false);
 	}
 
 	public void NotifyEndLevelReached()

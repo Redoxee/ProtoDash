@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\ExpandableCircle.cs" />
     <Compile Include="Assets\Scripts\FPSMeter.cs" />
     <Compile Include="Assets\Scripts\FuctionUtils.cs" />
+    <Compile Include="Assets\Scripts\GUI\PauseButtonComponent.cs" />
     <Compile Include="Assets\Scripts\Game\CameraScript.cs" />
     <Compile Include="Assets\Scripts\Game\Character.cs" />
     <Compile Include="Assets\Scripts\Game\CharacterStates\CharacterDash.cs" />

@@ -1057,6 +1057,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: animationCurve.m_Curve.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
       propertyPath: m_LocalPosition.x
       value: 28.56
@@ -1124,6 +1128,54 @@ Prefab:
     - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
       propertyPath: shiftLength
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: animationDuration
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: animationCurve.m_Curve.Array.data[1].time
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: animationCurve.m_Curve.Array.data[1].value
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: animationCurve.m_Curve.Array.data[1].inSlope
+      value: 2.8422155
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: animationCurve.m_Curve.Array.data[1].outSlope
+      value: 3.1128945
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: animationCurve.m_Curve.Array.data[2].time
+      value: 0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: animationCurve.m_Curve.Array.data[2].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: animationCurve.m_Curve.Array.data[3].time
+      value: 0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: animationCurve.m_Curve.Array.data[3].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: animationCurve.m_Curve.Array.data[1].tangentMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: animationCurve.m_Curve.Array.data[2].tangentMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411660, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+      propertyPath: animationCurve.m_Curve.Array.data[2].inSlope
+      value: 0.2223525
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
