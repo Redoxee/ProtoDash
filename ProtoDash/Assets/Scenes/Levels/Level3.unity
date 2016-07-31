@@ -318,6 +318,25 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 71eb9fabb2cd20247b19ddd7bd42ed65, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &391484429 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 104914, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
+  m_PrefabInternal: {fileID: 471432553}
+--- !u!114 &391484431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 391484429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76598c4935470ef4985a37b2e686a52e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationTime: 2
+  animatedCircles:
+  - {fileID: 914832945}
+  animatedTimeStart: 0
 --- !u!1001 &407676815
 Prefab:
   m_ObjectHideFlags: 0
@@ -590,23 +609,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationTime: 3
-  scaleAnimation:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  xOnly: 1
   animatedCircles:
   - {fileID: 1842865887}
   animatedTimeStart: 0
@@ -1091,7 +1093,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1480795792}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -452.69, y: -260.97}
@@ -1109,23 +1111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationTime: 3
-  scaleAnimation:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  xOnly: 1
   animatedCircles:
   - {fileID: 231859910}
   animatedTimeStart: 0
@@ -1724,113 +1709,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 71eb9fabb2cd20247b19ddd7bd42ed65, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1338758700
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 224: {fileID: 1338758701}
-  - 222: {fileID: 1338758704}
-  - 114: {fileID: 1338758703}
-  - 114: {fileID: 1338758702}
-  m_Layer: 0
-  m_Name: Swipe (3)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1338758701
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1338758700}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 1480795792}
-  m_RootOrder: 1
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -400.86, y: -259.97}
-  m_SizeDelta: {x: 500, y: 250}
-  m_Pivot: {x: 0, y: 0.5}
---- !u!114 &1338758702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1338758700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76598c4935470ef4985a37b2e686a52e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animationTime: 3
-  scaleAnimation:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  xOnly: 1
-  animatedCircles:
-  - {fileID: 914832945}
-  animatedTimeStart: 0
---- !u!114 &1338758703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1338758700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 08967c3d5c06eaa4fb93a57afbd8a146, type: 2}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: c1090e0bd20c3c2478c8e50f13c79c99, type: 3}
-    m_FontSize: 160
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 0
-    m_MaxSize: 160
-    m_Alignment: 3
-    m_AlignByGeometry: 0
-    m_RichText: 0
-    m_HorizontalOverflow: 1
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: SWIPE
---- !u!222 &1338758704
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1338758700}
 --- !u!4 &1385571874 stripped
 Transform:
   m_PrefabParentObject: {fileID: 429572, guid: 71eb9fabb2cd20247b19ddd7bd42ed65, type: 2}
@@ -1925,7 +1803,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 539219679}
-  - {fileID: 1338758701}
   - {fileID: 784630200}
   m_Father: {fileID: 0}
   m_RootOrder: 14

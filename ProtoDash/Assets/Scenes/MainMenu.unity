@@ -1207,10 +1207,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 11458930, guid: 3446cbf404d476548976cd24c4148918, type: 2}
-      propertyPath: Levels.Array.size
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 441416, guid: 3446cbf404d476548976cd24c4148918, type: 2}
       propertyPath: m_LocalPosition.x
       value: 133.4707
@@ -1242,14 +1238,6 @@ Prefab:
     - target: {fileID: 441416, guid: 3446cbf404d476548976cd24c4148918, type: 2}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11458930, guid: 3446cbf404d476548976cd24c4148918, type: 2}
-      propertyPath: Levels.Array.data[9]
-      value: GymLevel
-      objectReference: {fileID: 0}
-    - target: {fileID: 11458930, guid: 3446cbf404d476548976cd24c4148918, type: 2}
-      propertyPath: Levels.Array.data[8]
-      value: GymLevel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3446cbf404d476548976cd24c4148918, type: 2}

@@ -5,11 +5,6 @@ public class TutorialAnimator : MonoBehaviour {
 
 	[SerializeField]
 	float animationTime = 2f;
-	[SerializeField]
-	private AnimationCurve scaleAnimation;
-
-	[SerializeField]
-	private bool xOnly;
 
 	[SerializeField]
 	private List<ExpandableCircle> animatedCircles;
@@ -17,14 +12,12 @@ public class TutorialAnimator : MonoBehaviour {
 	private float animatedTimeStart = 0f;
 
 	private bool hasNotifiedCircles = false;
-
-	private Vector3 originalScale;
+	
 
 	private float animationTimer;
 
 	// Use this for initialization
 	void Start () {
-		originalScale = transform.localScale;
 		animationTimer = 0f;
 	}
 	
@@ -36,18 +29,6 @@ public class TutorialAnimator : MonoBehaviour {
 			hasNotifiedCircles = false;
 			animationTimer %= animationTime;
 		}
-		Vector3 nextScale;
-		if (!xOnly)
-		{
-			nextScale = originalScale * scaleAnimation.Evaluate(animationTimer / animationTime);
-
-		}
-		else
-		{
-			nextScale = originalScale;
-			nextScale.x *= scaleAnimation.Evaluate(animationTimer / animationTime);
-		}
-		gameObject.transform.localScale = nextScale;
 
 		if (animationTimer >= animatedTimeStart && !hasNotifiedCircles)
 		{
