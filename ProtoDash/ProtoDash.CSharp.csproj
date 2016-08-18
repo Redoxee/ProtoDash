@@ -72,6 +72,8 @@
     <Compile Include="Assets\Scripts\Game\CharacterStates\CharacterDash.cs" />
     <Compile Include="Assets\Scripts\Game\CharacterStates\CharacterIdle.cs" />
     <Compile Include="Assets\Scripts\Game\CharacterStates\CharacterJump.cs" />
+    <Compile Include="Assets\Scripts\Game\DeathZone.cs" />
+    <Compile Include="Assets\Scripts\Game\DeathZoneMaterialUpdater.cs" />
     <Compile Include="Assets\Scripts\Game\GUIManager.cs" />
     <Compile Include="Assets\Scripts\Game\GaugeScript.cs" />
     <Compile Include="Assets\Scripts\Game\TraceManager.cs" />

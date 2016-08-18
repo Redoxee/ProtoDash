@@ -178,6 +178,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 128240, guid: f414e3c957855b0418562e0d8e622a05, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f414e3c957855b0418562e0d8e622a05, type: 2}
   m_IsPrefabParent: 0
@@ -905,6 +909,25 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 71eb9fabb2cd20247b19ddd7bd42ed65, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1287131796 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 128240, guid: f414e3c957855b0418562e0d8e622a05, type: 2}
+  m_PrefabInternal: {fileID: 287788130}
+--- !u!114 &1287131797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1287131796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ef639ae7256da94994cd6fed6be870a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathZoneMaterial: {fileID: 2100000, guid: 0335a564b1c070a48bc6f0ca85f08c3d, type: 2}
+  color1: {r: 1, g: 0.18382353, b: 0.42023328, a: 0}
+  color2: {r: 1, g: 0.12068963, b: 0.12068963, a: 0}
+  frequence: 6
 --- !u!1001 &1416300025
 Prefab:
   m_ObjectHideFlags: 0

@@ -15,6 +15,8 @@ public class GUIManager : MonoBehaviour {
 	private Canvas pauseCanvas;
 	[SerializeField]
 	private Canvas endLevelCanvas;
+	[SerializeField]
+	private Canvas failCanvas;
 
 	private Animator guiAnimator;
 
@@ -48,10 +50,7 @@ public class GUIManager : MonoBehaviour {
 	}
 
 	public void PauseGame()
-	{
-		//gameCanvas.gameObject.SetActive(false);
-		//pauseCanvas.gameObject.SetActive(true);
-		
+	{	
 		guiAnimator.SetTrigger("GoToPause");
 		characterRef.PauseGame(true);
 	}
@@ -59,8 +58,6 @@ public class GUIManager : MonoBehaviour {
 	public void ResumeGame()
 	{
 		guiAnimator.SetTrigger("ResumeGame");
-		//gameCanvas.gameObject.SetActive(true);
-		//pauseCanvas.gameObject.SetActive(false);
 
 	}
 
@@ -74,6 +71,13 @@ public class GUIManager : MonoBehaviour {
 		characterRef.PauseGame(true);
 		gameCanvas.gameObject.SetActive(false);
 		endLevelCanvas.gameObject.SetActive(true);
+	}
+
+	public void NotifyDeathZoneTouched()
+	{
+		characterRef.PauseGame(true);
+		gameCanvas.gameObject.SetActive(false);
+		failCanvas.gameObject.SetActive(true);
 	}
 
 	public void GoHome()
