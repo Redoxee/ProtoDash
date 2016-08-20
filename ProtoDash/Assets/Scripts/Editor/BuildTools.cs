@@ -39,6 +39,12 @@ public class BuildTools : EditorWindow
 
 	void SetSceneInProjects()
 	{
-
+        AssetDatabase.ImportAsset(LEVEL_FLOW_PATH + MAIN_FLOW_NAME);
+        LevelFlow lf = AssetDatabase.LoadAssetAtPath<LevelFlow>(LEVEL_FLOW_PATH + MAIN_FLOW_NAME);
+        Debug.Log("Setting up level in build");
+        for (int i = 0; i < lf.levelList.Count; ++i)
+        {
+            Debug.Log(lf.levelList[i].sceneObject.name);
+        }
 	}
 }
