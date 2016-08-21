@@ -63,7 +63,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Data\LevelData.cs" />
     <Compile Include="Assets\Scripts\Data\LevelFlow.cs" />
     <Compile Include="Assets\Scripts\ExpandableCircle.cs" />
     <Compile Include="Assets\Scripts\FPSMeter.cs" />
