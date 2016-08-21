@@ -1,48 +1,53 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
+using Dasher;
 
-[CustomEditor(typeof(LevelFlow))]
-public class LevelDataEditor : Editor
+namespace DasherTool
 {
-	private ReorderableList list;
-
-	private void OnEnable()
+	[CustomEditor(typeof(LevelFlow))]
+	public class LevelDataEditor : Editor
 	{
-		list = new ReorderableList(serializedObject,
-				serializedObject.FindProperty("levelList"),
-				true, true, true, true);
+		private ReorderableList list;
 
-		float elementOffset = EditorGUIUtility.singleLineHeight + 1f;
-
-		list.elementHeightCallback = (index) =>
+		private void OnEnable()
 		{
-			return elementOffset * 3f + 6f;
-		};
+			list = new ReorderableList(serializedObject,
+					serializedObject.FindProperty("levelList"),
+					true, true, true, true);
 
-		list.drawElementCallback =
-		(Rect rect, int index, bool isActive, bool isFocused) => {
-			var element = list.serializedProperty.GetArrayElementAtIndex(index);
-			rect.y +=2f;
+			float elementOffset = EditorGUIUtility.singleLineHeight + 1f;
 
-			float fieldWidth = EditorGUIUtility.currentViewWidth - 60;
+			list.elementHeightCallback = (index) =>
+			{
+				return elementOffset * 3f + 6f;
+			};
 
-			EditorGUI.PropertyField(
-				new Rect(rect.x, rect.y, fieldWidth, EditorGUIUtility.singleLineHeight),
-				element.FindPropertyRelative("sceneObject"), GUIContent.none);
-			EditorGUI.PropertyField(
-				new Rect(rect.x, rect.y + elementOffset, fieldWidth, EditorGUIUtility.singleLineHeight),
-				element.FindPropertyRelative("world"), GUIContent.none);
-			EditorGUI.PropertyField(
-				new Rect(rect.x, rect.y + elementOffset * 2f, fieldWidth, EditorGUIUtility.singleLineHeight),
-				element.FindPropertyRelative("parTime"), GUIContent.none);
-		};
-	}
+			list.drawElementCallback =
+			(Rect rect, int index, bool isActive, bool isFocused) =>
+			{
+				var element = list.serializedProperty.GetArrayElementAtIndex(index);
+				rect.y += 2f;
 
-	public override void OnInspectorGUI()
-	{
-		serializedObject.Update();
-		list.DoLayoutList();
-		serializedObject.ApplyModifiedProperties();
+				float fieldWidth = EditorGUIUtility.currentViewWidth - 60;
+
+				EditorGUI.PropertyField(
+					new Rect(rect.x, rect.y, fieldWidth, EditorGUIUtility.singleLineHeight),
+					element.FindPropertyRelative("sceneObject"), GUIContent.none);
+				EditorGUI.PropertyField(
+					new Rect(rect.x, rect.y + elementOffset, fieldWidth, EditorGUIUtility.singleLineHeight),
+					element.FindPropertyRelative("world"), GUIContent.none);
+				EditorGUI.PropertyField(
+					new Rect(rect.x, rect.y + elementOffset * 2f, fieldWidth, EditorGUIUtility.singleLineHeight),
+					element.FindPropertyRelative("parTime"), GUIContent.none);
+			};
+		}
+
+		public override void OnInspectorGUI()
+		{
+			serializedObject.Update();
+			list.DoLayoutList();
+			serializedObject.ApplyModifiedProperties();
+		}
 	}
 }

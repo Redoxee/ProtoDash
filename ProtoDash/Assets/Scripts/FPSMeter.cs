@@ -1,17 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class FPSMeter : MonoBehaviour {
+namespace Dasher
+{
+	public class FPSMeter : MonoBehaviour
+	{
 
-	private Text text;
+		private Text text;
 
-	// Use this for initialization
-	void Start () {
-		text = GetComponent<Text>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		text.text = (1.0f / Time.deltaTime).ToString();
+		void Start()
+		{
+			text = GetComponent<Text>();
+		}
+
+		void Update()
+		{
+			text.text = (1.0f / Time.deltaTime).ToString();
+		}
 	}
 }

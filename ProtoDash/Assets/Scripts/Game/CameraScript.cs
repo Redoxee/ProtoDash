@@ -1,98 +1,102 @@
 ﻿using UnityEngine;
-using Assets;
 
-public class CameraScript : MonoBehaviour {
-
-    [SerializeField]
-    private Character character;
-
-	[SerializeField]
-	private float xDampingFactor = 0.5f;
-	[SerializeField]
-	private float yDampingFactor = 0.25f;
-
-	[SerializeField]
-	private float cameraYOffset = 6;
-	[SerializeField]
-	private float wantedXOffset = 6;
-
-	[SerializeField]
-	private float centerXoffset = 0.0f;
-
-
-    [SerializeField]
-    private float timeToPosX = 1.5f;
-    [SerializeField]
-    private AnimationCurve repositionXCurve;
-
-	private float maxVerticalOffset = 9f;
-	
-    private float lastOffsetX = 0.0f;
-    private float lastOrientation = 0.0f;
-    private float timerPosX = 0.0f;
-
-
-	void Start () {
-	}
-
-    void Update()
-    {
-		if (character.isPaused)
-		{
-			return;
-		}
-
-        if (lastOrientation != character.getFacingSign())
-        {
-            lastOrientation = character.getFacingSign();
-            timerPosX = timeToPosX;
-            lastOffsetX = transform.position.x - character.transform.position.x;
-        }
-        if (timerPosX > 0)
-        {
-            timerPosX = Mathf.Max(0, timerPosX - Time.deltaTime);
-        }
-    }
-
-    private void _DrawCross(float x, float y, Color col)
-    {
-        Debug.DrawRay(new Vector3(x - .5f, y, 0.0f), new Vector3(1f, 0.0f, 0.0f), col);
-        Debug.DrawRay(new Vector3(x, y - .5f, 0.0f), new Vector3(0f, 1f, 0.0f), col);
-    }
-
-	void LateUpdate()
+namespace Dasher
+{
+	public class CameraScript : MonoBehaviour
 	{
 
-		if (character.isPaused)
+		[SerializeField]
+		private Character character;
+
+		[SerializeField]
+		private float xDampingFactor = 0.5f;
+		[SerializeField]
+		private float yDampingFactor = 0.25f;
+
+		[SerializeField]
+		private float cameraYOffset = 6;
+		[SerializeField]
+		private float wantedXOffset = 6;
+
+		[SerializeField]
+		private float centerXoffset = 0.0f;
+
+
+		[SerializeField]
+		private float timeToPosX = 1.5f;
+		[SerializeField]
+		private AnimationCurve repositionXCurve;
+
+		private float maxVerticalOffset = 9f;
+
+		private float lastOffsetX = 0.0f;
+		private float lastOrientation = 0.0f;
+		private float timerPosX = 0.0f;
+
+
+		void Start()
 		{
-			return;
 		}
 
-		float orientation =  character.getFacingSign();
-        float currentOffsetX = wantedXOffset * orientation;
-        if (timerPosX > 0)
-        {
-            float progression = 1.0f - repositionXCurve.Evaluate(1.0f - timerPosX / timeToPosX);
-
-            currentOffsetX = currentOffsetX + (lastOffsetX - currentOffsetX) * progression;
-            orientation = lastOrientation;
-
-        }
-
-        Vector3 p = character.transform.position;
-        float tpx = p.x + currentOffsetX + centerXoffset;
-        float tpy = p.y + cameraYOffset;
-        _DrawCross(tpx, tpy, Color.yellow);
-        tpx = FuctionUtils.damping(xDampingFactor, transform.position.x, tpx, Time.deltaTime);
-        tpy = FuctionUtils.damping(yDampingFactor, transform.position.y, tpy, Time.deltaTime);
-        _DrawCross(p.x + wantedXOffset * orientation, p.y + cameraYOffset, Color.gray);
-        _DrawCross(tpx, tpy, Color.cyan);
-
-		if (transform.position.y - p.y > maxVerticalOffset)
+		void Update()
 		{
-			tpy = p.y + maxVerticalOffset;
+			if (character.isPaused)
+			{
+				return;
+			}
+
+			if (lastOrientation != character.getFacingSign())
+			{
+				lastOrientation = character.getFacingSign();
+				timerPosX = timeToPosX;
+				lastOffsetX = transform.position.x - character.transform.position.x;
+			}
+			if (timerPosX > 0)
+			{
+				timerPosX = Mathf.Max(0, timerPosX - Time.deltaTime);
+			}
 		}
 
-        transform.position = new Vector3(tpx, tpy, transform.position.z);
+		private void _DrawCross(float x, float y, Color col)
+		{
+			Debug.DrawRay(new Vector3(x - .5f, y, 0.0f), new Vector3(1f, 0.0f, 0.0f), col);
+			Debug.DrawRay(new Vector3(x, y - .5f, 0.0f), new Vector3(0f, 1f, 0.0f), col);
+		}
+
+		void LateUpdate()
+		{
+
+			if (character.isPaused)
+			{
+				return;
+			}
+
+			float orientation = character.getFacingSign();
+			float currentOffsetX = wantedXOffset * orientation;
+			if (timerPosX > 0)
+			{
+				float progression = 1.0f - repositionXCurve.Evaluate(1.0f - timerPosX / timeToPosX);
+
+				currentOffsetX = currentOffsetX + (lastOffsetX - currentOffsetX) * progression;
+				orientation = lastOrientation;
+
+			}
+
+			Vector3 p = character.transform.position;
+			float tpx = p.x + currentOffsetX + centerXoffset;
+			float tpy = p.y + cameraYOffset;
+			_DrawCross(tpx, tpy, Color.yellow);
+			tpx = FunctionUtils.damping(xDampingFactor, transform.position.x, tpx, Time.deltaTime);
+			tpy = FunctionUtils.damping(yDampingFactor, transform.position.y, tpy, Time.deltaTime);
+			_DrawCross(p.x + wantedXOffset * orientation, p.y + cameraYOffset, Color.gray);
+			_DrawCross(tpx, tpy, Color.cyan);
+
+			if (transform.position.y - p.y > maxVerticalOffset)
+			{
+				tpy = p.y + maxVerticalOffset;
+			}
+
+			transform.position = new Vector3(tpx, tpy, transform.position.z);
+		}
 	}
 }

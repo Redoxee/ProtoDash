@@ -443,7 +443,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1661814511}
   m_HandleRect: {fileID: 1661814510}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -987,7 +987,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 590321272}
         m_MethodName: StartLevel
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1239,6 +1239,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11458930, guid: 3446cbf404d476548976cd24c4148918, type: 2}
+      propertyPath: levelFlow
+      value: 
+      objectReference: {fileID: 11400000, guid: 891749800a1bfb047b10289c5de68145,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3446cbf404d476548976cd24c4148918, type: 2}
   m_IsPrefabParent: 0

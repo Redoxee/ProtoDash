@@ -2,47 +2,51 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class MainMenuScript : MonoBehaviour {
-
-	private List<GameObject> LevelButons;
-
-	[SerializeField]
-	GameObject LevelButonTemplate;
-
-
-	public void Start()
+namespace Dasher
+{
+	public class MainMenuScript : MonoBehaviour
 	{
-		MainProcess gm = MainProcess.GetInstance();
 
-		
+		private List<GameObject> LevelButons;
 
-		LevelButons = new List<GameObject>(gm.Levels.Count);
-		Button btn = LevelButonTemplate.GetComponent<Button>();
-		btn.onClick.AddListener(delegate { StartLevel(gm.Levels[0]); });
-		Text label = LevelButonTemplate.transform.Find("Label").GetComponent<Text>();
-		label.text = gm.Levels[0];
-		LevelButons.Add(LevelButonTemplate);
+		[SerializeField]
+		GameObject LevelButonTemplate;
 
-		for (int i = 1; i < gm.Levels.Count; ++i)
+		private const string BASE_LEVEL_LABEL = "Level - ";
+
+		public void Start()
 		{
-			GameObject lb = Instantiate<GameObject>(LevelButonTemplate);
-			lb.transform.SetParent(LevelButonTemplate.transform.parent);
+			MainProcess gm = MainProcess.Instance;
 
-			btn = lb.GetComponent<Button>();
-			string target = gm.Levels[i];
-			btn.onClick.AddListener(delegate { StartLevel(target); });
 
-			label = lb.transform.Find("Label").GetComponent<Text>();
-			label.text = gm.Levels[i];
 
-			LevelButons.Add(lb);
-		} 
+			LevelButons = new List<GameObject>(gm.levelFlow.levelList.Count);
+			Button btn = LevelButonTemplate.GetComponent<Button>();
+			btn.onClick.AddListener(delegate { StartLevel(0); });
+			Text label = LevelButonTemplate.transform.Find("Label").GetComponent<Text>();
+			label.text = BASE_LEVEL_LABEL + 1;
+			LevelButons.Add(LevelButonTemplate);
 
+			for (int i = 1; i < gm.levelFlow.levelList.Count; ++i)
+			{
+				GameObject lb = Instantiate<GameObject>(LevelButonTemplate);
+				lb.transform.SetParent(LevelButonTemplate.transform.parent);
+
+				btn = lb.GetComponent<Button>();
+				object o = i; // weird trick to force the copy
+				btn.onClick.AddListener(delegate { StartLevel((int) o); });
+
+				label = lb.transform.Find("Label").GetComponent<Text>();
+				label.text = BASE_LEVEL_LABEL + (i + 1);
+
+				LevelButons.Add(lb);
+			}
+
+		}
+
+		public void StartLevel(int levelIndex)
+		{
+			MainProcess.Instance.LaunchLevel(levelIndex);
+		}
 	}
-
-	public void StartLevel(string levelName)
-	{
-		MainProcess.GetInstance().LaunchLevel(levelName);
-	}
-	
 }

@@ -1,99 +1,105 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GUIManager : MonoBehaviour {
-	
-	private Character characterRef;
-
-	private MainProcess gameManagerRef;
-
-	[SerializeField]
-	private Canvas mainCanvas;
-	[SerializeField]
-	private Canvas gameCanvas;
-	[SerializeField]
-	private Canvas pauseCanvas;
-	[SerializeField]
-	private Canvas endLevelCanvas;
-	[SerializeField]
-	private Canvas failCanvas;
-
-	private Animator guiAnimator;
-
-
-	// Use this for initialization
-	void Start () {
-		gameManagerRef = MainProcess.GetInstance();
-		gameManagerRef.registerGUIManager(this);
-
-		guiAnimator = mainCanvas.GetComponent<Animator>();
-	}
-
-	public void NotifyCharacterStart(Character c)
+namespace Dasher
+{
+	public class GUIManager : MonoBehaviour
 	{
-		characterRef = c;
-	}
 
-	public void notifyCharacterDisable(Character character)
-	{
-		characterRef = null;
-	}
+		private Character characterRef;
 
-	void OnDisable()
-	{
-		gameManagerRef.unregisterGUI();
-	}
+		private MainProcess gameManagerRef;
 
-	// Update is called once per frame
-	void Update () {
-	
-	}
+		[SerializeField]
+		private Canvas mainCanvas;
+		[SerializeField]
+		private Canvas gameCanvas;
+		[SerializeField]
+		private Canvas pauseCanvas;
+		[SerializeField]
+		private Canvas endLevelCanvas;
+		[SerializeField]
+		private Canvas failCanvas;
 
-	public void PauseGame()
-	{	
-		guiAnimator.SetTrigger("GoToPause");
-		characterRef.PauseGame(true);
-	}
+		private Animator guiAnimator;
 
-	public void ResumeGame()
-	{
-		guiAnimator.SetTrigger("ResumeGame");
 
-	}
+		// Use this for initialization
+		void Start()
+		{
+			gameManagerRef = MainProcess.Instance;
+			gameManagerRef.registerGUIManager(this);
 
-	public void OnResumeAnimationEnd()
-	{
-		characterRef.PauseGame(false);
-	}
+			guiAnimator = mainCanvas.GetComponent<Animator>();
+		}
 
-	public void NotifyEndLevelReached()
-	{
-		characterRef.PauseGame(true);
-		gameCanvas.gameObject.SetActive(false);
-		endLevelCanvas.gameObject.SetActive(true);
-	}
+		public void NotifyCharacterStart(Character c)
+		{
+			characterRef = c;
+		}
 
-	public void NotifyDeathZoneTouched()
-	{
-		characterRef.PauseGame(true);
-		gameCanvas.gameObject.SetActive(false);
-		failCanvas.gameObject.SetActive(true);
-	}
+		public void notifyCharacterDisable(Character character)
+		{
+			characterRef = null;
+		}
 
-	public void GoHome()
-	{
-		gameCanvas.gameObject.SetActive(false);
-		pauseCanvas.gameObject.SetActive(false);
-		gameManagerRef.SwitchToHome();
-	}
+		void OnDisable()
+		{
+			gameManagerRef.unregisterGUI();
+		}
 
-	public void NextLevel()
-	{
-		gameManagerRef.LaunchNextLevel();
-	}
+		// Update is called once per frame
+		void Update()
+		{
 
-	public void RetryLevel()
-	{
-		gameManagerRef.RelaunchLevel();
+		}
+
+		public void PauseGame()
+		{
+			guiAnimator.SetTrigger("GoToPause");
+			characterRef.PauseGame(true);
+		}
+
+		public void ResumeGame()
+		{
+			guiAnimator.SetTrigger("ResumeGame");
+
+		}
+
+		public void OnResumeAnimationEnd()
+		{
+			characterRef.PauseGame(false);
+		}
+
+		public void NotifyEndLevelReached()
+		{
+			characterRef.PauseGame(true);
+			gameCanvas.gameObject.SetActive(false);
+			endLevelCanvas.gameObject.SetActive(true);
+		}
+
+		public void NotifyDeathZoneTouched()
+		{
+			characterRef.PauseGame(true);
+			gameCanvas.gameObject.SetActive(false);
+			failCanvas.gameObject.SetActive(true);
+		}
+
+		public void GoHome()
+		{
+			gameCanvas.gameObject.SetActive(false);
+			pauseCanvas.gameObject.SetActive(false);
+			gameManagerRef.SwitchToHome();
+		}
+
+		public void NextLevel()
+		{
+			gameManagerRef.LaunchNextLevel();
+		}
+
+		public void RetryLevel()
+		{
+			gameManagerRef.RelaunchLevel();
+		}
 	}
 }

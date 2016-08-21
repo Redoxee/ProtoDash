@@ -8,36 +8,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
   - enabled: 1
-    path: Assets/Scenes/Levels/Level1.unity
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level2.unity
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level7.unity
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level8.unity
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level9.unity
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level10.unity
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level11.unity
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level12.unity
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level13.unity
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level14.unity
-  - enabled: 1
-    path: Assets/Scenes/Levels/DeathPit.unity
-  - enabled: 1
-    path: Assets/Scenes/Levels/GymLevel.unity
-  - enabled: 1
     path: Assets/Scenes/GameSetupScene.unity
   - enabled: 1
-    path: Assets/Scenes/Levels/Level3.unity
+    path: Assets/Scenes/Levels/001TheBasics.unity
   - enabled: 1
-    path: Assets/Scenes/Levels/Level4.unity
+    path: Assets/Scenes/Levels/002WallJumping.unity
   - enabled: 1
-    path: Assets/Scenes/Levels/Level5.unity
+    path: Assets/Scenes/Levels/003DeathPit.unity
   - enabled: 1
-    path: Assets/Scenes/Levels/Level6.unity
+    path: Assets/Scenes/Levels/004DashIntro.unity
+  - enabled: 1
+    path: Assets/Scenes/Levels/005SimpleDash.unity
+  - enabled: 1
+    path: Assets/Scenes/Levels/006Climb.unity
+  - enabled: 1
+    path: Assets/Scenes/Levels/GymLevel.unity

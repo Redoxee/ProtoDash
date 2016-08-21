@@ -1,42 +1,66 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public partial class Character {
-
-	/**
-	* Jump
-	**/
-	private void _StartJump()
+namespace Dasher
+{
+	public partial class Character
 	{
 
-		currentSquishY = .8f;
-		jumpTimer = .0f;
-	}
-
-	private Vector2 _GameplayJump(Vector2 currentVelocity)
-	{
-
-
-		if (isTouchingRight || isTouchingLeft)
+		/**
+		* Jump
+		**/
+		private void _StartJump()
 		{
-			currentVelocity.y = Mathf.Max(currentVelocity.y, -wallSlideSpeed);
-			if (isMouseDown)
+
+			currentSquishY = .8f;
+			jumpTimer = .0f;
+		}
+
+		private Vector2 _GameplayJump(Vector2 currentVelocity)
+		{
+
+
+			if (isTouchingRight || isTouchingLeft)
 			{
-				currentVelocity = isTouchingLeft ? wallJumpVector : mirroredWallJumpVector;
-				currentFacingVector.x = isTouchingLeft ? 1 : -1;
-				currentVelocity *= wallJumpForce;
-				currentSquishX = .85f;
-				canLateJump = false;
-				traceManager.NotifyJump(characterRB.transform.position);
+				currentVelocity.y = Mathf.Max(currentVelocity.y, -wallSlideSpeed);
+				if (isMouseDown)
+				{
+					currentVelocity = isTouchingLeft ? wallJumpVector : mirroredWallJumpVector;
+					currentFacingVector.x = isTouchingLeft ? 1 : -1;
+					currentVelocity *= wallJumpForce;
+					currentSquishX = .85f;
+					canLateJump = false;
+					traceManager.NotifyJump(characterRB.transform.position);
+					return currentVelocity;
+				}
+			}
+			if (canLateJump)
+			{
+				jumpTimer += Time.fixedDeltaTime;
+				if (jumpTimer < lateJumpDuration)
+				{
+					if (isMouseDown)
+					{
+						currentVelocity.y = jumpForce;
+						_SetState(Jump);
+						traceManager.NotifyJump(characterRB.transform.position);
+						return currentVelocity;
+					}
+				}
+				else
+				{
+					canLateJump = false;
+				}
+			}
+
+			if (isTouchingDown && currentVelocity.y <= 0)
+			{
+				_SetState(Idle);
 				return currentVelocity;
 			}
-		}
-		if (canLateJump)
-		{
-			jumpTimer += Time.fixedDeltaTime;
-			if (jumpTimer < lateJumpDuration)
+			if (isMouseDown)
 			{
-				if (isMouseDown)
+				if (currentVelocity.y < 0 && isInEarlyJumpRange)
 				{
 					currentVelocity.y = jumpForce;
 					_SetState(Jump);
@@ -44,60 +68,40 @@ public partial class Character {
 					return currentVelocity;
 				}
 			}
-			else
-			{
-				canLateJump = false;
-			}
-		}
 
-		if (isTouchingDown && currentVelocity.y <= 0)
-		{
-			_SetState(Idle);
+
+			{
+				bool hasMagneted = false;
+				Vector2 magnetVector = Vector2.zero;
+				if (magnetRadius > .0f)
+				{
+					if (isInMagnetRight)
+					{
+						magnetVector.x += magnetForce;
+						hasMagneted = true;
+					}
+					if (isInMagnetLeft)
+					{
+						magnetVector.x -= magnetForce;
+						hasMagneted = true;
+					}
+					currentVelocity += magnetVector;
+				}
+				if (!hasMagneted)
+				{
+					float d = currentFacingVector.x * airPropulsion;
+					if (Mathf.Abs(currentVelocity.x + d) < maxPropulsion)
+					{
+						currentVelocity.x = currentVelocity.x + d;
+					}
+				}
+			}
 			return currentVelocity;
 		}
-		if (isMouseDown)
+
+		private void _EndJump()
 		{
-			if (currentVelocity.y < 0 && isInEarlyJumpRange)
-			{
-				currentVelocity.y = jumpForce;
-				_SetState(Jump);
-				traceManager.NotifyJump(characterRB.transform.position);
-				return currentVelocity;
-			}
+			canLateJump = false;
 		}
-
-
-		{
-			bool hasMagneted = false;
-			Vector2 magnetVector = Vector2.zero;
-			if (magnetRadius > .0f)
-			{
-				if (isInMagnetRight)
-				{
-					magnetVector.x += magnetForce;
-					hasMagneted = true;
-				}
-				if (isInMagnetLeft)
-				{
-					magnetVector.x -= magnetForce;
-					hasMagneted = true;
-				}
-				currentVelocity += magnetVector;
-			}
-			if (!hasMagneted)
-			{
-				float d = currentFacingVector.x * airPropulsion;
-				if (Mathf.Abs(currentVelocity.x + d) < maxPropulsion)
-				{
-					currentVelocity.x = currentVelocity.x + d;
-				}
-			}
-		}
-		return currentVelocity;
-	}
-
-	private void _EndJump()
-	{
-		canLateJump = false;
 	}
 }

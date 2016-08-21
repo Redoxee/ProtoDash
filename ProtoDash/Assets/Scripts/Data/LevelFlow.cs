@@ -1,16 +1,20 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
-
-[Serializable]
-public struct LevelData
+namespace Dasher
 {
-	public UnityEngine.Object sceneObject;
-	public int world;
-	public float parTime;
-}
+	[Serializable]
+	public struct LevelData
+	{
+		public UnityEngine.Object sceneObject;
+		public string sceneName;
+		public int world;
+		public float parTime;
+	}
 
-public class LevelFlow : ScriptableObject {
-	[SerializeField]
-	public List<LevelData> levelList;
+	public class LevelFlow : ScriptableObject
+	{
+		[SerializeField]
+		public List<LevelData> levelList;
+	}
 }

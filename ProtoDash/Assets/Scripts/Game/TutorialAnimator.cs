@@ -1,42 +1,48 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class TutorialAnimator : MonoBehaviour {
+namespace Dasher
+{
+	public class TutorialAnimator : MonoBehaviour
+	{
 
-	[SerializeField]
-	float animationTime = 2f;
+		[SerializeField]
+		float animationTime = 2f;
 
-	[SerializeField]
-	private List<ExpandableCircle> animatedCircles;
-	[SerializeField]
-	private float animatedTimeStart = 0f;
+		[SerializeField]
+		private List<ExpandableCircle> animatedCircles;
+		[SerializeField]
+		private float animatedTimeStart = 0f;
 
-	private bool hasNotifiedCircles = false;
-	
+		private bool hasNotifiedCircles = false;
 
-	private float animationTimer;
 
-	// Use this for initialization
-	void Start () {
-		animationTimer = 0f;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		animationTimer = (animationTimer + Time.deltaTime);
-		if (animationTimer > animationTime)
+		private float animationTimer;
+
+		// Use this for initialization
+		void Start()
 		{
-			hasNotifiedCircles = false;
-			animationTimer %= animationTime;
+			animationTimer = 0f;
 		}
 
-		if (animationTimer >= animatedTimeStart && !hasNotifiedCircles)
+		// Update is called once per frame
+		void Update()
 		{
-			for (int i = 0; i < animatedCircles.Count; ++i)
+			animationTimer = (animationTimer + Time.deltaTime);
+			if (animationTimer > animationTime)
 			{
-				animatedCircles[i].StartAnimation();
+				hasNotifiedCircles = false;
+				animationTimer %= animationTime;
 			}
-			hasNotifiedCircles = true;
+
+			if (animationTimer >= animatedTimeStart && !hasNotifiedCircles)
+			{
+				for (int i = 0; i < animatedCircles.Count; ++i)
+				{
+					animatedCircles[i].StartAnimation();
+				}
+				hasNotifiedCircles = true;
+			}
 		}
 	}
 }

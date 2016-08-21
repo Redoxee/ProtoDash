@@ -13,23 +13,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelList:
   - sceneObject: {fileID: 102900000, guid: 12143ebb1477140479131520c3e81f60, type: 3}
+    sceneName: 001TheBasics
     world: 1
     parTime: 3
   - sceneObject: {fileID: 102900000, guid: 8011ba23e5af11f4cac288200ec5999f, type: 3}
+    sceneName: 002WallJumping
+    world: 1
+    parTime: 3
+  - sceneObject: {fileID: 102900000, guid: 8478ecac3eb56a648b7a9f600981b614, type: 3}
+    sceneName: 003DeathPit
     world: 1
     parTime: 3
   - sceneObject: {fileID: 102900000, guid: d2d45e860eecac745bf52693eff38cba, type: 3}
+    sceneName: 004DashIntro
     world: 1
     parTime: 3
   - sceneObject: {fileID: 102900000, guid: 8c4947b108ea4534cb4d479a3533c915, type: 3}
+    sceneName: 005SimpleDash
     world: 1
     parTime: 3
   - sceneObject: {fileID: 102900000, guid: 35131affaa210d34c871bf288337f211, type: 3}
+    sceneName: 006Climb
     world: 1
     parTime: 3
-  - sceneObject: {fileID: 102900000, guid: 28222288afd950f49a10fd20e656bc85, type: 3}
-    world: 2
-    parTime: 3
-  - sceneObject: {fileID: 102900000, guid: f108bfd5871de01478e266cd24d6166a, type: 3}
-    world: 2
+  - sceneObject: {fileID: 102900000, guid: b271b7621ead3cb4c90f0eba4bf919a6, type: 3}
+    sceneName: GymLevel
+    world: 1
     parTime: 3

@@ -66,22 +66,23 @@
     <Compile Include="Assets\Scripts\Data\LevelFlow.cs" />
     <Compile Include="Assets\Scripts\ExpandableCircle.cs" />
     <Compile Include="Assets\Scripts\FPSMeter.cs" />
-    <Compile Include="Assets\Scripts\FuctionUtils.cs" />
+    <Compile Include="Assets\Scripts\FunctionUtils.cs" />
     <Compile Include="Assets\Scripts\GUI\PauseButtonComponent.cs" />
     <Compile Include="Assets\Scripts\Game\CameraScript.cs" />
     <Compile Include="Assets\Scripts\Game\Character.cs" />
     <Compile Include="Assets\Scripts\Game\CharacterStates\CharacterDash.cs" />
     <Compile Include="Assets\Scripts\Game\CharacterStates\CharacterIdle.cs" />
     <Compile Include="Assets\Scripts\Game\CharacterStates\CharacterJump.cs" />
-    <Compile Include="Assets\Scripts\Game\DeathZone.cs" />
     <Compile Include="Assets\Scripts\Game\DeathZoneMaterialUpdater.cs" />
     <Compile Include="Assets\Scripts\Game\GUIManager.cs" />
     <Compile Include="Assets\Scripts\Game\GaugeScript.cs" />
     <Compile Include="Assets\Scripts\Game\TraceManager.cs" />
     <Compile Include="Assets\Scripts\Game\TutorialAnimator.cs" />
+    <Compile Include="Assets\Scripts\Game\World\DeathZone.cs" />
     <Compile Include="Assets\Scripts\Game\World\EndNode.cs" />
     <Compile Include="Assets\Scripts\MainMenuScript.cs" />
     <Compile Include="Assets\Scripts\MainProcess.cs" />
+    <Compile Include="Assets\Scripts\Tool\Singleton.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Materials\Shaders\BackgroundShader.shader" />

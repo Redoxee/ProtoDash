@@ -1,42 +1,46 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public partial class Character {
-
-	/**
-	* Idle
-	**/
-
-	private void _StartIdle()
+namespace Dasher
+{
+	public partial class Character
 	{
-		canLateJump = false;
-	}
 
-	private Vector2 _GameplayIdle(Vector2 currentVelocity)
-	{
-		if (isTouchingDown)
+		/**
+		* Idle
+		**/
+
+		private void _StartIdle()
 		{
+			canLateJump = false;
+		}
 
-			if (isMouseDown)
+		private Vector2 _GameplayIdle(Vector2 currentVelocity)
+		{
+			if (isTouchingDown)
 			{
-				currentVelocity.y = jumpForce;
-				_SetState(Jump);
-				traceManager.NotifyJump(characterRB.transform.position);
+
+				if (isMouseDown)
+				{
+					currentVelocity.y = jumpForce;
+					_SetState(Jump);
+					traceManager.NotifyJump(characterRB.transform.position);
+				}
+
+				float d = currentFacingVector.x * propulsionImpulse;
+				currentVelocity.x = Mathf.Clamp(currentVelocity.x + d, -maxPropulsion, maxPropulsion);
 			}
-
-			float d = currentFacingVector.x * propulsionImpulse;
-			currentVelocity.x = Mathf.Clamp(currentVelocity.x + d, -maxPropulsion, maxPropulsion);
+			else
+			{
+				canLateJump = true;
+				_SetState(Jump);
+			}
+			return currentVelocity;
 		}
-		else
+
+		private void _EndIdle()
 		{
-			canLateJump = true;
-			_SetState(Jump);
 		}
-		return currentVelocity;
-	}
 
-	private void _EndIdle()
-	{
 	}
-
 }
