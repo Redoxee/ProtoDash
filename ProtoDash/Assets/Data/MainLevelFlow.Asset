@@ -36,7 +36,19 @@ MonoBehaviour:
     sceneName: 006Climb
     world: 1
     parTime: 3
-  - sceneObject: {fileID: 102900000, guid: b271b7621ead3cb4c90f0eba4bf919a6, type: 3}
-    sceneName: GymLevel
+  - sceneObject: {fileID: 102900000, guid: 28222288afd950f49a10fd20e656bc85, type: 3}
+    sceneName: 007DashDown
+    world: 1
+    parTime: 3
+  - sceneObject: {fileID: 102900000, guid: f108bfd5871de01478e266cd24d6166a, type: 3}
+    sceneName: 008DeathShaft
+    world: 1
+    parTime: 3
+  - sceneObject: {fileID: 102900000, guid: d07f505a4af2ce8469ffa0921e769480, type: 3}
+    sceneName: 009WallJumpingChain
+    world: 1
+    parTime: 3
+  - sceneObject: {fileID: 102900000, guid: 8d3ef0089fe05244ea0bc7c139d31732, type: 3}
+    sceneName: 010MissLeadingJump
     world: 1
     parTime: 3
