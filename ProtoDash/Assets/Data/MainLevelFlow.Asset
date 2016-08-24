@@ -52,3 +52,15 @@ MonoBehaviour:
     sceneName: 010MissLeadingJump
     world: 1
     parTime: 3
+  - sceneObject: {fileID: 102900000, guid: 084f59d2b672a224b8bfef179b0d3f71, type: 3}
+    sceneName: 011DontMessTheTransition
+    world: 1
+    parTime: 3
+  - sceneObject: {fileID: 102900000, guid: bea951c94f38bec4d8090ded0521f738, type: 3}
+    sceneName: 012LeapOfFaith
+    world: 1
+    parTime: 3
+  - sceneObject: {fileID: 102900000, guid: 9817ee53e80782d4fbff6d5671a11018, type: 3}
+    sceneName: 013ATopTheClockTower
+    world: 1
+    parTime: 3
