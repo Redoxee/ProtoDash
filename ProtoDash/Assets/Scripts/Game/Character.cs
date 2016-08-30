@@ -229,7 +229,7 @@ namespace Dasher
 			MainProcess mp = MainProcess.Instance;
 			if (mp != null)
 			{
-				mp.NotifyCharacterStart(this);
+				mp.RegisterCharacter(this);
 			}
 		}
 
@@ -238,7 +238,7 @@ namespace Dasher
 			MainProcess mp = MainProcess.Instance;
 			if (mp != null)
 			{
-				mp.NotifyCharacterDisable(this);
+				mp.UnregisterCharacter();
 			}
 		}
 
@@ -390,21 +390,24 @@ namespace Dasher
 			return currentFacingVector.x;
 		}
 
-		public void PauseGame(bool value)
+		public void Pause()
 		{
-			if (isPaused != value)
+			if (!isPaused)
 			{
-				isPaused = value;
-				if (isPaused)
-				{
-					savedVelocity = characterRB.velocity;
-					characterRB.isKinematic = true;
-				}
-				else
-				{
-					characterRB.isKinematic = false;
-					characterRB.velocity = savedVelocity;
-				}
+				savedVelocity = characterRB.velocity;
+				characterRB.isKinematic = true;
+				isPaused = true;
+			}
+			
+		}
+
+		public void Unpause()
+		{
+			if (isPaused)
+			{
+				characterRB.isKinematic = false;
+				characterRB.velocity = savedVelocity;
+				isPaused = false;
 			}
 		}
 	}

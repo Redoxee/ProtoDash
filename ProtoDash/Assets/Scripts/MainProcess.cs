@@ -8,54 +8,62 @@ namespace Dasher
 	{
 
 		protected MainProcess() { } // guarantee this will be always a singleton only - can't use the constructor!
-		/*
-		#region singleton
-		private static MainProcess singleInstance;
-
-		public static MainProcess GetInstance()
-		{
-			return singleInstance;
-		}
-		void Awake()
-		{
-			//Check if instance already exists
-			if (singleInstance == null)
-
-				//if not, set instance to this
-				singleInstance = this;
-
-			//If instance already exists and it's not this:
-			else if (singleInstance != this)
-			{
-				//Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a MainProcess.
-				Destroy(gameObject);
-				return;
-			}
-			//Sets this to not be destroyed when reloading scene
-			DontDestroyOnLoad(gameObject);
-
-		}
-	#endregion
-	*/
 		enum GameState { MainMenu, InGame }
-		GameState gameState = GameState.MainMenu;
+		GameState m_gameState = GameState.MainMenu;
 
 		[SerializeField]
 		public LevelFlow levelFlow;
-		private int currentLevelIndex = -1;
+
+		private int m_currentLevelIndex = -1;
+		public int CurrentLevelIndex {get { return m_currentLevelIndex; }}
+
 		string currentLevelName;
 
+		private Character m_character;
+
+		private TimeManager m_timeManager = new TimeManager();
+		public TimeManager GameTime { get { return m_timeManager;} }
+
+		#region Character
+
+		public void RegisterCharacter(Character character)
+		{
+			m_character = character;
+		}
+
+		public void UnregisterCharacter()
+		{
+			m_character = null;
+		}
+
+		#endregion
+
+		#region MonoBehavior
+		public void FixedUpdate()
+		{
+			if (m_gameState == GameState.InGame)
+			{
+				m_timeManager.ManualFixedUpdate();
+				if (m_GUIManager != null)
+					m_GUIManager.ManualFixedUpdate();
+			}
+		}
+		#endregion
+
+		#region Process navigation
 
 		public void SwitchToHome()
 		{
 			SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+			m_gameState = GameState.MainMenu;
 		}
 
 		public void LaunchLevel(int index)
 		{
-			if (gameState != GameState.InGame)
+			if (m_gameState != GameState.InGame)
 			{
 				SceneManager.LoadScene("GameSetupScene", LoadSceneMode.Single);
+				m_gameState = GameState.InGame;
 			}
 			else
 			{
@@ -63,18 +71,20 @@ namespace Dasher
 			}
 			currentLevelName = levelFlow.levelList[index].sceneName;
 
-			currentLevelIndex = index;
+			m_currentLevelIndex = index;
 			SceneManager.LoadScene(currentLevelName, LoadSceneMode.Additive);
+
+			LevelStart();
 		}
 
 		public void RelaunchLevel()
 		{
-			LaunchLevel(currentLevelIndex);
+			LaunchLevel(m_currentLevelIndex);
 		}
 
 		public void LaunchNextLevel()
 		{
-			int levelIndex = currentLevelIndex + 1;
+			int levelIndex = m_currentLevelIndex + 1;
 			if (levelIndex < 0 || levelIndex == levelFlow.levelList.Count)
 			{
 				SwitchToHome();
@@ -85,38 +95,57 @@ namespace Dasher
 			}
 		}
 
-		private GUIManager currentGUI;
+		#endregion
+
+		#region GUIManager
+
+		private GUIManager m_GUIManager;
 		public void registerGUIManager(GUIManager gui)
 		{
-			currentGUI = gui;
+			m_GUIManager = gui;
 		}
+
 		public void unregisterGUI()
 		{
-			currentGUI = null;
+			m_GUIManager = null;
 		}
 
 		public GUIManager getCurrentGUI()
 		{
-			return currentGUI;
+			return m_GUIManager;
+		}
+		#endregion
+
+		#region Level flow
+
+		private void LevelStart()
+		{
+			if (m_GUIManager != null)
+			{
+				m_GUIManager.NotifyLevelStart();
+			}
+			m_timeManager.NotifyStartLevel();
+			m_timeManager.GameTimeFactor = 1;
 		}
 
-		public void NotifyCharacterStart(Character character)
+		public void RequirePause()
 		{
-			if (currentGUI)
-				currentGUI.NotifyCharacterStart(character);
+			m_character.Pause();
+			m_timeManager.GameTimeFactor = 0f;
 		}
 
-		public void NotifyCharacterDisable(Character character)
+		public void RequireResume()
 		{
-			if (currentGUI)
-				currentGUI.notifyCharacterDisable(character);
+			m_character.Unpause();
+			m_timeManager.GameTimeFactor = 1f;
 		}
 
 		public void NotifyEndLevelReached()
 		{
-			if (currentGUI)
+			m_timeManager.GameTimeFactor = 0f;
+			if (m_GUIManager)
 			{
-				currentGUI.NotifyEndLevelReached();
+				m_GUIManager.NotifyEndLevelReached();
 			}
 			else
 			{
@@ -126,14 +155,17 @@ namespace Dasher
 
 		public void NotifyDeathZoneTouched()
 		{
-			if (currentGUI)
+			m_timeManager.GameTimeFactor = 0f;
+			if (m_GUIManager)
 			{
-				currentGUI.NotifyDeathZoneTouched();
+				m_GUIManager.NotifyDeathZoneTouched();
 			}
 			else
 			{
 				FunctionUtils.Quit();
 			}
 		}
+
+		#endregion
 	}
 }
