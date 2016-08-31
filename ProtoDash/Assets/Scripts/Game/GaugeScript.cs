@@ -5,20 +5,19 @@ namespace Dasher
 {
 	public class GaugeScript : MonoBehaviour
 	{
-
-		[SerializeField]
-		private Character watchedScript;
+		private Character m_character;
 
 		private Material gaugeMaterial;
 
 		void Start()
 		{
 			gaugeMaterial = GetComponent<Image>().material;
+			m_character = MainProcess.Instance.CurrentCharacter;
 		}
 
 		void Update()
 		{
-			gaugeMaterial.SetFloat("_GaugeProgression", watchedScript.currentEnergy / watchedScript.maxEnergyPoints);
+			gaugeMaterial.SetFloat("_GaugeProgression", m_character.currentEnergy / m_character.maxEnergyPoints);
 		}
 	}
 }

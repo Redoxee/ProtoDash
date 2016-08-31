@@ -37,6 +37,11 @@ namespace Dasher
 		private Text m_failTimerText;
 
 
+		void Awake()
+		{
+			Debug.Log("GUI Awake");
+		}
+
 		void Start()
 		{
 			m_mainProcess = MainProcess.Instance;
@@ -75,6 +80,7 @@ namespace Dasher
 
 		public void NotifyLevelStart()
 		{
+			Debug.Log("GUILevelStart");
 			gameCanvas.gameObject.SetActive(true);
 			pauseCanvas.gameObject.SetActive(false);
 			endLevelCanvas.gameObject.SetActive(false);

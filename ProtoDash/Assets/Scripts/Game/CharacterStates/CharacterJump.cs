@@ -28,7 +28,7 @@ namespace Dasher
 					currentVelocity = isTouchingLeft ? wallJumpVector : mirroredWallJumpVector;
 					currentFacingVector.x = isTouchingLeft ? 1 : -1;
 					currentVelocity *= wallJumpForce;
-					currentSquishX = .85f;
+					currentSquishX = .55f;
 					canLateJump = false;
 					traceManager.NotifyJump(characterRB.transform.position);
 					return currentVelocity;

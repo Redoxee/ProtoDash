@@ -19,12 +19,13 @@ namespace Dasher
 
 		string currentLevelName;
 
-		private Character m_character;
-
 		private TimeManager m_timeManager = new TimeManager();
 		public TimeManager GameTime { get { return m_timeManager;} }
 
+		private bool m_initFrameWait = false;
+
 		#region Character
+		private Character m_character;
 
 		public void RegisterCharacter(Character character)
 		{
@@ -36,11 +37,18 @@ namespace Dasher
 			m_character = null;
 		}
 
+		public Character CurrentCharacter {get { return m_character; }}
+
 		#endregion
 
 		#region MonoBehavior
 		public void FixedUpdate()
 		{
+			if (m_initFrameWait)
+			{
+				m_initFrameWait = false;
+				LevelStart();
+			}
 			if (m_gameState == GameState.InGame)
 			{
 				m_timeManager.ManualFixedUpdate();
@@ -74,7 +82,7 @@ namespace Dasher
 			m_currentLevelIndex = index;
 			SceneManager.LoadScene(currentLevelName, LoadSceneMode.Additive);
 
-			LevelStart();
+			m_initFrameWait = true;
 		}
 
 		public void RelaunchLevel()
@@ -102,6 +110,7 @@ namespace Dasher
 		private GUIManager m_GUIManager;
 		public void registerGUIManager(GUIManager gui)
 		{
+			Debug.Log("Register GUI");
 			m_GUIManager = gui;
 		}
 
@@ -120,12 +129,14 @@ namespace Dasher
 
 		private void LevelStart()
 		{
+			Debug.Log("MainProcess Level Start");
 			if (m_GUIManager != null)
 			{
 				m_GUIManager.NotifyLevelStart();
 			}
 			m_timeManager.NotifyStartLevel();
 			m_timeManager.GameTimeFactor = 1;
+
 		}
 
 		public void RequirePause()
