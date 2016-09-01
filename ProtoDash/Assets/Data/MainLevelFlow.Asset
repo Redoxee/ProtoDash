@@ -48,6 +48,10 @@ MonoBehaviour:
     sceneName: 010MissLeadingJump
     world: 1
     parTime: 3
+  - sceneObject: {fileID: 102900000, guid: 8f1401b09f340d143ba5ad54ca330a16, type: 3}
+    sceneName: 015JumpDashJumpDash
+    world: 1
+    parTime: 3
   - sceneObject: {fileID: 102900000, guid: 084f59d2b672a224b8bfef179b0d3f71, type: 3}
     sceneName: 011DontMessTheTransition
     world: 1
@@ -62,9 +66,5 @@ MonoBehaviour:
     parTime: 3
   - sceneObject: {fileID: 102900000, guid: 858e69054a44c2746b6a6854310298fa, type: 3}
     sceneName: 014StalactitePath
-    world: 1
-    parTime: 3
-  - sceneObject: {fileID: 102900000, guid: 8f1401b09f340d143ba5ad54ca330a16, type: 3}
-    sceneName: 015JumpDashJumpDash
     world: 1
     parTime: 3
