@@ -6,8 +6,8 @@ namespace Dasher
 	public class AnimatedEnergyCost : MonoBehaviour
 	{
 
-		private float m_animationDuration = 2f;
-		private Vector3 m_animationOffset = new Vector3(1, 0, 0) * 30;
+		private float m_animationDuration = 1f;
+		private Vector3 m_animationOffset = new Vector3(-1, 0, 0) * 30;
 		[SerializeField]
 		private AnimationCurve m_animationCurve;
 
