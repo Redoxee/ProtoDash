@@ -169,7 +169,7 @@ namespace Dasher
 		private float originalBeakX = 0.0f;
 
 
-		private float squishDampingFactor = .15f;
+		private float squishDampingFactor = .075f;
 		private float currentSquishX = 1.0f;
 		private float currentSquishY = 1.0f;
 

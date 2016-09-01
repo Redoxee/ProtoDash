@@ -15,6 +15,9 @@ namespace Dasher
 		private Text m_gameTimerText;
 
 		[SerializeField]
+		private SmartGauge m_gauge;
+
+		[SerializeField]
 		private Canvas pauseCanvas;
 
 		[SerializeField]
@@ -90,6 +93,8 @@ namespace Dasher
 			m_pauseLevelLabelText.text = levelLabel;
 			m_endLevelLabelText.text = levelLabel;
 			m_failLevelLabelText.text = levelLabel;
+
+			m_gauge.Initialize();
 		}
 
 		public void NotifyEndLevelReached()

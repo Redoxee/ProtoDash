@@ -32,10 +32,6 @@ MonoBehaviour:
     sceneName: 005SimpleDash
     world: 1
     parTime: 3
-  - sceneObject: {fileID: 102900000, guid: 35131affaa210d34c871bf288337f211, type: 3}
-    sceneName: 006Climb
-    world: 1
-    parTime: 3
   - sceneObject: {fileID: 102900000, guid: 28222288afd950f49a10fd20e656bc85, type: 3}
     sceneName: 007DashDown
     world: 1
