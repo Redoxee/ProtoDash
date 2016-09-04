@@ -1,4 +1,6 @@
-﻿Shader "Unlit/BackgroundShader"
+﻿// Upgrade NOTE: commented out 'float4x4 _CameraToWorld', a built-in variable
+
+Shader "Unlit/BackgroundShader"
 {
 	Properties
 	{
@@ -38,7 +40,7 @@
 			float4 _MainColor;
 			
 			//FRAGMENT
-			float4x4 _CameraToWorld;
+			// float4x4 _CameraToWorld;
 #define LEVEL_NUMBER 10.
 
 #define SF 15.

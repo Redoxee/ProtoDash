@@ -23,7 +23,7 @@ namespace DasherTool
 		private LevelFlow mainLevelFlow;
 
 		private bool m_IncrementPatch = true;
-		private bool m_isDevelopementBuild = true;
+		private bool m_isDevelopementBuild = false;
 		private bool m_androidAutoPlay = true;
 
 		#region Create flow
@@ -90,7 +90,13 @@ namespace DasherTool
 			{
 				BuildForAndroid(m_isDevelopementBuild, m_IncrementPatch, m_androidAutoPlay);
 			}
+
+			if (GUILayout.Button("Build Web"))
+			{
+				BuildForWeb(m_isDevelopementBuild, m_IncrementPatch);
+			}
 		}
+
 		#region Set scenes in builds
 		void SetSceneInProjects()
 		{
@@ -177,6 +183,8 @@ namespace DasherTool
 			return bo;
 		}
 
+		#region Platforms
+
 		#region Android
 		const string c_androidFolder = "Android/";
 		const string c_androidExtension = ".apk";
@@ -215,6 +223,54 @@ namespace DasherTool
 			}
 		}
 		#endregion
+
+		#region Web
+		const string c_webFolder = "Web/";
+
+		public void BuildForWeb(bool isDebug, bool increment)
+		{
+			string buildPath = c_buildFolder + c_webFolder + GetVersionName();
+
+			if (!Directory.Exists(buildPath))
+			{
+				Directory.CreateDirectory(buildPath);
+			}
+			string buildName = buildPath + "/" + GetVersionName();
+
+			string[] scenes = StandardSetup();
+			BuildOptions bo = GetOptions(isDebug);
+
+			string buildResult = BuildPipeline.BuildPlayer(scenes, buildName, BuildTarget.WebGL, bo);
+
+			if (string.IsNullOrEmpty(buildResult))
+			{
+				UnityEngine.Debug.Log("Web build complete" + buildName);
+				if (increment)
+				{
+					IncrementPatch();
+				}
+			}
+			else
+			{
+				UnityEngine.Debug.LogError("Error building Web:\n" + buildResult);
+			}
+		}
+		#endregion
+
+		#endregion
+
+		#endregion
+
+		#region Show save folder
+
+		[MenuItem("Dasher/Open save folder")]
+		public static void OpenSaveFolder()
+		{
+			string itemPath = Application.persistentDataPath;
+			itemPath = itemPath.Replace(@"/", @"\");   // explorer doesn't like front slashes
+			System.Diagnostics.Process.Start("explorer.exe", "/select," + itemPath);
+		}
+
 		#endregion
 	}
 }

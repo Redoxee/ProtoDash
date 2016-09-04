@@ -14,10 +14,14 @@ namespace Dasher
 		[SerializeField]
 		public LevelFlow levelFlow;
 
+		private SaveManager m_saveManager = null;
+		public SaveManager DataManager { get { return m_saveManager; } }
+
 		private int m_currentLevelIndex = -1;
 		public int CurrentLevelIndex {get { return m_currentLevelIndex; }}
 
-		string currentLevelName;
+		private string currentLevelName;
+		public string CurrentLevelName {  get{ return currentLevelName; }  }
 
 		private TimeManager m_timeManager = new TimeManager();
 		public TimeManager GameTime { get { return m_timeManager;} }
@@ -42,6 +46,12 @@ namespace Dasher
 		#endregion
 
 		#region MonoBehavior
+
+		public void OnEnable()
+		{
+			m_saveManager = new SaveManager();
+		}
+
 		public void FixedUpdate()
 		{
 			if (m_initFrameWait)
@@ -110,7 +120,6 @@ namespace Dasher
 		private GUIManager m_GUIManager;
 		public void registerGUIManager(GUIManager gui)
 		{
-			Debug.Log("Register GUI");
 			m_GUIManager = gui;
 		}
 
@@ -129,7 +138,6 @@ namespace Dasher
 
 		private void LevelStart()
 		{
-			Debug.Log("MainProcess Level Start");
 			if (m_GUIManager != null)
 			{
 				m_GUIManager.NotifyLevelStart();
@@ -154,6 +162,14 @@ namespace Dasher
 		public void NotifyEndLevelReached()
 		{
 			m_timeManager.GameTimeFactor = 0f;
+
+			float currentTime = m_timeManager.CurrentLevelTime;
+			if (currentTime < m_saveManager.GetLevelTime(currentLevelName))
+			{
+				m_saveManager.SetLevelTime(currentLevelName, m_timeManager.CurrentLevelTime);
+				m_saveManager.Save();
+			}
+
 			if (m_GUIManager)
 			{
 				m_GUIManager.NotifyEndLevelReached();

@@ -1,0 +1,15 @@
+// save file
+ 
+namespace DasherSave;
+
+table FlatLevelSave {
+	LevelId:string;
+	BestTime:float = 0; 
+}
+
+table FlatGameSave {
+	Version:string;
+	levelResults:[LevelSave];
+} 
+ 
+root_type GameSave;

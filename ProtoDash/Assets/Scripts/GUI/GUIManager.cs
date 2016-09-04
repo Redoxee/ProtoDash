@@ -30,6 +30,8 @@ namespace Dasher
 		private Text m_endLevelLabelText;
 		[SerializeField]
 		private Text m_endTimerText;
+		[SerializeField]
+		private Text m_endBestTimerText;
 
 		[SerializeField]
 		private Canvas failCanvas;
@@ -38,12 +40,6 @@ namespace Dasher
 		private Text m_failLevelLabelText;
 		[SerializeField]
 		private Text m_failTimerText;
-
-
-		void Awake()
-		{
-			Debug.Log("GUI Awake");
-		}
 
 		void Start()
 		{
@@ -83,7 +79,6 @@ namespace Dasher
 
 		public void NotifyLevelStart()
 		{
-			Debug.Log("GUILevelStart");
 			gameCanvas.gameObject.SetActive(true);
 			pauseCanvas.gameObject.SetActive(false);
 			endLevelCanvas.gameObject.SetActive(false);
@@ -105,6 +100,9 @@ namespace Dasher
 
 			float time = m_mainProcess.GameTime.CurrentLevelTime;
 			m_endTimerText.text = time.ToString(TimeManager.c_timeDisplayFormat);
+
+			float bestTime = m_mainProcess.DataManager.GetLevelTime(m_mainProcess.CurrentLevelName);
+			m_endBestTimerText.text = bestTime.ToString(TimeManager.c_timeDisplayFormat);
 		}
 
 		public void NotifyDeathZoneTouched()
