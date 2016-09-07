@@ -86,6 +86,7 @@
     <Compile Include="Assets\Scripts\Game\CharacterStates\CharacterJump.cs" />
     <Compile Include="Assets\Scripts\Game\DeathZoneMaterialUpdater.cs" />
     <Compile Include="Assets\Scripts\Game\GaugeScript.cs" />
+    <Compile Include="Assets\Scripts\Game\InputManager.cs" />
     <Compile Include="Assets\Scripts\Game\SmartGauge.cs" />
     <Compile Include="Assets\Scripts\Game\TraceManager.cs" />
     <Compile Include="Assets\Scripts\Game\TutorialAnimator.cs" />

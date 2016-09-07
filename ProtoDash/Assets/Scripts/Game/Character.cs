@@ -254,10 +254,6 @@ namespace Dasher
 				isMouseDown = true;
 			}
 			isMousePressed = Input.GetMouseButton(0);
-			//if (Input.GetMouseButtonUp(0))
-			//{
-			//	isMouseUp = true;
-			//}
 			Vector3 sv = tapPosition - Input.mousePosition;
 			sv.x *= screenRatio;
 			sv.y *= screenRatio;
