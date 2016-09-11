@@ -13,24 +13,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainBackGround: {r: 0, g: 0.09019608, b: 0.47843137, a: 1}
   MainForground: {r: 0.92156863, g: 0.6901961, b: 0.015686275, a: 1}
+  MainForground_Material: {fileID: 2100000, guid: f49aa710b82b4c84983ffac5050f09f0,
+    type: 2}
   MainTitle: {r: 0.78039217, g: 0.8039216, b: 0.92156863, a: 1}
+  MainTitle_Material: {fileID: 2100000, guid: 2192b66311fa4d647a596c19e923814b, type: 2}
   DarkText: {r: 0, g: 0.043137256, b: 0.25882354, a: 1}
+  DarkText_Material: {fileID: 2100000, guid: 7b806ddd0706fdf46a550d26c5054a1d, type: 2}
   LightText: {r: 0.78039217, g: 0.8039216, b: 0.92156863, a: 1}
+  LightText_Material: {fileID: 2100000, guid: e0c817552e7d0674586992113145f9ac, type: 2}
   Button: {r: 0.92156863, g: 0.6901961, b: 0.015686275, a: 1}
+  Button_Material: {fileID: 2100000, guid: ac5c3c475a8c30f45befc72a1c931c23, type: 2}
   LightButton: {r: 0.92156863, g: 0.75686276, b: 0.2627451, a: 1}
+  LightButtond_Material: {fileID: 2100000, guid: 42725ce627a036b4c9c3435f8e235c05,
+    type: 2}
   World_UI_Background: {r: 0, g: 0.043137256, b: 0.25882354, a: 1}
+  World_UI_BG_Material: {fileID: 2100000, guid: 8fa25d8fa5f10df4dbb6d6dd3c750bc9,
+    type: 2}
   HardWorld_UI_Backgroud: {r: 0.565, g: 0.043137256, b: 0, a: 1}
+  HarldWorld_UI_BG_Material: {fileID: 2100000, guid: 185c24bda1b88344484d6eb36ad4ebd0,
+    type: 2}
   WorldNormalBorder: {r: 0, g: 0.043137256, b: 0.25882354, a: 1}
+  WorldBorder_Material: {fileID: 2100000, guid: 9e779ad0bc6802d46b00c8982b3e1679,
+    type: 2}
   WorldFinishedBorder: {r: 0.92156863, g: 0.69803923, b: 0.015686275, a: 1}
+  WorldFinishedBorder_Material: {fileID: 2100000, guid: 61686fbda1a94554d82e8622967aff1b,
+    type: 2}
   WorldGoldenColor1: {r: 0.77254903, g: 0.7764706, b: 0.09411765, a: 1}
   WorldGoldenColor2: {r: 0.77254903, g: 0.7764706, b: 0.28235295, a: 1}
+  WorldGoldenBorder_Material: {fileID: 2100000, guid: e251eb4635e755348bb5fec36022aeea,
+    type: 2}
   MainCharacterBase: {r: 0.78039217, g: 0.8039216, b: 0.92156863, a: 1}
   MainCharacterDepleted: {r: 0.61960787, g: 0.5411765, b: 0.29411766, a: 1}
+  Character_Material: {fileID: 2100000, guid: 90f97fdc99da2354cb608b3b96f3fa59, type: 2}
   Gauge: {r: 0.78039217, g: 0.8039216, b: 0.92156863, a: 1}
+  Gauge_Material: {fileID: 2100000, guid: a4fbe5a81a9a05a46bb4ed1df481ae16, type: 2}
   GaugeDepletion: {r: 0.61960787, g: 0.5411765, b: 0.29411766, a: 1}
+  GaugeDepletion_Material: {fileID: 2100000, guid: 1f582c2adedef134c9b258b4748709ec,
+    type: 2}
   EndNode: {r: 0.93333334, g: 0.80784315, b: 0.7137255, a: 1}
+  EndNode_Material: {fileID: 2100000, guid: 12b3e278ffc4a6f408a6698a9b83c845, type: 2}
   Lava1: {r: 0.7764706, g: 0.31764707, b: 0.15686275, a: 1}
   Lava2: {r: 0.5647059, g: 0.29803923, b: 0.20392157, a: 1}
+  Lava_Material: {fileID: 2100000, guid: 0335a564b1c070a48bc6f0ca85f08c3d, type: 2}
   BackgroundComposition: {r: 0.23529412, g: 0.35686275, b: 0.7764706, a: 1}
+  Background_Material: {fileID: 2100000, guid: 007dfd71c1321e74aae895b6caedcc5d, type: 2}
   Transition1: {r: 0.92156863, g: 0.91764706, b: 0.1764706, a: 1}
+  Transition_Material: {fileID: 2100000, guid: e61925aa67afbcf45ad238d60f099ab8, type: 2}
   Transition2: {r: 0.8392157, g: 0.8392157, b: 0.34117648, a: 1}
+  Transition2_Material: {fileID: 2100000, guid: 1957c38bf6386c34690f40017d5690d2,
+    type: 2}

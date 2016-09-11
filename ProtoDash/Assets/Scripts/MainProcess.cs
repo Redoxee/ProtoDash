@@ -44,6 +44,8 @@ namespace Dasher
 
 			m_saveManager = new SaveManager();
 
+			m_colorScheme.SetColors();
+
 			if (SceneManager.GetActiveScene().name != c_mainScene)
 			{
 				Scene mainScene = SceneManager.GetSceneByName(c_mainScene);
@@ -137,6 +139,18 @@ namespace Dasher
 				m_gameState = newState;
 				m_transitionCamera.gameObject.SetActive(false);
 			}
+		}
+		#endregion
+
+		#region Transitions
+		public void OnTransitionIn()
+		{
+			Debug.Log("Transition In");
+		}
+
+		public void OnTransitionOut()
+		{
+			Debug.Log("Transition Out");
 		}
 		#endregion
 	}

@@ -6,7 +6,6 @@ namespace Dasher
 	public class ColorScheme : ScriptableObject
 	{
 		public Color MainBackGround;
-		public Material MainBackgound_Material;
 		public Color MainForground;
 		public Material MainForground_Material;
 
@@ -61,7 +60,6 @@ namespace Dasher
 
 		public void SetColors()
 		{
-			MainBackgound_Material.color = MainBackGround;
 			MainForground_Material.color = MainForground;
 
 			MainTitle_Material.color = MainTitle;
