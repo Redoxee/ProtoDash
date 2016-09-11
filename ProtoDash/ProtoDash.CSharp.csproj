@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Data\BuildData.cs" />
+    <Compile Include="Assets\Scripts\Data\ColorScheme.cs" />
     <Compile Include="Assets\Scripts\Data\LevelFlow.cs" />
     <Compile Include="Assets\Scripts\ExpandableCircle.cs" />
     <Compile Include="Assets\Scripts\FPSMeter.cs" />
@@ -92,8 +93,10 @@
     <Compile Include="Assets\Scripts\Game\TutorialAnimator.cs" />
     <Compile Include="Assets\Scripts\Game\World\DeathZone.cs" />
     <Compile Include="Assets\Scripts\Game\World\EndNode.cs" />
+    <Compile Include="Assets\Scripts\MainGameProcess.cs" />
     <Compile Include="Assets\Scripts\MainMenuScript.cs" />
     <Compile Include="Assets\Scripts\MainProcess.cs" />
+    <Compile Include="Assets\Scripts\MainProcessInstaciator.cs" />
     <Compile Include="Assets\Scripts\Save\DasherSave.cs" />
     <Compile Include="Assets\Scripts\Save\SaveManager.cs" />
     <Compile Include="Assets\Scripts\TimeManager.cs" />

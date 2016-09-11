@@ -1,98 +1,103 @@
 ﻿using UnityEngine;
+using System.Collections;
 using UnityEngine.SceneManagement;
-using System.Collections.Generic;
 
 namespace Dasher
 {
-	public class MainProcess : Singleton<MainProcess>
-	{
+	public enum GameStates {
+		Error = 0,
+		Intro = 1,
+		MainMenu = 2,
+		InGame = 3
+	}
 
-		protected MainProcess() { } // guarantee this will be always a singleton only - can't use the constructor!
-		enum GameState { MainMenu, InGame }
-		GameState m_gameState = GameState.MainMenu;
+	public class MainProcess : MonoBehaviour
+	{
+		const string c_mainScene = "MainScene";
+
+		private static MainProcess m_instance;
+		public static MainProcess Instance { get { return m_instance; } }
+
+		GameStates m_gameState = GameStates.MainMenu;
 
 		[SerializeField]
 		public LevelFlow levelFlow;
+	
+		[SerializeField]
+		public ColorScheme m_colorScheme;
 
-		private SaveManager m_saveManager = null;
-		public SaveManager DataManager { get { return m_saveManager; } }
+		[SerializeField]
+		Camera m_transitionCamera;
 
-		private int m_currentLevelIndex = -1;
-		public int CurrentLevelIndex {get { return m_currentLevelIndex; }}
-
-		private string currentLevelName;
-		public string CurrentLevelName {  get{ return currentLevelName; }  }
-
-		private TimeManager m_timeManager = new TimeManager();
-		public TimeManager GameTime { get { return m_timeManager;} }
-
-		private bool m_initFrameWait = false;
-
-		#region Character
-		private Character m_character;
-
-		public void RegisterCharacter(Character character)
+		void Awake()
 		{
-			m_character = character;
-		}
+			m_gameState = GameStates.Intro;
+			if (m_instance == null)
+			{
+				m_instance = this;
+			}
+			else
+			{
+				Destroy(gameObject);
+				return;
+			}
 
-		public void UnregisterCharacter()
-		{
-			m_character = null;
-		}
-
-		public Character CurrentCharacter {get { return m_character; }}
-
-		#endregion
-
-		#region MonoBehavior
-
-		public void OnEnable()
-		{
 			m_saveManager = new SaveManager();
+
+			if (SceneManager.GetActiveScene().name != c_mainScene)
+			{
+				Scene mainScene = SceneManager.GetSceneByName(c_mainScene);
+				SceneManager.SetActiveScene(mainScene);
+			}
+			
+			if (SceneManager.sceneCount == 1)
+			{
+				//SwitchToHome();
+			}
 		}
 
-		public void FixedUpdate()
-		{
-			if (m_initFrameWait)
-			{
-				m_initFrameWait = false;
-				LevelStart();
-			}
-			if (m_gameState == GameState.InGame)
-			{
-				m_timeManager.ManualFixedUpdate();
-				if (m_GUIManager != null)
-					m_GUIManager.ManualFixedUpdate();
-			}
-		}
-		#endregion
 
 		#region Process navigation
 
+		const string c_mainMenuScene = "MainMenu";
+		const string c_gameSetupScene = "GameSetupScene";
+
+		string m_currenLevelScene = null;
+		int m_currentLevelIndex = -1;
+
 		public void SwitchToHome()
 		{
-			SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
-			m_gameState = GameState.MainMenu;
+			if (m_gameState == GameStates.InGame)
+			{
+				SceneManager.UnloadScene(c_gameSetupScene);
+				SceneManager.UnloadScene(m_currenLevelScene);
+			}
+			SceneManager.LoadScene(c_mainMenuScene, LoadSceneMode.Additive);
+			SetState(GameStates.MainMenu);
 		}
 
 		public void LaunchLevel(int index)
 		{
-			if (m_gameState != GameState.InGame)
+			if (m_gameState == GameStates.MainMenu)
 			{
-				SceneManager.LoadScene("GameSetupScene", LoadSceneMode.Single);
-				m_gameState = GameState.InGame;
+				SceneManager.UnloadScene(c_mainMenuScene);
 			}
-			else
+			if (m_gameState == GameStates.InGame)
 			{
-				SceneManager.UnloadScene(currentLevelName);
+				SceneManager.UnloadScene(c_gameSetupScene);
+				if(m_currenLevelScene != null)
+				{
+					SceneManager.UnloadScene(m_currenLevelScene);
+				}
 			}
-			currentLevelName = levelFlow.levelList[index].sceneName;
+			
+			SceneManager.LoadScene(c_gameSetupScene, LoadSceneMode.Additive);
+			SetState(GameStates.InGame);
+			
+			m_currenLevelScene = levelFlow.levelList[index].sceneName;
 
 			m_currentLevelIndex = index;
-			SceneManager.LoadScene(currentLevelName, LoadSceneMode.Additive);
-
-			m_initFrameWait = true;
+			SceneManager.LoadScene(m_currenLevelScene, LoadSceneMode.Additive);
 		}
 
 		public void RelaunchLevel()
@@ -105,7 +110,7 @@ namespace Dasher
 			int levelIndex = m_currentLevelIndex + 1;
 			if (levelIndex < 0 || levelIndex == levelFlow.levelList.Count)
 			{
-				SwitchToHome();
+				SwitchToHome(); // TODO Recap screen
 			}
 			else
 			{
@@ -113,86 +118,26 @@ namespace Dasher
 			}
 		}
 
+		public string CurrentLevel { get { return m_currenLevelScene; } }
+		public int CurrentLevelIndex { get { return m_currentLevelIndex; } }
 		#endregion
 
-		#region GUIManager
+		#region Save
 
-		private GUIManager m_GUIManager;
-		public void registerGUIManager(GUIManager gui)
-		{
-			m_GUIManager = gui;
-		}
+		private SaveManager m_saveManager = null;
+		public SaveManager DataManager { get { return m_saveManager; } }
 
-		public void unregisterGUI()
-		{
-			m_GUIManager = null;
-		}
-
-		public GUIManager getCurrentGUI()
-		{
-			return m_GUIManager;
-		}
 		#endregion
 
-		#region Level flow
-
-		private void LevelStart()
+		#region States
+		public void SetState(GameStates newState)
 		{
-			if (m_GUIManager != null)
+			if (newState != GameStates.Intro)
 			{
-				m_GUIManager.NotifyLevelStart();
-			}
-			m_timeManager.NotifyStartLevel();
-			m_timeManager.GameTimeFactor = 1;
-
-		}
-
-		public void RequirePause()
-		{
-			m_character.Pause();
-			m_timeManager.GameTimeFactor = 0f;
-		}
-
-		public void RequireResume()
-		{
-			m_character.Unpause();
-			m_timeManager.GameTimeFactor = 1f;
-		}
-
-		public void NotifyEndLevelReached()
-		{
-			m_timeManager.GameTimeFactor = 0f;
-
-			float currentTime = m_timeManager.CurrentLevelTime;
-			if (currentTime < m_saveManager.GetLevelTime(currentLevelName))
-			{
-				m_saveManager.SetLevelTime(currentLevelName, m_timeManager.CurrentLevelTime);
-				m_saveManager.Save();
-			}
-
-			if (m_GUIManager)
-			{
-				m_GUIManager.NotifyEndLevelReached();
-			}
-			else
-			{
-				FunctionUtils.Quit();
+				m_gameState = newState;
+				m_transitionCamera.gameObject.SetActive(false);
 			}
 		}
-
-		public void NotifyDeathZoneTouched()
-		{
-			m_timeManager.GameTimeFactor = 0f;
-			if (m_GUIManager)
-			{
-				m_GUIManager.NotifyDeathZoneTouched();
-			}
-			else
-			{
-				FunctionUtils.Quit();
-			}
-		}
-
 		#endregion
 	}
 }

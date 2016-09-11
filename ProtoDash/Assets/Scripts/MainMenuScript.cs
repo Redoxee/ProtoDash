@@ -16,25 +16,28 @@ namespace Dasher
 
 		public void Start()
 		{
-			MainProcess gm = MainProcess.Instance;
+			MainProcess mp = MainProcess.Instance;
 
 
-
-			LevelButons = new List<GameObject>(gm.levelFlow.levelList.Count);
+			LevelButons = new List<GameObject>(mp.levelFlow.levelList.Count);
 			Button btn = LevelButonTemplate.GetComponent<Button>();
 			btn.onClick.AddListener(delegate { StartLevel(0); });
 			Text label = LevelButonTemplate.transform.Find("Label").GetComponent<Text>();
 			label.text = BASE_LEVEL_LABEL + 1;
 			LevelButons.Add(LevelButonTemplate);
 
-			for (int i = 1; i < gm.levelFlow.levelList.Count; ++i)
+			for (int i = 1; i < mp.levelFlow.levelList.Count; ++i)
 			{
+				int copy = i; // forcing i into the scope
+
 				GameObject lb = Instantiate<GameObject>(LevelButonTemplate);
 				lb.transform.SetParent(LevelButonTemplate.transform.parent);
 
 				btn = lb.GetComponent<Button>();
-				object o = i; // weird trick to force the copy
-				btn.onClick.AddListener(delegate { StartLevel((int) o); });
+
+				btn.onClick.AddListener(() => {
+					StartLevel(copy);
+				});
 
 				label = lb.transform.Find("Label").GetComponent<Text>();
 				label.text = BASE_LEVEL_LABEL + (i + 1);

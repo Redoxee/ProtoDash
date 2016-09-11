@@ -5,7 +5,7 @@ namespace Dasher
 {
 	public class GUIManager : MonoBehaviour
 	{
-		private MainProcess m_mainProcess;
+		private MainGameProcess m_gameProcess;
 
 		[SerializeField]
 		private Canvas mainCanvas;
@@ -43,27 +43,27 @@ namespace Dasher
 
 		void Start()
 		{
-			m_mainProcess = MainProcess.Instance;
-			m_mainProcess.registerGUIManager(this);
+			m_gameProcess = MainGameProcess.Instance;
+			m_gameProcess.registerGUIManager(this);
 		}
 
 		void OnDisable()
 		{
-			m_mainProcess.unregisterGUI();
+			m_gameProcess.unregisterGUI();
 		}
 
 		public void ManualFixedUpdate()
 		{
 			if (gameCanvas.gameObject.activeSelf)
 			{
-				float time = m_mainProcess.GameTime.CurrentLevelTime;
+				float time = m_gameProcess.GameTime.CurrentLevelTime;
 				m_gameTimerText.text = time.ToString(TimeManager.c_timeDisplayFormat);
 			}
 		}
 
 		public void PauseGame()
 		{
-			m_mainProcess.RequirePause();
+			m_gameProcess.RequirePause();
 
 			gameCanvas.gameObject.SetActive(false);
 			pauseCanvas.gameObject.SetActive(true);
@@ -73,7 +73,7 @@ namespace Dasher
 		{
 			pauseCanvas.gameObject.SetActive(false);
 			gameCanvas.gameObject.SetActive(true);
-			m_mainProcess.RequireResume();
+			m_gameProcess.RequireResume();
 
 		}
 
@@ -84,7 +84,7 @@ namespace Dasher
 			endLevelCanvas.gameObject.SetActive(false);
 			failCanvas.gameObject.SetActive(false);
 
-			string levelLabel = "Level - " + (m_mainProcess.CurrentLevelIndex + 1); // TODO : use string builder or something
+			string levelLabel = "Level - " + (MainProcess.Instance.CurrentLevelIndex + 1); // TODO : use string builder or something
 			m_pauseLevelLabelText.text = levelLabel;
 			m_endLevelLabelText.text = levelLabel;
 			m_failLevelLabelText.text = levelLabel;
@@ -94,40 +94,40 @@ namespace Dasher
 
 		public void NotifyEndLevelReached()
 		{
-			m_mainProcess.RequirePause();
+			m_gameProcess.RequirePause();
 			gameCanvas.gameObject.SetActive(false);
 			endLevelCanvas.gameObject.SetActive(true);
 
-			float time = m_mainProcess.GameTime.CurrentLevelTime;
+			float time = m_gameProcess.GameTime.CurrentLevelTime;
 			m_endTimerText.text = time.ToString(TimeManager.c_timeDisplayFormat);
 
-			float bestTime = m_mainProcess.DataManager.GetLevelTime(m_mainProcess.CurrentLevelName);
+			float bestTime = MainProcess.Instance.DataManager.GetLevelTime(MainGameProcess.CurrentLevelName);
 			m_endBestTimerText.text = bestTime.ToString(TimeManager.c_timeDisplayFormat);
 		}
 
 		public void NotifyDeathZoneTouched()
 		{
-			m_mainProcess.RequirePause();
+			m_gameProcess.RequirePause();
 			gameCanvas.gameObject.SetActive(false);
 			failCanvas.gameObject.SetActive(true);
 
-			float time = m_mainProcess.GameTime.CurrentLevelTime;
+			float time = m_gameProcess.GameTime.CurrentLevelTime;
 			m_failTimerText.text = time.ToString(TimeManager.c_timeDisplayFormat);
 		}
 
 		public void GoHome()
 		{
-			m_mainProcess.SwitchToHome();
+			MainProcess.Instance.SwitchToHome();
 		}
 
 		public void NextLevel()
 		{
-			m_mainProcess.LaunchNextLevel();
+			MainProcess.Instance.LaunchNextLevel();
 		}
 
 		public void RetryLevel()
 		{
-			m_mainProcess.RelaunchLevel();
+			MainProcess.Instance.RelaunchLevel();
 		}
 	}
 }

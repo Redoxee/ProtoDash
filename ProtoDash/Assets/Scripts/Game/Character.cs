@@ -226,7 +226,7 @@ namespace Dasher
 			_InitializeWallJumpVectors();
 			currentState = Idle;
 
-			MainProcess mp = MainProcess.Instance;
+			MainGameProcess mp = MainGameProcess.Instance;
 			if (mp != null)
 			{
 				mp.RegisterCharacter(this);
@@ -235,7 +235,7 @@ namespace Dasher
 
 		public void Disable()
 		{
-			MainProcess mp = MainProcess.Instance;
+			MainGameProcess mp = MainGameProcess.Instance;
 			if (mp != null)
 			{
 				mp.UnregisterCharacter();

@@ -272,5 +272,17 @@ namespace DasherTool
 		}
 
 		#endregion
+
+		#region Colors
+
+		[MenuItem("Dasher/Create color data")]
+		static void S_CreateColorData()
+		{
+			Debug.Log("Creating a new color data");
+			ColorScheme lf = ScriptableObject.CreateInstance<ColorScheme>();
+			AssetDatabase.CreateAsset(lf, DATA_PATH + "ColorScheme.Asset");
+			Debug.Log("Color Data created");
+		}
+		#endregion
 	}
 }
