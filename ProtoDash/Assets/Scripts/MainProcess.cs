@@ -29,6 +29,13 @@ namespace Dasher
 		[SerializeField]
 		Camera m_transitionCamera;
 
+		[SerializeField]
+		GameObject InputInterceptionLayer;
+		[SerializeField]
+		Animator m_transitionAnimator;
+
+		#region Monobehaviour
+
 		void Awake()
 		{
 			m_gameState = GameStates.Intro;
@@ -54,10 +61,20 @@ namespace Dasher
 			
 			if (SceneManager.sceneCount == 1)
 			{
-				//SwitchToHome();
+				SwitchToHome();
 			}
 		}
 
+		void Update()
+		{
+			if (m_delayedAction != null)
+			{
+				m_delayedAction();
+				m_delayedAction = null;
+			}
+		}
+
+		#endregion
 
 		#region Process navigation
 
@@ -143,14 +160,84 @@ namespace Dasher
 		#endregion
 
 		#region Transitions
+		private const string c_transitionBool = "InTransition";
+
+		public delegate void TransitionCallback();
+
+		TransitionCallback m_transitionCallback;
+		TransitionCallback m_endTransitionCallback;
+
+		TransitionCallback m_delayedAction = null;
+
 		public void OnTransitionIn()
 		{
 			Debug.Log("Transition In");
+			if (m_transitionCallback != null)
+			{
+				m_delayedAction = m_transitionCallback;
+				//m_transitionCallback();
+				m_transitionCallback = null;
+			}
 		}
 
 		public void OnTransitionOut()
 		{
 			Debug.Log("Transition Out");
+			InputInterceptionLayer.SetActive(false);
+			if (m_endTransitionCallback != null)
+			{
+				m_delayedAction = m_endTransitionCallback;
+				//m_endTransitionCallback();
+				m_endTransitionCallback = null;
+			}
+		}
+
+		public void RequestTransition(TransitionCallback inCallback = null, TransitionCallback outCallback = null)
+		{
+			InputInterceptionLayer.SetActive(true);
+			m_transitionCallback = inCallback;
+			m_endTransitionCallback = outCallback;
+			m_transitionAnimator.SetBool(c_transitionBool, true);
+		}
+
+		public void RequestLevelLaunch(int index)
+		{
+			m_transitionCamera.gameObject.SetActive(true);
+			RequestTransition(() => {
+				LaunchLevel(index);
+				m_transitionAnimator.SetBool(c_transitionBool, false);
+				m_transitionCamera.gameObject.SetActive(false);
+			});
+		}
+
+		public void RequestLaunchNextLevel()
+		{
+			m_transitionCamera.gameObject.SetActive(true);
+			RequestTransition(() => {
+				LaunchNextLevel();
+				m_transitionAnimator.SetBool(c_transitionBool, false);
+				m_transitionCamera.gameObject.SetActive(false);
+			});
+		}
+
+		public void RequestRelaunchLevel()
+		{
+			m_transitionCamera.gameObject.SetActive(true);
+			RequestTransition(() => {
+				RelaunchLevel();
+				m_transitionAnimator.SetBool(c_transitionBool, false);
+				m_transitionCamera.gameObject.SetActive(false);
+			});
+		}
+
+		public void RequestSwitchToHome()
+		{
+			m_transitionCamera.gameObject.SetActive(true);
+			RequestTransition(() => {
+				SwitchToHome();
+				m_transitionAnimator.SetBool(c_transitionBool, false);
+				m_transitionCamera.gameObject.SetActive(false);
+			});
 		}
 		#endregion
 	}

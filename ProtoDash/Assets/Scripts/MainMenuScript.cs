@@ -49,7 +49,7 @@ namespace Dasher
 
 		public void StartLevel(int levelIndex)
 		{
-			MainProcess.Instance.LaunchLevel(levelIndex);
+			MainProcess.Instance.RequestLevelLaunch(levelIndex);
 		}
 	}
 }

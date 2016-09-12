@@ -117,17 +117,17 @@ namespace Dasher
 
 		public void GoHome()
 		{
-			MainProcess.Instance.SwitchToHome();
+			MainProcess.Instance.RequestSwitchToHome();
 		}
 
 		public void NextLevel()
 		{
-			MainProcess.Instance.LaunchNextLevel();
+			MainProcess.Instance.RequestLaunchNextLevel();
 		}
 
 		public void RetryLevel()
 		{
-			MainProcess.Instance.RelaunchLevel();
+			MainProcess.Instance.RequestRelaunchLevel();
 		}
 	}
 }

@@ -169,9 +169,20 @@ namespace DasherTool
 		void IncrementPatch()
 		{
 			BuildData bd = AssetDatabase.LoadAssetAtPath<BuildData>(DATA_PATH + BUILD_DATA_NAME);
+			//Undo.RecordObject(bd, "patchIncrement");
 			bd.Patch += 1;
+			EditorUtility.SetDirty(bd);
 			AssetDatabase.SaveAssets();
 		}
+
+		//[MenuItem("Dasher/Debug Increment patch")]
+		//static void S_IncrementPatch()
+		//{
+		//	BuildData bd = AssetDatabase.LoadAssetAtPath<BuildData>(DATA_PATH + BUILD_DATA_NAME);
+		//	bd.Patch += 1;
+		//	EditorUtility.SetDirty(bd);
+		//	AssetDatabase.SaveAssets();
+		//}
 
 		BuildOptions GetOptions(bool isDevelopementBuild)
 		{
