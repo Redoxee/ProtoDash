@@ -19,7 +19,7 @@ namespace Dasher
 		{
 			if (col.gameObject.tag == "Player")
 			{
-				MainGameProcess.Instance.NotifyEndLevelReached();
+				GameProcess.Instance.NotifyEndLevelReached();
 			}
 		}
 	}

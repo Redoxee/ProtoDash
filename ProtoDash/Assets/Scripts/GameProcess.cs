@@ -2,10 +2,10 @@
 
 namespace Dasher
 {
-	public class MainGameProcess : MonoBehaviour
+	public class GameProcess : MonoBehaviour
 	{
-		private static MainGameProcess i_instance;
-		public static MainGameProcess Instance { get {return i_instance;} }
+		private static GameProcess i_instance;
+		public static GameProcess Instance { get {return i_instance;} }
 
 		public static string CurrentLevelName {get { return MainProcess.Instance.CurrentLevel; }}
 
@@ -41,6 +41,9 @@ namespace Dasher
 				Debug.LogWarning("At least two game process at the same time");
 				Destroy(gameObject);
 			}
+
+			InitStates();
+
 			m_initFrameWait = true;
 		}
 
@@ -50,6 +53,11 @@ namespace Dasher
 			{
 				i_instance = null;
 			}
+		}
+
+		void Update()
+		{
+			UpdateState();
 		}
 
 		void FixedUpdate()
@@ -64,6 +72,7 @@ namespace Dasher
 			{
 				m_GUIManager.ManualFixedUpdate();
 			}
+			FixedUpdateState();
 		}
 
 		#endregion
@@ -98,6 +107,7 @@ namespace Dasher
 			m_timeManager.NotifyStartLevel();
 			m_timeManager.GameTimeFactor = 1;
 
+			SetState(m_gamplayState);
 		}
 
 		public void RequirePause()
@@ -146,6 +156,68 @@ namespace Dasher
 			{
 				FunctionUtils.Quit();
 			}
+		}
+
+		#endregion
+
+
+
+		#region State machine
+		delegate void D_StateMachineCallback();
+
+		struct FSM_State
+		{
+			public D_StateMachineCallback d_begin;
+			public D_StateMachineCallback d_update;
+			public D_StateMachineCallback d_fixedUpdate;
+			public D_StateMachineCallback d_end;
+
+			public FSM_State(D_StateMachineCallback begin = null, D_StateMachineCallback update = null, D_StateMachineCallback fixedUpdate = null, D_StateMachineCallback end = null)
+			{
+				d_begin = begin;
+				d_update = update;
+				d_fixedUpdate = fixedUpdate;
+				d_end = end;
+			}
+		}
+		FSM_State m_currentState = new FSM_State();
+
+		void SetState(FSM_State newState)
+		{
+			if (m_currentState.d_end != null)
+				m_currentState.d_end();
+			m_currentState = newState;
+			if (m_currentState.d_begin != null)
+				m_currentState.d_begin();
+		}
+
+		void UpdateState()
+		{
+			if (m_currentState.d_update != null)
+				m_currentState.d_update();
+		}
+
+		void FixedUpdateState()
+		{
+			if (m_currentState.d_fixedUpdate != null)
+				m_currentState.d_fixedUpdate();
+		}
+
+		void Gameplay_update()
+		{
+			m_character.ManualUpdate();
+		}
+
+		void Gameplay_fixedUpdate()
+		{
+			m_character.ManualFixedUpdate();
+		}
+
+		FSM_State m_gamplayState;
+
+		private void InitStates()
+		{
+			m_gamplayState = new FSM_State(null, Gameplay_update, Gameplay_fixedUpdate, null);
 		}
 
 		#endregion

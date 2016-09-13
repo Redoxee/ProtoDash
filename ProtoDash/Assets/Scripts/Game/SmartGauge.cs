@@ -45,7 +45,7 @@ namespace Dasher
 
 		public void Initialize()
 		{
-			m_character = MainGameProcess.Instance.CurrentCharacter;
+			m_character = GameProcess.Instance.CurrentCharacter;
 			m_animated1.Reset();
 			m_animated2.Reset();
 		}

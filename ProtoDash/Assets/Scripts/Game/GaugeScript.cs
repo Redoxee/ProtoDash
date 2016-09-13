@@ -12,7 +12,7 @@ namespace Dasher
 		void Start()
 		{
 			gaugeMaterial = GetComponent<Image>().material;
-			m_character = MainGameProcess.Instance.CurrentCharacter;
+			m_character = GameProcess.Instance.CurrentCharacter;
 		}
 
 		void Update()

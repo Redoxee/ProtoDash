@@ -11,7 +11,7 @@ namespace Dasher
 		{
 			if (col.gameObject.tag == "Player")
 			{
-				MainGameProcess.Instance.NotifyDeathZoneTouched();
+				GameProcess.Instance.NotifyDeathZoneTouched();
 			}
 		}
 	}

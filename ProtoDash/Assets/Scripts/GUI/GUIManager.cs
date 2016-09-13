@@ -5,7 +5,7 @@ namespace Dasher
 {
 	public class GUIManager : MonoBehaviour
 	{
-		private MainGameProcess m_gameProcess;
+		private GameProcess m_gameProcess;
 
 		[SerializeField]
 		private Canvas mainCanvas;
@@ -43,7 +43,7 @@ namespace Dasher
 
 		void Start()
 		{
-			m_gameProcess = MainGameProcess.Instance;
+			m_gameProcess = GameProcess.Instance;
 			m_gameProcess.registerGUIManager(this);
 		}
 
@@ -101,7 +101,7 @@ namespace Dasher
 			float time = m_gameProcess.GameTime.CurrentLevelTime;
 			m_endTimerText.text = time.ToString(TimeManager.c_timeDisplayFormat);
 
-			float bestTime = MainProcess.Instance.DataManager.GetLevelTime(MainGameProcess.CurrentLevelName);
+			float bestTime = MainProcess.Instance.DataManager.GetLevelTime(GameProcess.CurrentLevelName);
 			m_endBestTimerText.text = bestTime.ToString(TimeManager.c_timeDisplayFormat);
 		}
 
