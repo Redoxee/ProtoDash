@@ -102,12 +102,12 @@ namespace Dasher
 		{
 			if (m_GUIManager != null)
 			{
-				m_GUIManager.NotifyLevelStart();
+				SetState(m_introState);
 			}
-			m_timeManager.NotifyStartLevel();
-			m_timeManager.GameTimeFactor = 1;
-
-			SetState(m_gamplayState);
+			else
+			{
+				SetState(m_gamplayState);
+			}
 		}
 
 		public void RequirePause()
@@ -203,6 +203,39 @@ namespace Dasher
 				m_currentState.d_fixedUpdate();
 		}
 
+		#region intro state
+		void Intro_begin()
+		{
+			if (m_GUIManager != null)
+			{
+				m_GUIManager.SetStateIntro();
+			}
+		}
+
+		void Intro_update()
+		{
+			if (Input.GetMouseButtonDown(0))
+			{
+				SetState(m_gamplayState);
+			}
+		}
+
+		FSM_State m_introState;
+
+		#endregion
+
+		#region gameplay state
+
+		void Gameplay_begin()
+		{
+			if (m_GUIManager != null)
+			{
+				m_GUIManager.NotifyLevelStart();
+			}
+			m_timeManager.NotifyStartLevel();
+			m_timeManager.GameTimeFactor = 1;
+		}
+
 		void Gameplay_update()
 		{
 			m_character.ManualUpdate();
@@ -215,9 +248,12 @@ namespace Dasher
 
 		FSM_State m_gamplayState;
 
+		#endregion 
+
 		private void InitStates()
 		{
-			m_gamplayState = new FSM_State(null, Gameplay_update, Gameplay_fixedUpdate, null);
+			m_gamplayState = new FSM_State(Gameplay_begin, Gameplay_update, Gameplay_fixedUpdate, null);
+			m_introState = new FSM_State(null, Intro_update, null, null);
 		}
 
 		#endregion

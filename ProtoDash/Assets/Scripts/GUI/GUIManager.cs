@@ -10,7 +10,7 @@ namespace Dasher
 		[SerializeField]
 		private Canvas mainCanvas;
 		[SerializeField]
-		private Canvas gameCanvas;
+		private Canvas m_gameCanvas;
 		[SerializeField]
 		private Text m_gameTimerText;
 
@@ -18,13 +18,13 @@ namespace Dasher
 		private SmartGauge m_gauge;
 
 		[SerializeField]
-		private Canvas pauseCanvas;
+		private Canvas m_pauseCanvas;
 
 		[SerializeField]
 		private Text m_pauseLevelLabelText;
 
 		[SerializeField]
-		private Canvas endLevelCanvas;
+		private Canvas m_endCanvas;
 
 		[SerializeField]
 		private Text m_endLevelLabelText;
@@ -34,12 +34,18 @@ namespace Dasher
 		private Text m_endBestTimerText;
 
 		[SerializeField]
-		private Canvas failCanvas;
+		private Canvas m_failCanvas;
 
 		[SerializeField]
 		private Text m_failLevelLabelText;
 		[SerializeField]
 		private Text m_failTimerText;
+
+		[SerializeField]
+		private Canvas m_introCanvas = null;
+		[SerializeField]
+		private Text m_introText = null;
+
 
 		void Start()
 		{
@@ -54,7 +60,7 @@ namespace Dasher
 
 		public void ManualFixedUpdate()
 		{
-			if (gameCanvas.gameObject.activeSelf)
+			if (m_gameCanvas.gameObject.activeSelf)
 			{
 				float time = m_gameProcess.GameTime.CurrentLevelTime;
 				m_gameTimerText.text = time.ToString(TimeManager.c_timeDisplayFormat);
@@ -65,24 +71,25 @@ namespace Dasher
 		{
 			m_gameProcess.RequirePause();
 
-			gameCanvas.gameObject.SetActive(false);
-			pauseCanvas.gameObject.SetActive(true);
+			m_gameCanvas.gameObject.SetActive(false);
+			m_pauseCanvas.gameObject.SetActive(true);
 		}
 
 		public void ResumeGame()
 		{
-			pauseCanvas.gameObject.SetActive(false);
-			gameCanvas.gameObject.SetActive(true);
+			m_pauseCanvas.gameObject.SetActive(false);
+			m_gameCanvas.gameObject.SetActive(true);
 			m_gameProcess.RequireResume();
 
 		}
 
 		public void NotifyLevelStart()
 		{
-			gameCanvas.gameObject.SetActive(true);
-			pauseCanvas.gameObject.SetActive(false);
-			endLevelCanvas.gameObject.SetActive(false);
-			failCanvas.gameObject.SetActive(false);
+			m_gameCanvas.gameObject.SetActive(true);
+			m_pauseCanvas.gameObject.SetActive(false);
+			m_endCanvas.gameObject.SetActive(false);
+			m_failCanvas.gameObject.SetActive(false);
+			m_introCanvas.gameObject.SetActive(false);
 
 			string levelLabel = "Level - " + (MainProcess.Instance.CurrentLevelIndex + 1); // TODO : use string builder or something
 			m_pauseLevelLabelText.text = levelLabel;
@@ -95,8 +102,8 @@ namespace Dasher
 		public void NotifyEndLevelReached()
 		{
 			m_gameProcess.RequirePause();
-			gameCanvas.gameObject.SetActive(false);
-			endLevelCanvas.gameObject.SetActive(true);
+			m_gameCanvas.gameObject.SetActive(false);
+			m_endCanvas.gameObject.SetActive(true);
 
 			float time = m_gameProcess.GameTime.CurrentLevelTime;
 			m_endTimerText.text = time.ToString(TimeManager.c_timeDisplayFormat);
@@ -108,8 +115,8 @@ namespace Dasher
 		public void NotifyDeathZoneTouched()
 		{
 			m_gameProcess.RequirePause();
-			gameCanvas.gameObject.SetActive(false);
-			failCanvas.gameObject.SetActive(true);
+			m_gameCanvas.gameObject.SetActive(false);
+			m_failCanvas.gameObject.SetActive(true);
 
 			float time = m_gameProcess.GameTime.CurrentLevelTime;
 			m_failTimerText.text = time.ToString(TimeManager.c_timeDisplayFormat);
@@ -129,5 +136,18 @@ namespace Dasher
 		{
 			MainProcess.Instance.RequestRelaunchLevel();
 		}
+
+		#region introState
+
+		public void SetStateIntro()
+		{
+			m_introCanvas.gameObject.SetActive(true);
+			m_gameCanvas.gameObject.SetActive(false);
+			m_pauseCanvas.gameObject.SetActive(false);
+			m_failCanvas.gameObject.SetActive(false);
+			m_endCanvas.gameObject.SetActive(false);
+		}
+
+		#endregion
 	}
 }
