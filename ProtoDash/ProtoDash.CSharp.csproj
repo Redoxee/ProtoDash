@@ -96,6 +96,9 @@
     <Compile Include="Assets\Scripts\GameProcess.cs" />
     <Compile Include="Assets\Scripts\MainMenu\AnimatableScreen.cs" />
     <Compile Include="Assets\Scripts\MainMenu\AnimatableUI.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\FromLevelInfoBehaviour.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\LevelInfoHolder.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\WorldHolder.cs" />
     <Compile Include="Assets\Scripts\MainMenuScript.cs" />
     <Compile Include="Assets\Scripts\MainProcess.cs" />
     <Compile Include="Assets\Scripts\MainProcessInstaciator.cs" />

@@ -21,12 +21,12 @@ MonoBehaviour:
   DarkText_Material: {fileID: 2100000, guid: 7b806ddd0706fdf46a550d26c5054a1d, type: 2}
   LightText: {r: 0.78039217, g: 0.8039216, b: 0.92156863, a: 1}
   LightText_Material: {fileID: 2100000, guid: e0c817552e7d0674586992113145f9ac, type: 2}
-  Button: {r: 0.92156863, g: 0.6901961, b: 0.015686275, a: 1}
+  Button: {r: 0.014812539, g: 0.008010022, b: 0.4705882, a: 1}
   Button_Material: {fileID: 2100000, guid: ac5c3c475a8c30f45befc72a1c931c23, type: 2}
-  LightButton: {r: 0.92156863, g: 0.75686276, b: 0.2627451, a: 1}
+  LightButton: {r: 0.92156863, g: 0.8920906, b: 0.4734956, a: 1}
   LightButtond_Material: {fileID: 2100000, guid: 42725ce627a036b4c9c3435f8e235c05,
     type: 2}
-  World_UI_Background: {r: 0, g: 0.043137256, b: 0.25882354, a: 1}
+  World_UI_Background: {r: 0.19320485, g: 0.35365713, b: 0.44117647, a: 1}
   World_UI_BG_Material: {fileID: 2100000, guid: 8fa25d8fa5f10df4dbb6d6dd3c750bc9,
     type: 2}
   HardWorld_UI_Backgroud: {r: 0.565, g: 0.043137256, b: 0, a: 1}

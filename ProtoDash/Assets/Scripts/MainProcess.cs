@@ -119,6 +119,19 @@ namespace Dasher
 			SceneManager.LoadScene(m_currenLevelScene, LoadSceneMode.Additive);
 		}
 
+		public void LaunchLevel(LevelData level)
+		{
+			int i = 0;
+			for (; i < levelFlow.levelList.Count; ++i)
+			{
+				if (levelFlow.levelList[i] == level)
+				{
+					break;
+				}
+			}
+			LaunchLevel(i);
+		}
+
 		public void RelaunchLevel()
 		{
 			LaunchLevel(m_currentLevelIndex);
@@ -171,7 +184,7 @@ namespace Dasher
 
 		public void OnTransitionIn()
 		{
-			Debug.Log("Transition In");
+			//Debug.Log("Transition In");
 			if (m_transitionCallback != null)
 			{
 				m_delayedAction = m_transitionCallback;
@@ -182,7 +195,7 @@ namespace Dasher
 
 		public void OnTransitionOut()
 		{
-			Debug.Log("Transition Out");
+			//Debug.Log("Transition Out");
 			InputInterceptionLayer.SetActive(false);
 			if (m_endTransitionCallback != null)
 			{
@@ -205,6 +218,16 @@ namespace Dasher
 			m_transitionCamera.gameObject.SetActive(true);
 			RequestTransition(() => {
 				LaunchLevel(index);
+				m_transitionAnimator.SetBool(c_transitionBool, false);
+				m_transitionCamera.gameObject.SetActive(false);
+			});
+		}
+		
+		public void RequestLevelLaunch(LevelData level)
+		{
+			m_transitionCamera.gameObject.SetActive(true);
+			RequestTransition(() => {
+				LaunchLevel(level);
 				m_transitionAnimator.SetBool(c_transitionBool, false);
 				m_transitionCamera.gameObject.SetActive(false);
 			});
@@ -239,6 +262,31 @@ namespace Dasher
 				m_transitionCamera.gameObject.SetActive(false);
 			});
 		}
+		#endregion
+
+		#region Main menu reference
+
+		MainMenuScript m_mainMenuRef = null;
+		public void RegisterMainMenu(MainMenuScript mm)
+		{
+			if (m_mainMenuRef != null)
+			{
+				Debug.LogWarning("Flow error : trying to register main menu script several time !");
+			}
+			m_mainMenuRef = mm;
+		}
+
+		public void UnregisterMainMenu()
+		{
+			if (m_mainMenuRef == null)
+			{
+				Debug.LogWarning("unregistering Main menu while no main menu registered !");
+			}
+			m_mainMenuRef = null;
+		}
+
+		public MainMenuScript MainMenu { get { return m_mainMenuRef; } }
+
 		#endregion
 	}
 }

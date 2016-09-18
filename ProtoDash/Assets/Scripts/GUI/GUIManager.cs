@@ -43,8 +43,8 @@ namespace Dasher
 
 		[SerializeField]
 		private Canvas m_introCanvas = null;
-		[SerializeField]
-		private Text m_introText = null;
+		//[SerializeField]
+		//private Text m_introText = null;
 
 
 		void Start()

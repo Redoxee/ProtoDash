@@ -6,6 +6,8 @@ using UnityEditor.SceneManagement;
 using System.IO;
 using Dasher;
 using UnityEditorInternal;
+using System;
+using System.Diagnostics;
 
 namespace DasherTool
 {
@@ -91,6 +93,11 @@ namespace DasherTool
 				BuildForAndroid(m_isDevelopementBuild, m_IncrementPatch, m_androidAutoPlay);
 			}
 
+			if (GUILayout.Button("Push last build Android"))
+			{
+				PushLastAndroidBuild();
+			}
+
 			if (GUILayout.Button("Build Web"))
 			{
 				BuildForWeb(m_isDevelopementBuild, m_IncrementPatch);
@@ -103,22 +110,22 @@ namespace DasherTool
 			EditorBuildSettingsScene[] buildScenes = EditorBuildSettings.scenes;
 			AssetDatabase.ImportAsset(DATA_PATH + MAIN_FLOW_NAME);
 			LevelFlow lf = AssetDatabase.LoadAssetAtPath<LevelFlow>(DATA_PATH + MAIN_FLOW_NAME);
-			Debug.Log("Setting up level in build");
+			UnityEngine.Debug.Log("Setting up level in build");
 
 			bool sceneAdded = false;
 			bool sceneNameChanged = false;
 			for (int i = 0; i < lf.levelList.Count; ++i)
 			{
 				LevelData levelItem = lf.levelList[i];
-				Object sceneObject = levelItem.sceneObject;
+				UnityEngine.Object sceneObject = levelItem.sceneObject;
 				string scenePath = GAME_SCENES_PATH + sceneObject.name + GAME_SCENE_EXTENSION;
 				int index = UnityEditor.ArrayUtility.FindIndex<EditorBuildSettingsScene>(buildScenes, (ebs) => { return ebs.path == scenePath; });
 				if (index < 0)
 				{
 					EditorBuildSettingsScene newEBS = new EditorBuildSettingsScene(scenePath, true);
 					UnityEditor.ArrayUtility.Add<EditorBuildSettingsScene>(ref buildScenes, newEBS);
-					
-					Debug.Log("Adding scene : " + scenePath);
+
+					UnityEngine.Debug.Log("Adding scene : " + scenePath);
 					sceneAdded = true;
 				}
 				if (sceneObject.name != lf.levelList[i].sceneName)
@@ -200,6 +207,8 @@ namespace DasherTool
 		const string c_androidFolder = "Android/";
 		const string c_androidExtension = ".apk";
 
+		private string m_lastBuildName = null;
+
 		public void BuildForAndroid(bool isDebug,bool increment, bool autoRun)
 		{
 			string buildPath = c_buildFolder + c_androidFolder + GetVersionName();
@@ -218,11 +227,15 @@ namespace DasherTool
 				bo = bo | BuildOptions.AutoRunPlayer;
 			}
 
+			UnityEngine.Debug.Log("Android building : " + buildName);
+
 			string buildResult = BuildPipeline.BuildPlayer(scenes, buildName, BuildTarget.Android,bo);
 
 			if (string.IsNullOrEmpty(buildResult))
 			{
-				UnityEngine.Debug.Log("Android build complete" + buildName);
+				UnityEngine.Debug.Log("Android build complete : " + buildName);
+				m_lastBuildName = GetVersionName();
+
 				if (increment)
 				{
 					IncrementPatch();
@@ -233,6 +246,38 @@ namespace DasherTool
 				UnityEngine.Debug.LogError("Error building Android:\n" + buildResult);
 			}
 		}
+
+		public void PushLastAndroidBuild()
+		{
+			string dataPath = Application.dataPath;
+			string projectpath = dataPath.Substring(0, dataPath.Length - ("ProtoDash/ProtoDash/Assets").Length);
+			string apkLocation = projectpath + "DasherBuilds/Android/" + m_lastBuildName + "/" + m_lastBuildName + c_androidExtension;
+			if (string.IsNullOrEmpty(apkLocation) || !File.Exists(apkLocation))
+			{
+				UnityEngine.Debug.LogError("Cannot find .apk file : " + apkLocation );
+				return;
+			}
+			PlayerPrefs.SetString("APK location", apkLocation);
+
+			string adbLocation = PlayerPrefs.GetString("Android debug bridge location");
+			if (string.IsNullOrEmpty(apkLocation) || !File.Exists(adbLocation))
+				adbLocation = EditorUtility.OpenFilePanel("Android debug bridge", Environment.CurrentDirectory, "exe");
+			if (string.IsNullOrEmpty(apkLocation) || !File.Exists(adbLocation))
+			{
+				UnityEngine.Debug.LogError("Cannot find adb.exe.");
+				return;
+			}
+			PlayerPrefs.SetString("Android debug bridge location", adbLocation);
+
+			ProcessStartInfo info = new ProcessStartInfo
+			{
+				FileName = adbLocation,
+				Arguments = string.Format("install -r \"{0}\"", apkLocation),
+				WorkingDirectory = Path.GetDirectoryName(adbLocation),
+			};
+			Process.Start(info);
+		}
+
 		#endregion
 
 		#region Web
@@ -289,10 +334,10 @@ namespace DasherTool
 		[MenuItem("Dasher/Create color data")]
 		static void S_CreateColorData()
 		{
-			Debug.Log("Creating a new color data");
+			UnityEngine.Debug.Log("Creating a new color data");
 			ColorScheme lf = ScriptableObject.CreateInstance<ColorScheme>();
 			AssetDatabase.CreateAsset(lf, DATA_PATH + "ColorScheme.Asset");
-			Debug.Log("Color Data created");
+			UnityEngine.Debug.Log("Color Data created");
 		}
 		#endregion
 	}
