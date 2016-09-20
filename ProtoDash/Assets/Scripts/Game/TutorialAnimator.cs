@@ -28,7 +28,8 @@ namespace Dasher
 		// Update is called once per frame
 		void Update()
 		{
-			animationTimer = (animationTimer + Time.deltaTime);
+			float dt = GameProcess.Instance.GameTime.GetGameDeltaTime();
+			animationTimer = (animationTimer + dt);
 			if (animationTimer > animationTime)
 			{
 				hasNotifiedCircles = false;

@@ -54,6 +54,7 @@ namespace Dasher
 		void Update()
 		{
 			int c = currentAnimatedCount;
+			float dt = GameProcess.Instance.GameTime.GetGameDeltaTime();
 			for (int i = c; i > 0; --i)
 			{
 				int index = currentIndex - i + 1;
@@ -63,7 +64,7 @@ namespace Dasher
 				}
 				Trace t = TraceList[index];
 
-				t.timer -= Time.deltaTime;
+				t.timer -= dt;
 
 				TraceList[index] = t;
 				float progression = Mathf.Clamp(1.0f - t.timer / popAnimationTime, 0.0f, 1.0f);

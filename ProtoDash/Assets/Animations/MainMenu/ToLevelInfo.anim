@@ -33,7 +33,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: animatablePosition
-    path: LevelInfo
+    path: LevelInfoCanvas/LevelInfo
     classID: 114
     script: {fileID: 11500000, guid: 63ebca347c3cb4242a0ae1d3d94cdf86, type: 3}
   m_PPtrCurves: []
@@ -44,7 +44,7 @@ AnimationClip:
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
     genericBindings:
-    - path: 2266557091
+    - path: 3349264195
       attribute: 3503203550
       script: {fileID: 11500000, guid: 63ebca347c3cb4242a0ae1d3d94cdf86, type: 3}
       classID: 114
@@ -89,7 +89,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: animatablePosition
-    path: LevelInfo
+    path: LevelInfoCanvas/LevelInfo
     classID: 114
     script: {fileID: 11500000, guid: 63ebca347c3cb4242a0ae1d3d94cdf86, type: 3}
   m_EulerEditorCurves: []

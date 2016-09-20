@@ -12,7 +12,8 @@ namespace Dasher
 		// Update is called once per frame
 		void Update()
 		{
-			transform.rotation *= Quaternion.AngleAxis(rotationSpeed * Time.deltaTime, Vector3.forward);
+			float dt = GameProcess.Instance.GameTime.GetGameDeltaTime();
+			transform.rotation *= Quaternion.AngleAxis(rotationSpeed * dt, Vector3.forward);
 		}
 
 		void OnTriggerEnter2D(Collider2D col)

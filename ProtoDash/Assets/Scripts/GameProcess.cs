@@ -210,6 +210,7 @@ namespace Dasher
 			{
 				m_GUIManager.SetStateIntro();
 			}
+			GameTime.GameTimeFactor = 0;
 		}
 
 		void Intro_update()
@@ -234,6 +235,8 @@ namespace Dasher
 			}
 			m_timeManager.NotifyStartLevel();
 			m_timeManager.GameTimeFactor = 1;
+
+			m_character.NotifyGameStart();
 		}
 
 		void Gameplay_update()
@@ -253,7 +256,7 @@ namespace Dasher
 		private void InitStates()
 		{
 			m_gamplayState = new FSM_State(Gameplay_begin, Gameplay_update, Gameplay_fixedUpdate, null);
-			m_introState = new FSM_State(null, Intro_update, null, null);
+			m_introState = new FSM_State(Intro_begin, Intro_update, null, null);
 		}
 
 		#endregion

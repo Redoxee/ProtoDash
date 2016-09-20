@@ -53,7 +53,8 @@ namespace Dasher
 			}
 			if (timerPosX > 0)
 			{
-				timerPosX = Mathf.Max(0, timerPosX - Time.deltaTime);
+				float dt = GameProcess.Instance.GameTime.GetGameDeltaTime();
+				timerPosX = Mathf.Max(0, timerPosX - dt);
 			}
 		}
 
@@ -86,8 +87,9 @@ namespace Dasher
 			float tpx = p.x + currentOffsetX + centerXoffset;
 			float tpy = p.y + cameraYOffset;
 			_DrawCross(tpx, tpy, Color.yellow);
-			tpx = FunctionUtils.damping(xDampingFactor, transform.position.x, tpx, Time.deltaTime);
-			tpy = FunctionUtils.damping(yDampingFactor, transform.position.y, tpy, Time.deltaTime);
+			float dt = GameProcess.Instance.GameTime.GetGameDeltaTime();
+			tpx = FunctionUtils.damping(xDampingFactor, transform.position.x, tpx, dt);
+			tpy = FunctionUtils.damping(yDampingFactor, transform.position.y, tpy, dt);
 			_DrawCross(p.x + wantedXOffset * orientation, p.y + cameraYOffset, Color.gray);
 			_DrawCross(tpx, tpy, Color.cyan);
 

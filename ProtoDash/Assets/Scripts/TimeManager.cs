@@ -10,6 +10,10 @@ namespace Dasher
 		private float m_gameTimeFactor = 1f;
 		public float GameTimeFactor {get {return m_gameTimeFactor;} set { m_gameTimeFactor = value; } }
 
+		public float GetGameDeltaTime()
+		{
+			return Time.deltaTime * m_gameTimeFactor;
+		}
 
 		public float GetGameFixedDeltaTime()
 		{

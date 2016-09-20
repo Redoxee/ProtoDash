@@ -197,6 +197,11 @@ namespace Dasher
 			mirroredWallJumpVector = wallJumpVector; mirroredWallJumpVector.x *= -1;
 		}
 
+		public void NotifyGameStart()
+		{
+			tapPosition = Input.mousePosition;
+		}
+
 		void Start()
 		{
 			squareSwipeInputTrigger = swipeInputDistance * swipeInputDistance;

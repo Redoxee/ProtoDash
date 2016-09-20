@@ -58,7 +58,8 @@ namespace Dasher
 
 			if (currentState != null)
 			{
-				currentState(Time.deltaTime);
+				float dt = GameProcess.Instance.GameTime.GetGameDeltaTime();
+				currentState(dt);
 
 				objectColor.a = fadeCurve.Evaluate(animationTimer / animationDuration);
 				objectMaterial.SetColor("_Color", objectColor);
