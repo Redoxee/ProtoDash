@@ -145,19 +145,6 @@ namespace Dasher
 			}
 		}
 
-		public void NotifyDeathZoneTouched()
-		{
-			m_timeManager.GameTimeFactor = 0f;
-			if (m_GUIManager)
-			{
-				m_GUIManager.NotifyDeathZoneTouched();
-			}
-			else
-			{
-				FunctionUtils.Quit();
-			}
-		}
-
 		#endregion
 
 
@@ -236,6 +223,10 @@ namespace Dasher
 			m_timeManager.NotifyStartLevel();
 			m_timeManager.GameTimeFactor = 1;
 
+
+			m_deathFrameCounter = 0;
+			m_deathZoneCounter = 0;
+
 			m_character.NotifyGameStart();
 		}
 
@@ -246,12 +237,52 @@ namespace Dasher
 
 		void Gameplay_fixedUpdate()
 		{
+			if (m_deathZoneCounter > 0)
+			{
+				if (m_deathFrameCounter > m_allowedDeathFrame)
+				{
+					OnDeath();
+					return;
+				}
+				m_deathFrameCounter += 1;
+			}
+			else
+			{
+				m_deathFrameCounter = 0;
+			}
 			m_character.ManualFixedUpdate();
 		}
 
 		FSM_State m_gamplayState;
 
-		#endregion 
+		private int m_deathZoneCounter = 0;
+		private int m_deathFrameCounter = 0;
+		private int m_allowedDeathFrame = 3;
+
+		public void NotifyDeathZoneTouched()
+		{
+			m_deathZoneCounter += 1;
+		}
+
+		public void NotifyDeathZoneEmerged()
+		{
+			m_deathZoneCounter -= 1;
+		}
+
+		private void OnDeath()
+		{
+			m_timeManager.GameTimeFactor = 0f;
+			if (m_GUIManager)
+			{
+				m_GUIManager.NotifyDeathZoneTouched();
+			}
+			else
+			{
+				FunctionUtils.Quit();
+			}
+		}
+
+		#endregion
 
 		private void InitStates()
 		{

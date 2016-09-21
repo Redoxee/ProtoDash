@@ -14,5 +14,13 @@ namespace Dasher
 				GameProcess.Instance.NotifyDeathZoneTouched();
 			}
 		}
+
+		void OnTriggerExit2D(Collider2D col)
+		{
+			if (col.gameObject.tag == "Player")
+			{
+				GameProcess.Instance.NotifyDeathZoneEmerged();
+			}
+		}
 	}
 }

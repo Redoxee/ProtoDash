@@ -126,6 +126,7 @@ GameObject:
   - 4: {fileID: 490328}
   - 50: {fileID: 5059356}
   - 114: {fileID: 11412342}
+  - 114: {fileID: 114000013416392766}
   m_Layer: 2
   m_Name: Character
   m_TagString: Player
@@ -382,21 +383,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c876cc2d107223442adf4d4f2519da9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 2013856}
+  m_inputManager: {fileID: 114000013416392766}
   isPaused: 0
   propulsionImpulse: 2
   maxPropulsion: 7
   jumpForce: 18
   earlyJumpDistance: 0.65
-  lateJumpDuration: 0.15
+  lateJumpDuration: 0.1
   wallJumpAngle: 55
   wallJumpForce: 18
   wallSlideSpeed: 6
   airPropulsion: 0.125
   magnetRadius: 0.6
   magnetForce: 0.6
-  swipeInputDistance: 0.05
-  swipeDeadZone: 0.35
   dashCurve:
     serializedVersion: 2
     m_Curve:
@@ -608,3 +607,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_requiredState: 3
+--- !u!114 &114000013416392766
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 191382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81e206edd19109d43a34d2e23b6fe961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_swipeInputDistance: 0.05
+  m_swipeDeadZone: 0.35
+  m_bunttonList: []

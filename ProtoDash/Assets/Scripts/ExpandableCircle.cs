@@ -13,9 +13,9 @@ namespace Dasher
 		[SerializeField]
 		private float shiftLength = 3f;
 		[SerializeField]
-		private AnimationCurve animationCurve;
+		private AnimationCurve animationCurve = null;
 		[SerializeField]
-		private AnimationCurve fadeCurve;
+		private AnimationCurve fadeCurve = null;
 		[SerializeField]
 		private Color objectColor = Color.white;
 

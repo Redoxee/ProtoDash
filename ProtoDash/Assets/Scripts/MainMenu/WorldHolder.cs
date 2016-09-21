@@ -8,7 +8,7 @@ public class WorldHolder : MonoBehaviour {
 	[SerializeField]
 	private GameObject m_levelButtonPrefab = null;
 	[SerializeField]
-	private Transform m_rowParent;
+	private Transform m_rowParent = null;
 
 	private GameObject m_currentRow;
 

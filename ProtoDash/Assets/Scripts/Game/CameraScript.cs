@@ -6,7 +6,7 @@ namespace Dasher
 	{
 
 		[SerializeField]
-		private Character character;
+		private Character character = null;
 
 		[SerializeField]
 		private float xDampingFactor = 0.5f;
@@ -25,7 +25,7 @@ namespace Dasher
 		[SerializeField]
 		private float timeToPosX = 1.5f;
 		[SerializeField]
-		private AnimationCurve repositionXCurve;
+		private AnimationCurve repositionXCurve = null;
 
 		private float maxVerticalOffset = 9f;
 

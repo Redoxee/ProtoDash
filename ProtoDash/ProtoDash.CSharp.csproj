@@ -82,9 +82,6 @@
     <Compile Include="Assets\Scripts\Game\AnimatedEnergyCost.cs" />
     <Compile Include="Assets\Scripts\Game\CameraScript.cs" />
     <Compile Include="Assets\Scripts\Game\Character.cs" />
-    <Compile Include="Assets\Scripts\Game\CharacterStates\CharacterDash.cs" />
-    <Compile Include="Assets\Scripts\Game\CharacterStates\CharacterIdle.cs" />
-    <Compile Include="Assets\Scripts\Game\CharacterStates\CharacterJump.cs" />
     <Compile Include="Assets\Scripts\Game\DeathZoneMaterialUpdater.cs" />
     <Compile Include="Assets\Scripts\Game\GaugeScript.cs" />
     <Compile Include="Assets\Scripts\Game\InputManager.cs" />
