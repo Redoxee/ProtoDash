@@ -6,9 +6,7 @@ namespace Dasher
 	public class GUIManager : MonoBehaviour
 	{
 		private GameProcess m_gameProcess;
-
-		[SerializeField]
-		private Canvas mainCanvas;
+		
 		[SerializeField]
 		private Canvas m_gameCanvas;
 		[SerializeField]
