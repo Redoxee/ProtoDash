@@ -122,10 +122,9 @@ namespace Dasher
 			m_timeManager.GameTimeFactor = 1f;
 		}
 
-		public void NotifyEndLevelReached()
+		public void NotifyEndLevelReached(Vector2 endPosition)
 		{
 			m_timeManager.GameTimeFactor = 0f;
-
 			SaveManager saveManager = MainProcess.Instance.DataManager;
 
 			float currentTime = m_timeManager.CurrentLevelTime;
@@ -135,14 +134,8 @@ namespace Dasher
 				saveManager.Save();
 			}
 
-			if (m_GUIManager)
-			{
-				m_GUIManager.NotifyEndLevelReached();
-			}
-			else
-			{
-				FunctionUtils.Quit();
-			}
+			m_character.NotifyEndLevel(endPosition);
+			SetState(m_outroState);
 		}
 
 		#endregion
@@ -282,12 +275,58 @@ namespace Dasher
 			}
 		}
 
+		#region Outro
+
+		private float m_outroDuration = 1f;
+		private float m_outroTimer = 0f;
+
+		FSM_State m_outroState;
+
+		private void Outro_begin()
+		{
+			m_outroTimer = 0f;
+		}
+		private void Outro_update()
+		{
+			m_outroTimer += Time.deltaTime;
+			if (m_outroTimer > m_outroDuration)
+			{
+				SetState(m_endState);
+			}
+			m_character.ManualUpdate();
+		}
+		private void Outro_FixedUpdate()
+		{
+			m_character.ManualFixedUpdate();
+		}
+
+		#endregion
+
+		#region End
+
+		FSM_State m_endState;
+		private void End_begin()
+		{
+			if (m_GUIManager)
+			{
+				m_GUIManager.NotifyEndLevelReached();
+			}
+			else
+			{
+				FunctionUtils.Quit();
+			}
+		}
+
+		#endregion
+
 		#endregion
 
 		private void InitStates()
 		{
-			m_gamplayState = new FSM_State(Gameplay_begin, Gameplay_update, Gameplay_fixedUpdate, null);
 			m_introState = new FSM_State(Intro_begin, Intro_update, null, null);
+			m_gamplayState = new FSM_State(Gameplay_begin, Gameplay_update, Gameplay_fixedUpdate, null);
+			m_outroState = new FSM_State(Outro_begin, Outro_update, Outro_FixedUpdate);
+			m_endState = new FSM_State(End_begin);
 		}
 
 		#endregion

@@ -28,12 +28,14 @@ namespace Dasher
 		State Idle;
 		State Jump;
 		State Dash;
+		State EndGame;
 
 		private void _InitializeStates()
 		{
-			Idle = new State("Idle", _StartIdle, _GameplayIdle, _EndIdle);
-			Jump = new State("Jump", _StartJump, _GameplayJump, _EndJump);
-			Dash = new State("Dash", _StartDash, _GameplayDash, _EndDash);
+			Idle	= new State("Idle", _StartIdle, _GameplayIdle, _EndIdle);
+			Jump	= new State("Jump", _StartJump, _GameplayJump, _EndJump);
+			Dash	= new State("Dash", _StartDash, _GameplayDash, _EndDash);
+			EndGame = new State("EndGame", _BeginEndGame, _UpdateEndGame, _EndEndGame);
 		}
 
 		private void _SetState(State newState)
@@ -49,6 +51,7 @@ namespace Dasher
 
 		//[SerializeField]
 		private Vector3 fakeGravity = new Vector3(0.0f, -60.0f, 0.0f);
+		private float m_gravityFactor = 1f;
 
 		[SerializeField]
 		private float propulsionImpulse = 0.5f;
@@ -247,7 +250,7 @@ namespace Dasher
 
 			Vector3 newVelocity = characterRB.velocity;
 
-			newVelocity += fakeGravity * Time.fixedDeltaTime;
+			newVelocity += fakeGravity * Time.fixedDeltaTime * m_gravityFactor;
 			newVelocity = currentState.gameplay(newVelocity);
 			characterRB.velocity = newVelocity;
 			refillEnergy();
@@ -560,6 +563,37 @@ namespace Dasher
 
 			body.transform.localRotation = Quaternion.identity;
 		}
+		#endregion
+
+		#region EndGame
+
+		private Vector2 m_endTargetPosition;
+		private float m_endAttractionForce = 10f;
+
+		private void _BeginEndGame()
+		{
+			m_gravityFactor = 0f;
+		}
+
+		private Vector2 _UpdateEndGame(Vector2 currentVelocity)
+		{
+			float dt = Time.deltaTime;
+			Vector2 dir = m_endTargetPosition - new Vector2(transform.position.x, transform.position.y);
+			float m = dir.magnitude;
+			return (currentVelocity + Mathf.Pow(m * m_endAttractionForce, 2f) * dir.normalized * dt )* .9f;
+		}
+
+		private void _EndEndGame()
+		{
+		}
+
+
+		public void NotifyEndLevel(Vector2 endPosition)
+		{
+			m_endTargetPosition = endPosition;
+			_SetState(EndGame);
+		}
+
 		#endregion
 
 		#endregion
