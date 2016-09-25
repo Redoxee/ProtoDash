@@ -473,6 +473,9 @@ namespace Dasher
 
 		private void updateDashInput()
 		{
+			if (m_cancelDash)
+				return;
+
 			if (dashTimer > 0)
 			{
 				dashTimer -= Time.fixedDeltaTime;
@@ -567,12 +570,15 @@ namespace Dasher
 
 		#region EndGame
 
+		private bool m_cancelDash = false;
+
 		private Vector2 m_endTargetPosition;
 		private float m_endAttractionForce = 10f;
 
 		private void _BeginEndGame()
 		{
 			m_gravityFactor = 0f;
+			m_cancelDash = true;
 		}
 
 		private Vector2 _UpdateEndGame(Vector2 currentVelocity)
@@ -585,6 +591,7 @@ namespace Dasher
 
 		private void _EndEndGame()
 		{
+			m_cancelDash = false;
 		}
 
 

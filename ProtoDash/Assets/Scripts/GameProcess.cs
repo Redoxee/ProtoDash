@@ -122,16 +122,28 @@ namespace Dasher
 			m_timeManager.GameTimeFactor = 1f;
 		}
 
+		private bool m_isNewbest = false;
+		private bool m_isNewPar = false;
+
 		public void NotifyEndLevelReached(Vector2 endPosition)
 		{
 			m_timeManager.GameTimeFactor = 0f;
 			SaveManager saveManager = MainProcess.Instance.DataManager;
 
 			float currentTime = m_timeManager.CurrentLevelTime;
-			if (currentTime < saveManager.GetLevelTime(CurrentLevelName))
+			if (CurrentLevelName != null)
 			{
-				saveManager.SetLevelTime(CurrentLevelName, m_timeManager.CurrentLevelTime);
-				saveManager.Save();
+				LevelData currentLevelData = MainProcess.Instance.levelFlow.GetLevelData(CurrentLevelName);
+
+				if (currentTime < saveManager.GetLevelTime(CurrentLevelName))
+				{
+					m_isNewbest = true;
+					if (currentTime < currentLevelData.parTime)
+						m_isNewPar = true;
+					currentLevelData.currentBest = currentTime;
+					saveManager.SetLevelTime(CurrentLevelName, m_timeManager.CurrentLevelTime);
+					saveManager.Save();
+				}
 			}
 
 			m_character.NotifyEndLevel(endPosition);
@@ -274,10 +286,11 @@ namespace Dasher
 				FunctionUtils.Quit();
 			}
 		}
+		#endregion
 
 		#region Outro
 
-		private float m_outroDuration = 1f;
+		private float m_outroDuration = 1.5f;
 		private float m_outroTimer = 0f;
 
 		FSM_State m_outroState;
@@ -309,15 +322,13 @@ namespace Dasher
 		{
 			if (m_GUIManager)
 			{
-				m_GUIManager.NotifyEndLevelReached();
+				m_GUIManager.NotifyEndLevelReached(m_isNewbest,m_isNewPar);
 			}
 			else
 			{
 				FunctionUtils.Quit();
 			}
 		}
-
-		#endregion
 
 		#endregion
 

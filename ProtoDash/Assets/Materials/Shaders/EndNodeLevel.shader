@@ -3,7 +3,9 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
-		_Color ("Color", Color) = (1.,1.,1.,1.)
+		_Color("Color", Color) = (1.,1.,1.,1.)
+		_AnimationTime("Animation Time", Float) = 0.
+		_ClosureFactor("Closure Factor", Float) = 0.
 	}
 	SubShader
 	{
@@ -35,6 +37,13 @@
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
 #define BORDER .1
+
+#define _Smooth(p,r,s) smoothstep(-s, s, p-(r))
+#define PI 3.141592
+#define TPI 6.2831
+
+#define STRIPES 4.
+#define COL 3.
 			
 			v2f vert (appdata v)
 			{
@@ -46,21 +55,31 @@
 			}
 
 			float4 _Color;
-			
+			float _AnimationTime = 0.f;
+			float _ClosureFactor = 0.f;
+
+			float df(float2 pos)
+			{
+				float2 q = abs(pos);
+				return max((q.x * 0.866025 + q.y*0.5), q.y);
+			}
+
 			fixed4 frag (v2f i) : SV_Target
 			{
-				float2 center = float2(.5,.5) - i.uv;
-				float d = length(center);
-				float f = smoothstep(.49, .51, d);
+				float2 position = float2(.5, .5) - i.uv;
 
-				f = 1. - f;
-				f -= 1. - smoothstep(.49 - BORDER, .51 - BORDER, d);
+				float dist = 1. - df(position *2.3);
 
-				float angle = atan2(center.y, center.x) + 1.57079;
-				f *= smoothstep(-.1, .1, sin(angle * 10.) - .5);
+				float stripID = ceil(dist * STRIPES);
+				float v = (fmod(stripID , 2.) * 2. - 1.);
+
+				float shape = _Smooth(sin(dist * TPI * STRIPES), .1 - clamp(_ClosureFactor * 3. - 2.,0.,1.) * 1.2,.05);
+				float angle = (atan2(position.y,position.x));
+				shape *= _Smooth(sin(angle * COL + _AnimationTime * stripID * v),0.4 - clamp(_ClosureFactor * 1.5 ,0.,1.) * 1.5,.01);
+				shape *= _Smooth(dist,0.,.01);
 
 				float4 col = _Color;
-				col.a = f;
+				col.a = shape;
 				return col;
 			}
 			ENDCG

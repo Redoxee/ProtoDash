@@ -71,8 +71,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - first:
+        name: _AnimationTime
+      second: 81.2
+    - first:
         name: _BumpScale
       second: 1
+    - first:
+        name: _ClosureFactor
+      second: 0
     - first:
         name: _Cutoff
       second: 0.5

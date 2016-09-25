@@ -6,7 +6,6 @@ namespace Dasher
 {
 	public class MainMenuScript : MonoBehaviour
 	{
-		private const string BASE_LEVEL_LABEL = "Level - ";
 
 		private const string c_a_select = "LevelSelect";
 		private const string c_a_info = "LevelInfo";
@@ -63,7 +62,7 @@ namespace Dasher
 		[SerializeField]
 		private GameObject m_worldPrefab;
 
-		const string c_levelLabelPattern = "{0}-{1}";
+		public const string c_levelLabelPattern = "{0}-{1}";
 
 		private bool m_isinitialized = false;
 		private void InitializeWorlds()
@@ -200,7 +199,9 @@ namespace Dasher
 			m_levelInfo.LevelTitle.text = levelName;
 
 			m_levelInfo.ParTime.text = string.Format(c_parTimePattern, lvl.parTime.ToString(TimeManager.c_timeDisplayFormat));
-	
+
+			m_levelInfo.BestTime.text = string.Format(c_bestTimePattern, lvl.currentBest.ToString(TimeManager.c_timeDisplayFormat));
+
 		}
 
 		private void OnLevelPlayPressed()

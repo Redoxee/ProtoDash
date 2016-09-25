@@ -5,15 +5,44 @@ namespace Dasher
 {
 	public class EndNode : MonoBehaviour
 	{
-		[SerializeField]
-		private float rotationSpeed = 1.0f;
+		const string c_animationTime = "_AnimationTime";
+		const string c_closure = "_ClosureFactor";
+
+		private float m_AnimationSpeed = 2.5f;
+
+		private float m_currentTime = 0f;
+		private float m_currentClosure = 0f;
+		private float m_closureDuration = 1f;
+		private bool m_isInClosure = false;
+
+		private Material m_material;
 
 
-		// Update is called once per frame
+		void Awake()
+		{
+			m_material = GetComponent<Renderer>().material;
+		}
+		
 		void Update()
 		{
-			float dt = GameProcess.Instance.GameTime.GetGameDeltaTime();
-			transform.rotation *= Quaternion.AngleAxis(rotationSpeed * dt, Vector3.forward);
+			float dt = Time.deltaTime;
+			m_currentTime += dt;
+			if (m_closureDuration == 1f)
+			{
+				m_material.SetFloat(c_animationTime, m_currentTime * m_AnimationSpeed);
+			}
+			if (m_isInClosure)
+			{
+				m_currentClosure += dt;
+				float progression = Mathf.Min(m_currentClosure, 1f) / m_closureDuration;
+				m_material.SetFloat(c_closure, progression);
+				if (m_currentClosure >= 1f)
+				{
+					m_currentClosure = 1f;
+					m_isInClosure = false;
+				}
+			}
+
 		}
 
 		void OnTriggerEnter2D(Collider2D col)
@@ -22,6 +51,7 @@ namespace Dasher
 			{
 				GameProcess.Instance.NotifyEndLevelReached(transform.position);
 			}
+			m_isInClosure = true;
 		}
 	}
 }
