@@ -9,6 +9,18 @@ namespace Dasher
 
 		public static string CurrentLevelName {get { return MainProcess.Instance.CurrentLevel; }}
 
+
+		private CameraScript m_CameraS;
+		public void RegisterCamera(CameraScript cam)
+		{
+			m_CameraS = cam;
+		}
+
+		public void UnregisterCamera()
+		{
+			m_CameraS = null;
+		}
+
 		private TimeManager m_timeManager = new TimeManager();
 		public TimeManager GameTime { get { return m_timeManager;} }
 
@@ -58,6 +70,7 @@ namespace Dasher
 		void Update()
 		{
 			UpdateState();
+			m_CameraS.ManualUpdate();
 		}
 
 		void FixedUpdate()
@@ -73,6 +86,11 @@ namespace Dasher
 				m_GUIManager.ManualFixedUpdate();
 			}
 			FixedUpdateState();
+		}
+
+		void LateUpdate()
+		{
+			m_CameraS.ManualLateUpdate();
 		}
 
 		#endregion
@@ -147,6 +165,7 @@ namespace Dasher
 			}
 
 			m_character.NotifyEndLevel(endPosition);
+			m_CameraS.NotifyEndGame(endPosition);
 			SetState(m_outroState);
 		}
 
