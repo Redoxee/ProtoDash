@@ -190,7 +190,7 @@ namespace Dasher
 		}
 
 		const string c_bestTimePattern = "Best : {0}";
-		const string c_parTimePattern = "Par : {0}";
+		const string c_parTimePattern = "Champ : {0}";
 
 		private void SetUpLevelInfo(LevelData lvl, string levelName)
 		{

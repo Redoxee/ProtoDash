@@ -157,7 +157,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'target Time
+  m_Text: 'Champ Time
 
     000.00'
 --- !u!222 &57748
@@ -2771,8 +2771,8 @@ RectTransform:
   m_RootOrder: 2
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1066.6666, y: -62}
-  m_SizeDelta: {x: 406.66666, y: 104}
+  m_AnchoredPosition: {x: 853.3334, y: -62}
+  m_SizeDelta: {x: 321.33334, y: 104}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1283753769
 MonoBehaviour:
@@ -2996,7 +2996,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'target Time : 000.00'
+  m_Text: 'Champ Time : 000.00'
 --- !u!222 &1418478914
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3297,11 +3297,11 @@ RectTransform:
   m_Children:
   - {fileID: 1418478912}
   m_Father: {fileID: 1951222120}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 320, y: -62}
-  m_SizeDelta: {x: 620, y: 104}
+  m_AnchoredPosition: {x: 768, y: -62}
+  m_SizeDelta: {x: 492, y: 104}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1579944859
 MonoBehaviour:
@@ -3591,8 +3591,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 640, y: -10}
-  m_SizeDelta: {x: 1260, y: 104}
+  m_AnchoredPosition: {x: 512, y: -10}
+  m_SizeDelta: {x: 1004, y: 104}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1648601878
 MonoBehaviour:
@@ -3740,8 +3740,8 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 640, y: -62}
-  m_SizeDelta: {x: 406.66666, y: 104}
+  m_AnchoredPosition: {x: 512, y: -62}
+  m_SizeDelta: {x: 321.33334, y: 104}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1674970280
 MonoBehaviour:
@@ -3957,8 +3957,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 213.33333, y: -62}
-  m_SizeDelta: {x: 406.66666, y: 104}
+  m_AnchoredPosition: {x: 170.66667, y: -62}
+  m_SizeDelta: {x: 321.33334, y: 104}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1805980501
 MonoBehaviour:
@@ -4023,11 +4023,11 @@ RectTransform:
   m_Children:
   - {fileID: 2023381546}
   m_Father: {fileID: 1951222120}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 960, y: -62}
-  m_SizeDelta: {x: 620, y: 104}
+  m_AnchoredPosition: {x: 256, y: -62}
+  m_SizeDelta: {x: 492, y: 104}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1834233587
 MonoBehaviour:
@@ -4217,6 +4217,8 @@ MonoBehaviour:
   m_gauge: {fileID: 907543387}
   m_pauseCanvas: {fileID: 1229752919}
   m_pauseLevelLabelText: {fileID: 1766679926}
+  m_pauseCurrentTimeText: {fileID: 2023381547}
+  m_pauseParTimeText: {fileID: 1418478913}
   m_endCanvas: {fileID: 600875245}
   m_endLevelLabelText: {fileID: 1712654565}
   m_endTimer: {fileID: 1805980499}
@@ -4267,8 +4269,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1579944858}
   - {fileID: 1834233586}
+  - {fileID: 1579944858}
   m_Father: {fileID: 941806266}
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0.5}

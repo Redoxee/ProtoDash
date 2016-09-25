@@ -121,6 +121,7 @@
     <None Include="Assets\Materials\Shaders\BackgroundShader.shader" />
     <None Include="Assets\Materials\Shaders\CharacterShader.shader" />
     <None Include="Assets\Materials\Shaders\CompanionGauge.shader" />
+    <None Include="Assets\Materials\Shaders\DeathZoneShader.shader" />
     <None Include="Assets\Materials\Shaders\EndNodeLevel.shader" />
     <None Include="Assets\Materials\Shaders\ExtandableCircle.shader" />
   </ItemGroup>

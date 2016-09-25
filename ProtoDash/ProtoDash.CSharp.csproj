@@ -82,7 +82,6 @@
     <Compile Include="Assets\Scripts\Game\AnimatedEnergyCost.cs" />
     <Compile Include="Assets\Scripts\Game\CameraScript.cs" />
     <Compile Include="Assets\Scripts\Game\Character.cs" />
-    <Compile Include="Assets\Scripts\Game\DeathZoneMaterialUpdater.cs" />
     <Compile Include="Assets\Scripts\Game\GaugeScript.cs" />
     <Compile Include="Assets\Scripts\Game\InputManager.cs" />
     <Compile Include="Assets\Scripts\Game\SmartGauge.cs" />
@@ -109,6 +108,7 @@
     <None Include="Assets\Materials\Shaders\BackgroundShader.shader" />
     <None Include="Assets\Materials\Shaders\CharacterShader.shader" />
     <None Include="Assets\Materials\Shaders\CompanionGauge.shader" />
+    <None Include="Assets\Materials\Shaders\DeathZoneShader.shader" />
     <None Include="Assets\Materials\Shaders\EndNodeLevel.shader" />
     <None Include="Assets\Materials\Shaders\ExtandableCircle.shader" />
   </ItemGroup>

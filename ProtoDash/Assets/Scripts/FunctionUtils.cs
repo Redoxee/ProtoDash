@@ -26,7 +26,8 @@ namespace Dasher
 		public static void Quit()
 		{
 #if UNITY_EDITOR
-			UnityEditor.EditorApplication.isPlaying = false;
+			//UnityEditor.EditorApplication.isPlaying = false;
+			UnityEditor.EditorApplication.isPaused = true;
 #elif UNITY_WEBPLAYER
         Application.OpenURL(webplayerQuitURL);
 #else

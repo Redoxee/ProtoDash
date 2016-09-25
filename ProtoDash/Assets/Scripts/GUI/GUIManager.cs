@@ -21,6 +21,10 @@ namespace Dasher
 		private Canvas m_pauseCanvas;
 		[SerializeField]
 		private Text m_pauseLevelLabelText;
+		[SerializeField]
+		private Text m_pauseCurrentTimeText;
+		[SerializeField]
+		private Text m_pauseParTimeText;
 
 		[Space]
 		[Header("End Level")]
@@ -81,6 +85,15 @@ namespace Dasher
 		{
 			m_gameProcess.RequirePause();
 
+
+			LevelData currentLevel = MainProcess.Instance.levelFlow.GetLevelData(GameProcess.CurrentLevelName);
+
+			float time = m_gameProcess.GameTime.CurrentLevelTime;
+			float parTime = currentLevel.parTime;
+
+			m_pauseCurrentTimeText.text = "Current :\n" + time.ToString(TimeManager.c_timeDisplayFormat);
+			m_pauseParTimeText.text = "Champ :\n" + parTime.ToString(TimeManager.c_timeDisplayFormat);
+
 			m_gameCanvas.gameObject.SetActive(false);
 			m_pauseCanvas.gameObject.SetActive(true);
 		}
@@ -125,7 +138,7 @@ namespace Dasher
 
 			m_endTimerText.text = "Current :\n" + time.ToString(TimeManager.c_timeDisplayFormat);
 			m_endBestTimeText.text = "Best :\n" + bestTime.ToString(TimeManager.c_timeDisplayFormat);
-			m_endParTimeText.text = "Target :\n" + parTime.ToString(TimeManager.c_timeDisplayFormat);
+			m_endParTimeText.text = "Champ :\n" + parTime.ToString(TimeManager.c_timeDisplayFormat);
 			if (bestTime <= parTime)
 			{
 				m_endParTime.SetActive(false);

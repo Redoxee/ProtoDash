@@ -273,7 +273,7 @@ namespace Dasher
 				Vector2 start = characterRB.position + normal * (i - NB_RAYCHECK / 2) * RAY_RANGE;
 				Debug.DrawRay(start, direction * probDistance, Color.red);
 #endif
-				if (rt.collider && rt.distance < result.distance)
+				if (rt.collider && rt.distance < result.distance && rt.transform.tag == "Floor")
 				{
 					result = rt;
 				}

@@ -15,56 +15,64 @@ MonoBehaviour:
   - sceneObject: {fileID: 102900000, guid: 12143ebb1477140479131520c3e81f60, type: 3}
     sceneName: 001TheBasics
     world: 1
-    parTime: 3
+    parTime: 4
   - sceneObject: {fileID: 102900000, guid: 8011ba23e5af11f4cac288200ec5999f, type: 3}
     sceneName: 002WallJumping
     world: 1
-    parTime: 3
+    parTime: 8
   - sceneObject: {fileID: 102900000, guid: 8478ecac3eb56a648b7a9f600981b614, type: 3}
     sceneName: 003DeathPit
     world: 1
-    parTime: 3
+    parTime: 7.5
   - sceneObject: {fileID: 102900000, guid: d2d45e860eecac745bf52693eff38cba, type: 3}
     sceneName: 004DashIntro
     world: 1
-    parTime: 3
+    parTime: 8
   - sceneObject: {fileID: 102900000, guid: 8c4947b108ea4534cb4d479a3533c915, type: 3}
     sceneName: 005SimpleDash
     world: 1
-    parTime: 3
+    parTime: 7
   - sceneObject: {fileID: 102900000, guid: 28222288afd950f49a10fd20e656bc85, type: 3}
     sceneName: 007DashDown
     world: 1
-    parTime: 3
+    parTime: 10
   - sceneObject: {fileID: 102900000, guid: f108bfd5871de01478e266cd24d6166a, type: 3}
     sceneName: 008DeathShaft
     world: 2
-    parTime: 3
+    parTime: 11
   - sceneObject: {fileID: 102900000, guid: d07f505a4af2ce8469ffa0921e769480, type: 3}
     sceneName: 009WallJumpingChain
     world: 2
-    parTime: 3
+    parTime: 17
   - sceneObject: {fileID: 102900000, guid: 8d3ef0089fe05244ea0bc7c139d31732, type: 3}
     sceneName: 010MissLeadingJump
     world: 2
-    parTime: 3
+    parTime: 11
   - sceneObject: {fileID: 102900000, guid: 8f1401b09f340d143ba5ad54ca330a16, type: 3}
     sceneName: 015JumpDashJumpDash
     world: 2
-    parTime: 3
+    parTime: 20
   - sceneObject: {fileID: 102900000, guid: 084f59d2b672a224b8bfef179b0d3f71, type: 3}
     sceneName: 011DontMessTheTransition
     world: 2
-    parTime: 3
+    parTime: 17
   - sceneObject: {fileID: 102900000, guid: bea951c94f38bec4d8090ded0521f738, type: 3}
     sceneName: 012LeapOfFaith
     world: 2
-    parTime: 3
+    parTime: 16
   - sceneObject: {fileID: 102900000, guid: 9817ee53e80782d4fbff6d5671a11018, type: 3}
     sceneName: 013ATopTheClockTower
     world: 3
-    parTime: 3
+    parTime: 16
   - sceneObject: {fileID: 102900000, guid: 858e69054a44c2746b6a6854310298fa, type: 3}
     sceneName: 014StalactitePath
     world: 3
-    parTime: 3
+    parTime: 22
+  - sceneObject: {fileID: 102900000, guid: 35131affaa210d34c871bf288337f211, type: 3}
+    sceneName: 006Climb
+    world: 3
+    parTime: 12
+  - sceneObject: {fileID: 102900000, guid: 4e4da0dce300b804cb3d290474ee0c9a, type: 3}
+    sceneName: 016ThroughTheFlames
+    world: 3
+    parTime: 9
