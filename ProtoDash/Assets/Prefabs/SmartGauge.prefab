@@ -80,6 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9660b9623de4f3489c7730fdb2834f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_animationOffset: {x: -60, y: 0, z: 0}
   m_animationCurve:
     serializedVersion: 2
     m_Curve:
@@ -161,6 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9660b9623de4f3489c7730fdb2834f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_animationOffset: {x: -60, y: 0, z: 0}
   m_animationCurve:
     serializedVersion: 2
     m_Curve:
@@ -216,7 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_mainSprite: {fileID: 11438196}
-  m_character: {fileID: 0}
+  m_isRight: 0
   m_cost1: {fileID: 186520}
   m_cost2: {fileID: 178532}
 --- !u!222 &22210234
@@ -256,8 +258,8 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 45, y: 0}
-  m_Pivot: {x: -0.000000044703484, y: 0}
+  m_SizeDelta: {x: 25, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!224 &22442688
 RectTransform:
   m_ObjectHideFlags: 1
@@ -275,7 +277,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: -0.00000008940697, y: -0.0000000055879354}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &22455638
 RectTransform:
   m_ObjectHideFlags: 1
@@ -293,7 +295,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: -0.00000008940697, y: -0.0000000055879354}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &22464578
 RectTransform:
   m_ObjectHideFlags: 1

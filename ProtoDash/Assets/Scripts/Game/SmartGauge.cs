@@ -10,6 +10,7 @@ namespace Dasher
 		private Image m_mainSprite;
 
 		Character m_character;
+		public bool m_isRight;
 
 		[SerializeField]
 		private GameObject m_cost1;
@@ -38,6 +39,11 @@ namespace Dasher
 
 			m_costImage2 = m_cost2.GetComponent<Image>();
 			m_animated2 = m_cost2.GetComponent<AnimatedEnergyCost>();
+
+			Vector3 offset = m_animated1.m_animationOffset;
+			offset.x = Mathf.Abs(offset.x) * (m_isRight ? -1 : 1);
+			m_animated1.m_animationOffset = offset;
+			m_animated2.m_animationOffset = offset;
 
 			m_currentCostImage = m_costImage1;
 			m_currentAnimated = m_animated1;

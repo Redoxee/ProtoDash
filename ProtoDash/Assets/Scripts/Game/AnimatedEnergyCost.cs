@@ -7,7 +7,8 @@ namespace Dasher
 	{
 
 		private float m_animationDuration = 1f;
-		private Vector3 m_animationOffset = new Vector3(-1, 0, 0) * 60;
+		[HideInInspector]
+		public Vector3 m_animationOffset = new Vector3(-1, 0, 0) * 60;
 		[SerializeField]
 		private AnimationCurve m_animationCurve = null;
 

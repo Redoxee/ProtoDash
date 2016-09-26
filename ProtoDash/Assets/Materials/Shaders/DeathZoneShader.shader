@@ -21,7 +21,6 @@ Shader "Custom/DeathZone" {
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma target 2.0
-			#pragma multi_compile_fog
 
 #include "UnityCG.cginc"
 
@@ -33,8 +32,6 @@ Shader "Custom/DeathZone" {
 			struct v2f {
 				float4 vertex : SV_POSITION;
 				float4 worldPos : POSITIONT;
-				float2 uv : TEXCOORD0;
-				
 			};
 
 			fixed4 _Color;
@@ -49,9 +46,7 @@ Shader "Custom/DeathZone" {
 			{
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);
-				o.uv = v.uv;
 				o.worldPos = mul(unity_ObjectToWorld, v.vertex);
-				UNITY_TRANSFER_FOG(o,o.vertex);
 				return o;
 			}
 

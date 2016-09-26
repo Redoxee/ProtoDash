@@ -14,12 +14,12 @@ SceneSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 7
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_FogMode: 3
+  m_Fog: 1
+  m_FogColor: {r: 0, g: 0.08627451, b: 0.22745098, a: 1}
+  m_FogMode: 1
   m_FogDensity: 0.01
-  m_LinearFogStart: 0
-  m_LinearFogEnd: 300
+  m_LinearFogStart: 30
+  m_LinearFogEnd: 140
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
@@ -168,8 +168,7 @@ GameObject:
   - 4: {fileID: 499521735}
   - 20: {fileID: 499521734}
   - 92: {fileID: 499521733}
-  - 124: {fileID: 499521732}
-  - 81: {fileID: 499521731}
+  - 114: {fileID: 499521731}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: Untagged
@@ -177,20 +176,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &499521731
-AudioListener:
+--- !u!114 &499521731
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 499521730}
   m_Enabled: 1
---- !u!124 &499521732
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 499521730}
-  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a367bb057b91204b8796d00ae42180b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!92 &499521733
 Behaviour:
   m_ObjectHideFlags: 0
