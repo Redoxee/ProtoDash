@@ -335,7 +335,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 480834, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: eddeab919d5cbaa499aac8c4363ec071, type: 2}
@@ -619,7 +619,7 @@ RectTransform:
   m_Children:
   - {fileID: 1093855180}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 459, y: 261}
@@ -642,7 +642,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 468646, guid: ce22577bb821c7f4dad7f1245be31995, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 468646, guid: ce22577bb821c7f4dad7f1245be31995, type: 2}
       propertyPath: m_LocalRotation.x
@@ -696,7 +696,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1093855179}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 0.01, y: 0.01, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -1447,15 +1447,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114000013416392766, guid: f414e3c957855b0418562e0d8e622a05,
-        type: 2}
-      propertyPath: m_swipeDeadZone
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000013416392766, guid: f414e3c957855b0418562e0d8e622a05,
-        type: 2}
-      propertyPath: m_swipeInputDistance
-      value: 0.05
+    - target: {fileID: 2013856, guid: f414e3c957855b0418562e0d8e622a05, type: 2}
+      propertyPath: m_ClearFlags
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f414e3c957855b0418562e0d8e622a05, type: 2}

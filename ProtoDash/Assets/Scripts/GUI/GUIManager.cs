@@ -54,11 +54,18 @@ namespace Dasher
 		[SerializeField]
 		private Canvas m_introCanvas = null;
 
+		[Space]
+		[Header("Debug")]
+		private PerfRuler m_perf;
+		[SerializeField]
+		public Text m_debugFPS;
+
 		void Awake()
 		{
 			m_endTimerText = m_endTimer.GetComponentInChildren<Text>();
 			m_endBestTimeText = m_endBestTime.GetComponentInChildren<Text>();
 			m_endParTimeText = m_endParTime.GetComponentInChildren<Text>();
+			m_perf = GetComponent<PerfRuler>();
 		}
 
 		void Start()
@@ -122,10 +129,13 @@ namespace Dasher
 			m_failLevelLabelText.text = levelLabel;
 
 			m_gauge.Initialize();
+			m_perf.StartRecord();
 		}
 
 		public void NotifyEndLevelReached(bool isNewBestTime, bool isNewparTime)
 		{
+			m_perf.StopRecord();
+			m_debugFPS.text = m_perf.GetMeanFPS().ToString();
 			m_gameProcess.RequirePause();
 			m_gameCanvas.gameObject.SetActive(false);
 			m_endCanvas.gameObject.SetActive(true);

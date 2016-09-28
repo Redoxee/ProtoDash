@@ -11,22 +11,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de5c810adc731384da2ad72f93402526, type: 3}
   m_Name: MainColorScheme
   m_EditorClassIdentifier: 
-  MainBackGround: {r: 0, g: 0.078431375, b: 0.22745098, a: 1}
-  MainForground: {r: 0.007843138, g: 0.4392157, b: 0.47843137, a: 1}
+  MainBackGround: {r: 0.07058824, g: 0.08627451, b: 0.10196079, a: 1}
+  MainForground: {r: 0.9725491, g: 0.77647066, b: 0.38431376, a: 1}
   MainForground_Material: {fileID: 2100000, guid: f49aa710b82b4c84983ffac5050f09f0,
     type: 2}
   MainTitle: {r: 0.78039217, g: 0.8039216, b: 0.92156863, a: 1}
   MainTitle_Material: {fileID: 2100000, guid: 2192b66311fa4d647a596c19e923814b, type: 2}
-  DarkText: {r: 0, g: 0.043137256, b: 0.25882354, a: 1}
+  DarkText: {r: 0.05490196, g: 0.05490196, b: 0.05490196, a: 1}
   DarkText_Material: {fileID: 2100000, guid: 7b806ddd0706fdf46a550d26c5054a1d, type: 2}
   LightText: {r: 0.78039217, g: 0.8039216, b: 0.92156863, a: 1}
   LightText_Material: {fileID: 2100000, guid: e0c817552e7d0674586992113145f9ac, type: 2}
   Button: {r: 0.014812539, g: 0.008010022, b: 0.4705882, a: 1}
   Button_Material: {fileID: 2100000, guid: ac5c3c475a8c30f45befc72a1c931c23, type: 2}
-  LightButton: {r: 0.92156863, g: 0.8920906, b: 0.4734956, a: 1}
+  LightButton: {r: 0.8310852, g: 0.8310852, b: 0.8310852, a: 1}
   LightButtond_Material: {fileID: 2100000, guid: 42725ce627a036b4c9c3435f8e235c05,
     type: 2}
-  World_UI_Background: {r: 0.19320485, g: 0.35365713, b: 0.44117647, a: 1}
+  World_UI_Background: {r: 0.07058824, g: 0.08627451, b: 0.10196079, a: 1}
   World_UI_BG_Material: {fileID: 2100000, guid: 8fa25d8fa5f10df4dbb6d6dd3c750bc9,
     type: 2}
   HardWorld_UI_Backgroud: {r: 0.565, g: 0.043137256, b: 0, a: 1}
@@ -55,7 +55,7 @@ MonoBehaviour:
   Lava1: {r: 0.7764706, g: 0.31764707, b: 0.15686275, a: 1}
   Lava2: {r: 0.5647059, g: 0.29803923, b: 0.20392157, a: 1}
   Lava_Material: {fileID: 2100000, guid: 0335a564b1c070a48bc6f0ca85f08c3d, type: 2}
-  BackgroundComposition: {r: 0.23529412, g: 0.35686275, b: 0.7764706, a: 1}
+  BackgroundComposition: {r: 0.07058824, g: 0.08627451, b: 0.10196079, a: 1}
   Background_Material: {fileID: 2100000, guid: 007dfd71c1321e74aae895b6caedcc5d, type: 2}
   Transition1: {r: 0.92156863, g: 0.91764706, b: 0.1764706, a: 1}
   Transition_Material: {fileID: 2100000, guid: e61925aa67afbcf45ad238d60f099ab8, type: 2}

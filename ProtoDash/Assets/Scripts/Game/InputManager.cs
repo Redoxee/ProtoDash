@@ -17,8 +17,8 @@ namespace Dasher
 
 		private int m_dashFrameCount = 0;
 
-		[SerializeField]
-		private List<RectTransform> m_bunttonList = new List<RectTransform>();
+		//[SerializeField]
+		//private List<RectTransform> m_bunttonList = new List<RectTransform>();
 
 		private Vector2 m_currentPointerPosition;
 
