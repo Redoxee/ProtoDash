@@ -10,7 +10,12 @@
 		Tags{ "Queue" = "Geometry" }
 
 		Pass
-	{
+		{
+			Stencil{
+				Ref 1
+				Comp Greater
+				Pass replace
+			}
 		CGPROGRAM
 #pragma vertex vert
 #pragma fragment frag

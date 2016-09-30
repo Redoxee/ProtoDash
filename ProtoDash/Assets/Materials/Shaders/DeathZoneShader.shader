@@ -16,6 +16,11 @@ Shader "Custom/DeathZone" {
 		LOD 100
 
 		Pass{
+				Stencil{
+					Ref 1
+					Comp always
+					Pass replace
+			}
 			CGPROGRAM
 
 			#pragma vertex vert
