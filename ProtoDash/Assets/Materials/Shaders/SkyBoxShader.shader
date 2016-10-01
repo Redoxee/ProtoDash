@@ -39,7 +39,8 @@
 	sampler2D _MainTex;
 	float4 _MainTex_ST;
 
-#define POWER .15
+#define POWER .11
+#define FACTOR .5
 
 	v2f vert(appdata v)
 	{
@@ -58,7 +59,7 @@
 		float f = saturate(
 			pow(
 				length(i.uv),POWER
-			)
+			) 
 		);
 		return lerp(_Color,_Color2,f);
 	}

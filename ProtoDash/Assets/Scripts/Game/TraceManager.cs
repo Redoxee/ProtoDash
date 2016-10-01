@@ -54,7 +54,7 @@ namespace Dasher
 		void Update()
 		{
 			int c = currentAnimatedCount;
-			float dt = GameProcess.Instance.GameTime.GetGameDeltaTime();
+			float dt = Time.deltaTime;
 			for (int i = c; i > 0; --i)
 			{
 				int index = currentIndex - i + 1;
@@ -78,34 +78,40 @@ namespace Dasher
 
 		public void NotifyJump(Vector3 pos)
 		{
-			currentIndex++;
-			currentIndex %= TraceList.Count;
-			Trace t = TraceList[currentIndex];
-			t.obj.SetActive(true);
-			t.sprite.sprite = JumpSprite;
-			t.obj.transform.position = pos;
-			t.obj.transform.localScale = Vector3.zero;
-			t.timer = popAnimationTime;
+			if (isActiveAndEnabled)
+			{
+				currentIndex++;
+				currentIndex %= TraceList.Count;
+				Trace t = TraceList[currentIndex];
+				t.obj.SetActive(true);
+				t.sprite.sprite = JumpSprite;
+				t.obj.transform.position = pos;
+				t.obj.transform.localScale = Vector3.zero;
+				t.timer = popAnimationTime;
 
-			TraceList[currentIndex] = t;
-			currentAnimatedCount = currentAnimatedCount + 1;
+				TraceList[currentIndex] = t;
+				currentAnimatedCount = currentAnimatedCount + 1;
+			}
 		}
 
 		public void NotifyDash(Vector3 pos, Quaternion orientation)
 		{
-			currentIndex++;
-			currentIndex %= TraceList.Count;
+			if (isActiveAndEnabled)
+			{
+				currentIndex++;
+				currentIndex %= TraceList.Count;
 
-			Trace t = TraceList[currentIndex];
-			t.obj.SetActive(true);
-			t.sprite.sprite = DashSprite;
-			t.obj.transform.position = pos;
-			t.obj.transform.localRotation = orientation;
-			t.obj.transform.localScale = Vector3.zero;
-			t.timer = popAnimationTime;
+				Trace t = TraceList[currentIndex];
+				t.obj.SetActive(true);
+				t.sprite.sprite = DashSprite;
+				t.obj.transform.position = pos;
+				t.obj.transform.localRotation = orientation;
+				t.obj.transform.localScale = Vector3.zero;
+				t.timer = popAnimationTime;
 
-			TraceList[currentIndex] = t;
-			currentAnimatedCount = currentAnimatedCount + 1;
+				TraceList[currentIndex] = t;
+				currentAnimatedCount = currentAnimatedCount + 1;
+			}
 		}
 
 	}

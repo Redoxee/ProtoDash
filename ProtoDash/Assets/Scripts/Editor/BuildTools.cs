@@ -19,7 +19,7 @@ namespace DasherTool
 		private const string GAME_SCENES_PATH = "Assets/Scenes/Levels/";
 		private const string GAME_SCENE_EXTENSION = ".unity";
 
-		private const string INTRO_SCENE_PATH = "Assets/Scenes/MainMenu.unity";
+		private const string INTRO_SCENE_PATH = "Assets/Scenes/MainScene.unity";
 
 
 		private LevelFlow mainLevelFlow;

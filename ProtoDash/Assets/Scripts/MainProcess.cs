@@ -8,7 +8,8 @@ namespace Dasher
 		Error = 0,
 		Intro = 1,
 		MainMenu = 2,
-		InGame = 3
+		InGame = 3,
+		Stats = 4,
 	}
 
 	public class MainProcess : MonoBehaviour
@@ -80,35 +81,44 @@ namespace Dasher
 
 		const string c_mainMenuScene = "MainMenu";
 		const string c_gameSetupScene = "GameSetupScene";
-
+		const string c_statsScreen = "StatsScreen";
 		string m_currenLevelScene = null;
 		int m_currentLevelIndex = -1;
 
-		public void SwitchToHome()
+		private void UnloadCurrentAdditionalScene(bool keepLevel = false)
 		{
 			if (m_gameState == GameStates.InGame)
 			{
 				SceneManager.UnloadScene(c_gameSetupScene);
-				SceneManager.UnloadScene(m_currenLevelScene);
+				if (!keepLevel)
+				{
+					SceneManager.UnloadScene(m_currenLevelScene);
+				}
 			}
+
+			if (m_gameState == GameStates.MainMenu)
+			{
+				SceneManager.UnloadScene(c_mainMenuScene);
+			}
+
+			if (m_gameState == GameStates.Stats)
+			{
+				SceneManager.UnloadScene(c_statsScreen);
+			}
+		}
+
+
+		public void SwitchToHome()
+		{
+			UnloadCurrentAdditionalScene();
+
 			SceneManager.LoadScene(c_mainMenuScene, LoadSceneMode.Additive);
 			SetState(GameStates.MainMenu);
 		}
 
 		public void LaunchLevel(int index)
 		{
-			if (m_gameState == GameStates.MainMenu)
-			{
-				SceneManager.UnloadScene(c_mainMenuScene);
-			}
-			if (m_gameState == GameStates.InGame)
-			{
-				SceneManager.UnloadScene(c_gameSetupScene);
-				if(m_currenLevelScene != null)
-				{
-					SceneManager.UnloadScene(m_currenLevelScene);
-				}
-			}
+			UnloadCurrentAdditionalScene();
 			
 			SceneManager.LoadScene(c_gameSetupScene, LoadSceneMode.Additive);
 			SetState(GameStates.InGame);
@@ -142,7 +152,7 @@ namespace Dasher
 			int levelIndex = m_currentLevelIndex + 1;
 			if (levelIndex < 0 || levelIndex == levelFlow.levelList.Count)
 			{
-				SwitchToHome(); // TODO Recap screen
+				SwitchToStatsScreen(); // TODO Recap screen
 			}
 			else
 			{
@@ -161,14 +171,25 @@ namespace Dasher
 
 		#endregion
 
+		#region StatsScreen
+
+		public void SwitchToStatsScreen()
+		{
+			UnloadCurrentAdditionalScene();
+			SetState(GameStates.Stats);
+			SceneManager.LoadScene(c_statsScreen, LoadSceneMode.Additive);
+		}
+
+		#endregion
+
 		#region States
 		public void SetState(GameStates newState)
 		{
 			if (newState != GameStates.Intro)
 			{
-				m_gameState = newState;
 				m_transitionCamera.gameObject.SetActive(false);
 			}
+			m_gameState = newState;
 		}
 		#endregion
 
@@ -262,6 +283,17 @@ namespace Dasher
 				m_transitionCamera.gameObject.SetActive(false);
 			});
 		}
+
+		public void RequestSwitchToStats()
+		{
+			m_transitionCamera.gameObject.SetActive(true);
+			RequestTransition(() => {
+				SwitchToStatsScreen();
+				m_transitionAnimator.SetBool(c_transitionBool, false);
+				m_transitionCamera.gameObject.SetActive(false);
+			});
+		}
+
 		#endregion
 
 		#region Main menu reference

@@ -53,7 +53,7 @@ namespace Dasher
 				m_structuredLevelFlow[lvl.world].Add(lvl);
 
 				lvl.indexInWorld = i;
-	}
+			}
 		}
 
 		public Dictionary<int, List<LevelData>> GetStructuredProgression()
@@ -63,6 +63,22 @@ namespace Dasher
 				BuildStructuredData();
 			}
 			return m_structuredLevelFlow;
+		}
+
+		public int GetLevelCount()
+		{
+			return levelList.Count;
+		}
+
+		public bool IsLevelFinished(int levelIndex)
+		{
+			return levelList[levelIndex].currentBest > 0;
+		}
+
+		public bool IsLevelChamp(int levelIndex)
+		{
+			LevelData lvl = levelList[levelIndex];
+			return lvl.currentBest > 0 && lvl.currentBest < lvl.parTime;
 		}
 	}
 }

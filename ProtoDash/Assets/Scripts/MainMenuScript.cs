@@ -143,6 +143,11 @@ namespace Dasher
 			SetState(m_levelSelectState);
 		}
 
+		public void OnStatsPressed()
+		{
+			MainProcess.Instance.RequestSwitchToStats();
+		}
+
 		#endregion
 		#region LevelSelect
 		FSM_State m_levelSelectState;

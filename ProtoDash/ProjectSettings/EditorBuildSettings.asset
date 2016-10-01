@@ -12,6 +12,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameSetupScene.unity
   - enabled: 1
+    path: Assets/Scenes/StatsScreen.unity
+  - enabled: 1
     path: Assets/Scenes/Levels/001TheBasics.unity
   - enabled: 1
     path: Assets/Scenes/Levels/002WallJumping.unity
