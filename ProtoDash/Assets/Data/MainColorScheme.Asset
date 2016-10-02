@@ -45,9 +45,9 @@ MonoBehaviour:
   MainCharacterBase: {r: 0.78039217, g: 0.8039216, b: 0.92156863, a: 1}
   MainCharacterDepleted: {r: 0.61960787, g: 0.5411765, b: 0.29411766, a: 1}
   Character_Material: {fileID: 2100000, guid: 90f97fdc99da2354cb608b3b96f3fa59, type: 2}
-  Gauge: {r: 0.70980394, g: 0.9607843, b: 0.7607843, a: 1}
+  Gauge: {r: 0.6475527, g: 0.6428777, b: 0.9607843, a: 1}
   Gauge_Material: {fileID: 2100000, guid: a4fbe5a81a9a05a46bb4ed1df481ae16, type: 2}
-  GaugeDepletion: {r: 0.92156863, g: 0.7176471, b: 0.65882355, a: 1}
+  GaugeDepletion: {r: 0.92156863, g: 0.5014417, b: 0.5014417, a: 1}
   GaugeDepletion_Material: {fileID: 2100000, guid: 1f582c2adedef134c9b258b4748709ec,
     type: 2}
   EndNode: {r: 0.92156863, g: 0.91764706, b: 0.17254902, a: 1}
