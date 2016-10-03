@@ -84,3 +84,7 @@ MonoBehaviour:
     sceneName: 018PerillousDescent
     world: 3
     parTime: 20
+  - sceneObject: {fileID: 102900000, guid: b432b3c23c3a0bc43b1de0c0590b9d94, type: 3}
+    sceneName: 019DashBackUp
+    world: 4
+    parTime: 15
