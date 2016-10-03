@@ -9,6 +9,7 @@ namespace Dasher
 		[SerializeField]
 		GameObject m_itemPrefab = null;
 
+		const string c_noStats = "No stats yet!\nFinish a level and come back";
 		const string c_LevelMessage = "You've beat {0} out of {1} levels";
 		const string c_AllLevelComplete = "Congratulation !\nYou've beat all the levels";
 		const string c_ChampMessage = "You are a champ on {0} levels";
@@ -23,9 +24,12 @@ namespace Dasher
 		GameObject m_container = null;
 
 		private LevelFlow m_levelFlow;
-		
+
+		private int m_nbStats = 0;
+
 		private void Setup()
 		{
+			m_nbStats = 0;
 			int levelCount = m_levelFlow.GetLevelCount();
 			int levelFinished = 0, levelChamp = 0;
 
@@ -75,10 +79,16 @@ namespace Dasher
 				Text totalTimeText = CreateItem();
 				totalTimeText.text = string.Format(c_TotalTime, totalTime.ToString(TimeManager.c_timeDisplayFormat));
 			}
+			if (m_nbStats == 0)
+			{
+				Text noStats = CreateItem();
+				noStats.text = c_noStats;
+			}
 		}
 
 		Text CreateItem()
 		{
+			m_nbStats++;
 			GameObject item = Instantiate(m_itemPrefab);
 			item.transform.SetParent(m_container.transform, false);
 			return item.GetComponentInChildren<Text>();
