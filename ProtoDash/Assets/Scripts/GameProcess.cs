@@ -160,8 +160,9 @@ namespace Dasher
 						m_isNewPar = true;
 					currentLevelData.currentBest = currentTime;
 					saveManager.SetLevelTime(CurrentLevelName, m_timeManager.CurrentLevelTime);
-					saveManager.Save();
 				}
+				saveManager.NotifyEndRun(m_character.Traces.NbJumps, m_character.Traces.NbDashes);
+				saveManager.Save();
 			}
 
 			m_character.NotifyEndLevel(endPosition);
@@ -246,6 +247,7 @@ namespace Dasher
 			}
 			m_timeManager.NotifyStartLevel();
 			m_timeManager.GameTimeFactor = 1;
+			MainProcess.Instance.DataManager.NotifyLevelStarted();
 
 
 			m_deathFrameCounter = 0;
@@ -295,6 +297,7 @@ namespace Dasher
 
 		private void OnDeath()
 		{
+			SetState(m_deathState);
 			m_timeManager.GameTimeFactor = 0f;
 			if (m_GUIManager)
 			{
@@ -334,6 +337,17 @@ namespace Dasher
 
 		#endregion
 
+		#region Death
+		FSM_State m_deathState;
+		private void Death_Begin()
+		{
+			SaveManager dataManager = MainProcess.Instance.DataManager;
+			dataManager.NotifyEndRun(m_character.Traces.NbJumps, m_character.Traces.NbDashes);
+			dataManager.Save();
+		}
+
+		#endregion
+
 		#region End
 
 		FSM_State m_endState;
@@ -357,6 +371,7 @@ namespace Dasher
 			m_gamplayState = new FSM_State(Gameplay_begin, Gameplay_update, Gameplay_fixedUpdate, null);
 			m_outroState = new FSM_State(Outro_begin, Outro_update, Outro_FixedUpdate);
 			m_endState = new FSM_State(End_begin);
+			m_deathState = new FSM_State(Death_Begin);
 		}
 
 		#endregion

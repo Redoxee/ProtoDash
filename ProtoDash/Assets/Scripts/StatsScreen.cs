@@ -50,48 +50,63 @@ namespace Dasher
 
 			if (levelFinished > 0)
 			{
-				Text levelText = CreateItem();
 				if (levelFinished == levelCount)
 				{
-					levelText.text = string.Format(c_AllLevelComplete);
+					CreateItem(string.Format(c_AllLevelComplete));
+
+					CreateItem(string.Format(c_TotalTime, totalTime.ToString(TimeManager.c_timeDisplayFormat)));
 				}
 				else
 				{
-					levelText.text = string.Format(c_LevelMessage, levelFinished, levelCount);
+					CreateItem(string.Format(c_LevelMessage, levelFinished, levelCount));
 				}
-				levelText.gameObject.SetActive(false);
-				levelText.gameObject.SetActive(true);
 
 
 				if (levelChamp > 0)
 				{
-					Text champText = CreateItem();
 					if (levelChamp == levelCount)
 					{
-						champText.text = c_ChampAllLevels;
+						CreateItem(c_ChampAllLevels);
 					}
 					else
 					{
-						champText.text = string.Format(c_ChampMessage, levelChamp);
+						CreateItem(string.Format(c_ChampMessage, levelChamp));
 					}
 				}
-
-				Text totalTimeText = CreateItem();
-				totalTimeText.text = string.Format(c_TotalTime, totalTime.ToString(TimeManager.c_timeDisplayFormat));
 			}
+
+			SaveManager datas = MainProcess.Instance.DataManager;
+			int totalRuns = datas.GetTotalRuns();
+			if (totalRuns > 0)
+			{
+				CreateItem(string.Format(c_NbRunLaunched, totalRuns));
+			}
+			int totalJumps = datas.GetTotalJumps();
+			if (totalJumps > 0)
+			{
+				CreateItem(string.Format(c_NbJumps, totalJumps));
+			}
+			int totalDashes = datas.GetTotalDashes();
+			if (totalDashes > 0)
+			{
+				CreateItem(string.Format(c_NbDash, totalDashes));
+			}
+			
+
 			if (m_nbStats == 0)
 			{
-				Text noStats = CreateItem();
-				noStats.text = c_noStats;
+				CreateItem(c_noStats);
 			}
 		}
 
-		Text CreateItem()
+		GameObject CreateItem(string message)
 		{
 			m_nbStats++;
 			GameObject item = Instantiate(m_itemPrefab);
 			item.transform.SetParent(m_container.transform, false);
-			return item.GetComponentInChildren<Text>();
+			Text text = item.GetComponentInChildren<Text>();
+			text.text = message;
+			return item;
 		}
 
 		void Start() {

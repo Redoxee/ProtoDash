@@ -14,25 +14,29 @@ namespace Dasher
 		}
 
 		[SerializeField]
-		GameObject traceObject;
+		GameObject traceObject = null;
 		[SerializeField]
 		int tracePoolSize = 50;
 
 		[SerializeField]
 		private float popAnimationTime = 1;
 		[SerializeField]
-		private AnimationCurve popAnimationCurve;
+		private AnimationCurve popAnimationCurve = AnimationCurve.Linear(0,0,1,1);
 
 		private List<Trace> TraceList = new List<Trace>();
 		private int currentIndex = 0;
 		private int currentAnimatedCount = 0;
 
 		[SerializeField]
-		private Sprite JumpSprite;
+		private Sprite JumpSprite = null;
 		[SerializeField]
-		private Sprite DashSprite;
+		private Sprite DashSprite = null;
 
-		// Use this for initialization
+		private int m_jumpCounter = 0;
+		private int m_dashesCounter = 0;
+		public int NbJumps { get { return m_jumpCounter; } }
+		public int NbDashes { get { return m_dashesCounter; } }
+
 		void Start()
 		{
 
@@ -48,6 +52,8 @@ namespace Dasher
 				TraceList.Add(t);
 			}
 
+			m_jumpCounter = 0;
+			m_dashesCounter = 0;
 		}
 
 
@@ -78,6 +84,7 @@ namespace Dasher
 
 		public void NotifyJump(Vector3 pos)
 		{
+			m_jumpCounter += 1;
 			if (isActiveAndEnabled)
 			{
 				currentIndex++;
@@ -96,6 +103,7 @@ namespace Dasher
 
 		public void NotifyDash(Vector3 pos, Quaternion orientation)
 		{
+			m_dashesCounter += 1;
 			if (isActiveAndEnabled)
 			{
 				currentIndex++;

@@ -113,7 +113,8 @@ namespace Dasher
 
 		[SerializeField]
 		private TraceManager traceManager;
-		
+		public TraceManager Traces {  get { return traceManager; } }
+
 		private Vector3 currentFacingVector;
 
 		private bool canLateJump = false;

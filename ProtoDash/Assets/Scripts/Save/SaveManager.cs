@@ -2,12 +2,12 @@
 using System.IO;
 using System.Collections.Generic;
 using FlatBuffers;
-using FlatDasherSave;
+using DasherSave;
 using System;
 namespace Dasher
 {
 	public class SaveManager {
-		public const string c_SaveVersion = "0.00.001";
+		public const string c_SaveVersion = "0.00.002";
 		private DasherSavable m_savable;
 
 		#region Save mecanics
@@ -26,7 +26,7 @@ namespace Dasher
 			if (File.Exists(S_GetSaveName()))
 			{
 				ByteBuffer bb = new ByteBuffer(File.ReadAllBytes(S_GetSaveName()));
-				FlatGameSave save = FlatGameSave.GetRootAsGameSave(bb);
+				FlatGameSave save = FlatGameSave.GetRootAsFlatGameSave(bb);
 
 				m_savable = new DasherSavable(save.LevelResultsLength);
 				LevelFlow flow = MainProcess.Instance.levelFlow;
@@ -40,6 +40,10 @@ namespace Dasher
 						lvlData.currentBest = lvlSave.BestTime;
 					}
 				}
+
+				m_savable.m_TotalRuns = save.TotalRuns;
+				m_savable.m_TotalDashes = save.TotalDashes;
+				m_savable.m_TotalJumps = save.TotalJumps;
 			}
 			else
 			{
@@ -51,6 +55,7 @@ namespace Dasher
 		{
 			m_builder.Clear();
 
+
 			var levelsEnumerator = m_savable.m_levels.GetEnumerator();
 			var offsetTable = new Offset<FlatLevelSave>[m_savable.m_levels.Count];
 			int i = 0;
@@ -58,19 +63,24 @@ namespace Dasher
 			{
 				var value = levelsEnumerator.Current;
 				var idOffset = m_builder.CreateString(value.Key);
-				var lvlOffset = FlatLevelSave.CreateLevelSave(m_builder, idOffset, value.Value);
+				var lvlOffset = FlatLevelSave.CreateFlatLevelSave(m_builder, idOffset, value.Value);
 				offsetTable[i++] = lvlOffset;
 			}
 
 			var versionOffset = m_builder.CreateString(c_SaveVersion);
 			var levelsOffset = FlatGameSave.CreateLevelResultsVector(m_builder, offsetTable);
-			FlatGameSave.StartGameSave(m_builder);
+			FlatGameSave.StartFlatGameSave(m_builder);
+
 			FlatGameSave.AddVersion(m_builder, versionOffset);
 			FlatGameSave.AddLevelResults(m_builder, levelsOffset);
 
-			var gameOffset = FlatGameSave.EndGameSave(m_builder);
+			FlatGameSave.AddTotalRuns(m_builder, m_savable.m_TotalRuns);
+			FlatGameSave.AddTotalJumps(m_builder, m_savable.m_TotalJumps);
+			FlatGameSave.AddTotalDashes(m_builder, m_savable.m_TotalDashes);
 
-			FlatGameSave.FinishGameSaveBuffer(m_builder, gameOffset);
+			var gameOffset = FlatGameSave.EndFlatGameSave(m_builder);
+
+			FlatGameSave.FinishFlatGameSaveBuffer(m_builder, gameOffset);
 
 			using (var ms = new MemoryStream(m_builder.DataBuffer.Data, m_builder.DataBuffer.Position, m_builder.Offset))
 			{
@@ -102,12 +112,42 @@ namespace Dasher
 			m_savable.m_levels[levelId] = time;
 		}
 
+		public void NotifyLevelStarted()
+		{
+			m_savable.m_TotalRuns += 1;
+		}
+
+		public void NotifyEndRun(int nbJumps, int nbDashes)
+		{
+			m_savable.m_TotalJumps += nbJumps;
+			m_savable.m_TotalDashes += nbDashes;
+		}
+
+		public int GetTotalRuns()
+		{
+			return m_savable.m_TotalRuns;
+		}
+
+		public int GetTotalJumps()
+		{
+			return m_savable.m_TotalJumps;
+		}
+
+		public int GetTotalDashes()
+		{
+			return m_savable.m_TotalDashes;
+		}
+
 		#endregion
 	}
 
 	public class DasherSavable
 	{
 		public Dictionary<string, float> m_levels;
+
+		public int m_TotalRuns = 0;
+		public int m_TotalJumps = 0;
+		public int m_TotalDashes = 0;
 
 		public DasherSavable(int nbLevels)
 		{
