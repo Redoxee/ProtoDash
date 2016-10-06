@@ -20,12 +20,14 @@ namespace Dasher
 
 		public string GetLevelLabel()
 		{
-			return string.Format(c_levelNamePattern, world, indexInWorld + 1);
+			return string.Format(c_levelNamePattern, world, indexInWorld);
 		}
 	}
 
 	public class LevelFlow : ScriptableObject
 	{
+		public const int c_nbLevelInWorld = 6;
+
 		[SerializeField]
 		public List<LevelData> levelList;
 
@@ -52,7 +54,7 @@ namespace Dasher
 				}
 				m_structuredLevelFlow[lvl.world].Add(lvl);
 
-				lvl.indexInWorld = i;
+				lvl.indexInWorld = m_structuredLevelFlow[lvl.world].Count;
 			}
 		}
 
