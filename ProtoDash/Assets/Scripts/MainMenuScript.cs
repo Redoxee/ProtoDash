@@ -107,6 +107,9 @@ namespace Dasher
 			playButton.onClick.RemoveAllListeners();
 			playButton.onClick.AddListener(() => { OnLevelPlayPressed(); });
 
+			ScrollRect scrollRect = m_worldsParent.GetComponentInParent<ScrollRect>();
+			scrollRect.verticalNormalizedPosition = 0;
+
 			m_isinitialized = true;
 		}
 

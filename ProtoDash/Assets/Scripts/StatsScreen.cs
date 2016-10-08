@@ -10,8 +10,8 @@ namespace Dasher
 		GameObject m_itemPrefab = null;
 
 		const string c_noStats = "No stats yet!\nFinish a level and come back";
-		const string c_LevelMessage = "You've beat {0} out of {1} levels";
-		const string c_AllLevelComplete = "Congratulation !\nYou've beat all the levels";
+		const string c_LevelMessage = "You've beaten {0} out of {1} levels";
+		const string c_AllLevelComplete = "Congratulation !\nYou've beaten all the levels";
 		const string c_ChampMessage = "You are a champ on {0} levels";
 		const string c_ChampAllLevels = "Congratulation !\nYou are a champ on all levels!";
 		const string c_TotalTime = "Cumulated Time : {0}";

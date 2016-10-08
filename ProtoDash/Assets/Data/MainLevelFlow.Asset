@@ -96,3 +96,11 @@ MonoBehaviour:
     sceneName: 021ThroughTheHeart
     world: 4
     parTime: 10
+  - sceneObject: {fileID: 102900000, guid: d2086cc251411ca47a49000c9f287c25, type: 3}
+    sceneName: 022YouDense
+    world: 4
+    parTime: 22
+  - sceneObject: {fileID: 102900000, guid: 6077e58d44e936e4e83e0cf88b9b952e, type: 3}
+    sceneName: 023SimpleDashes
+    world: 4
+    parTime: 12
