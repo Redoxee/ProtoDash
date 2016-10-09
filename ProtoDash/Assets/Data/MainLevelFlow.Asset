@@ -112,3 +112,11 @@ MonoBehaviour:
     sceneName: 025DashUpUpUp
     world: 5
     parTime: 15
+  - sceneObject: {fileID: 102900000, guid: c77ef801fb27e064294236ad23fba2b7, type: 3}
+    sceneName: 026JumpsJumpsDash
+    world: 5
+    parTime: 15
+  - sceneObject: {fileID: 102900000, guid: 39150da95f67b2f43bdc3ed4d1d75635, type: 3}
+    sceneName: 027SmallSpiral
+    world: 5
+    parTime: 10

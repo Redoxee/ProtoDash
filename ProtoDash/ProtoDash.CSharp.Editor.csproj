@@ -120,6 +120,7 @@
   <ItemGroup>
     <None Include="Assets\Materials\Shaders\BackgroundShader.shader" />
     <None Include="Assets\Materials\Shaders\CharacterShader.shader" />
+    <None Include="Assets\Materials\Shaders\CircleShader.shader" />
     <None Include="Assets\Materials\Shaders\CompanionGauge.shader" />
     <None Include="Assets\Materials\Shaders\DeathZoneMonoChrome.shader" />
     <None Include="Assets\Materials\Shaders\DeathZoneShader.shader" />
