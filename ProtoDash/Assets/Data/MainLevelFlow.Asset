@@ -120,3 +120,15 @@ MonoBehaviour:
     sceneName: 027SmallSpiral
     world: 5
     parTime: 10
+  - sceneObject: {fileID: 102900000, guid: 879e483496494504eae8e8f91764a06a, type: 3}
+    sceneName: 028LeftDiagonal
+    world: 5
+    parTime: 12
+  - sceneObject: {fileID: 102900000, guid: ac0667d1c27ba9e46a51840dbef10c9c, type: 3}
+    sceneName: 029GrindTower
+    world: 5
+    parTime: 12
+  - sceneObject: {fileID: 102900000, guid: 06bf8f34538afb544bda7a1d8cfb7d69, type: 3}
+    sceneName: 030LatheralInsanity
+    world: 5
+    parTime: 12
