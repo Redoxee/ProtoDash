@@ -13,6 +13,7 @@ namespace Dasher
 		public Material MainTitle_Material;
 		public Color DarkText;
 		public Material DarkText_Material;
+		public Material OptionIcon_Material;
 		public Color LightText;
 		public Material LightText_Material;
 
@@ -64,6 +65,7 @@ namespace Dasher
 
 			MainTitle_Material.color = MainTitle;
 			DarkText_Material.color = DarkText;
+			OptionIcon_Material.color = DarkText;
 			LightText_Material.color = LightText;
 
 			Button_Material.color = Button;

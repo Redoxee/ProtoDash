@@ -7,8 +7,9 @@ namespace Dasher
 	public class MainMenuScript : MonoBehaviour
 	{
 
-		private const string c_a_select = "LevelSelect";
-		private const string c_a_info = "LevelInfo";
+		private static int c_a_select = Animator.StringToHash("LevelSelect");
+		private static int c_a_info = Animator.StringToHash("LevelInfo");
+		private static int c_a_settings = Animator.StringToHash("SettingsMenu");
 		[SerializeField]
 		private Animator m_menuAnimator = null;
 
@@ -30,12 +31,14 @@ namespace Dasher
 			public D_FSMCallback m_beging;
 			public D_FSMCallback m_end;
 			public D_FSMCallback m_lvlButtonCallback;
+			public bool m_canGoSettings;
 
-			public FSM_State(D_FSMCallback begin = null, D_FSMCallback end = null, D_FSMCallback lvl = null)
+			public FSM_State(D_FSMCallback begin = null, D_FSMCallback end = null, D_FSMCallback lvl = null, bool canGoSettings = false)
 			{
 				m_beging = begin;
 				m_end = end;
 				m_lvlButtonCallback = lvl;
+				m_canGoSettings = canGoSettings;
 			}
 		}
 
@@ -54,6 +57,17 @@ namespace Dasher
 		{
 			if (m_currentState.m_lvlButtonCallback != null)
 				m_currentState.m_lvlButtonCallback();
+		}
+
+		public void SettingsPressed()
+		{
+			if(m_currentState.m_canGoSettings)
+				SetState(m_setingsState);
+		}
+
+		public void SettingsClosePressed()
+		{
+			SetState(m_introState);
 		}
 
 		#region Worlds
@@ -132,8 +146,9 @@ namespace Dasher
 		#region States
 		private void InitStates()
 		{
-			m_introState = new FSM_State(null, null, Intro_levelPressed);
+			m_introState = new FSM_State(null, null, Intro_levelPressed,true);
 			m_levelSelectState = new FSM_State(null, null, LvlSelect_levelPressed);
+			m_setingsState = new FSM_State(BeginSettings, EndSettings);
 			SetState(m_introState);
 		}
 
@@ -218,6 +233,21 @@ namespace Dasher
 			{
 				MainProcess.Instance.RequestLevelLaunch(m_currentLevelDisplayed);
 			}
+		}
+
+		#endregion
+
+		#region Settings
+		FSM_State m_setingsState;
+
+		private void BeginSettings()
+		{
+			m_menuAnimator.SetBool(c_a_settings, true);
+		}
+
+		private void EndSettings()
+		{
+			m_menuAnimator.SetBool(c_a_settings, false);
 		}
 
 		#endregion

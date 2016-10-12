@@ -122,10 +122,12 @@
     <None Include="Assets\Materials\Shaders\CharacterShader.shader" />
     <None Include="Assets\Materials\Shaders\CircleShader.shader" />
     <None Include="Assets\Materials\Shaders\CompanionGauge.shader" />
+    <None Include="Assets\Materials\Shaders\CrossShader.shader" />
     <None Include="Assets\Materials\Shaders\DeathZoneMonoChrome.shader" />
     <None Include="Assets\Materials\Shaders\DeathZoneShader.shader" />
     <None Include="Assets\Materials\Shaders\EndNodeLevel.shader" />
     <None Include="Assets\Materials\Shaders\ExtandableCircle.shader" />
+    <None Include="Assets\Materials\Shaders\GearShader.shader" />
     <None Include="Assets\Materials\Shaders\SkyBoxShader.shader" />
     <None Include="Assets\Materials\Shaders\UnlitBGElementShader.shader" />
     <None Include="Assets\Materials\Shaders\UnlitWallShader.shader" />

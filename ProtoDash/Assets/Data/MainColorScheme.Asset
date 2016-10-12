@@ -19,6 +19,7 @@ MonoBehaviour:
   MainTitle_Material: {fileID: 2100000, guid: 2192b66311fa4d647a596c19e923814b, type: 2}
   DarkText: {r: 0.05490196, g: 0.05490196, b: 0.05490196, a: 1}
   DarkText_Material: {fileID: 2100000, guid: 7b806ddd0706fdf46a550d26c5054a1d, type: 2}
+  OptionIcon_Material: {fileID: 2100000, guid: 240979b9c079a4c449ed5f285ac12541, type: 2}
   LightText: {r: 0.78039217, g: 0.8039216, b: 0.92156863, a: 1}
   LightText_Material: {fileID: 2100000, guid: e0c817552e7d0674586992113145f9ac, type: 2}
   Button: {r: 0.014812539, g: 0.008010022, b: 0.4705882, a: 1}
@@ -37,6 +38,8 @@ MonoBehaviour:
     type: 2}
   WorldFinishedBorder: {r: 0.92156863, g: 0.69803923, b: 0.015686275, a: 1}
   WorldFinishedBorder_Material: {fileID: 2100000, guid: 61686fbda1a94554d82e8622967aff1b,
+    type: 2}
+  SettingsMenu_Material: {fileID: 2100000, guid: 804d8c70ddc95564786ee53642efc0d3,
     type: 2}
   WorldGoldenColor1: {r: 0.77254903, g: 0.7764706, b: 0.09411765, a: 1}
   WorldGoldenColor2: {r: 0.77254903, g: 0.7764706, b: 0.28235295, a: 1}
