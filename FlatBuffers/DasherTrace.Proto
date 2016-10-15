@@ -1,0 +1,19 @@
+namespace DasherSave;
+
+table FlatVector2 {
+	x:float=0;
+	y:float=0;
+}
+
+table FlatTracePoint {
+	TraceType:int;
+	Position:FlatVector2;
+	Rotation:float;
+}
+
+table FlatTraceSave {
+	LevelId : string;
+	Points:[FlatTracePoint];
+}
+
+root_type FlatTraceSave;

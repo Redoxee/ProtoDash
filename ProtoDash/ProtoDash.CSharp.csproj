@@ -85,6 +85,7 @@
     <Compile Include="Assets\Scripts\Game\Character.cs" />
     <Compile Include="Assets\Scripts\Game\GaugeScript.cs" />
     <Compile Include="Assets\Scripts\Game\InputManager.cs" />
+    <Compile Include="Assets\Scripts\Game\PastTraceManager.cs" />
     <Compile Include="Assets\Scripts\Game\SmartGauge.cs" />
     <Compile Include="Assets\Scripts\Game\TraceManager.cs" />
     <Compile Include="Assets\Scripts\Game\TutorialAnimator.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Assets\Scripts\MainSharedScene\TransitionCanvasBehaviour.cs" />
     <Compile Include="Assets\Scripts\PerfRuler.cs" />
     <Compile Include="Assets\Scripts\Save\DasherSave.cs" />
+    <Compile Include="Assets\Scripts\Save\DasherTrace.cs" />
     <Compile Include="Assets\Scripts\Save\SaveManager.cs" />
     <Compile Include="Assets\Scripts\StatsScreen.cs" />
     <Compile Include="Assets\Scripts\TimeManager.cs" />

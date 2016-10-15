@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Dasher
 {
+	[RequireComponent(typeof(PastTraceManager))]
 	public class TraceManager : MonoBehaviour
 	{
 
@@ -37,6 +38,8 @@ namespace Dasher
 		public int NbJumps { get { return m_jumpCounter; } }
 		public int NbDashes { get { return m_dashesCounter; } }
 
+		private PastTraceManager m_pastTraceManager;
+
 		void Start()
 		{
 
@@ -54,6 +57,9 @@ namespace Dasher
 
 			m_jumpCounter = 0;
 			m_dashesCounter = 0;
+
+			m_pastTraceManager = GetComponent<PastTraceManager>();
+			m_pastTraceManager.StartRecording();
 		}
 
 
@@ -98,6 +104,8 @@ namespace Dasher
 
 				TraceList[currentIndex] = t;
 				currentAnimatedCount = currentAnimatedCount + 1;
+
+				m_pastTraceManager.NotifyJump(t.obj.transform);
 			}
 		}
 
@@ -119,6 +127,8 @@ namespace Dasher
 
 				TraceList[currentIndex] = t;
 				currentAnimatedCount = currentAnimatedCount + 1;
+
+				m_pastTraceManager.NotifyDash(t.obj.transform);
 			}
 		}
 

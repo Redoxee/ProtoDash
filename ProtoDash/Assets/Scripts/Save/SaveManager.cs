@@ -17,6 +17,11 @@ namespace Dasher
 			return Application.persistentDataPath + "/dSave";
 		}
 
+		public static string S_GetLevelTraceFile(string lvlId)
+		{
+			return Application.persistentDataPath + "/Trace_" + lvlId;
+		}
+
 		private FlatBufferBuilder m_builder;
 
 		public SaveManager()
@@ -89,6 +94,62 @@ namespace Dasher
 			}
 		}
 
+		public void SaveLevelTrace(string lvlId)
+		{
+			if (!m_traceDictionary.ContainsKey(lvlId))
+				return;
+			var trace = m_traceDictionary[lvlId];
+			var fileName = S_GetLevelTraceFile(lvlId);
+
+			m_builder.Clear();
+
+			var idOffset = m_builder.CreateString(lvlId);
+
+			var pointVectorOffset = new Offset<FlatTracePoint>[trace.Length];
+			for (int i = 0; i < trace.Length; ++i)
+			{
+				var point = trace.m_points[i];
+				var positionOffset = FlatVector2.CreateFlatVector2(m_builder,point.position.x, point.position.y);
+				var pointType = (int)point.tType;
+				pointVectorOffset[i] = FlatTracePoint.CreateFlatTracePoint(m_builder, pointType, positionOffset, point.rotation);
+			}
+			var pointOffs = FlatTraceSave.CreatePointsVector(m_builder,pointVectorOffset);
+			var flatTrace = FlatTraceSave.CreateFlatTraceSave(m_builder, idOffset, pointOffs);
+			FlatTraceSave.FinishFlatTraceSaveBuffer(m_builder, flatTrace);
+			using (var ms = new MemoryStream(m_builder.DataBuffer.Data, m_builder.DataBuffer.Position, m_builder.Offset))
+			{
+				File.WriteAllBytes(fileName, ms.ToArray());
+				Debug.Log("data saved");
+			}
+		}
+
+
+		public bool LoadTrace(string lvlId,bool force = false)
+		{
+			if (m_traceDictionary.ContainsKey(lvlId) && !force)
+				return true;
+
+			string fileName = S_GetLevelTraceFile(lvlId);
+			if (!File.Exists(fileName))
+				return false;
+
+			ByteBuffer bb = new ByteBuffer(File.ReadAllBytes(fileName));
+			FlatTraceSave flatTrace = FlatTraceSave.GetRootAsFlatTraceSave(bb);
+
+			TraceRecording newTrace = new TraceRecording();
+			m_traceDictionary[lvlId] = newTrace;
+
+			int nbPoint = flatTrace.PointsLength;
+			for (int i = 0; i < nbPoint; ++i)
+			{
+				var flatPoint = flatTrace.GetPoints(i);
+				newTrace.AddPoint((TraceType)flatPoint.TraceType, new Vector2(flatPoint.Position.X, flatPoint.Position.Y), flatPoint.Rotation);
+			}
+
+			return true;
+		}
+
+
 		#endregion
 
 		#region Interface
@@ -136,6 +197,23 @@ namespace Dasher
 		public int GetTotalDashes()
 		{
 			return m_savable.m_TotalDashes;
+		}
+
+
+		public Dictionary<string, TraceRecording> m_traceDictionary = new Dictionary<string, TraceRecording>();
+		public TraceRecording GetTraceForLevel(string levelId)
+		{
+			if(m_traceDictionary.ContainsKey(levelId))
+				return m_traceDictionary[levelId];
+			if(LoadTrace(levelId))
+				return m_traceDictionary[levelId];
+
+			return null;
+		} 
+
+		public void SetTraceForLevel(string levelId, TraceRecording trace)
+		{
+			m_traceDictionary[levelId] = trace;
 		}
 
 		#endregion

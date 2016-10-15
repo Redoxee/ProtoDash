@@ -26,6 +26,8 @@ namespace Dasher
 
 		private bool m_initFrameWait = false;
 
+		private PastTraceManager m_pastTraceManagerRef = null;
+
 		#region Character
 		private Character m_character;
 
@@ -160,6 +162,9 @@ namespace Dasher
 						m_isNewPar = true;
 					currentLevelData.currentBest = currentTime;
 					saveManager.SetLevelTime(CurrentLevelName, m_timeManager.CurrentLevelTime);
+
+					saveManager.SetTraceForLevel(CurrentLevelName, m_pastTraceManagerRef.GetCurrentRecording());
+					saveManager.SaveLevelTrace(CurrentLevelName);
 				}
 				saveManager.NotifyEndRun(m_character.Traces.NbJumps, m_character.Traces.NbDashes);
 				saveManager.Save();
@@ -223,6 +228,13 @@ namespace Dasher
 				m_GUIManager.SetStateIntro();
 			}
 			GameTime.GameTimeFactor = 0;
+
+			m_pastTraceManagerRef = transform.parent.GetComponentInChildren<PastTraceManager>();
+			if (m_pastTraceManagerRef)
+			{
+				m_pastTraceManagerRef.Initialize();
+			}
+
 		}
 
 		void Intro_update()

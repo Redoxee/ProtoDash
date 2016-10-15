@@ -72,6 +72,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 473626}
   - 114: {fileID: 11446340}
+  - 114: {fileID: 114000014041820748}
   m_Layer: 2
   m_Name: TraceHolder
   m_TagString: Untagged
@@ -2082,6 +2083,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_swipeInputDistance: 0.05
   m_swipeDeadZone: 0.35
+--- !u!114 &114000014041820748
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 137038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b20ff0fa2fccc43b272eeafde0f2e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TracePrefab: {fileID: 139350, guid: ebce38a67f572de48b3c83f083fb91a0, type: 2}
+  m_jumpSprite: {fileID: 21300000, guid: a50e6eb667d67944f8fe259a4df7b8b6, type: 3}
+  m_dashSprite: {fileID: 21300000, guid: 8ebc1a81fb4343045b3e290bfff1616c, type: 3}
 --- !u!124 &124000013094005290
 Behaviour:
   m_ObjectHideFlags: 1
