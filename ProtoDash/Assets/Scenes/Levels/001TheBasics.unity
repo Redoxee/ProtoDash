@@ -1263,23 +1263,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114000014041820748, guid: f414e3c957855b0418562e0d8e622a05,
-        type: 2}
-      propertyPath: m_dashSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 8ebc1a81fb4343045b3e290bfff1616c,
-        type: 3}
-    - target: {fileID: 114000014041820748, guid: f414e3c957855b0418562e0d8e622a05,
-        type: 2}
-      propertyPath: m_jumpSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: a50e6eb667d67944f8fe259a4df7b8b6,
-        type: 3}
-    - target: {fileID: 114000014041820748, guid: f414e3c957855b0418562e0d8e622a05,
-        type: 2}
-      propertyPath: TracePrefab
-      value: 
-      objectReference: {fileID: 139350, guid: ebce38a67f572de48b3c83f083fb91a0, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f414e3c957855b0418562e0d8e622a05, type: 2}
   m_IsPrefabParent: 0

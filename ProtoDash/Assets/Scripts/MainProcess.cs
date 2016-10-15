@@ -23,6 +23,9 @@ namespace Dasher
 
 		[SerializeField]
 		public LevelFlow levelFlow;
+
+		[SerializeField]
+		public BuildData buildData;
 	
 		[SerializeField]
 		public ColorScheme m_colorScheme;
