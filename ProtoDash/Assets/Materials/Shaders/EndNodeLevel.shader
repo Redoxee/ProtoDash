@@ -58,11 +58,33 @@
 			float _AnimationTime = 0.f;
 			float _ClosureFactor = 0.f;
 
+
+			// from http://iquilezles.org/www/articles/smin/smin.htm
+			// polynomial smooth min (k = 0.1);
+			float smin(float a, float b, float k)
+			{
+				float h = clamp(0.5 + 0.5*(b - a) / k, 0.0, 1.0);
+				return lerp(b, a, h) - k*h*(1.0 - h);
+			}
+
+			float smax(float a, float b, float k)
+			{
+				return (-smin(-a, -b, k));
+			}
+
+			float df(float2 pos)
+			{
+				float2 q = abs(pos);
+				return smax(smax((q.x * 0.866025 + pos.y*0.5), q.y, .05), smax((q.x * 0.866025 - pos.y*0.5), q.y, .05), .05);
+			}
+
+
+/*
 			float df(float2 pos)
 			{
 				float2 q = abs(pos);
 				return max((q.x * 0.866025 + q.y*0.5), q.y);
-			}
+			}*/
 
 			fixed4 frag (v2f i) : SV_Target
 			{

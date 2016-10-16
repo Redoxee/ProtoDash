@@ -114,9 +114,10 @@ namespace DasherTool
 
 			bool sceneAdded = false;
 			bool sceneNameChanged = false;
-			for (int i = 0; i < lf.levelList.Count; ++i)
+			int levelCount = lf.GetLevelCount();
+			for (int i = 0; i < levelCount; ++i)
 			{
-				LevelData levelItem = lf.levelList[i];
+				LevelData levelItem = lf.LevelList[i];
 				UnityEngine.Object sceneObject = levelItem.sceneObject;
 				string scenePath = GAME_SCENES_PATH + sceneObject.name + GAME_SCENE_EXTENSION;
 				int index = UnityEditor.ArrayUtility.FindIndex<EditorBuildSettingsScene>(buildScenes, (ebs) => { return ebs.path == scenePath; });
@@ -128,10 +129,10 @@ namespace DasherTool
 					UnityEngine.Debug.Log("Adding scene : " + scenePath);
 					sceneAdded = true;
 				}
-				if (sceneObject.name != lf.levelList[i].sceneName)
+				if (sceneObject.name != levelItem.sceneName)
 				{
 					levelItem.sceneName = sceneObject.name;
-					lf.levelList[i] = levelItem;
+					lf.LevelList[i] = levelItem;
 					sceneNameChanged = true;
 				}
 			}

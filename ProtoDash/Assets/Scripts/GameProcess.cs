@@ -269,8 +269,11 @@ namespace Dasher
 			m_timeManager.GameTimeFactor = 1;
 			MainProcess mp = MainProcess.Instance;
 
-			mp.DataManager.NotifyLevelStarted(mp.CurrentLevel);
-			mp.DataManager.Save();
+			if (mp.CurrentLevel != null)
+			{
+				mp.DataManager.NotifyLevelStarted(mp.CurrentLevel);
+				mp.DataManager.Save();
+			}
 
 			m_deathFrameCounter = 0;
 			m_deathZoneCounter = 0;

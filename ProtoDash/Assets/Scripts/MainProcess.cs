@@ -130,7 +130,7 @@ namespace Dasher
 			SceneManager.LoadScene(c_gameSetupScene, LoadSceneMode.Additive);
 			SetState(GameStates.InGame);
 			
-			m_currenLevelScene = levelFlow.levelList[index].sceneName;
+			m_currenLevelScene = levelFlow.LevelList[index].sceneName;
 
 			m_currentLevelIndex = index;
 			SceneManager.LoadScene(m_currenLevelScene, LoadSceneMode.Additive);
@@ -139,9 +139,10 @@ namespace Dasher
 		public void LaunchLevel(LevelData level)
 		{
 			int i = 0;
-			for (; i < levelFlow.levelList.Count; ++i)
+			int count = levelFlow.GetLevelCount();
+			for (; i < count; ++i)
 			{
-				if (levelFlow.levelList[i] == level)
+				if (levelFlow.LevelList[i] == level)
 				{
 					break;
 				}
@@ -157,9 +158,9 @@ namespace Dasher
 		public void LaunchNextLevel()
 		{
 			int levelIndex = m_currentLevelIndex + 1;
-			if (levelIndex < 0 || levelIndex == levelFlow.levelList.Count)
+			if (levelIndex < 0 || levelIndex == levelFlow.GetLevelCount())
 			{
-				SwitchToStatsScreen(); // TODO Recap screen
+				SwitchToStatsScreen(); 
 			}
 			else
 			{

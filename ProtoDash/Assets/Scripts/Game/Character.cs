@@ -132,9 +132,9 @@ namespace Dasher
 		private float dashTimer = 0.0f;
 
 		//[SerializeField]
-		private float upDashCost = 75.0f;
+		private float upDashCost = 50f;
 		//[SerializeField]
-		private float diagonalUpDashCost = 65.0f;
+		private float diagonalUpDashCost = 50f;
 		//[SerializeField]
 		private float lateralDashCost = 40.0f;
 		//[SerializeField]

@@ -14,7 +14,7 @@ namespace Dasher
 		const string c_AllLevelComplete = "Congratulation !\nYou've beaten all the levels";
 		const string c_ChampMessage = "You are a champ on {0} levels";
 		const string c_ChampAllLevels = "Congratulation !\nYou are a champ on all levels!";
-		const string c_TotalTime = "Cumulated Time : {0}";
+		const string c_TotalTime = "Cumulated best Time : {0}";
 		const string c_NbRunLaunched = "Level launched : {0}";
 		const string c_NbJumps = "Number of jumps : {0}";
 		const string c_NbDash = "Number of dashes : {0}";
@@ -44,7 +44,7 @@ namespace Dasher
 					{
 						levelChamp ++;
 					}
-					totalTime += m_levelFlow.levelList[i].currentBest;
+					totalTime += m_levelFlow.LevelList[i].currentBest;
 				}
 			}
 

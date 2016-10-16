@@ -53,6 +53,8 @@ namespace Dasher
 		[Header("Intro")]
 		[SerializeField]
 		private Canvas m_introCanvas = null;
+		[SerializeField]
+		private Text m_introLevelText = null;
 
 		[Space]
 		[Header("Debug")]
@@ -72,6 +74,13 @@ namespace Dasher
 		{
 			m_gameProcess = GameProcess.Instance;
 			m_gameProcess.registerGUIManager(this);
+
+			LevelData currentLevel = MainProcess.Instance.levelFlow.GetLevelData(GameProcess.CurrentLevelName);
+			string levelLabel = currentLevel.GetLevelLabel();
+			m_pauseLevelLabelText.text = levelLabel;
+			m_endLevelLabelText.text = levelLabel;
+			m_failLevelLabelText.text = levelLabel;
+			m_introLevelText.text = levelLabel;
 		}
 
 		void OnDisable()
@@ -120,13 +129,6 @@ namespace Dasher
 			m_endCanvas.gameObject.SetActive(false);
 			m_failCanvas.gameObject.SetActive(false);
 			m_introCanvas.gameObject.SetActive(false);
-
-			LevelData currentLevel = MainProcess.Instance.levelFlow.GetLevelData(GameProcess.CurrentLevelName);
-
-			string levelLabel = currentLevel.GetLevelLabel();
-			m_pauseLevelLabelText.text = levelLabel;
-			m_endLevelLabelText.text = levelLabel;
-			m_failLevelLabelText.text = levelLabel;
 
 			m_gauge.Initialize();
 			m_perf.StartRecord();

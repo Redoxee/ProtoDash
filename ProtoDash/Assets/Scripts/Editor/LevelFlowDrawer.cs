@@ -13,7 +13,7 @@ namespace DasherTool
 		private void OnEnable()
 		{
 			list = new ReorderableList(serializedObject,
-					serializedObject.FindProperty("levelList"),
+					serializedObject.FindProperty("m_levelList"),
 					true, true, true, true);
 
 			float elementOffset = EditorGUIUtility.singleLineHeight + 1f;
@@ -30,13 +30,13 @@ namespace DasherTool
 				rect.y += 2f;
 
 				float fieldWidth = EditorGUIUtility.currentViewWidth - 60;
-
+				EditorGUI.LabelField(
+					new Rect(rect.x, rect.y + elementOffset * 0f, fieldWidth, EditorGUIUtility.singleLineHeight),
+					"Level : " + index.ToString("00")
+				);
 				EditorGUI.PropertyField(
-					new Rect(rect.x, rect.y, fieldWidth, EditorGUIUtility.singleLineHeight),
+					new Rect(rect.x, rect.y + elementOffset * 1f, fieldWidth, EditorGUIUtility.singleLineHeight),
 					element.FindPropertyRelative("sceneObject"), GUIContent.none);
-				EditorGUI.PropertyField(
-					new Rect(rect.x, rect.y + elementOffset, fieldWidth, EditorGUIUtility.singleLineHeight),
-					element.FindPropertyRelative("world"), GUIContent.none);
 				EditorGUI.PropertyField(
 					new Rect(rect.x, rect.y + elementOffset * 2f, fieldWidth, EditorGUIUtility.singleLineHeight),
 					element.FindPropertyRelative("parTime"), GUIContent.none);

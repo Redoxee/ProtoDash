@@ -8,6 +8,7 @@ namespace Dasher
 	{
 		public UnityEngine.Object sceneObject;
 		public string sceneName;
+		[NonSerialized]
 		public int world;
 		public float parTime;
 		[NonSerialized]
@@ -28,58 +29,82 @@ namespace Dasher
 	{
 		public const int c_nbLevelInWorld = 6;
 
+		private bool m_isInitialized = false;
+		private void Initialize()
+		{
+			if (m_isInitialized)
+				return;
+			InitializeWorldInLevels();
+			BuildStructuredData();
+		}
+
+		void Awake()
+		{
+			Initialize();
+		}
+
 		[SerializeField]
-		public List<LevelData> levelList;
+		private List<LevelData> m_levelList;
+		public List<LevelData> LevelList { get { Initialize(); return m_levelList; } }
 
 		public LevelData GetLevelData(string levelName)
 		{
-			for (int i = 0; i < levelList.Count; ++i)
+			int count = LevelList.Count;
+			for (int i = 0; i < count; ++i)
 			{
-				if (levelList[i].sceneName == levelName)
-					return levelList[i];
+				if (m_levelList[i].sceneName == levelName)
+					return m_levelList[i];
 			}
 			return null;
+		}
+
+		private void InitializeWorldInLevels()
+		{
+			int count = m_levelList.Count;
+			for (int i = 0; i < count; ++i)
+			{
+				m_levelList[i].world = i / c_nbLevelInWorld + 1;
+			}
 		}
 
 		private Dictionary<int, List<LevelData>> m_structuredLevelFlow = null;
 		private void BuildStructuredData()
 		{
 			m_structuredLevelFlow = new Dictionary<int, List<LevelData>>();
-			for (int i = 0; i < levelList.Count; ++i)
+			int count = m_levelList.Count;
+			for (int i = 0; i < count; ++i)
 			{
-				LevelData lvl = levelList[i];
-				if (!m_structuredLevelFlow.ContainsKey(lvl.world))
+				LevelData lvl = m_levelList[i];
+				int worldIndex = i / c_nbLevelInWorld + 1;
+				if (!m_structuredLevelFlow.ContainsKey(worldIndex))
 				{
-					m_structuredLevelFlow[lvl.world] = new List<LevelData>();
+					m_structuredLevelFlow[worldIndex] = new List<LevelData>();
 				}
-				m_structuredLevelFlow[lvl.world].Add(lvl);
+				m_structuredLevelFlow[worldIndex].Add(lvl);
 
-				lvl.indexInWorld = m_structuredLevelFlow[lvl.world].Count;
+				lvl.indexInWorld = m_structuredLevelFlow[worldIndex].Count;
 			}
 		}
 
 		public Dictionary<int, List<LevelData>> GetStructuredProgression()
 		{
-			if (m_structuredLevelFlow == null)
-			{
-				BuildStructuredData();
-			}
+			Initialize();
 			return m_structuredLevelFlow;
 		}
 
 		public int GetLevelCount()
 		{
-			return levelList.Count;
+			return m_levelList.Count;
 		}
 
 		public bool IsLevelFinished(int levelIndex)
 		{
-			return levelList[levelIndex].currentBest > 0;
+			return m_levelList[levelIndex].currentBest > 0;
 		}
 
 		public bool IsLevelChamp(int levelIndex)
 		{
-			LevelData lvl = levelList[levelIndex];
+			LevelData lvl = m_levelList[levelIndex];
 			return lvl.currentBest > 0 && lvl.currentBest < lvl.parTime;
 		}
 	}

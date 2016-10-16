@@ -14,15 +14,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StatsScreen.unity
   - enabled: 1
-    path: Assets/Scenes/Levels/001TheBasics.unity
-  - enabled: 1
     path: Assets/Scenes/Levels/002WallJumping.unity
+  - enabled: 1
+    path: Assets/Scenes/Levels/GymLevel.unity
+  - enabled: 1
+    path: Assets/Scenes/Levels/001TheBasics.unity
   - enabled: 1
     path: Assets/Scenes/Levels/003DeathPit.unity
   - enabled: 1
     path: Assets/Scenes/Levels/004DashIntro.unity
   - enabled: 1
     path: Assets/Scenes/Levels/005SimpleDash.unity
+  - enabled: 1
+    path: Assets/Scenes/Levels/006Climb.unity
   - enabled: 1
     path: Assets/Scenes/Levels/007DashDown.unity
   - enabled: 1
@@ -41,8 +45,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/014StalactitePath.unity
   - enabled: 1
     path: Assets/Scenes/Levels/015JumpDashJumpDash.unity
-  - enabled: 1
-    path: Assets/Scenes/Levels/006Climb.unity
   - enabled: 1
     path: Assets/Scenes/Levels/016ThroughTheFlames.unity
   - enabled: 1
