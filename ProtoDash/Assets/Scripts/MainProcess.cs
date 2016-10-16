@@ -38,6 +38,9 @@ namespace Dasher
 		[SerializeField]
 		Animator m_transitionAnimator;
 
+		private DasherAnalyticsManager m_AnalyticsManager;
+		public DasherAnalyticsManager AnalyticsManager { get { return m_AnalyticsManager; } }
+
 		#region Monobehaviour
 
 		void Awake()
@@ -54,6 +57,7 @@ namespace Dasher
 			}
 
 			m_saveManager = new SaveManager();
+			m_AnalyticsManager = new DasherAnalyticsManager();
 
 			m_colorScheme.SetColors();
 

@@ -144,16 +144,24 @@ namespace Dasher
 
 		private bool m_isNewbest = false;
 		private bool m_isNewPar = false;
+		//private bool m_isFirstCompletion = false;
 
 		public void NotifyEndLevelReached(Vector2 endPosition)
 		{
 			m_timeManager.GameTimeFactor = 0f;
-			SaveManager saveManager = MainProcess.Instance.DataManager;
+			MainProcess mp = MainProcess.Instance;
+			SaveManager saveManager = mp.DataManager;
 
 			float currentTime = m_timeManager.CurrentLevelTime;
 			if (CurrentLevelName != null)
 			{
-				LevelData currentLevelData = MainProcess.Instance.levelFlow.GetLevelData(CurrentLevelName);
+				LevelData currentLevelData = mp.levelFlow.GetLevelData(CurrentLevelName);
+
+				if(!saveManager.HasLevelBeenFinished(CurrentLevelName))
+				{
+					//m_isFirstCompletion = true;
+					mp.AnalyticsManager.NotifyNewLevelBeaten(CurrentLevelName, saveManager.GetLevelTryCount(CurrentLevelName), currentTime);
+				}
 
 				if (currentTime < saveManager.GetLevelTime(CurrentLevelName))
 				{
@@ -259,8 +267,10 @@ namespace Dasher
 			}
 			m_timeManager.NotifyStartLevel();
 			m_timeManager.GameTimeFactor = 1;
-			MainProcess.Instance.DataManager.NotifyLevelStarted();
+			MainProcess mp = MainProcess.Instance;
 
+			mp.DataManager.NotifyLevelStarted(mp.CurrentLevel);
+			mp.DataManager.Save();
 
 			m_deathFrameCounter = 0;
 			m_deathZoneCounter = 0;

@@ -81,7 +81,7 @@ namespace Dasher
 		[SerializeField]
 		private Sprite m_dashSprite = null;
 
-		private List<GameObject> m_spawnedObjects = new List<GameObject>();
+		//private List<GameObject> m_spawnedObjects = new List<GameObject>();
 
 		private void SetupFromPast()
 		{
@@ -97,6 +97,8 @@ namespace Dasher
 
 				SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
 				renderer.sprite = tex;
+
+				//m_spawnedObjects.Add(obj);
 			}
 		}
 

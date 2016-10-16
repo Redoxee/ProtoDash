@@ -5,6 +5,7 @@ namespace DasherSave;
 table FlatLevelSave {
 	LevelId:string;
 	BestTime:float = 0; 
+	NbTry:int = 0;
 }
 
 table FlatGameSave {

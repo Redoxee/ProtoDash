@@ -7,7 +7,7 @@ using System;
 namespace Dasher
 {
 	public class SaveManager {
-		public const string c_SaveVersion = "0.00.002";
+		public const string c_SaveVersion = "0.00.004";
 		private DasherSavable m_savable;
 
 		#region Save mecanics
@@ -38,7 +38,10 @@ namespace Dasher
 				for (int i = 0; i < save.LevelResultsLength; ++i)
 				{
 					FlatLevelSave lvlSave = save.GetLevelResults(i);
-					m_savable.m_levels[lvlSave.LevelId] = lvlSave.BestTime;
+					var level = new DasherSavable.LevelSavable();
+					level.bestTime = lvlSave.BestTime;
+					level.nbTry = lvlSave.NbTry;
+					m_savable.m_levels[lvlSave.LevelId] = level;
 					LevelData lvlData = flow.GetLevelData(lvlSave.LevelId);
 					if (lvlData != null)
 					{
@@ -66,9 +69,10 @@ namespace Dasher
 			int i = 0;
 			while (levelsEnumerator.MoveNext())
 			{
-				var value = levelsEnumerator.Current;
-				var idOffset = m_builder.CreateString(value.Key);
-				var lvlOffset = FlatLevelSave.CreateFlatLevelSave(m_builder, idOffset, value.Value);
+				var current = levelsEnumerator.Current;
+				var level = current.Value;
+				var idOffset = m_builder.CreateString(current.Key);
+				var lvlOffset = FlatLevelSave.CreateFlatLevelSave(m_builder, idOffset,level.bestTime,level.nbTry);
 				offsetTable[i++] = lvlOffset;
 			}
 
@@ -154,28 +158,59 @@ namespace Dasher
 
 		#region Interface
 
-		public bool HasLevelBeenDone(string levelId)
+		public bool HasLevelBeenFinished(string levelId)
 		{
-			return m_savable.m_levels.ContainsKey(levelId);
+			return m_savable.m_levels.ContainsKey(levelId) && m_savable.m_levels[levelId].bestTime > 0;
 		}
 
 		public float GetLevelTime(string levelId)
 		{
-			if (HasLevelBeenDone(levelId))
+			if (HasLevelBeenFinished(levelId))
 			{
-				return m_savable.m_levels[levelId];
+				return m_savable.m_levels[levelId].bestTime;
 			}
 			return float.MaxValue;
 		}
 
-		public void SetLevelTime(string levelId, float time)
+		public int GetLevelTryCount(string levelId)
 		{
-			m_savable.m_levels[levelId] = time;
+			if (!m_savable.m_levels.ContainsKey(levelId))
+				return 0;
+			return m_savable.m_levels[levelId].nbTry;
 		}
 
-		public void NotifyLevelStarted()
+		public void SetLevelTime(string levelId, float time)
+		{
+
+			DasherSavable.LevelSavable lvl = null;
+			if (m_savable.m_levels.ContainsKey(levelId))
+			{
+				lvl = m_savable.m_levels[levelId];
+			}
+			else
+			{
+				lvl = new DasherSavable.LevelSavable();
+				m_savable.m_levels[levelId] = lvl;
+			}
+			lvl.bestTime = time;
+		}
+
+		public void NotifyLevelStarted(string levelId)
 		{
 			m_savable.m_TotalRuns += 1;
+
+			DasherSavable.LevelSavable lvl = null;
+			if (m_savable.m_levels.ContainsKey(levelId))
+			{
+				lvl = m_savable.m_levels[levelId];
+			}
+			else
+			{
+				lvl = new DasherSavable.LevelSavable();
+				m_savable.m_levels[levelId] = lvl;
+			}
+
+			lvl.nbTry += 1;
 		}
 
 		public void NotifyEndRun(int nbJumps, int nbDashes)
@@ -221,7 +256,12 @@ namespace Dasher
 
 	public class DasherSavable
 	{
-		public Dictionary<string, float> m_levels;
+		public class LevelSavable {
+			public float bestTime = -1f;
+			public int nbTry = 0;
+		}
+
+		public Dictionary<string, LevelSavable> m_levels;
 
 		public int m_TotalRuns = 0;
 		public int m_TotalJumps = 0;
@@ -229,7 +269,7 @@ namespace Dasher
 
 		public DasherSavable(int nbLevels)
 		{
-			m_levels = new Dictionary<string, float>(nbLevels);
+			m_levels = new Dictionary<string, LevelSavable>(nbLevels);
 		}
 	}
 }

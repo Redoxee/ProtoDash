@@ -14,19 +14,23 @@ public sealed class FlatLevelSave : Table {
   public string LevelId { get { int o = __offset(4); return o != 0 ? __string(o + bb_pos) : null; } }
   public ArraySegment<byte>? GetLevelIdBytes() { return __vector_as_arraysegment(4); }
   public float BestTime { get { int o = __offset(6); return o != 0 ? bb.GetFloat(o + bb_pos) : (float)0.0f; } }
+  public int NbTry { get { int o = __offset(8); return o != 0 ? bb.GetInt(o + bb_pos) : (int)0; } }
 
   public static Offset<FlatLevelSave> CreateFlatLevelSave(FlatBufferBuilder builder,
       StringOffset LevelIdOffset = default(StringOffset),
-      float BestTime = 0.0f) {
-    builder.StartObject(2);
+      float BestTime = 0.0f,
+      int NbTry = 0) {
+    builder.StartObject(3);
+    FlatLevelSave.AddNbTry(builder, NbTry);
     FlatLevelSave.AddBestTime(builder, BestTime);
     FlatLevelSave.AddLevelId(builder, LevelIdOffset);
     return FlatLevelSave.EndFlatLevelSave(builder);
   }
 
-  public static void StartFlatLevelSave(FlatBufferBuilder builder) { builder.StartObject(2); }
+  public static void StartFlatLevelSave(FlatBufferBuilder builder) { builder.StartObject(3); }
   public static void AddLevelId(FlatBufferBuilder builder, StringOffset LevelIdOffset) { builder.AddOffset(0, LevelIdOffset.Value, 0); }
   public static void AddBestTime(FlatBufferBuilder builder, float BestTime) { builder.AddFloat(1, BestTime, 0.0f); }
+  public static void AddNbTry(FlatBufferBuilder builder, int NbTry) { builder.AddInt(2, NbTry, 0); }
   public static Offset<FlatLevelSave> EndFlatLevelSave(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<FlatLevelSave>(o);
