@@ -39,15 +39,23 @@
 	};
 
 	fixed4 _Color;
-	float _Rotation = 0.;
+	
+	#define _Smooth(p,r,s) smoothstep(-s, s, p-(r))
+	float sdSegment(in float2 p, in float2 a, in float2 b)
+	{
+		float2 pa = p - a, ba = b - a;
+		float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+		return length(pa - ba*h);
+	}
+	// from http://iquilezles.org/www/articles/smin/smin.htm
+	// polynomial smooth min (k = 0.1);
+	float smin(float a, float b, float k)
+	{
+		float h = clamp(0.5 + 0.5*(b - a) / k, 0.0, 1.0);
+		return lerp(b, a, h) - k*h*(1.0 - h);
+	}
 
-#define _Smooth(p,r,s) smoothstep(-s, s, p-(r))
-
-#define radius .2
-#define teehNumber 4.
-#define teethSize .3
-#define teethSteepness .7
-#define centerHoleSize .15
+#define Si .3
 
 	v2f vert(appdata_t v)
 	{
@@ -61,14 +69,9 @@
 
 	fixed4 frag(v2f i) : COLOR
 	{
-		float2 pos = i.texcoord.xy;
-
-		float dist = length(pos);
-
-		float teeth = sin(atan2(pos.y, pos.x) * teehNumber + _Rotation);
-		teeth = _Smooth(teeth,0.,teethSteepness) * teethSize;
-
-		float f = 1 - _Smooth(dist - teeth, radius,.006);
+		float f = sdSegment(i.texcoord,float2(-Si,-Si),float2(Si,Si));
+		f = smin(f , sdSegment(i.texcoord, float2(-Si,Si), float2(Si,-Si)), .05);
+		f = _Smooth(.09, f, .004);
 
 		float4 col = _Color;
 		col.a = f;

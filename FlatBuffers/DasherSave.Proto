@@ -8,12 +8,17 @@ table FlatLevelSave {
 	NbTry:int = 0;
 }
 
+table FlatSettings {
+	LeftHandedMode:bool = false;
+}
+
 table FlatGameSave {
 	Version:string;
 	levelResults:[FlatLevelSave];
 	TotalRuns:int=0;
 	TotalJumps:int=0;
 	TotalDashes:int=0;
+	Settings:FlatSettings;
 } 
  
 root_type FlatGameSave;

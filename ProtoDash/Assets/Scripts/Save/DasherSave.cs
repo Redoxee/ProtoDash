@@ -37,6 +37,28 @@ public sealed class FlatLevelSave : Table {
   }
 };
 
+public sealed class FlatSettings : Table {
+  public static FlatSettings GetRootAsFlatSettings(ByteBuffer _bb) { return GetRootAsFlatSettings(_bb, new FlatSettings()); }
+  public static FlatSettings GetRootAsFlatSettings(ByteBuffer _bb, FlatSettings obj) { return (obj.__init(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
+  public FlatSettings __init(int _i, ByteBuffer _bb) { bb_pos = _i; bb = _bb; return this; }
+
+  public bool LeftHandedMode { get { int o = __offset(4); return o != 0 ? 0!=bb.Get(o + bb_pos) : (bool)false; } }
+
+  public static Offset<FlatSettings> CreateFlatSettings(FlatBufferBuilder builder,
+      bool LeftHandedMode = false) {
+    builder.StartObject(1);
+    FlatSettings.AddLeftHandedMode(builder, LeftHandedMode);
+    return FlatSettings.EndFlatSettings(builder);
+  }
+
+  public static void StartFlatSettings(FlatBufferBuilder builder) { builder.StartObject(1); }
+  public static void AddLeftHandedMode(FlatBufferBuilder builder, bool LeftHandedMode) { builder.AddBool(0, LeftHandedMode, false); }
+  public static Offset<FlatSettings> EndFlatSettings(FlatBufferBuilder builder) {
+    int o = builder.EndObject();
+    return new Offset<FlatSettings>(o);
+  }
+};
+
 public sealed class FlatGameSave : Table {
   public static FlatGameSave GetRootAsFlatGameSave(ByteBuffer _bb) { return GetRootAsFlatGameSave(_bb, new FlatGameSave()); }
   public static FlatGameSave GetRootAsFlatGameSave(ByteBuffer _bb, FlatGameSave obj) { return (obj.__init(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
@@ -50,14 +72,18 @@ public sealed class FlatGameSave : Table {
   public int TotalRuns { get { int o = __offset(8); return o != 0 ? bb.GetInt(o + bb_pos) : (int)0; } }
   public int TotalJumps { get { int o = __offset(10); return o != 0 ? bb.GetInt(o + bb_pos) : (int)0; } }
   public int TotalDashes { get { int o = __offset(12); return o != 0 ? bb.GetInt(o + bb_pos) : (int)0; } }
+  public FlatSettings Settings { get { return GetSettings(new FlatSettings()); } }
+  public FlatSettings GetSettings(FlatSettings obj) { int o = __offset(14); return o != 0 ? obj.__init(__indirect(o + bb_pos), bb) : null; }
 
   public static Offset<FlatGameSave> CreateFlatGameSave(FlatBufferBuilder builder,
       StringOffset VersionOffset = default(StringOffset),
       VectorOffset levelResultsOffset = default(VectorOffset),
       int TotalRuns = 0,
       int TotalJumps = 0,
-      int TotalDashes = 0) {
-    builder.StartObject(5);
+      int TotalDashes = 0,
+      Offset<FlatSettings> SettingsOffset = default(Offset<FlatSettings>)) {
+    builder.StartObject(6);
+    FlatGameSave.AddSettings(builder, SettingsOffset);
     FlatGameSave.AddTotalDashes(builder, TotalDashes);
     FlatGameSave.AddTotalJumps(builder, TotalJumps);
     FlatGameSave.AddTotalRuns(builder, TotalRuns);
@@ -66,7 +92,7 @@ public sealed class FlatGameSave : Table {
     return FlatGameSave.EndFlatGameSave(builder);
   }
 
-  public static void StartFlatGameSave(FlatBufferBuilder builder) { builder.StartObject(5); }
+  public static void StartFlatGameSave(FlatBufferBuilder builder) { builder.StartObject(6); }
   public static void AddVersion(FlatBufferBuilder builder, StringOffset VersionOffset) { builder.AddOffset(0, VersionOffset.Value, 0); }
   public static void AddLevelResults(FlatBufferBuilder builder, VectorOffset levelResultsOffset) { builder.AddOffset(1, levelResultsOffset.Value, 0); }
   public static VectorOffset CreateLevelResultsVector(FlatBufferBuilder builder, Offset<FlatLevelSave>[] data) { builder.StartVector(4, data.Length, 4); for (int i = data.Length - 1; i >= 0; i--) builder.AddOffset(data[i].Value); return builder.EndVector(); }
@@ -74,6 +100,7 @@ public sealed class FlatGameSave : Table {
   public static void AddTotalRuns(FlatBufferBuilder builder, int TotalRuns) { builder.AddInt(2, TotalRuns, 0); }
   public static void AddTotalJumps(FlatBufferBuilder builder, int TotalJumps) { builder.AddInt(3, TotalJumps, 0); }
   public static void AddTotalDashes(FlatBufferBuilder builder, int TotalDashes) { builder.AddInt(4, TotalDashes, 0); }
+  public static void AddSettings(FlatBufferBuilder builder, Offset<FlatSettings> SettingsOffset) { builder.AddOffset(5, SettingsOffset.Value, 0); }
   public static Offset<FlatGameSave> EndFlatGameSave(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<FlatGameSave>(o);

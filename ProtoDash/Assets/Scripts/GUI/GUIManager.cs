@@ -6,13 +6,14 @@ namespace Dasher
 	public class GUIManager : MonoBehaviour
 	{
 		private GameProcess m_gameProcess;
-		
+
 		[Header("Game UI")]
 		[SerializeField]
+		private GameCanvasHolder m_canvasHolder;
+
+
 		private Canvas m_gameCanvas;
-		[SerializeField]
 		private Text m_gameTimerText;
-		[SerializeField]
 		private SmartGauge m_gauge;
 
 		[Space]
@@ -64,6 +65,13 @@ namespace Dasher
 
 		void Awake()
 		{
+			bool isLeftHanded = MainProcess.Instance.DataManager.GetSettings().isLefthanded;
+			var canvas = isLeftHanded ? m_canvasHolder.LeftCanvas:m_canvasHolder.RightCanvas;
+			m_gameCanvas = canvas.GetComponent<Canvas>();
+			m_gauge = canvas.GetComponentInChildren<SmartGauge>();
+			m_gameTimerText = (isLeftHanded ? m_canvasHolder.LeftTimeText : m_canvasHolder.RightTimeText).GetComponentInChildren<Text>();
+			(isLeftHanded ? m_canvasHolder.RightCanvas : m_canvasHolder.LeftCanvas).SetActive(false);
+
 			m_endTimerText = m_endTimer.GetComponentInChildren<Text>();
 			m_endBestTimeText = m_endBestTime.GetComponentInChildren<Text>();
 			m_endParTimeText = m_endParTime.GetComponentInChildren<Text>();

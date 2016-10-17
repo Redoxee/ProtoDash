@@ -52,6 +52,11 @@ namespace Dasher
 				m_savable.m_TotalRuns = save.TotalRuns;
 				m_savable.m_TotalDashes = save.TotalDashes;
 				m_savable.m_TotalJumps = save.TotalJumps;
+
+				if (save.Settings != null)
+				{
+					m_savable.m_settings.isLefthanded = save.Settings.LeftHandedMode;
+				}
 			}
 			else
 			{
@@ -78,6 +83,7 @@ namespace Dasher
 
 			var versionOffset = m_builder.CreateString(c_SaveVersion);
 			var levelsOffset = FlatGameSave.CreateLevelResultsVector(m_builder, offsetTable);
+			var settingsOffset = FlatSettings.CreateFlatSettings(m_builder, m_savable.m_settings.isLefthanded);
 			FlatGameSave.StartFlatGameSave(m_builder);
 
 			FlatGameSave.AddVersion(m_builder, versionOffset);
@@ -86,6 +92,8 @@ namespace Dasher
 			FlatGameSave.AddTotalRuns(m_builder, m_savable.m_TotalRuns);
 			FlatGameSave.AddTotalJumps(m_builder, m_savable.m_TotalJumps);
 			FlatGameSave.AddTotalDashes(m_builder, m_savable.m_TotalDashes);
+
+			FlatGameSave.AddSettings(m_builder, settingsOffset);
 
 			var gameOffset = FlatGameSave.EndFlatGameSave(m_builder);
 
@@ -251,6 +259,16 @@ namespace Dasher
 			m_traceDictionary[levelId] = trace;
 		}
 
+		public DasherSettings GetSettings()
+		{
+			return m_savable.m_settings;
+		}
+
+		public void SetLeftHandedMode(bool isLeftHanded)
+		{
+			m_savable.m_settings.isLefthanded = isLeftHanded;
+		}
+
 		#endregion
 	}
 
@@ -267,9 +285,16 @@ namespace Dasher
 		public int m_TotalJumps = 0;
 		public int m_TotalDashes = 0;
 
+		public DasherSettings m_settings;
+
 		public DasherSavable(int nbLevels)
 		{
 			m_levels = new Dictionary<string, LevelSavable>(nbLevels);
 		}
+	}
+
+	public struct DasherSettings
+	{
+		public bool isLefthanded;
 	}
 }
