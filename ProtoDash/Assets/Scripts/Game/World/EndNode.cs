@@ -21,6 +21,7 @@ namespace Dasher
 		void Awake()
 		{
 			m_material = GetComponent<Renderer>().material;
+			m_material.SetFloat(c_closure, 0f);
 		}
 		
 		void Update()
@@ -49,7 +50,7 @@ namespace Dasher
 		{
 			if (col.gameObject.tag == "Player")
 			{
-				GameProcess.Instance.NotifyEndLevelReached(transform.position);
+				GameProcess.Instance.NotifyEndLevelReached(gameObject);
 			}
 			m_isInClosure = true;
 		}

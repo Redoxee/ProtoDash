@@ -29,6 +29,7 @@ namespace Dasher
 		State Jump;
 		State Dash;
 		State EndGame;
+		State Dead;
 
 		private void _InitializeStates()
 		{
@@ -36,6 +37,7 @@ namespace Dasher
 			Jump	= new State("Jump", _StartJump, _GameplayJump, _EndJump);
 			Dash	= new State("Dash", _StartDash, _GameplayDash, _EndDash);
 			EndGame = new State("EndGame", _BeginEndGame, _UpdateEndGame, _EndEndGame);
+			Dead	= new State("Dead"	, _BeginDead, _UpdateDead, _EndDead);
 		}
 
 		private void _SetState(State newState)
@@ -210,10 +212,10 @@ namespace Dasher
 			_InitializeWallJumpVectors();
 			currentState = Idle;
 
-			GameProcess mp = GameProcess.Instance;
-			if (mp != null)
+			GameProcess gp = GameProcess.Instance;
+			if (gp != null)
 			{
-				mp.RegisterCharacter(this);
+				gp.RegisterCharacter(this);
 			}
 		}
 
@@ -250,7 +252,6 @@ namespace Dasher
 			updateRayCasts();
 
 			Vector3 newVelocity = characterRB.velocity;
-
 			newVelocity += fakeGravity * Time.fixedDeltaTime * m_gravityFactor;
 			newVelocity = currentState.gameplay(newVelocity);
 			characterRB.velocity = newVelocity;
@@ -602,6 +603,33 @@ namespace Dasher
 			_SetState(EndGame);
 		}
 
+		#endregion
+
+		#region Dead
+
+		void _BeginDead()
+		{
+			m_gravityFactor = 0f;
+			m_cancelDash = true;
+		}
+
+		float m_deathSlowDownFactor = .8f;
+
+		Vector2 _UpdateDead(Vector2 currentVelocity)
+		{
+			currentEnergy = 0f;
+			return currentVelocity * m_deathSlowDownFactor;
+		}
+
+		void _EndDead()
+		{
+		}
+
+		public void NotifyDying()
+		{
+			_SetState(Dead);
+		}
+		
 		#endregion
 
 		#endregion

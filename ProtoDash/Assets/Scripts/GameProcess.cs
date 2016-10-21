@@ -45,6 +45,14 @@ namespace Dasher
 
 		#endregion
 
+		const float c_fullScreenScalerDepth = -1.5f;
+
+		#region EndAnimations
+		[SerializeField]
+		GameObject m_fakeEndNode = null;
+		FullScreenScaler m_endFakeScaller;
+		#endregion
+
 		#region MonoBehavior
 		void Awake()
 		{
@@ -59,6 +67,12 @@ namespace Dasher
 			InitStates();
 
 			m_initFrameWait = true;
+
+			m_endFakeScaller = m_fakeEndNode.GetComponent<FullScreenScaler>();
+			m_fakeEndNode.SetActive(false);
+
+			m_deathDummyScaler = m_deathDummy.GetComponent<FullScreenScaler>();
+			m_deathDummy.SetActive(false);
 		}
 
 		void OnDestroy()
@@ -146,7 +160,7 @@ namespace Dasher
 		private bool m_isNewPar = false;
 		//private bool m_isFirstCompletion = false;
 
-		public void NotifyEndLevelReached(Vector2 endPosition)
+		public void NotifyEndLevelReached(GameObject endNode)
 		{
 			m_timeManager.GameTimeFactor = 0f;
 			MainProcess mp = MainProcess.Instance;
@@ -178,9 +192,8 @@ namespace Dasher
 				saveManager.Save();
 			}
 
-			m_character.NotifyEndLevel(endPosition);
-			m_CameraS.NotifyEndGame(endPosition);
-			SetState(m_outroState);
+			m_endNode = endNode;
+			SetState(m_outroCharacterAnimationState);
 		}
 
 		#endregion
@@ -322,57 +335,153 @@ namespace Dasher
 
 		private void OnDeath()
 		{
-			SetState(m_deathState);
+			SetState(m_dyingState);
 			m_timeManager.GameTimeFactor = 0f;
-			if (m_GUIManager)
-			{
-				m_GUIManager.NotifyDeathZoneTouched();
-			}
-			else
-			{
-				FunctionUtils.Quit();
-			}
 		}
 		#endregion
 
-		#region Outro
+		#region Outro CharacterAnimation
 
-		private float m_outroDuration = 1.5f;
-		private float m_outroTimer = 0f;
+		private GameObject m_endNode;
 
-		FSM_State m_outroState;
+		private float m_outroCharacterDuration = 1f;
+		private float m_outroCharacterTimer = 0f;
 
-		private void Outro_begin()
+		FSM_State m_outroCharacterAnimationState;
+
+		private void OutroCharacter_begin()
 		{
-			m_outroTimer = 0f;
-		}
-		private void Outro_update()
-		{
-			m_outroTimer += Time.deltaTime;
-			if (m_outroTimer > m_outroDuration)
+			var ep = m_endNode.transform.position;
+			Vector2 endPosition = new Vector2(ep.x, ep.y);
+			ep.z = c_fullScreenScalerDepth;
+			m_fakeEndNode.transform.position = ep;
+
+			m_character.NotifyEndLevel(endPosition);
+			m_CameraS.NotifyEndGame(endPosition);
+			m_outroCharacterTimer = 0f;
+
+
+			if (m_GUIManager)
 			{
-				SetState(m_endState);
+				m_GUIManager.NotifyIntermediateState();
+			}
+
+		}
+		private void OutroCharacter_update()
+		{
+			m_outroCharacterTimer += Time.deltaTime;
+			if (m_outroCharacterTimer > m_outroCharacterDuration)
+			{
+				SetState(m_outroNodeAnimationState);
 			}
 			m_character.ManualUpdate();
 		}
-		private void Outro_FixedUpdate()
+		private void OutroCharacter_FixedUpdate()
 		{
 			m_character.ManualFixedUpdate();
 		}
 
 		#endregion
 
-		#region Death
-		FSM_State m_deathState;
-		private void Death_Begin()
+		#region Outro end node animation
+		private float m_outroNodeDuration = 1f;
+		private float m_outroNodeTimer = 0f;
+
+		FSM_State m_outroNodeAnimationState;
+
+		private void OutroNode_begin()
+		{
+			m_outroNodeTimer = 0f;
+			m_endNode.SetActive(false);
+			m_fakeEndNode.SetActive(true);
+			m_character.gameObject.SetActive(false);
+
+			var cs = MainProcess.Instance.m_colorScheme;
+			m_endFakeScaller.StartColor = cs.EndNode;
+			m_endFakeScaller.EndColor = cs.EndLevelPanel;
+
+		}
+
+		private void OutroNode_Update()
+		{
+			m_outroNodeTimer += Time.deltaTime;
+			m_endFakeScaller.SetProgression(m_outroNodeTimer / m_outroNodeDuration);
+
+			if (m_outroNodeTimer > m_outroNodeDuration)
+			{
+				SetState(m_endState);
+			}
+		}
+
+		private void OutroNode_fixedUpdate()
+		{
+			m_endFakeScaller.SetProgression(1f);
+		}
+		
+
+		#endregion
+
+		#region Dying
+		FSM_State m_dyingState;
+
+		float m_dyingDuration = 1.0f;
+		float m_dyingTimer = 0f;
+
+		[SerializeField]
+		GameObject m_deathDummy = null;
+		FullScreenScaler m_deathDummyScaler;
+
+		private void Dying_Begin()
 		{
 			SaveManager dataManager = MainProcess.Instance.DataManager;
 			dataManager.NotifyEndRun(m_character.Traces.NbJumps, m_character.Traces.NbDashes);
 			dataManager.Save();
+			m_dyingTimer = 0f;
+			var cPos = m_character.transform.position;
+			m_CameraS.NotifyDeath(cPos);
+			m_character.NotifyDying();
+			cPos.z = c_fullScreenScalerDepth;
+			m_deathDummy.transform.position = cPos;
+			m_deathDummy.SetActive(true);
+			m_deathDummyScaler.SetProgression(0f);
+			if(m_GUIManager != null)
+				m_GUIManager.NotifyIntermediateState();
+		}
+
+		private void Dying_Update()
+		{
+			m_dyingTimer += Time.deltaTime;
+			m_character.ManualUpdate();
+
+			m_deathDummyScaler.SetProgression(m_dyingTimer / m_dyingDuration);
+
+			if (m_dyingTimer >= m_dyingDuration)
+			{
+				SetState(m_deadState);
+			}
+		}
+
+		private void Dying_FixedUpdate()
+		{
+			m_character.ManualFixedUpdate();
 		}
 
 		#endregion
 
+		#region Dead
+		#endregion
+		FSM_State m_deadState;
+		private void Dead_Begin()
+		{
+			if (m_GUIManager)
+			{
+				m_GUIManager.NotifyDeath();
+			}
+			else
+			{
+				FunctionUtils.Quit();
+			}
+		}
 		#region End
 
 		FSM_State m_endState;
@@ -394,9 +503,11 @@ namespace Dasher
 		{
 			m_introState = new FSM_State(Intro_begin, Intro_update, null, null);
 			m_gamplayState = new FSM_State(Gameplay_begin, Gameplay_update, Gameplay_fixedUpdate, null);
-			m_outroState = new FSM_State(Outro_begin, Outro_update, Outro_FixedUpdate);
+			m_outroCharacterAnimationState = new FSM_State(OutroCharacter_begin, OutroCharacter_update, OutroCharacter_FixedUpdate);
+			m_outroNodeAnimationState = new FSM_State(OutroNode_begin, OutroNode_Update, OutroNode_fixedUpdate,null);
 			m_endState = new FSM_State(End_begin);
-			m_deathState = new FSM_State(Death_Begin);
+			m_dyingState = new FSM_State(Dying_Begin,Dying_Update,Dying_FixedUpdate);
+			m_deadState = new FSM_State(Dead_Begin);
 		}
 
 		#endregion

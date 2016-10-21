@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Dasher
 {
@@ -145,16 +146,38 @@ namespace Dasher
 		}
 
 		#endregion
-		#region FSM
 
-		private delegate void d_FSM_Delegate();
+		#region DeathState
+
+		FSM_STATE DeathState;
+		Vector3 m_deathPos;
+		public void NotifyDeath(Vector3 pos)
+		{
+			m_deathPos = pos;
+			m_currentState = DeathState;
+		}
+
+		void Death_Update()
+		{
+		}
+
+		void Death_LateUpdate()
+		{
+			float dt = Time.deltaTime;
+			float tpx = FunctionUtils.damping(xDampingFactor, transform.position.x, m_deathPos.x, dt);
+			float tpy = FunctionUtils.damping(yDampingFactor, transform.position.y, m_deathPos.y, dt);
+			transform.position = new Vector3(tpx, tpy, transform.position.z);
+		}
+
+		#endregion
+		#region FSM
 
 		private class FSM_STATE
 		{
-			public d_FSM_Delegate Update;
-			public d_FSM_Delegate LateUpdate;
+			public Action Update;
+			public Action LateUpdate;
 
-			public FSM_STATE(d_FSM_Delegate udpt, d_FSM_Delegate lateUdpt)
+			public FSM_STATE(Action udpt, Action lateUdpt)
 			{
 				Update = udpt;
 				LateUpdate = lateUdpt;
@@ -170,6 +193,7 @@ namespace Dasher
 		{
 			GameState = new FSM_STATE(Game_Update, Game_LateUpdate);
 			EndGameSate = new FSM_STATE(EndGame_Update, EndGame_LateUpdate);
+			DeathState = new FSM_STATE(Death_Update, Death_LateUpdate);
 
 			m_currentState = GameState;
 		}

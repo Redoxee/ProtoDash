@@ -1,4 +1,4 @@
-﻿Shader "Custom/CircleShader" {
+﻿Shader "Unlit/CircleShader" {
 	Properties{
 		_Color("Main Color", Color) = (1,1,1,1)
 	}
@@ -41,7 +41,7 @@
 			fixed4 frag(v2f i) : COLOR
 			{
 				float4 col = _Color;
-				col.a = 1.-_Smooth(length(i.uv), .495, .005);
+				col.a *= 1.-_Smooth(length(i.uv), .495, .005);
 				return col;
 			}
 			ENDCG

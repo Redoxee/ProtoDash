@@ -167,7 +167,12 @@ namespace Dasher
 
 		}
 
-		public void NotifyDeathZoneTouched()
+		public void NotifyIntermediateState()
+		{
+			m_gameCanvas.gameObject.SetActive(false);
+		}
+
+		public void NotifyDeath()
 		{
 			m_gameProcess.RequirePause();
 			m_gameCanvas.gameObject.SetActive(false);

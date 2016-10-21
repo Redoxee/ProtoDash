@@ -47,6 +47,8 @@ namespace Dasher
 		public Color EndNode;
 		public Material EndNode_Material;
 
+		public Color EndLevelPanel;
+
 		public Color Lava1;
 		public Color Lava2;
 		public Material Lava_Material;
