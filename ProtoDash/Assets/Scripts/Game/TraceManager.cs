@@ -7,15 +7,13 @@ namespace Dasher
 	public class TraceManager : MonoBehaviour
 	{
 
-		private struct Trace
+		private class Trace
 		{
 			public GameObject obj;
-			public SpriteRenderer sprite;
+			public TraceObject trace;
 			public float timer;
 		}
-
-		[SerializeField]
-		GameObject traceObject = null;
+		
 		[SerializeField]
 		int tracePoolSize = 50;
 
@@ -29,9 +27,15 @@ namespace Dasher
 		private int currentAnimatedCount = 0;
 
 		[SerializeField]
-		private Sprite JumpSprite = null;
+		private GameObject m_tracePrefab;
 		[SerializeField]
-		private Sprite DashSprite = null;
+		private Color m_traceColor;
+		[SerializeField]
+		private Material m_jumpMaterialBase;
+		[SerializeField]
+		private Material m_dashMaterialBase;
+		[SerializeField]
+		private Material m_deathMaterialBase;
 
 		private int m_jumpCounter = 0;
 		private int m_dashesCounter = 0;
@@ -42,17 +46,25 @@ namespace Dasher
 
 		void Start()
 		{
+			var jumpMaterial = new Material(m_jumpMaterialBase);
+			var dashMaterial = new Material(m_dashMaterialBase);
+			var deathMaterial = new Material(m_deathMaterialBase);
+			jumpMaterial.color = m_traceColor;
+			dashMaterial.color = m_traceColor;
+			deathMaterial.color = m_traceColor;
 
 			for (int i = 0; i < tracePoolSize; ++i)
 			{
-				GameObject go = Instantiate<GameObject>(traceObject);
+				GameObject go = Instantiate<GameObject>(m_tracePrefab);
 				go.transform.SetParent(transform);
 				go.SetActive(false);
 				Trace t = new Trace();
 				t.obj = go;
-				t.sprite = go.GetComponent<SpriteRenderer>();
+				t.trace = go.GetComponent<TraceObject>();
 				t.timer = 0;
 				TraceList.Add(t);
+
+				t.trace.SetMaterials(jumpMaterial, dashMaterial, deathMaterial);
 			}
 
 			m_jumpCounter = 0;
@@ -97,7 +109,7 @@ namespace Dasher
 				currentIndex %= TraceList.Count;
 				Trace t = TraceList[currentIndex];
 				t.obj.SetActive(true);
-				t.sprite.sprite = JumpSprite;
+				t.trace.SetJump();
 				t.obj.transform.position = pos;
 				t.obj.transform.localScale = Vector3.zero;
 				t.timer = popAnimationTime;
@@ -119,7 +131,7 @@ namespace Dasher
 
 				Trace t = TraceList[currentIndex];
 				t.obj.SetActive(true);
-				t.sprite.sprite = DashSprite;
+				t.trace.SetDash();
 				t.obj.transform.position = pos;
 				t.obj.transform.localRotation = orientation;
 				t.obj.transform.localScale = Vector3.zero;
@@ -131,6 +143,28 @@ namespace Dasher
 				m_pastTraceManager.NotifyDash(t.obj.transform);
 			}
 		}
+
+		public void NotifyDeath(Vector3 pos)
+		{
+			if (isActiveAndEnabled)
+			{
+				currentIndex++;
+				currentIndex %= TraceList.Count;
+				Trace t = TraceList[currentIndex];
+				t.obj.SetActive(true);
+				t.trace.SetDeath();
+				t.obj.transform.position = pos;
+				t.obj.transform.localScale = Vector3.zero;
+				t.obj.transform.localRotation = Quaternion.identity;
+				t.timer = popAnimationTime;
+
+				TraceList[currentIndex] = t;
+				currentAnimatedCount = currentAnimatedCount + 1;
+
+				m_pastTraceManager.NotifyDeath(t.obj.transform);
+			}
+		}
+
 
 	}
 }

@@ -361,6 +361,10 @@ namespace Dasher
 			computeDeathPosition();
 			SetState(m_dyingState);
 			m_timeManager.GameTimeFactor = 0f;
+
+			var dm = MainProcess.Instance.DataManager;
+			if(CurrentLevelName != null && !dm.HasLevelBeenFinished(CurrentLevelName))
+				dm.SetTraceForLevel(CurrentLevelName, m_pastTraceManagerRef.GetCurrentRecording());
 		}
 		#endregion
 

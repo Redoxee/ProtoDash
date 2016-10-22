@@ -195,7 +195,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 128240}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: 3, z: 0}
+  m_LocalPosition: {x: -3, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -439,7 +439,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c30e5bd56a15c324d81c89b29de49563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  traceObject: {fileID: 139350, guid: ebce38a67f572de48b3c83f083fb91a0, type: 2}
   tracePoolSize: 20
   popAnimationTime: 0.4
   popAnimationCurve:
@@ -458,8 +457,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  JumpSprite: {fileID: 21300000, guid: a50e6eb667d67944f8fe259a4df7b8b6, type: 3}
-  DashSprite: {fileID: 21300000, guid: 8ebc1a81fb4343045b3e290bfff1616c, type: 3}
+  m_tracePrefab: {fileID: 1000013050601060, guid: dba94f45eeedd66419c9c6b5b0d61702,
+    type: 2}
+  m_traceColor: {r: 0.6311747, g: 0.69655174, b: 0.55314404, a: 0.741}
+  m_jumpMaterialBase: {fileID: 2100000, guid: 9f7f76796412ea74189a558d9c187c05, type: 2}
+  m_dashMaterialBase: {fileID: 2100000, guid: d0a8468dc3ce4604dabd4a854985b62e, type: 2}
+  m_deathMaterialBase: {fileID: 2100000, guid: f8e6db77da0fb424f95e778cc58203c1, type: 2}
 --- !u!212 &21223692
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -2318,10 +2321,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5b20ff0fa2fccc43b272eeafde0f2e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TracePrefab: {fileID: 1000014145013558, guid: 0bb77ac0ce6dfef47829e27ff25b63c7,
+  m_traceObject: {fileID: 1000013050601060, guid: dba94f45eeedd66419c9c6b5b0d61702,
     type: 2}
-  m_jumpSprite: {fileID: 21300000, guid: a50e6eb667d67944f8fe259a4df7b8b6, type: 3}
-  m_dashSprite: {fileID: 21300000, guid: 8ebc1a81fb4343045b3e290bfff1616c, type: 3}
+  m_traceColor: {r: 0.49518254, g: 0.5928253, b: 0.7241379, a: 0.5294118}
+  m_jumpMaterialBase: {fileID: 2100000, guid: 9f7f76796412ea74189a558d9c187c05, type: 2}
+  m_dashMaterialBase: {fileID: 2100000, guid: d0a8468dc3ce4604dabd4a854985b62e, type: 2}
+  m_deathMaterialBase: {fileID: 2100000, guid: f8e6db77da0fb424f95e778cc58203c1, type: 2}
 --- !u!124 &124000013094005290
 Behaviour:
   m_ObjectHideFlags: 1

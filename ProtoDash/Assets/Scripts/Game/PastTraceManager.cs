@@ -6,6 +6,7 @@ namespace Dasher
 	public enum TraceType {
 		Jump,
 		Dash,
+		Death,
 	}
 
 	public struct TracePoint
@@ -55,6 +56,11 @@ namespace Dasher
 			m_currentTrace.AddPoint(TraceType.Dash, new Vector2(t.position.x, t.position.y),a);
 		}
 
+		public void NotifyDeath(Transform t)
+		{
+			m_currentTrace.AddPoint(TraceType.Death, new Vector2(t.position.x, t.position.y), 0);
+		}
+
 		public TraceRecording GetCurrentRecording()
 		{
 			return m_currentTrace;
@@ -75,29 +81,50 @@ namespace Dasher
 		}
 
 		[SerializeField]
-		private GameObject TracePrefab = null;
+		private GameObject m_traceObject = null;
 		[SerializeField]
-		private Sprite m_jumpSprite = null;
+		Color m_traceColor = Color.black;
 		[SerializeField]
-		private Sprite m_dashSprite = null;
+		Material m_jumpMaterialBase = null;
+		[SerializeField]
+		Material m_dashMaterialBase = null;
+		[SerializeField]
+		Material m_deathMaterialBase = null;
 
 		//private List<GameObject> m_spawnedObjects = new List<GameObject>();
 
 		private void SetupFromPast()
 		{
+
+			var jumpMaterial = new Material(m_jumpMaterialBase);
+			var dashMaterial = new Material(m_dashMaterialBase);
+			var deathMaterial = new Material(m_deathMaterialBase);
+			jumpMaterial.color = m_traceColor;
+			dashMaterial.color = m_traceColor;
+			deathMaterial.color = m_traceColor;
+
 			int nbTrace = m_pastTrace.Length;
 			for (int i = 0; i < nbTrace; ++i)
 			{
 				TracePoint tp = m_pastTrace.m_points[i];
-				GameObject obj = Instantiate(TracePrefab);
+				GameObject obj = Instantiate(m_traceObject);
 				obj.transform.SetParent(transform);
 				obj.transform.position = new Vector3(tp.position.x, tp.position.y, transform.position.z);
 				obj.transform.rotation = Quaternion.AngleAxis(tp.rotation,new Vector3(0,0,1));
-				Sprite tex = (tp.tType == TraceType.Jump) ? m_jumpSprite : m_dashSprite;
 
-				SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
-				renderer.sprite = tex;
-
+				var traceObject = obj.GetComponent<TraceObject>();
+				traceObject.SetMaterials(jumpMaterial, dashMaterial, deathMaterial);
+				switch (tp.tType) {
+					case TraceType.Jump:
+						traceObject.SetJump();
+						break;
+					case TraceType.Dash:
+						traceObject.SetDash();
+						break;
+					case TraceType.Death:
+						traceObject.SetDeath();
+						break;
+				}
 				//m_spawnedObjects.Add(obj);
 			}
 		}

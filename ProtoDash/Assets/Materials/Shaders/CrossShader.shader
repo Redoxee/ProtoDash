@@ -2,7 +2,6 @@
 	{
 	Properties{
 		_Color("Main Color", Color) = (1,1,1,1)
-		_Rotation("Rotation", Float) = 0
 	}
 
 		SubShader{
@@ -74,7 +73,7 @@
 		f = _Smooth(.09, f, .004);
 
 		float4 col = _Color;
-		col.a = f;
+		col.a *= f;
 		return col;
 	}
 

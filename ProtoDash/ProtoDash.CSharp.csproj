@@ -94,6 +94,7 @@
     <Compile Include="Assets\Scripts\Game\PastTraceManager.cs" />
     <Compile Include="Assets\Scripts\Game\SmartGauge.cs" />
     <Compile Include="Assets\Scripts\Game\TraceManager.cs" />
+    <Compile Include="Assets\Scripts\Game\TraceObject.cs" />
     <Compile Include="Assets\Scripts\Game\TutorialAnimator.cs" />
     <Compile Include="Assets\Scripts\Game\World\DeathZone.cs" />
     <Compile Include="Assets\Scripts\Game\World\EndNode.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Assets\Scripts\Tool\Singleton.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Materials\Shaders\ArrowShader.shader" />
     <None Include="Assets\Materials\Shaders\BackgroundShader.shader" />
     <None Include="Assets\Materials\Shaders\CharacterShader.shader" />
     <None Include="Assets\Materials\Shaders\CircleShader.shader" />
@@ -127,6 +129,7 @@
     <None Include="Assets\Materials\Shaders\EndNodeLevel.shader" />
     <None Include="Assets\Materials\Shaders\ExtandableCircle.shader" />
     <None Include="Assets\Materials\Shaders\GearShader.shader" />
+    <None Include="Assets\Materials\Shaders\ShallowCircleShader.shader" />
     <None Include="Assets\Materials\Shaders\SimpleHexagon.shader" />
     <None Include="Assets\Materials\Shaders\SkyBoxShader.shader" />
     <None Include="Assets\Materials\Shaders\UnlitBGElementShader.shader" />

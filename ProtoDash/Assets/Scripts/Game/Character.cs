@@ -629,6 +629,7 @@ namespace Dasher
 
 		public void NotifyDying(Vector2 endPosition)
 		{
+			traceManager.NotifyDeath(transform.position);
 			m_endTargetPosition = endPosition;
 			_SetState(Dead);
 		}
