@@ -167,6 +167,7 @@ namespace Dasher
 			float tpx = FunctionUtils.damping(xDampingFactor, transform.position.x, m_deathPos.x, dt);
 			float tpy = FunctionUtils.damping(yDampingFactor, transform.position.y, m_deathPos.y, dt);
 			transform.position = new Vector3(tpx, tpy, transform.position.z);
+			_DrawCross(m_deathPos.x, m_deathPos.y, Color.black);
 		}
 
 		#endregion

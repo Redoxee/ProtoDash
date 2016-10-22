@@ -323,9 +323,12 @@ namespace Dasher
 		private int m_deathFrameCounter = 0;
 		private int m_allowedDeathFrame = 3;
 
-		public void NotifyDeathZoneTouched()
+		private GameObject m_lastDeathZoneTouched = null;
+
+		public void NotifyDeathZoneTouched(GameObject deadZone)
 		{
 			m_deathZoneCounter += 1;
+			m_lastDeathZoneTouched = deadZone;
 		}
 
 		public void NotifyDeathZoneEmerged()
@@ -333,8 +336,29 @@ namespace Dasher
 			m_deathZoneCounter -= 1;
 		}
 
+		private Vector3 m_deathPositionTarget ;
+
+		void computeDeathPosition()
+		{
+
+			var death = (m_lastDeathZoneTouched.transform.position);
+			var deathScale = m_lastDeathZoneTouched.transform.localScale;
+			var chara = (m_character.transform.position);
+
+			m_deathPositionTarget = FunctionUtils.Floor(chara);
+
+			m_deathPositionTarget.x = Mathf.Max(m_deathPositionTarget.x, death.x);
+			m_deathPositionTarget.x = Mathf.Min(m_deathPositionTarget.x, death.x + deathScale.x - 1);
+
+			m_deathPositionTarget.y = Mathf.Max(m_deathPositionTarget.y, death.y);
+			m_deathPositionTarget.y = Mathf.Min(m_deathPositionTarget.y, death.y + deathScale.y - 1);
+
+			m_deathPositionTarget += new Vector3(.5f, .5f, 0f);
+		}
+
 		private void OnDeath()
 		{
+			computeDeathPosition();
 			SetState(m_dyingState);
 			m_timeManager.GameTimeFactor = 0f;
 		}
@@ -431,17 +455,18 @@ namespace Dasher
 		GameObject m_deathDummy = null;
 		FullScreenScaler m_deathDummyScaler;
 
+
 		private void Dying_Begin()
 		{
 			SaveManager dataManager = MainProcess.Instance.DataManager;
 			dataManager.NotifyEndRun(m_character.Traces.NbJumps, m_character.Traces.NbDashes);
 			dataManager.Save();
 			m_dyingTimer = 0f;
-			var cPos = m_character.transform.position;
-			m_CameraS.NotifyDeath(cPos);
-			m_character.NotifyDying();
-			cPos.z = c_fullScreenScalerDepth;
-			m_deathDummy.transform.position = cPos;
+			m_CameraS.NotifyDeath(m_deathPositionTarget);
+			var characterTarget = new Vector2(m_deathPositionTarget.x, m_deathPositionTarget.y);
+			m_character.NotifyDying(characterTarget);
+			m_deathPositionTarget.z = c_fullScreenScalerDepth;
+			m_deathDummy.transform.position = m_deathPositionTarget;
 			m_deathDummy.SetActive(true);
 			m_deathDummyScaler.SetProgression(0f);
 			if(m_GUIManager != null)

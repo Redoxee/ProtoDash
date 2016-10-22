@@ -20,6 +20,11 @@ namespace Dasher
 			return a - b * Mathf.Floor(a / b);
 		}
 
+		public static Vector3 Floor(Vector3 v)
+		{
+			return new Vector3(Mathf.Floor(v.x), Mathf.Floor(v.y), Mathf.Floor(v.z));
+		}
+
 #if UNITY_WEBPLAYER
     public static string webplayerQuitURL = "http://google.com";
 #endif

@@ -290,11 +290,17 @@ namespace Dasher
 		public DasherSavable(int nbLevels)
 		{
 			m_levels = new Dictionary<string, LevelSavable>(nbLevels);
+			m_settings = new DasherSettings();
 		}
 	}
 
 	public struct DasherSettings
 	{
 		public bool isLefthanded;
+
+		public DasherSettings(bool leftHand = false)
+		{
+			isLefthanded = leftHand;
+		}
 	}
 }

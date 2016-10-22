@@ -613,20 +613,23 @@ namespace Dasher
 			m_cancelDash = true;
 		}
 
-		float m_deathSlowDownFactor = .8f;
+		const float c_deathSlowDownFactor = .9f;
 
 		Vector2 _UpdateDead(Vector2 currentVelocity)
 		{
-			currentEnergy = 0f;
-			return currentVelocity * m_deathSlowDownFactor;
+			float dt = Time.deltaTime;
+			Vector2 dir = m_endTargetPosition - new Vector2(transform.position.x, transform.position.y);
+			float m = dir.magnitude;
+			return (currentVelocity + Mathf.Pow(m * m_endAttractionForce, 2f) * dir.normalized * dt) * c_deathSlowDownFactor;
 		}
 
 		void _EndDead()
 		{
 		}
 
-		public void NotifyDying()
+		public void NotifyDying(Vector2 endPosition)
 		{
+			m_endTargetPosition = endPosition;
 			_SetState(Dead);
 		}
 		
