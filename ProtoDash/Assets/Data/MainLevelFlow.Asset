@@ -75,8 +75,8 @@ MonoBehaviour:
   - sceneObject: {fileID: 102900000, guid: 98a34c720012fe94f89c7f92cf3d7d52, type: 3}
     sceneName: 020DeathSymetri
     parTime: 20
-  - sceneObject: {fileID: 102900000, guid: 858e69054a44c2746b6a6854310298fa, type: 3}
-    sceneName: 014StalactitePath
+  - sceneObject: {fileID: 102900000, guid: 0b18dca187897c749b18521f3392da51, type: 3}
+    sceneName: 031StalactitePath2
     parTime: 20
   - sceneObject: {fileID: 102900000, guid: b432b3c23c3a0bc43b1de0c0590b9d94, type: 3}
     sceneName: 019DashBackUp
@@ -87,14 +87,14 @@ MonoBehaviour:
   - sceneObject: {fileID: 102900000, guid: bea951c94f38bec4d8090ded0521f738, type: 3}
     sceneName: 012LeapOfFaith
     parTime: 20
-  - sceneObject: {fileID: 102900000, guid: 06bf8f34538afb544bda7a1d8cfb7d69, type: 3}
-    sceneName: 030LatheralInsanity
+  - sceneObject: {fileID: 102900000, guid: 858e69054a44c2746b6a6854310298fa, type: 3}
+    sceneName: 014StalactitePath
     parTime: 15
-  - sceneObject: {fileID: 102900000, guid: d2086cc251411ca47a49000c9f287c25, type: 3}
+  - sceneObject: {fileID: 102900000, guid: b947519b0a15d2343907c8c6c89155bf, type: 3}
     sceneName: 022YouDense
-    parTime: 30
+    parTime: 20
   - sceneObject: {fileID: 102900000, guid: 879e483496494504eae8e8f91764a06a, type: 3}
-    sceneName: 028LeftDiagonal
+    sceneName: 028TrappedWallJumps
     parTime: 20
   - sceneObject: {fileID: 102900000, guid: 39150da95f67b2f43bdc3ed4d1d75635, type: 3}
     sceneName: 027SmallSpiral
