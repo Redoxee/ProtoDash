@@ -22,5 +22,12 @@ namespace Dasher
 			data.SetLeftHandedMode(isOn);
 			data.Save();
 		}
+
+		public void OnDeleteSavePressed()
+		{
+			var data = MainProcess.Instance.DataManager;
+			data.ClearSave();
+			MainProcess.Instance.RelaunchGame();
+		}
 	}
 }

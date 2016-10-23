@@ -30,9 +30,9 @@ namespace Dasher
 		public const int c_nbLevelInWorld = 6;
 
 		private bool m_isInitialized = false;
-		private void Initialize()
+		private void Initialize(bool force = false)
 		{
-			if (m_isInitialized)
+			if (m_isInitialized || force)
 				return;
 			InitializeWorldInLevels();
 			BuildStructuredData();
@@ -44,7 +44,7 @@ namespace Dasher
 		}
 
 		[SerializeField]
-		private List<LevelData> m_levelList;
+		private List<LevelData> m_levelList = null;
 		public List<LevelData> LevelList { get { Initialize(); return m_levelList; } }
 
 		public LevelData GetLevelData(string levelName)

@@ -63,8 +63,8 @@
 			{
 				float4 col = _Color;
 				i.uv.y = abs(i.uv.y);
-				float f = sdSegment(i.uv,float2(-Si,.0f),float2(Si,.0f));
-				f = smin(f , sdSegment(i.uv, float2(Bx,By), float2(Si, .0f)), .01);
+				float f = sdSegment(i.uv,float2(-Si,.0f),float2(Si,.0f))*.65;
+				f = smin(f , sdSegment(i.uv, float2(Bx,By), float2(Si+.05, .0f)), .01) * 1.9;
 				f = _Smooth(.06, f, .006);
 				col.a *= f;
 				return col;

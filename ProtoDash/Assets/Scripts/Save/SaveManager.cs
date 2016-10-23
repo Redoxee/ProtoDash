@@ -7,7 +7,7 @@ using System;
 namespace Dasher
 {
 	public class SaveManager {
-		public const string c_SaveVersion = "0.00.004";
+		public const string c_SaveVersion = "0.00.005";
 		private DasherSavable m_savable;
 
 		#region Save mecanics
@@ -161,6 +161,25 @@ namespace Dasher
 			return true;
 		}
 
+		public void ClearSave()
+		{
+			var info = new DirectoryInfo(Application.persistentDataPath);
+			var fileEnum = info.GetFiles().GetEnumerator();
+			while (fileEnum.MoveNext())
+			{
+				var file = (FileInfo)fileEnum.Current;
+				File.Delete(file.FullName);
+			}
+			m_savable = new DasherSavable(0);
+			m_traceDictionary = new Dictionary<string, TraceRecording>();
+
+			var flow  = MainProcess.Instance.levelFlow;
+			var levelEnum = flow.LevelList.GetEnumerator();
+			while (levelEnum.MoveNext())
+			{
+				levelEnum.Current.currentBest = 0f;
+			}
+		}
 
 		#endregion
 

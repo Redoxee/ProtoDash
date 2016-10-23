@@ -170,6 +170,11 @@ namespace Dasher
 
 		public string CurrentLevel { get { return m_currenLevelScene; } }
 		public int CurrentLevelIndex { get { return m_currentLevelIndex; } }
+
+		public void RelaunchGame()
+		{
+			SceneManager.LoadScene(0);
+		}
 		#endregion
 
 		#region Save
