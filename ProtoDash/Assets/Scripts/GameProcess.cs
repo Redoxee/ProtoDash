@@ -324,11 +324,17 @@ namespace Dasher
 		private int m_allowedDeathFrame = 3;
 
 		private GameObject m_lastDeathZoneTouched = null;
+		private Vector3 m_firstDeathPosition = Vector3.zero;
 
 		public void NotifyDeathZoneTouched(GameObject deadZone)
 		{
 			m_deathZoneCounter += 1;
 			m_lastDeathZoneTouched = deadZone;
+
+			if (m_deathZoneCounter == 1)
+			{
+				m_firstDeathPosition = m_character.transform.position;
+			}
 		}
 
 		public void NotifyDeathZoneEmerged()
@@ -343,7 +349,7 @@ namespace Dasher
 
 			var death = (m_lastDeathZoneTouched.transform.position);
 			var deathScale = m_lastDeathZoneTouched.transform.localScale;
-			var chara = (m_character.transform.position);
+			var chara = m_firstDeathPosition;
 
 			m_deathPositionTarget = FunctionUtils.Floor(chara);
 
@@ -354,6 +360,7 @@ namespace Dasher
 			m_deathPositionTarget.y = Mathf.Min(m_deathPositionTarget.y, death.y + deathScale.y - 1);
 
 			m_deathPositionTarget += new Vector3(.5f, .5f, 0f);
+			m_firstDeathPosition = (m_deathPositionTarget + m_firstDeathPosition) / 2f;
 		}
 
 		private void OnDeath()
@@ -467,8 +474,7 @@ namespace Dasher
 			dataManager.Save();
 			m_dyingTimer = 0f;
 			m_CameraS.NotifyDeath(m_deathPositionTarget);
-			var characterTarget = new Vector2(m_deathPositionTarget.x, m_deathPositionTarget.y);
-			m_character.NotifyDying(characterTarget);
+			m_character.NotifyDying(m_deathPositionTarget, m_firstDeathPosition);
 			m_deathPositionTarget.z = c_fullScreenScalerDepth;
 			m_deathDummy.transform.position = m_deathPositionTarget;
 			m_deathDummy.SetActive(true);

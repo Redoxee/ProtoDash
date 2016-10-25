@@ -627,10 +627,10 @@ namespace Dasher
 		{
 		}
 
-		public void NotifyDying(Vector2 endPosition)
+		public void NotifyDying(Vector3 deathPosition, Vector2 endMarkerPosition)
 		{
-			traceManager.NotifyDeath(transform.position);
-			m_endTargetPosition = endPosition;
+			traceManager.NotifyDeath(endMarkerPosition);
+			m_endTargetPosition = deathPosition;
 			_SetState(Dead);
 		}
 		

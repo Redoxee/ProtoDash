@@ -109,7 +109,7 @@ namespace Dasher
 				TracePoint tp = m_pastTrace.m_points[i];
 				GameObject obj = Instantiate(m_traceObject);
 				obj.transform.SetParent(transform);
-				obj.transform.position = new Vector3(tp.position.x, tp.position.y, transform.position.z);
+				obj.transform.position = new Vector3(tp.position.x, tp.position.y, -1f);
 				obj.transform.rotation = Quaternion.AngleAxis(tp.rotation,new Vector3(0,0,1));
 
 				var traceObject = obj.GetComponent<TraceObject>();

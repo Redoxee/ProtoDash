@@ -148,6 +148,7 @@ namespace Dasher
 		{
 			if (isActiveAndEnabled)
 			{
+				pos.z = -.5f;
 				currentIndex++;
 				currentIndex %= TraceList.Count;
 				Trace t = TraceList[currentIndex];
