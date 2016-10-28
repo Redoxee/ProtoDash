@@ -66,41 +66,46 @@ public sealed class FlatGameSave : Table {
 
   public string Version { get { int o = __offset(4); return o != 0 ? __string(o + bb_pos) : null; } }
   public ArraySegment<byte>? GetVersionBytes() { return __vector_as_arraysegment(4); }
+  public string UserId { get { int o = __offset(6); return o != 0 ? __string(o + bb_pos) : null; } }
+  public ArraySegment<byte>? GetUserIdBytes() { return __vector_as_arraysegment(6); }
   public FlatLevelSave GetLevelResults(int j) { return GetLevelResults(new FlatLevelSave(), j); }
-  public FlatLevelSave GetLevelResults(FlatLevelSave obj, int j) { int o = __offset(6); return o != 0 ? obj.__init(__indirect(__vector(o) + j * 4), bb) : null; }
-  public int LevelResultsLength { get { int o = __offset(6); return o != 0 ? __vector_len(o) : 0; } }
-  public int TotalRuns { get { int o = __offset(8); return o != 0 ? bb.GetInt(o + bb_pos) : (int)0; } }
-  public int TotalJumps { get { int o = __offset(10); return o != 0 ? bb.GetInt(o + bb_pos) : (int)0; } }
-  public int TotalDashes { get { int o = __offset(12); return o != 0 ? bb.GetInt(o + bb_pos) : (int)0; } }
+  public FlatLevelSave GetLevelResults(FlatLevelSave obj, int j) { int o = __offset(8); return o != 0 ? obj.__init(__indirect(__vector(o) + j * 4), bb) : null; }
+  public int LevelResultsLength { get { int o = __offset(8); return o != 0 ? __vector_len(o) : 0; } }
+  public int TotalRuns { get { int o = __offset(10); return o != 0 ? bb.GetInt(o + bb_pos) : (int)0; } }
+  public int TotalJumps { get { int o = __offset(12); return o != 0 ? bb.GetInt(o + bb_pos) : (int)0; } }
+  public int TotalDashes { get { int o = __offset(14); return o != 0 ? bb.GetInt(o + bb_pos) : (int)0; } }
   public FlatSettings Settings { get { return GetSettings(new FlatSettings()); } }
-  public FlatSettings GetSettings(FlatSettings obj) { int o = __offset(14); return o != 0 ? obj.__init(__indirect(o + bb_pos), bb) : null; }
+  public FlatSettings GetSettings(FlatSettings obj) { int o = __offset(16); return o != 0 ? obj.__init(__indirect(o + bb_pos), bb) : null; }
 
   public static Offset<FlatGameSave> CreateFlatGameSave(FlatBufferBuilder builder,
       StringOffset VersionOffset = default(StringOffset),
+      StringOffset UserIdOffset = default(StringOffset),
       VectorOffset levelResultsOffset = default(VectorOffset),
       int TotalRuns = 0,
       int TotalJumps = 0,
       int TotalDashes = 0,
       Offset<FlatSettings> SettingsOffset = default(Offset<FlatSettings>)) {
-    builder.StartObject(6);
+    builder.StartObject(7);
     FlatGameSave.AddSettings(builder, SettingsOffset);
     FlatGameSave.AddTotalDashes(builder, TotalDashes);
     FlatGameSave.AddTotalJumps(builder, TotalJumps);
     FlatGameSave.AddTotalRuns(builder, TotalRuns);
     FlatGameSave.AddLevelResults(builder, levelResultsOffset);
+    FlatGameSave.AddUserId(builder, UserIdOffset);
     FlatGameSave.AddVersion(builder, VersionOffset);
     return FlatGameSave.EndFlatGameSave(builder);
   }
 
-  public static void StartFlatGameSave(FlatBufferBuilder builder) { builder.StartObject(6); }
+  public static void StartFlatGameSave(FlatBufferBuilder builder) { builder.StartObject(7); }
   public static void AddVersion(FlatBufferBuilder builder, StringOffset VersionOffset) { builder.AddOffset(0, VersionOffset.Value, 0); }
-  public static void AddLevelResults(FlatBufferBuilder builder, VectorOffset levelResultsOffset) { builder.AddOffset(1, levelResultsOffset.Value, 0); }
+  public static void AddUserId(FlatBufferBuilder builder, StringOffset UserIdOffset) { builder.AddOffset(1, UserIdOffset.Value, 0); }
+  public static void AddLevelResults(FlatBufferBuilder builder, VectorOffset levelResultsOffset) { builder.AddOffset(2, levelResultsOffset.Value, 0); }
   public static VectorOffset CreateLevelResultsVector(FlatBufferBuilder builder, Offset<FlatLevelSave>[] data) { builder.StartVector(4, data.Length, 4); for (int i = data.Length - 1; i >= 0; i--) builder.AddOffset(data[i].Value); return builder.EndVector(); }
   public static void StartLevelResultsVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(4, numElems, 4); }
-  public static void AddTotalRuns(FlatBufferBuilder builder, int TotalRuns) { builder.AddInt(2, TotalRuns, 0); }
-  public static void AddTotalJumps(FlatBufferBuilder builder, int TotalJumps) { builder.AddInt(3, TotalJumps, 0); }
-  public static void AddTotalDashes(FlatBufferBuilder builder, int TotalDashes) { builder.AddInt(4, TotalDashes, 0); }
-  public static void AddSettings(FlatBufferBuilder builder, Offset<FlatSettings> SettingsOffset) { builder.AddOffset(5, SettingsOffset.Value, 0); }
+  public static void AddTotalRuns(FlatBufferBuilder builder, int TotalRuns) { builder.AddInt(3, TotalRuns, 0); }
+  public static void AddTotalJumps(FlatBufferBuilder builder, int TotalJumps) { builder.AddInt(4, TotalJumps, 0); }
+  public static void AddTotalDashes(FlatBufferBuilder builder, int TotalDashes) { builder.AddInt(5, TotalDashes, 0); }
+  public static void AddSettings(FlatBufferBuilder builder, Offset<FlatSettings> SettingsOffset) { builder.AddOffset(6, SettingsOffset.Value, 0); }
   public static Offset<FlatGameSave> EndFlatGameSave(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<FlatGameSave>(o);

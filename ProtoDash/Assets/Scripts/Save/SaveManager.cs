@@ -7,7 +7,7 @@ using System;
 namespace Dasher
 {
 	public class SaveManager {
-		public const string c_SaveVersion = "0.00.005";
+		public const string c_SaveVersion = "0.00.006";
 		private DasherSavable m_savable;
 
 		#region Save mecanics
@@ -52,6 +52,8 @@ namespace Dasher
 				m_savable.m_TotalRuns = save.TotalRuns;
 				m_savable.m_TotalDashes = save.TotalDashes;
 				m_savable.m_TotalJumps = save.TotalJumps;
+				
+				m_savable.UserId = save.UserId;
 
 				if (save.Settings != null)
 				{
@@ -62,6 +64,19 @@ namespace Dasher
 			{
 				m_savable = new DasherSavable(0);
 			}
+			if (m_savable.UserId == null || m_savable.UserId == "")
+			{
+				m_savable.UserId = GenerateUserId();
+			}
+		}
+
+		public static string GenerateUserId()
+		{
+			string result = "Id";
+			result += DateTime.Now.Ticks.ToString();
+			
+			result += Time.realtimeSinceStartup * Time.deltaTime;
+			return result;
 		}
 
 		public void Save()
@@ -82,11 +97,12 @@ namespace Dasher
 			}
 
 			var versionOffset = m_builder.CreateString(c_SaveVersion);
+			var userIdOffset = m_builder.CreateString(m_savable.UserId);
 			var levelsOffset = FlatGameSave.CreateLevelResultsVector(m_builder, offsetTable);
 			var settingsOffset = FlatSettings.CreateFlatSettings(m_builder, m_savable.m_settings.isLefthanded);
 			FlatGameSave.StartFlatGameSave(m_builder);
-
 			FlatGameSave.AddVersion(m_builder, versionOffset);
+			FlatGameSave.AddUserId(m_builder, userIdOffset);
 			FlatGameSave.AddLevelResults(m_builder, levelsOffset);
 
 			FlatGameSave.AddTotalRuns(m_builder, m_savable.m_TotalRuns);
@@ -288,6 +304,8 @@ namespace Dasher
 			m_savable.m_settings.isLefthanded = isLeftHanded;
 		}
 
+		public string UserId { get { return m_savable.UserId; } }
+
 		#endregion
 	}
 
@@ -297,6 +315,7 @@ namespace Dasher
 			public float bestTime = -1f;
 			public int nbTry = 0;
 		}
+		public string UserId = null;
 
 		public Dictionary<string, LevelSavable> m_levels;
 

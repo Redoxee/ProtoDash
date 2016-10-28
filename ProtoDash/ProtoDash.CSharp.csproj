@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\Data\ColorScheme.cs" />
     <Compile Include="Assets\Scripts\Data\LevelFlow.cs" />
     <Compile Include="Assets\Scripts\ExpandableCircle.cs" />
+    <Compile Include="Assets\Scripts\Extentions.cs" />
     <Compile Include="Assets\Scripts\FPSMeter.cs" />
     <Compile Include="Assets\Scripts\FunctionUtils.cs" />
     <Compile Include="Assets\Scripts\GUI\GUIManager.cs" />

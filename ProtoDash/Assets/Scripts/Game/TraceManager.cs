@@ -6,7 +6,6 @@ namespace Dasher
 	[RequireComponent(typeof(PastTraceManager))]
 	public class TraceManager : MonoBehaviour
 	{
-
 		private class Trace
 		{
 			public GameObject obj;
