@@ -271,7 +271,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 9.827378
+  orthographic size: 27
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -338,7 +338,7 @@ MonoBehaviour:
   character: {fileID: 11412342}
   xDampingFactor: 0.35
   yDampingFactor: 0.25
-  cameraYOffset: 3
+  cameraYOffset: -3
   wantedXOffset: 3
   centerXoffset: 0
   timeToPosX: 1.5
@@ -1578,7 +1578,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 9.827378
+  orthographic size: 27
   m_Depth: 3
   m_CullingMask:
     serializedVersion: 2
@@ -2217,11 +2217,11 @@ MonoBehaviour:
     m_Curve:
     - time: 0
       value: 0
-      inSlope: -0.35706767
-      outSlope: -0.35706767
+      inSlope: -0.16817036
+      outSlope: -0.16817036
       tangentMode: 0
     - time: 0.39999998
-      value: -0.04
+      value: -0.02
       inSlope: 0
       outSlope: 0
       tangentMode: 0

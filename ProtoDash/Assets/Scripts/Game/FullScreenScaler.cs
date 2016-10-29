@@ -20,7 +20,8 @@ namespace Dasher
 		{
 			m_OriginalScale = transform.localScale;
 			var mainCam = Camera.main;
-			float s = mainCam.orthographicSize * 2f * (float)Screen.width / Screen.height * 1.5f;
+			float r = Screen.width > Screen.height ? ((float)Screen.width / (float)Screen.height) : ((float)Screen.height / (float)Screen.width);
+			float s = mainCam.orthographicSize * 2f * r * 1.5f;
 			m_offsetScale = Vector3.one * s - m_OriginalScale;
 			m_offsetScale.z = 1;
 

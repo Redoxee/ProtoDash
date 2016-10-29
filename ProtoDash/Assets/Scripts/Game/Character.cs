@@ -6,9 +6,9 @@ namespace Dasher
 	public class Character : MonoBehaviour
 	{
 		private delegate Vector2 gameplayDelegate(Vector2 currentVelocity);
-		private delegate void startStateDelegate();
+		private delegate void startStateDelegate(State prevState);
 		private delegate void endStateDelegate();
-		struct State
+		class State
 		{
 			public State(string name, startStateDelegate d1, gameplayDelegate d2, endStateDelegate d3)
 			{
@@ -43,8 +43,10 @@ namespace Dasher
 		private void _SetState(State newState)
 		{
 			currentState.end();
+			var prevState = currentState;
 			currentState = newState;
-			newState.start();
+
+			newState.start(prevState);
 		}
 		[SerializeField]
 		private InputManager m_inputManager = null;
@@ -104,7 +106,6 @@ namespace Dasher
 		[HideInInspector]
 		public float currentEnergy = 100.0f;
 
-
 		private Rigidbody2D characterRB;
 
 		private GameObject beak;
@@ -114,7 +115,7 @@ namespace Dasher
 		private Renderer bodyRenderer;
 
 		[SerializeField]
-		private TraceManager traceManager;
+		private TraceManager traceManager = null;
 		public TraceManager Traces {  get { return traceManager; } }
 
 		private Vector3 currentFacingVector;
@@ -239,6 +240,7 @@ namespace Dasher
 			m_inputManager.ManualUpdate();
 			updateSquish(Time.deltaTime);
 			updateBeak();
+			
 		}
 
 		public void ManualFixedUpdate()
@@ -336,7 +338,7 @@ namespace Dasher
 		* Idle
 		**/
 
-		private void _StartIdle()
+		private void _StartIdle(State prevState)
 		{
 			canLateJump = false;
 		}
@@ -351,6 +353,8 @@ namespace Dasher
 					currentVelocity.y = jumpForce;
 					_SetState(Jump);
 					traceManager.NotifyJump(characterRB.transform.position);
+					currentSquishY = 1.5f;
+					currentSquishX = 1.5f;
 				}
 
 				float d = currentFacingVector.x * propulsionImpulse;
@@ -374,10 +378,8 @@ namespace Dasher
 		/**
 		* Jump
 		**/
-		private void _StartJump()
+		private void _StartJump(State prevState)
 		{
-
-			currentSquishY = .8f;
 			jumpTimer = .0f;
 		}
 
@@ -393,9 +395,14 @@ namespace Dasher
 					currentVelocity = isTouchingLeft ? wallJumpVector : mirroredWallJumpVector;
 					currentFacingVector.x = isTouchingLeft ? 1 : -1;
 					currentVelocity *= wallJumpForce;
-					currentSquishX = .55f;
+					currentSquishY = 1.25f;
+					currentSquishX = 1.25f;
 					canLateJump = false;
 					traceManager.NotifyJump(characterRB.transform.position);
+
+					currentSquishY = 1.5f;
+					currentSquishX = 1.5f;
+
 					return currentVelocity;
 				}
 			}
@@ -409,6 +416,10 @@ namespace Dasher
 						currentVelocity.y = jumpForce;
 						_SetState(Jump);
 						traceManager.NotifyJump(characterRB.transform.position);
+
+						currentSquishY = 1.5f;
+						currentSquishX = 1.5f;
+
 						return currentVelocity;
 					}
 				}
@@ -431,6 +442,10 @@ namespace Dasher
 					currentVelocity.y = jumpForce;
 					_SetState(Jump);
 					traceManager.NotifyJump(characterRB.transform.position);
+
+					currentSquishY = 1.5f;
+					currentSquishX = 1.5f;
+
 					return currentVelocity;
 				}
 			}
@@ -518,7 +533,7 @@ namespace Dasher
 		* Dash
 		**/
 
-		private void _StartDash()
+		private void _StartDash(State prevState)
 		{
 			dashTimer = dashCoolDown;
 			dashProgression = dashDuration;
@@ -577,7 +592,7 @@ namespace Dasher
 		private Vector2 m_endTargetPosition;
 		private float m_endAttractionForce = 10f;
 
-		private void _BeginEndGame()
+		private void _BeginEndGame(State prevState)
 		{
 			m_gravityFactor = 0f;
 			m_cancelDash = true;
@@ -607,7 +622,7 @@ namespace Dasher
 
 		#region Dead
 
-		void _BeginDead()
+		void _BeginDead(State prevState)
 		{
 			m_gravityFactor = 0f;
 			m_cancelDash = true;

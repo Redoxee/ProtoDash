@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\Data\ColorScheme.cs" />
     <Compile Include="Assets\Scripts\Data\LevelFlow.cs" />
     <Compile Include="Assets\Scripts\ExpandableCircle.cs" />
+    <Compile Include="Assets\Scripts\ExtensibleCircleManager.cs" />
     <Compile Include="Assets\Scripts\Extentions.cs" />
     <Compile Include="Assets\Scripts\FPSMeter.cs" />
     <Compile Include="Assets\Scripts\FunctionUtils.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Assets\Scripts\Game\FullScreenScaler.cs" />
     <Compile Include="Assets\Scripts\Game\GaugeScript.cs" />
     <Compile Include="Assets\Scripts\Game\InputManager.cs" />
+    <Compile Include="Assets\Scripts\Game\JumpParticlesManager.cs" />
     <Compile Include="Assets\Scripts\Game\PastTraceManager.cs" />
     <Compile Include="Assets\Scripts\Game\SmartGauge.cs" />
     <Compile Include="Assets\Scripts\Game\TraceManager.cs" />
@@ -115,6 +117,7 @@
     <Compile Include="Assets\Scripts\Save\DasherTrace.cs" />
     <Compile Include="Assets\Scripts\Save\SaveManager.cs" />
     <Compile Include="Assets\Scripts\StatsScreen.cs" />
+    <Compile Include="Assets\Scripts\Tests\ExtensibleCircleTester.cs" />
     <Compile Include="Assets\Scripts\TimeManager.cs" />
     <Compile Include="Assets\Scripts\Tool\Singleton.cs" />
   </ItemGroup>
@@ -129,6 +132,7 @@
     <None Include="Assets\Materials\Shaders\DeathZoneShader.shader" />
     <None Include="Assets\Materials\Shaders\EndNodeLevel.shader" />
     <None Include="Assets\Materials\Shaders\ExtandableCircle.shader" />
+    <None Include="Assets\Materials\Shaders\ExtensibleCircle.shader" />
     <None Include="Assets\Materials\Shaders\GearShader.shader" />
     <None Include="Assets\Materials\Shaders\ShallowCircleShader.shader" />
     <None Include="Assets\Materials\Shaders\SimpleHexagon.shader" />
