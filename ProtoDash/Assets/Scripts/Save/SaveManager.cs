@@ -73,9 +73,10 @@ namespace Dasher
 		public static string GenerateUserId()
 		{
 			string result = "Id";
-			result += DateTime.Now.Ticks.ToString();
-			
-			result += Time.realtimeSinceStartup * Time.deltaTime;
+			result += DateTime.Now.Ticks.ToString("X");
+
+			result += ((long)(Time.realtimeSinceStartup * Time.deltaTime)).ToString("X") ;
+			Debug.Log(result);
 			return result;
 		}
 

@@ -158,6 +158,7 @@ namespace Dasher
 
 		private bool m_isNewbest = false;
 		private bool m_isNewPar = false;
+		private float m_oldBestTime = 0f;
 		//private bool m_isFirstCompletion = false;
 
 		public void NotifyEndLevelReached(GameObject endNode)
@@ -176,8 +177,8 @@ namespace Dasher
 					//m_isFirstCompletion = true;
 					mp.AnalyticsManager.NotifyNewLevelBeaten(CurrentLevelName, saveManager.GetLevelTryCount(CurrentLevelName), currentTime);
 				}
-
-				if (currentTime < saveManager.GetLevelTime(CurrentLevelName))
+				m_oldBestTime = saveManager.GetLevelTime(CurrentLevelName);
+				if (currentTime < m_oldBestTime)
 				{
 					m_isNewbest = true;
 					if (currentTime < currentLevelData.parTime)
@@ -524,7 +525,7 @@ namespace Dasher
 		{
 			if (m_GUIManager)
 			{
-				m_GUIManager.NotifyEndLevelReached(m_isNewbest,m_isNewPar);
+				m_GUIManager.NotifyEndLevelReached(m_isNewbest,m_isNewPar,m_oldBestTime);
 			}
 			else
 			{

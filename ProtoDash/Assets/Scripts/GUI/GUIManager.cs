@@ -132,6 +132,7 @@ namespace Dasher
 
 		public void NotifyLevelStart()
 		{
+			m_canvasHolder.gameObject.SetActive(true);
 			m_gameCanvas.gameObject.SetActive(true);
 			m_pauseCanvas.gameObject.SetActive(false);
 			m_endCanvas.gameObject.SetActive(false);
@@ -142,7 +143,7 @@ namespace Dasher
 			m_perf.StartRecord();
 		}
 
-		public void NotifyEndLevelReached(bool isNewBestTime, bool isNewparTime)
+		public void NotifyEndLevelReached(bool isNewBestTime, bool isNewparTime,float oldBestTime)
 		{
 			m_perf.StopRecord();
 			m_debugFPS.text = m_perf.GetMeanFPS().ToString();
@@ -156,7 +157,7 @@ namespace Dasher
 			float bestTime = currentLevel.currentBest;
 			float parTime = currentLevel.parTime;
 
-			m_endTimerText.text = "Current :\n" + time.ToString(TimeManager.c_timeDisplayFormat);
+			m_endTimerText.text = "Time :\n" + time.ToString(TimeManager.c_timeDisplayFormat);
 			m_endBestTimeText.text = "Best :\n" + bestTime.ToString(TimeManager.c_timeDisplayFormat);
 			m_endParTimeText.text = "Champ :\n" + parTime.ToString(TimeManager.c_timeDisplayFormat);
 			if (bestTime <= parTime)

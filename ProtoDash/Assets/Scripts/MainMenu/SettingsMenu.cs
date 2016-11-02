@@ -6,22 +6,23 @@ namespace Dasher
 	public class SettingsMenu : MonoBehaviour {
 
 		[SerializeField]
-		private Toggle m_leftHandedMode = null;
+		private DasherToggleButton m_leftHandedMode = null;
 
 		void Awake()
 		{
 			DasherSettings setting = MainProcess.Instance.DataManager.GetSettings();
 
-			m_leftHandedMode.isOn = setting.isLefthanded;
-			m_leftHandedMode.onValueChanged.AddListener(OnLeftHandedChanged);
+			m_leftHandedMode.SetOn(setting.isLefthanded);
 		}
 
-		void OnLeftHandedChanged(bool isOn)
+		public void OnLeftHandToggle()
 		{
 			var data = MainProcess.Instance.DataManager;
-			data.SetLeftHandedMode(isOn);
+			data.SetLeftHandedMode(m_leftHandedMode.Toggle());
 			data.Save();
 		}
+
+
 
 		public void OnDeleteSavePressed()
 		{

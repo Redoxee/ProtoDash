@@ -29,7 +29,8 @@ namespace Dasher
 
 		private float m_height = 1f;
 
-		void Start() {
+		public void Initialize()
+		{
 			m_previousFill = 1f;
 			RectTransform rt = (RectTransform)transform;
 			m_height = rt.rect.height;
@@ -47,10 +48,7 @@ namespace Dasher
 
 			m_currentCostImage = m_costImage1;
 			m_currentAnimated = m_animated1;
-		}
 
-		public void Initialize()
-		{
 			m_character = GameProcess.Instance.CurrentCharacter;
 			m_animated1.Reset();
 			m_animated2.Reset();
