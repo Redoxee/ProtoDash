@@ -2594,9 +2594,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
   m_MinWidth: -1
-  m_MinHeight: 70
+  m_MinHeight: -1
   m_PreferredWidth: 400
-  m_PreferredHeight: 70
+  m_PreferredHeight: 160
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
 --- !u!114 &1388813771
@@ -2877,7 +2877,7 @@ ParticleSystem:
   moveWithTransform: 1
   autoRandomSeed: 1
   scalingMode: 1
-  randomSeed: 2025108370
+  randomSeed: -1466076317
   InitialModule:
     serializedVersion: 2
     enabled: 1
