@@ -21,6 +21,9 @@ MonoBehaviour:
   - sceneObject: {fileID: 102900000, guid: d2d45e860eecac745bf52693eff38cba, type: 3}
     sceneName: 004DashIntro
     parTime: 10
+  - sceneObject: {fileID: 102900000, guid: 9e0df97bddd5f5641b668fb6e8e47210, type: 3}
+    sceneName: 024TrickyJumps
+    parTime: 15
   - sceneObject: {fileID: 102900000, guid: 8478ecac3eb56a648b7a9f600981b614, type: 3}
     sceneName: 003DeathPit
     parTime: 10
@@ -45,8 +48,8 @@ MonoBehaviour:
   - sceneObject: {fileID: 102900000, guid: ac0667d1c27ba9e46a51840dbef10c9c, type: 3}
     sceneName: 029GrindTower
     parTime: 17
-  - sceneObject: {fileID: 102900000, guid: 9817ee53e80782d4fbff6d5671a11018, type: 3}
-    sceneName: 013ATopTheClockTower
+  - sceneObject: {fileID: 102900000, guid: 879e483496494504eae8e8f91764a06a, type: 3}
+    sceneName: 028TrappedWallJumps
     parTime: 20
   - sceneObject: {fileID: 102900000, guid: 11fa5f52fad2d2e40b3e44619e4f4aa7, type: 3}
     sceneName: 025DashUpUpUp
@@ -57,17 +60,17 @@ MonoBehaviour:
   - sceneObject: {fileID: 102900000, guid: 8d3ef0089fe05244ea0bc7c139d31732, type: 3}
     sceneName: 010MissLeadingJump
     parTime: 20
-  - sceneObject: {fileID: 102900000, guid: 9e0df97bddd5f5641b668fb6e8e47210, type: 3}
-    sceneName: 024TrickyJumps
-    parTime: 15
+  - sceneObject: {fileID: 102900000, guid: c77ef801fb27e064294236ad23fba2b7, type: 3}
+    sceneName: 026JumpsJumpsDash
+    parTime: 20
   - sceneObject: {fileID: 102900000, guid: 084f59d2b672a224b8bfef179b0d3f71, type: 3}
     sceneName: 011DontMessTheTransition
     parTime: 20
   - sceneObject: {fileID: 102900000, guid: 4e4da0dce300b804cb3d290474ee0c9a, type: 3}
     sceneName: 016ThroughTheFlames
     parTime: 15
-  - sceneObject: {fileID: 102900000, guid: c77ef801fb27e064294236ad23fba2b7, type: 3}
-    sceneName: 026JumpsJumpsDash
+  - sceneObject: {fileID: 102900000, guid: 9817ee53e80782d4fbff6d5671a11018, type: 3}
+    sceneName: 013ATopTheClockTower
     parTime: 20
   - sceneObject: {fileID: 102900000, guid: a0185c0f90ff56842bc5139f1e72beb5, type: 3}
     sceneName: 017StressJump
@@ -92,9 +95,6 @@ MonoBehaviour:
     parTime: 15
   - sceneObject: {fileID: 102900000, guid: b947519b0a15d2343907c8c6c89155bf, type: 3}
     sceneName: 032MazeLike
-    parTime: 20
-  - sceneObject: {fileID: 102900000, guid: 879e483496494504eae8e8f91764a06a, type: 3}
-    sceneName: 028TrappedWallJumps
     parTime: 20
   - sceneObject: {fileID: 102900000, guid: 39150da95f67b2f43bdc3ed4d1d75635, type: 3}
     sceneName: 027SmallSpiral
