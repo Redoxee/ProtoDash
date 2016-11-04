@@ -12,14 +12,14 @@ namespace Dasher
 		private GameCanvasHolder m_canvasHolder;
 
 
-		private Canvas m_gameCanvas;
+		private GameObject m_gameCanvas;
 		private Text m_gameTimerText;
 		private SmartGauge m_gauge;
 
 		[Space]
 		[Header("Pause")]
 		[SerializeField]
-		private Canvas m_pauseCanvas;
+		private GameObject m_pauseCanvas;
 		[SerializeField]
 		private Text m_pauseLevelLabelText;
 		[SerializeField]
@@ -30,7 +30,7 @@ namespace Dasher
 		[Space]
 		[Header("End Level")]
 		[SerializeField]
-		private Canvas m_endCanvas;
+		private GameObject m_endCanvas;
 		[SerializeField]
 		private Text m_endLevelLabelText;
 		[SerializeField]
@@ -46,14 +46,14 @@ namespace Dasher
 		[Space]
 		[Header("Death")]
 		[SerializeField]
-		private Canvas m_failCanvas;
+		private GameObject m_failCanvas;
 		[SerializeField]
 		private Text m_failLevelLabelText;
 
 		[Space]
 		[Header("Intro")]
 		[SerializeField]
-		private Canvas m_introCanvas = null;
+		private GameObject m_introCanvas = null;
 		[SerializeField]
 		private Text m_introLevelText = null;
 
@@ -67,7 +67,7 @@ namespace Dasher
 		{
 			bool isLeftHanded = MainProcess.Instance.DataManager.GetSettings().isLefthanded;
 			var canvas = isLeftHanded ? m_canvasHolder.LeftCanvas:m_canvasHolder.RightCanvas;
-			m_gameCanvas = canvas.GetComponent<Canvas>();
+			m_gameCanvas = canvas;
 			m_gauge = canvas.GetComponentInChildren<SmartGauge>();
 			m_gameTimerText = (isLeftHanded ? m_canvasHolder.LeftTimeText : m_canvasHolder.RightTimeText).GetComponentInChildren<Text>();
 			(isLeftHanded ? m_canvasHolder.RightCanvas : m_canvasHolder.LeftCanvas).SetActive(false);
