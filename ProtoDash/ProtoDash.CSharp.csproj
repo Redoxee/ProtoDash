@@ -88,6 +88,7 @@
     <Compile Include="Assets\Scripts\GUI\DasherToggleButton.cs" />
     <Compile Include="Assets\Scripts\GUI\GUIManager.cs" />
     <Compile Include="Assets\Scripts\GUI\GameCanvasHolder.cs" />
+    <Compile Include="Assets\Scripts\GUI\TimeDisplayCapsule.cs" />
     <Compile Include="Assets\Scripts\Game\AnimatedEnergyCost.cs" />
     <Compile Include="Assets\Scripts\Game\CameraScript.cs" />
     <Compile Include="Assets\Scripts\Game\Character.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Assets\Scripts\Save\DasherTrace.cs" />
     <Compile Include="Assets\Scripts\Save\SaveManager.cs" />
     <Compile Include="Assets\Scripts\StatsScreen.cs" />
+    <Compile Include="Assets\Scripts\Tests\AnimationSandbox.cs" />
     <Compile Include="Assets\Scripts\Tests\ExtensibleCircleTester.cs" />
     <Compile Include="Assets\Scripts\TimeManager.cs" />
     <Compile Include="Assets\Scripts\Tool\Singleton.cs" />
@@ -125,6 +127,7 @@
   <ItemGroup>
     <None Include="Assets\Materials\Shaders\ArrowShader.shader" />
     <None Include="Assets\Materials\Shaders\BackgroundShader.shader" />
+    <None Include="Assets\Materials\Shaders\BicolorUIShader.shader" />
     <None Include="Assets\Materials\Shaders\CharacterShader.shader" />
     <None Include="Assets\Materials\Shaders\CircleShader.shader" />
     <None Include="Assets\Materials\Shaders\CompanionGauge.shader" />
