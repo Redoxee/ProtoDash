@@ -86,6 +86,7 @@
     <Compile Include="Assets\Scripts\FPSMeter.cs" />
     <Compile Include="Assets\Scripts\FunctionUtils.cs" />
     <Compile Include="Assets\Scripts\GUI\DasherToggleButton.cs" />
+    <Compile Include="Assets\Scripts\GUI\EndLevelGUI.cs" />
     <Compile Include="Assets\Scripts\GUI\GUIManager.cs" />
     <Compile Include="Assets\Scripts\GUI\GameCanvasHolder.cs" />
     <Compile Include="Assets\Scripts\GUI\TimeDisplayCapsule.cs" />

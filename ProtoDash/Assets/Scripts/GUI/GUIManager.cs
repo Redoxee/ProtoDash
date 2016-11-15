@@ -34,15 +34,8 @@ namespace Dasher
 		[SerializeField]
 		private Text m_endLevelLabelText;
 		[SerializeField]
-		private GameObject m_endTimer;
-		private Text m_endTimerText;
-		[SerializeField]
-		private GameObject m_endBestTime;
-		private Text m_endBestTimeText;
-		[SerializeField]
-		private GameObject m_endParTime;
-		private Text m_endParTimeText;
-
+		EndLevelGUI m_endLevelGUI = null;
+		
 		[Space]
 		[Header("Death")]
 		[SerializeField]
@@ -71,11 +64,12 @@ namespace Dasher
 			m_gauge = canvas.GetComponentInChildren<SmartGauge>();
 			m_gameTimerText = (isLeftHanded ? m_canvasHolder.LeftTimeText : m_canvasHolder.RightTimeText).GetComponentInChildren<Text>();
 			(isLeftHanded ? m_canvasHolder.RightCanvas : m_canvasHolder.LeftCanvas).SetActive(false);
-
-			m_endTimerText = m_endTimer.GetComponentInChildren<Text>();
-			m_endBestTimeText = m_endBestTime.GetComponentInChildren<Text>();
-			m_endParTimeText = m_endParTime.GetComponentInChildren<Text>();
+			
 			m_perf = GetComponent<PerfRuler>();
+
+			m_endLevelGUI.m_current.Initialize();
+			m_endLevelGUI.m_best.Initialize();
+			m_endLevelGUI.m_champ.Initialize();
 		}
 
 		void Start()
@@ -157,13 +151,10 @@ namespace Dasher
 			float bestTime = currentLevel.currentBest;
 			float parTime = currentLevel.parTime;
 
-			m_endTimerText.text = "Time :\n" + time.ToString(TimeManager.c_timeDisplayFormat);
-			m_endBestTimeText.text = "Best :\n" + bestTime.ToString(TimeManager.c_timeDisplayFormat);
-			m_endParTimeText.text = "Champ :\n" + parTime.ToString(TimeManager.c_timeDisplayFormat);
-			if (bestTime <= parTime)
-			{
-				m_endParTime.SetActive(false);
-			}
+			m_endLevelGUI.m_current.SetMainText("Time\n" + time.ToString(TimeManager.c_timeDisplayFormat));
+			m_endLevelGUI.m_best.SetMainText("Best\n" + bestTime.ToString(TimeManager.c_timeDisplayFormat));
+			m_endLevelGUI.m_champ.SetMainText("Champ\n" + parTime.ToString(TimeManager.c_timeDisplayFormat));
+			
 
 
 		}
