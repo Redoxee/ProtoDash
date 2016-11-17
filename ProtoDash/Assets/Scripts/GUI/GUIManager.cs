@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+using System;
+using System.Collections.Generic;
+
 namespace Dasher
 {
 	public class GUIManager : MonoBehaviour
@@ -99,6 +102,12 @@ namespace Dasher
 			}
 		}
 
+		public void ManualUpdate()
+		{
+			if (m_isEndLevel)
+				Update_EndLevel();
+		}
+
 		public void PauseGame()
 		{
 			m_gameProcess.RequirePause();
@@ -137,6 +146,13 @@ namespace Dasher
 			m_perf.StartRecord();
 		}
 
+		bool m_isEndLevel = false;
+		
+		Dictionary<float, Action> m_endLevelEvents = null;
+		List<float> m_endEventsKeys = null;
+		int m_nextEventToShoot = 0;
+		float m_endEventTimer = 0f;
+
 		public void NotifyEndLevelReached(bool isNewBestTime, bool isNewparTime,float oldBestTime)
 		{
 			m_perf.StopRecord();
@@ -147,16 +163,76 @@ namespace Dasher
 
 			LevelData currentLevel = MainProcess.Instance.levelFlow.GetLevelData(GameProcess.CurrentLevelName);
 
-			float time = m_gameProcess.GameTime.CurrentLevelTime;
-			float bestTime = currentLevel.currentBest;
-			float parTime = currentLevel.parTime;
+			m_currentTime = m_gameProcess.GameTime.CurrentLevelTime;
+			m_bestTime = currentLevel.currentBest;
+			m_champTime = currentLevel.parTime;
 
-			m_endLevelGUI.m_current.SetMainText("Time\n" + time.ToString(TimeManager.c_timeDisplayFormat));
-			m_endLevelGUI.m_best.SetMainText("Best\n" + bestTime.ToString(TimeManager.c_timeDisplayFormat));
-			m_endLevelGUI.m_champ.SetMainText("Champ\n" + parTime.ToString(TimeManager.c_timeDisplayFormat));
-			
+			m_endLevelGUI.m_current.SetMainText("Time\n");
+			m_endLevelGUI.m_best.SetMainText("Best\n");
+			m_endLevelGUI.m_champ.SetMainText("Champ\n");
+
+			SetEndLevelEvents();
+			m_isEndLevel = true;
+		}
+
+		float m_currentTime, m_bestTime, m_champTime;
 
 
+		void SetEndLevelEvents()
+		{
+			m_endLevelEvents = new Dictionary<float, Action>();
+			m_endLevelEvents[.5f] = () => {
+				m_endLevelGUI.m_current.FlashInText("Time\n" + m_currentTime.ToString(TimeManager.c_timeDisplayFormat));
+			};
+			m_endLevelEvents[.75f] = () => {
+				m_endLevelGUI.m_best.FlashInText("Best\n" + m_bestTime.ToString(TimeManager.c_timeDisplayFormat));
+			};
+			m_endLevelEvents[1.0f] = () => {
+				m_endLevelGUI.m_champ.FlashInText("Champ\n" + m_champTime.ToString(TimeManager.c_timeDisplayFormat));
+			};
+
+			m_endEventsKeys =  new List<float>(m_endLevelEvents.Count);
+			var keys = m_endLevelEvents.Keys.GetEnumerator();
+			while(keys.MoveNext())
+			{
+				m_endEventsKeys.Add(keys.Current);
+			}
+			m_endEventsKeys.Sort();
+			m_nextEventToShoot = 0;
+			m_endEventTimer = 0f;
+		}
+
+		void Update_EndLevel()
+		{
+			m_endLevelGUI.m_current.ManualUpdate();
+			m_endLevelGUI.m_best.ManualUpdate();
+			m_endLevelGUI.m_champ.ManualUpdate();
+
+			if (m_nextEventToShoot < m_endEventsKeys.Count)
+			{ 
+				var prevTime = m_endEventTimer;
+				m_endEventTimer += Time.deltaTime;
+				while (shootNextEventIfNeeded(prevTime, m_endEventTimer))
+				{
+					if (m_nextEventToShoot >= m_endEventsKeys.Count)
+					{
+						break;
+					}
+				}
+			}
+
+		}
+
+		bool shootNextEventIfNeeded(float prev,float current)
+		{
+			var eventTime = m_endEventsKeys[m_nextEventToShoot];
+			if (eventTime > prev && eventTime < current)
+			{
+				m_endLevelEvents[eventTime]();
+				m_nextEventToShoot++;
+				return true;
+			}
+			return false;
 		}
 
 		public void NotifyIntermediateState()

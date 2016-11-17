@@ -87,6 +87,11 @@ namespace Dasher
 		{
 			UpdateState();
 			m_CameraS.ManualUpdate();
+
+			if (m_GUIManager != null)
+			{
+				m_GUIManager.ManualUpdate();
+			}
 		}
 
 		void FixedUpdate()
