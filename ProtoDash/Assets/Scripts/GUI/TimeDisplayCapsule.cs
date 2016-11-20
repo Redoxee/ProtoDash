@@ -26,6 +26,7 @@ namespace Dasher
 		GameObject m_flashPanel = null;
 		Image m_flashImage = null;
 		Color m_flashImageColor = Color.white;
+		Transform m_flashTransform = null;
 
 		[Header("Flash")]
 		[SerializeField]
@@ -38,6 +39,11 @@ namespace Dasher
 
 		[SerializeField]
 		AnimationCurve m_flashCurve = null;
+
+		[SerializeField]
+		AnimationCurve m_flashSplosion = null;
+		[SerializeField]
+		float m_flashSplosionFactor = 2f;
 
 		Action m_impactAction = null;
 
@@ -91,20 +97,15 @@ namespace Dasher
 			m_flashImage.color = m_flashImageColor;
 
 			m_impactAction = impactAction;
-		}
-
-		public void FlashInText(string message)
-		{
-			StartFlash(() =>
-			{
-				SetMainText(message);
-			});
+			m_flashTransform.localScale = Vector3.one;
 		}
 
 		public void EndFlash()
 		{
 			m_flashImage.enabled = false;
 			m_flashTimer = m_flashDuration + 1f;
+
+			m_flashTransform.localScale = Vector3.one;
 		}
 		#endregion
 
@@ -137,6 +138,7 @@ namespace Dasher
 			m_additionalTextText = m_additionalText.GetComponent<Text>();
 			m_flashImage = m_flashPanel.GetComponent<Image>();
 			m_flashImageColor = m_flashImage.color;
+			m_flashTransform = m_flashPanel.transform;
 
 			m_slideEndOffset = m_backPanel.transform.localPosition.y;
 
@@ -156,8 +158,11 @@ namespace Dasher
 				var wasUnder = (m_flashTimer / m_flashDuration < m_hitTime);
 				m_flashTimer += dt;
 				var isUpper = (m_flashTimer / m_flashDuration >= m_hitTime);
-				m_flashImageColor.a = m_flashCurve.Evaluate(m_flashTimer / m_flashDuration);
+				float progression = m_flashTimer / m_flashDuration;
+				m_flashImageColor.a = m_flashCurve.Evaluate(progression);
 				m_flashImage.color = m_flashImageColor;
+
+				m_flashTransform.localScale = Vector3.one * (1f + m_flashSplosion.Evaluate(progression) * m_flashSplosionFactor);
 
 				if (wasUnder && isUpper && m_impactAction != null)
 				{

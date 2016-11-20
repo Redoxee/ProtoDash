@@ -3,9 +3,10 @@ using System.Collections;
 
 namespace Dasher
 {
-	public class TimeManager 
+	public class TimeManager
 	{
 		public const string c_timeDisplayFormat = "000.00";
+		public const string c_diffDisplayFormat = "+000.00;-#000.00";
 
 		private float m_gameTimeFactor = 1f;
 		public float GameTimeFactor {get {return m_gameTimeFactor;} set { m_gameTimeFactor = value; } }

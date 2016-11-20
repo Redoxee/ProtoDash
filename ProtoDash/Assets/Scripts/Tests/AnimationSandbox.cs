@@ -17,9 +17,7 @@ public class AnimationSandbox : MonoBehaviour {
 
 	public void StartFlash()
 	{
-		string randomMessage = "Time\n" + Random.Range(0, 99).ToString(TimeManager.c_timeDisplayFormat);
-
-		m_timeCapsule.FlashInText(randomMessage);
+		m_timeCapsule.StartFlash();
 	}
 
 	public void StartSlide()

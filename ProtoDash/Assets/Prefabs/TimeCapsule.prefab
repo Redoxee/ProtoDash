@@ -251,29 +251,51 @@ MonoBehaviour:
   m_frontPanel: {fileID: 1000013886413088}
   m_backPanel: {fileID: 1000013353990190}
   m_flashPanel: {fileID: 1000010503876490}
-  m_flashDuration: 1
+  m_flashDuration: 1.15
   m_hitTime: 0.238
   m_flashCurve:
     serializedVersion: 2
     m_Curve:
     - time: 0
       value: 0
-      inSlope: 14.828513
-      outSlope: 14.828513
+      inSlope: 3.0529294
+      outSlope: 3.0529294
       tangentMode: 0
-    - time: 0.099999994
+    - time: 0.39999998
       value: 1.3
       inSlope: 0
       outSlope: 0
       tangentMode: 0
     - time: 1
       value: 0
-      inSlope: -1.60092
-      outSlope: -1.60092
+      inSlope: -0.028905494
+      outSlope: -0.028905494
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+  m_flashSplosion:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 0.39999998
+      value: 0
+      inSlope: 0
+      outSlope: 4.260774
+      tangentMode: 1
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  m_flashSplosionFactor: 0.3
   m_slideAnimationDuration: 0.5
   m_slideAnimationCurve:
     serializedVersion: 2
@@ -398,16 +420,16 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: c1090e0bd20c3c2478c8e50f13c79c99, type: 3}
     m_FontSize: 50
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 4
     m_MaxSize: 50
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 1
+    m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: +00.000
+  m_Text: you're a champ
 --- !u!222 &222000010208323358
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -483,7 +505,7 @@ RectTransform:
   m_Children:
   - {fileID: 224000012277621334}
   m_Father: {fileID: 224000012119098520}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -505,7 +527,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -10}
-  m_SizeDelta: {x: 0, y: 50}
+  m_SizeDelta: {x: -10, y: 43}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &224000011644489572
 RectTransform:
@@ -524,7 +546,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 70}
-  m_SizeDelta: {x: 225, y: 225}
+  m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000011729338880
 RectTransform:
@@ -532,13 +554,13 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010503876490}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 224000012119098520}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -555,14 +577,14 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 224000010396192430}
   - {fileID: 224000011729338880}
+  - {fileID: 224000010396192430}
   m_Father: {fileID: 224000010131768064}
   m_RootOrder: 1
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 225, y: 225}
+  m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000012277621334
 RectTransform:

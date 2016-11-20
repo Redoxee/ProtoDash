@@ -160,11 +160,11 @@ namespace Dasher
 			m_character.Unpause();
 			m_timeManager.GameTimeFactor = 1f;
 		}
-
+		
 		private bool m_isNewbest = false;
 		private bool m_isNewPar = false;
 		private float m_oldBestTime = 0f;
-		//private bool m_isFirstCompletion = false;
+		private bool m_isFirstCompletion = false;
 
 		public void NotifyEndLevelReached(GameObject endNode)
 		{
@@ -179,14 +179,14 @@ namespace Dasher
 
 				if(!saveManager.HasLevelBeenFinished(CurrentLevelName))
 				{
-					//m_isFirstCompletion = true;
+					m_isFirstCompletion = true;
 					mp.AnalyticsManager.NotifyNewLevelBeaten(CurrentLevelName, saveManager.GetLevelTryCount(CurrentLevelName), currentTime);
 				}
 				m_oldBestTime = saveManager.GetLevelTime(CurrentLevelName);
 				if (currentTime < m_oldBestTime)
 				{
 					m_isNewbest = true;
-					if (currentTime < currentLevelData.parTime)
+					if (currentTime <= currentLevelData.parTime && m_oldBestTime > currentLevelData.parTime)
 						m_isNewPar = true;
 					currentLevelData.currentBest = currentTime;
 					saveManager.SetLevelTime(CurrentLevelName, m_timeManager.CurrentLevelTime);
@@ -530,7 +530,7 @@ namespace Dasher
 		{
 			if (m_GUIManager)
 			{
-				m_GUIManager.NotifyEndLevelReached(m_isNewbest,m_isNewPar,m_oldBestTime);
+				m_GUIManager.NotifyEndLevelReached(m_isFirstCompletion, m_isNewbest, m_isNewPar, m_oldBestTime);
 			}
 			else
 			{

@@ -153,7 +153,7 @@ namespace Dasher
 		int m_nextEventToShoot = 0;
 		float m_endEventTimer = 0f;
 
-		public void NotifyEndLevelReached(bool isNewBestTime, bool isNewparTime,float oldBestTime)
+		public void NotifyEndLevelReached(bool isFirstTime, bool isNewBestTime, bool isNewparTime,float oldBestTime)
 		{
 			m_perf.StopRecord();
 			m_debugFPS.text = m_perf.GetMeanFPS().ToString();
@@ -167,29 +167,105 @@ namespace Dasher
 			m_bestTime = currentLevel.currentBest;
 			m_champTime = currentLevel.parTime;
 
-			m_endLevelGUI.m_current.SetMainText("Time\n");
-			m_endLevelGUI.m_best.SetMainText("Best\n");
-			m_endLevelGUI.m_champ.SetMainText("Champ\n");
+			m_endLevelGUI.m_current.SetMainText("Time\n" + m_currentTime.ToString(TimeManager.c_timeDisplayFormat));
+			m_endLevelGUI.m_best.SetMainText("Best\n" + oldBestTime.ToString(TimeManager.c_timeDisplayFormat));
+			m_endLevelGUI.m_champ.SetMainText("Champ\n" + m_champTime.ToString(TimeManager.c_timeDisplayFormat));
 
-			SetEndLevelEvents();
+			var bestTimeDifference = m_currentTime - oldBestTime ;
+			var isChampTime = m_currentTime <= currentLevel.parTime;
+
+			if (!isFirstTime)
+			{
+				m_endLevelGUI.m_best.SetAdditionalText(bestTimeDifference.ToString(TimeManager.c_diffDisplayFormat));
+			}
+			else
+			{
+				m_endLevelGUI.m_best.SetAdditionalText("First time");
+				m_endLevelGUI.m_best.SetMainText("Finished!");
+			}
+
+			if (isNewBestTime)
+			{
+				m_endLevelGUI.m_current.SetAdditionalText("New Best!");
+				m_endLevelGUI.m_current.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Good);
+				m_endLevelGUI.m_best.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Good);
+			}
+			else if(bestTimeDifference > 0)
+			{
+				m_endLevelGUI.m_current.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Neutral);
+				m_endLevelGUI.m_best.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Bad);
+			}
+			else
+			{
+				m_endLevelGUI.m_current.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Neutral);
+				m_endLevelGUI.m_best.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Neutral);
+			}
+
+			m_endLevelGUI.m_champ.SetAdditionalText("You're a Champ!");
+			if (isChampTime)
+			{
+				m_endLevelGUI.m_champ.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Good);
+			}
+			else
+			{
+				m_endLevelGUI.m_champ.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Neutral);
+			}
+
+			var displayChampTime = isChampTime || (oldBestTime < currentLevel.parTime);
+
+			SetEndLevelEvents(isFirstTime,isNewBestTime, displayChampTime);
 			m_isEndLevel = true;
 		}
 
 		float m_currentTime, m_bestTime, m_champTime;
 
 
-		void SetEndLevelEvents()
+		void SetEndLevelEvents(bool isFirstTime, bool isNewBestTime, bool displayChampTime)
 		{
+
+			var ts = .05f;
+			var timeGap = .25f;
+
 			m_endLevelEvents = new Dictionary<float, Action>();
-			m_endLevelEvents[.5f] = () => {
-				m_endLevelGUI.m_current.FlashInText("Time\n" + m_currentTime.ToString(TimeManager.c_timeDisplayFormat));
+			m_endLevelEvents[ts] = () => {
+				m_endLevelGUI.m_current.StartFlash();
 			};
-			m_endLevelEvents[.75f] = () => {
-				m_endLevelGUI.m_best.FlashInText("Best\n" + m_bestTime.ToString(TimeManager.c_timeDisplayFormat));
+			ts += timeGap;
+
+			m_endLevelEvents[ts] = () => {
+				m_endLevelGUI.m_best.StartFlash();
 			};
-			m_endLevelEvents[1.0f] = () => {
-				m_endLevelGUI.m_champ.FlashInText("Champ\n" + m_champTime.ToString(TimeManager.c_timeDisplayFormat));
+			ts += timeGap;
+
+			m_endLevelEvents[ts] = () => {
+				m_endLevelGUI.m_champ.StartFlash();
 			};
+			ts += timeGap * 2f;
+			if (isNewBestTime)
+			{
+				m_endLevelEvents[ts] = () => {
+					m_endLevelGUI.m_current.StartSlide();
+				};
+				ts += timeGap;
+			}
+
+			//if (!isFirstTime)
+			//{
+			m_endLevelEvents[ts] = () =>
+			{
+				m_endLevelGUI.m_best.StartSlide();
+			};
+			ts += timeGap;
+			//}
+
+			if (displayChampTime)
+			{
+				m_endLevelEvents[ts] = () =>
+				{
+					m_endLevelGUI.m_champ.StartSlide();
+				};
+				ts += timeGap;
+			}
 
 			m_endEventsKeys =  new List<float>(m_endLevelEvents.Count);
 			var keys = m_endLevelEvents.Keys.GetEnumerator();

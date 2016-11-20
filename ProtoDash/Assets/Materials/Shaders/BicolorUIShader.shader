@@ -68,9 +68,9 @@ Shader "Custom/BicolorUIShader" {
 
 			fixed4 frag(v2f i) : COLOR
 			{
-				float time = _Time.x * 15.;
+				float time = _Time.x * 60.;
 				float x = sin(
-					(i.worldPos.x - i.worldPos.y / 2.) * PI  *.01
+					(i.worldPos.x - i.worldPos.y / 2.) * PI * 2.5
 					+ time);
 				x = _Smooth(x, 0, .025);// *sin(time * .5);
 				float a = tex2D(_MainTex, i.texcoord).a;
