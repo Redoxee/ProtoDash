@@ -40,4 +40,13 @@ public class AnimationSandbox : MonoBehaviour {
 		m_timeCapsule.SetBackBorderState((TimeDisplayCapsule.CapsuleSuccessState)st);
 	}
 
+	public void StartSplash()
+	{
+		m_timeCapsule.StartSplash();
+	}
+
+	public void StopSplash()
+	{
+		m_timeCapsule.StopSplash();
+	}
 }

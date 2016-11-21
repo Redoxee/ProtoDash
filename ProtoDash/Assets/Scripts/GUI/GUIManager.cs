@@ -180,25 +180,34 @@ namespace Dasher
 			}
 			else
 			{
-				m_endLevelGUI.m_best.SetAdditionalText("First time");
-				m_endLevelGUI.m_best.SetMainText("Finished!");
-			}
+				m_endLevelGUI.m_best.SetAdditionalText("New Best");
+				m_endLevelGUI.m_best.SetMainText(m_currentTime.ToString(TimeManager.c_timeDisplayFormat));
 
-			if (isNewBestTime)
-			{
-				m_endLevelGUI.m_current.SetAdditionalText("New Best!");
+				m_endLevelGUI.m_current.SetAdditionalText("First time!");
+				m_endLevelGUI.m_current.SetMainText("Finished!");
+
 				m_endLevelGUI.m_current.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Good);
 				m_endLevelGUI.m_best.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Good);
 			}
-			else if(bestTimeDifference > 0)
+
+			if (!isFirstTime)
 			{
-				m_endLevelGUI.m_current.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Neutral);
-				m_endLevelGUI.m_best.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Bad);
-			}
-			else
-			{
-				m_endLevelGUI.m_current.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Neutral);
-				m_endLevelGUI.m_best.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Neutral);
+				if (isNewBestTime)
+				{
+					m_endLevelGUI.m_current.SetAdditionalText("New Best!");
+					m_endLevelGUI.m_current.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Good);
+					m_endLevelGUI.m_best.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Good);
+				}
+				else if (bestTimeDifference > 0)
+				{
+					m_endLevelGUI.m_current.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Neutral);
+					m_endLevelGUI.m_best.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Bad);
+				}
+				else
+				{
+					m_endLevelGUI.m_current.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Neutral);
+					m_endLevelGUI.m_best.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Neutral);
+				}
 			}
 
 			m_endLevelGUI.m_champ.SetAdditionalText("You're a Champ!");
@@ -225,6 +234,7 @@ namespace Dasher
 
 			var ts = .05f;
 			var timeGap = .25f;
+			var sg = .03f;
 
 			m_endLevelEvents = new Dictionary<float, Action>();
 			m_endLevelEvents[ts] = () => {
@@ -243,23 +253,43 @@ namespace Dasher
 			ts += timeGap * 2f;
 			if (isNewBestTime)
 			{
+				m_endLevelEvents[ts - sg] = () =>
+				{
+					if (m_endLevelGUI.m_current.CurrentState == TimeDisplayCapsule.CapsuleSuccessState.Good)
+					{
+						m_endLevelGUI.m_current.StartSplash();
+					}
+				};
+
 				m_endLevelEvents[ts] = () => {
 					m_endLevelGUI.m_current.StartSlide();
 				};
 				ts += timeGap;
 			}
+			
+			m_endLevelEvents[ts - sg] = () =>
+			{
+				if (m_endLevelGUI.m_best.CurrentState == TimeDisplayCapsule.CapsuleSuccessState.Good)
+				{
+					m_endLevelGUI.m_best.StartSplash();
+				}
+			};
 
-			//if (!isFirstTime)
-			//{
 			m_endLevelEvents[ts] = () =>
 			{
 				m_endLevelGUI.m_best.StartSlide();
 			};
 			ts += timeGap;
-			//}
 
 			if (displayChampTime)
 			{
+				m_endLevelEvents[ts - sg] = () =>
+				{
+					if (m_endLevelGUI.m_champ.CurrentState == TimeDisplayCapsule.CapsuleSuccessState.Good)
+					{
+						m_endLevelGUI.m_champ.StartSplash();
+					}
+				};
 				m_endLevelEvents[ts] = () =>
 				{
 					m_endLevelGUI.m_champ.StartSlide();

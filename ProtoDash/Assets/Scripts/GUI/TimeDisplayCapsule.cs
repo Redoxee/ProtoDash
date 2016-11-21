@@ -27,6 +27,8 @@ namespace Dasher
 		Image m_flashImage = null;
 		Color m_flashImageColor = Color.white;
 		Transform m_flashTransform = null;
+		[SerializeField]
+		ParticleSystem m_splashParticles = null;
 
 		[Header("Flash")]
 		[SerializeField]
@@ -148,6 +150,8 @@ namespace Dasher
 
 			m_frontBorderImage = m_frontPanel.GetComponent<Image>();
 			m_backBorderImage = m_backPanel.GetComponent<Image>();
+
+			StopSplash();
 		}
 
 		public void ManualUpdate()
@@ -192,6 +196,20 @@ namespace Dasher
 			}
 		}
 
+		#region Particles
+
+		public void StopSplash()
+		{
+			m_splashParticles.gameObject.SetActive(false);
+		}
+
+		public void StartSplash()
+		{
+			m_splashParticles.gameObject.SetActive(true);
+		}
+
+		#endregion
+
 		#region SuccessState
 
 		public enum CapsuleSuccessState {
@@ -200,8 +218,11 @@ namespace Dasher
 			Good
 		}
 
+		CapsuleSuccessState m_currentSuccessState = CapsuleSuccessState.Neutral;
+
 		void SetBorderMaterial(Image target, CapsuleSuccessState state = CapsuleSuccessState.Neutral)
 		{
+			m_currentSuccessState = state;
 			Material appliedMaterial = null;
 			switch (state)
 			{
@@ -217,6 +238,8 @@ namespace Dasher
 			}
 			target.material = appliedMaterial;
 		}
+
+		public CapsuleSuccessState CurrentState { get { return m_currentSuccessState; } }
 
 		public void SetFrontBorderState(CapsuleSuccessState state)
 		{
