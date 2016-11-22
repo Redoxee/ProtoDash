@@ -88,8 +88,8 @@ namespace Dasher
 			mp.RegisterMainMenu(this);
 
 			Material lightButtonMaterial = mp.m_colorScheme.LightButtond_Material;
-
-			var structuredLevels = mp.levelFlow.GetStructuredProgression();
+			var levelFlow = mp.levelFlow;
+			var structuredLevels = levelFlow.GetStructuredProgression();
 			var worldEnumerator = structuredLevels.GetEnumerator();
 
 			while (worldEnumerator.MoveNext())
@@ -124,6 +124,15 @@ namespace Dasher
 			ScrollRect scrollRect = m_worldsParent.GetComponentInParent<ScrollRect>();
 			scrollRect.verticalNormalizedPosition = 0;
 
+			string currentLevel = mp.DataManager.LastLevelPlayed;
+			if (currentLevel == null)
+			{
+				currentLevel = levelFlow.LevelList[0].sceneName;
+			}
+
+			var cl = levelFlow.GetWorldAndRankPosition(currentLevel);
+			QuickStartLevelDisplay.text = string.Format(c_levelLabelPattern, cl.Key, cl.Value);
+
 			m_isinitialized = true;
 		}
 
@@ -153,6 +162,8 @@ namespace Dasher
 		}
 
 		#region Intro
+		[SerializeField]
+		private Text QuickStartLevelDisplay = null;
 
 		public void OnQuickStartPressed()
 		{
@@ -236,7 +247,7 @@ namespace Dasher
 
 			m_levelInfo.ParTime.text = string.Format(c_parTimePattern, lvl.parTime.ToString(TimeManager.c_timeDisplayFormat));
 
-			m_levelInfo.BestTime.text = string.Format(c_bestTimePattern, lvl.currentBest.ToString(TimeManager.c_timeDisplayFormat));
+			m_levelInfo.BestTime.text = string.Format(c_bestTimePattern, (Mathf.Max(lvl.currentBest,0f)).ToString(TimeManager.c_timeDisplayFormat));
 
 		}
 

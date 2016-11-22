@@ -112,5 +112,24 @@ namespace Dasher
 		{
 			return m_levelList.FindIndex((LevelData data) => { return data.sceneName == levelName; });
 		}
+
+		public KeyValuePair<int,int> GetWorldAndRankPosition(string levelName)
+		{
+			var wc = m_structuredLevelFlow.Count;
+			for (int i = 0; i < wc; ++i)
+			{
+				var world = i + 1;
+				int lc = m_structuredLevelFlow[world].Count;
+				for (int level = 0; level < lc; ++level)
+				{
+					var lvl = m_structuredLevelFlow[world][level];
+					if (lvl.sceneName == levelName)
+					{
+						return new KeyValuePair<int, int>(world, level + 1);
+					}
+				}
+			}
+			return new KeyValuePair<int, int>(-1,-1);
+		}
 	}
 }
