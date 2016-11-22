@@ -154,6 +154,19 @@ namespace Dasher
 
 		#region Intro
 
+		public void OnQuickStartPressed()
+		{
+			MainProcess mp = MainProcess.Instance;
+			SaveManager save = mp.DataManager;
+			string levelToStart = save.LastLevelPlayed;
+			int levelIndex = 0;
+			if (levelToStart != null)
+			{
+				levelIndex = mp.levelFlow.GetLevelIndex(levelToStart);
+			}
+			StartLevel(levelIndex);
+		}
+
 		FSM_State m_introState;
 		private void Intro_levelPressed()
 		{

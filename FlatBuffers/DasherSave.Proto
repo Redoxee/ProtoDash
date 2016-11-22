@@ -13,12 +13,13 @@ table FlatSettings {
 }
 
 table FlatGameSave {
-	Version:string;
+	Version:int;
 	UserId:string;
 	levelResults:[FlatLevelSave];
 	TotalRuns:int=0;
 	TotalJumps:int=0;
 	TotalDashes:int=0;
+	LastPlayedLevel:string;
 	Settings:FlatSettings;
 } 
  

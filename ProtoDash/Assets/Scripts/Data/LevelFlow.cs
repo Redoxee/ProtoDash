@@ -107,5 +107,10 @@ namespace Dasher
 			LevelData lvl = m_levelList[levelIndex];
 			return lvl.currentBest > 0 && lvl.currentBest < lvl.parTime;
 		}
+
+		public int GetLevelIndex(string levelName)
+		{
+			return m_levelList.FindIndex((LevelData data) => { return data.sceneName == levelName; });
+		}
 	}
 }

@@ -7,7 +7,7 @@ using System;
 namespace Dasher
 {
 	public class SaveManager {
-		public const string c_SaveVersion = "0.00.006";
+		public const int c_SaveVersion = 7;
 		private DasherSavable m_savable;
 
 		#region Save mecanics
@@ -54,7 +54,7 @@ namespace Dasher
 				m_savable.m_TotalJumps = save.TotalJumps;
 				
 				m_savable.UserId = save.UserId;
-
+				m_savable.m_LastLevelPlayed = save.LastPlayedLevel;
 				if (save.Settings != null)
 				{
 					m_savable.m_settings.isLefthanded = save.Settings.LeftHandedMode;
@@ -96,20 +96,21 @@ namespace Dasher
 				var lvlOffset = FlatLevelSave.CreateFlatLevelSave(m_builder, idOffset,level.bestTime,level.nbTry);
 				offsetTable[i++] = lvlOffset;
 			}
-
-			var versionOffset = m_builder.CreateString(c_SaveVersion);
+			
 			var userIdOffset = m_builder.CreateString(m_savable.UserId);
+			var lastLevelPlayedOffset = m_builder.CreateString(m_savable.m_LastLevelPlayed);
 			var levelsOffset = FlatGameSave.CreateLevelResultsVector(m_builder, offsetTable);
 			var settingsOffset = FlatSettings.CreateFlatSettings(m_builder, m_savable.m_settings.isLefthanded);
+	
 			FlatGameSave.StartFlatGameSave(m_builder);
-			FlatGameSave.AddVersion(m_builder, versionOffset);
+			FlatGameSave.AddVersion(m_builder,c_SaveVersion);
 			FlatGameSave.AddUserId(m_builder, userIdOffset);
 			FlatGameSave.AddLevelResults(m_builder, levelsOffset);
 
 			FlatGameSave.AddTotalRuns(m_builder, m_savable.m_TotalRuns);
 			FlatGameSave.AddTotalJumps(m_builder, m_savable.m_TotalJumps);
 			FlatGameSave.AddTotalDashes(m_builder, m_savable.m_TotalDashes);
-
+			FlatGameSave.AddLastPlayedLevel(m_builder, lastLevelPlayedOffset);
 			FlatGameSave.AddSettings(m_builder, settingsOffset);
 
 			var gameOffset = FlatGameSave.EndFlatGameSave(m_builder);
@@ -242,6 +243,8 @@ namespace Dasher
 		public void NotifyLevelStarted(string levelId)
 		{
 			m_savable.m_TotalRuns += 1;
+			m_savable.m_LastLevelPlayed = levelId;
+
 
 			DasherSavable.LevelSavable lvl = null;
 			if (m_savable.m_levels.ContainsKey(levelId))
@@ -278,6 +281,7 @@ namespace Dasher
 			return m_savable.m_TotalDashes;
 		}
 
+		public string LastLevelPlayed { get { return m_savable.m_LastLevelPlayed; } }
 
 		public Dictionary<string, TraceRecording> m_traceDictionary = new Dictionary<string, TraceRecording>();
 		public TraceRecording GetTraceForLevel(string levelId)
@@ -323,6 +327,8 @@ namespace Dasher
 		public int m_TotalRuns = 0;
 		public int m_TotalJumps = 0;
 		public int m_TotalDashes = 0;
+
+		public string m_LastLevelPlayed = null;
 
 		public DasherSettings m_settings;
 
