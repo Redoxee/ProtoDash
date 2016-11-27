@@ -31,4 +31,11 @@ public class AnimatableUI : MonoBehaviour {
 			rTransform.anchoredPosition = Vector2.Lerp(relativPosition0, relativPosition1, animatablePosition);
 		}
 	}
+
+	public void SetAnimationPosition(float p)
+	{
+		rTransform.anchorMin = Vector2.Lerp(minAnchor0, minAnchor1, p);
+		rTransform.anchorMax = Vector2.Lerp(maxAnchor0, maxAnchor1, p);
+		rTransform.anchoredPosition = Vector2.Lerp(relativPosition0, relativPosition1, p);
+	}
 }

@@ -309,7 +309,35 @@ namespace Dasher
 			m_savable.m_settings.isLefthanded = isLeftHanded;
 		}
 
+		public void IncrementLestLevelPlayed()
+		{
+			var flow = MainProcess.Instance.levelFlow;
+			
+			var lastIndex = flow.GetLevelIndex(m_savable.m_LastLevelPlayed);
+			var newIndex = (lastIndex + 1) % flow.GetLevelCount();
+			m_savable.m_LastLevelPlayed = flow.LevelList[newIndex].sceneName;
+		}
+
 		public string UserId { get { return m_savable.UserId; } }
+
+		public bool DoesProgressionAllowLevel(int lvlIndex)
+		{
+			if (lvlIndex < 1)
+				return true;
+			LevelFlow flow = MainProcess.Instance.levelFlow;
+			var lvlData = flow.LevelList[lvlIndex];
+			if (flow.IsLevelFinished(lvlIndex))
+				return true;
+			else if (flow.IsLevelFinished(lvlIndex - 1))
+				return true;
+			return false;
+		}
+
+		public bool DoesProgressionAllowLevel(string levelName)
+		{
+			LevelFlow flow = MainProcess.Instance.levelFlow;
+			return DoesProgressionAllowLevel(flow.GetLevelIndex(levelName));
+		}
 
 		#endregion
 	}

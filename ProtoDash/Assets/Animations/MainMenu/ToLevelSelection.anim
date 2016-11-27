@@ -24,7 +24,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1
+      - time: 0.6666667
         value: 1
         inSlope: 0
         outSlope: 0
@@ -33,39 +33,19 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: animatablePosition
-    path: HomeCanvas/LeftIntro
-    classID: 114
-    script: {fileID: 11500000, guid: b20b7f488d29e0b46bd3ad9d63325bdb, type: 3}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: animatablePosition
-    path: HomeCanvas/MainTitle
+    path: HomeCanvas/HomeScreen
     classID: 114
     script: {fileID: 11500000, guid: 63ebca347c3cb4242a0ae1d3d94cdf86, type: 3}
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: 0
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1
-        value: 1
+      - time: 0.6666667
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -73,67 +53,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: animatablePosition
-    path: LevelButtonCanvas/LevelButtonContainer
-    classID: 114
-    script: {fileID: 11500000, guid: 63ebca347c3cb4242a0ae1d3d94cdf86, type: 3}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: animatablePosition
-    path: LevelSelectCanvas/LevelSelect
-    classID: 114
-    script: {fileID: 11500000, guid: 63ebca347c3cb4242a0ae1d3d94cdf86, type: 3}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: animatablePosition
-    path: HomeCanvas/QuickCredit
-    classID: 114
-    script: {fileID: 11500000, guid: 63ebca347c3cb4242a0ae1d3d94cdf86, type: 3}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: animatablePosition
-    path: HomeCanvas/StatsScreen
+    path: LevelSelectCanvas/LevelCanvas
     classID: 114
     script: {fileID: 11500000, guid: 63ebca347c3cb4242a0ae1d3d94cdf86, type: 3}
   m_PPtrCurves: []
@@ -144,37 +64,13 @@ AnimationClip:
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
     genericBindings:
-    - path: 303415588
-      attribute: 3503203550
-      script: {fileID: 11500000, guid: b20b7f488d29e0b46bd3ad9d63325bdb, type: 3}
-      classID: 114
-      customType: 0
-      isPPtrCurve: 0
-    - path: 3826399170
+    - path: 3626964197
       attribute: 3503203550
       script: {fileID: 11500000, guid: 63ebca347c3cb4242a0ae1d3d94cdf86, type: 3}
       classID: 114
       customType: 0
       isPPtrCurve: 0
-    - path: 3165621126
-      attribute: 3503203550
-      script: {fileID: 11500000, guid: 63ebca347c3cb4242a0ae1d3d94cdf86, type: 3}
-      classID: 114
-      customType: 0
-      isPPtrCurve: 0
-    - path: 536518441
-      attribute: 3503203550
-      script: {fileID: 11500000, guid: 63ebca347c3cb4242a0ae1d3d94cdf86, type: 3}
-      classID: 114
-      customType: 0
-      isPPtrCurve: 0
-    - path: 4190487132
-      attribute: 3503203550
-      script: {fileID: 11500000, guid: 63ebca347c3cb4242a0ae1d3d94cdf86, type: 3}
-      classID: 114
-      customType: 0
-      isPPtrCurve: 0
-    - path: 342972398
+    - path: 4053211633
       attribute: 3503203550
       script: {fileID: 11500000, guid: 63ebca347c3cb4242a0ae1d3d94cdf86, type: 3}
       classID: 114
@@ -186,7 +82,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1
+    m_StopTime: 0.6666667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -210,7 +106,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1
+      - time: 0.6666667
         value: 1
         inSlope: 0
         outSlope: 0
@@ -219,39 +115,19 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: animatablePosition
-    path: HomeCanvas/LeftIntro
-    classID: 114
-    script: {fileID: 11500000, guid: b20b7f488d29e0b46bd3ad9d63325bdb, type: 3}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: animatablePosition
-    path: HomeCanvas/MainTitle
+    path: HomeCanvas/HomeScreen
     classID: 114
     script: {fileID: 11500000, guid: 63ebca347c3cb4242a0ae1d3d94cdf86, type: 3}
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: 0
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1
-        value: 1
+      - time: 0.6666667
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -259,67 +135,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: animatablePosition
-    path: LevelButtonCanvas/LevelButtonContainer
-    classID: 114
-    script: {fileID: 11500000, guid: 63ebca347c3cb4242a0ae1d3d94cdf86, type: 3}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: animatablePosition
-    path: LevelSelectCanvas/LevelSelect
-    classID: 114
-    script: {fileID: 11500000, guid: 63ebca347c3cb4242a0ae1d3d94cdf86, type: 3}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: animatablePosition
-    path: HomeCanvas/QuickCredit
-    classID: 114
-    script: {fileID: 11500000, guid: 63ebca347c3cb4242a0ae1d3d94cdf86, type: 3}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: animatablePosition
-    path: HomeCanvas/StatsScreen
+    path: LevelSelectCanvas/LevelCanvas
     classID: 114
     script: {fileID: 11500000, guid: 63ebca347c3cb4242a0ae1d3d94cdf86, type: 3}
   m_EulerEditorCurves: []

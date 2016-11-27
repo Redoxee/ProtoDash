@@ -105,10 +105,11 @@
     <Compile Include="Assets\Scripts\Game\World\DeathZone.cs" />
     <Compile Include="Assets\Scripts\Game\World\EndNode.cs" />
     <Compile Include="Assets\Scripts\GameProcess.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\AnimatableAnimationController.cs" />
     <Compile Include="Assets\Scripts\MainMenu\AnimatableScreen.cs" />
     <Compile Include="Assets\Scripts\MainMenu\AnimatableUI.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\FromLevelInfoBehaviour.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\LevelInfoHolder.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\LevelDescriptionButton.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\LevelListButton.cs" />
     <Compile Include="Assets\Scripts\MainMenu\SettingsMenu.cs" />
     <Compile Include="Assets\Scripts\MainMenu\WorldHolder.cs" />
     <Compile Include="Assets\Scripts\MainMenuScript.cs" />

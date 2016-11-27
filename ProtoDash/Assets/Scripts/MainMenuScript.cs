@@ -8,7 +8,6 @@ namespace Dasher
 	{
 
 		private static int c_a_select = Animator.StringToHash("LevelSelect");
-		private static int c_a_info = Animator.StringToHash("LevelInfo");
 		private static int c_a_settings = Animator.StringToHash("SettingsMenu");
 		[SerializeField]
 		private Animator m_menuAnimator = null;
@@ -30,14 +29,12 @@ namespace Dasher
 		{
 			public D_FSMCallback m_beging;
 			public D_FSMCallback m_end;
-			public D_FSMCallback m_lvlButtonCallback;
 			public bool m_canGoSettings;
 
-			public FSM_State(D_FSMCallback begin = null, D_FSMCallback end = null, D_FSMCallback lvl = null, bool canGoSettings = false)
+			public FSM_State(D_FSMCallback begin = null, D_FSMCallback end = null, bool canGoSettings = false)
 			{
 				m_beging = begin;
 				m_end = end;
-				m_lvlButtonCallback = lvl;
 				m_canGoSettings = canGoSettings;
 			}
 		}
@@ -55,8 +52,7 @@ namespace Dasher
 
 		public void LevelButtonPressed()
 		{
-			if (m_currentState.m_lvlButtonCallback != null)
-				m_currentState.m_lvlButtonCallback();
+			Intro_levelPressed();
 		}
 
 		public void SettingsPressed()
@@ -74,7 +70,7 @@ namespace Dasher
 		[SerializeField]
 		private Transform m_worldsParent = null;
 		[SerializeField]
-		private GameObject m_worldPrefab;
+		private GameObject m_worldPrefab = null;
 
 		public const string c_levelLabelPattern = "{0}-{1}";
 
@@ -89,6 +85,7 @@ namespace Dasher
 
 			Material lightButtonMaterial = mp.m_colorScheme.LightButtond_Material;
 			var levelFlow = mp.levelFlow;
+			var dataManager = mp.DataManager;
 			var structuredLevels = levelFlow.GetStructuredProgression();
 			var worldEnumerator = structuredLevels.GetEnumerator();
 
@@ -114,12 +111,15 @@ namespace Dasher
 
 					Image buttonImage = btnObject.GetComponent<Image>();
 					buttonImage.material = lightButtonMaterial;
+
+					bool isUnlocked = dataManager.DoesProgressionAllowLevel(levels[levelIndex].sceneName);
+					if (isUnlocked)
+					{
+						var disableImage = btnObject.GetComponentInChildren<LevelListButton>();
+						disableImage.DisableImage.SetActive(false);
+					}
 				}
 			}
-
-			Button playButton = m_levelInfo.PlayButton.GetComponent<Button>();
-			playButton.onClick.RemoveAllListeners();
-			playButton.onClick.AddListener(() => { OnLevelPlayPressed(); });
 
 			ScrollRect scrollRect = m_worldsParent.GetComponentInParent<ScrollRect>();
 			scrollRect.verticalNormalizedPosition = 0;
@@ -133,6 +133,9 @@ namespace Dasher
 			var cl = levelFlow.GetWorldAndRankPosition(currentLevel);
 			QuickStartLevelDisplay.text = string.Format(c_levelLabelPattern, cl.Key, cl.Value);
 
+			m_lightLevelButton.Initialize();
+			OnLevelPressed(structuredLevels[1][0], string.Format(c_levelLabelPattern, 1, 1));
+
 			m_isinitialized = true;
 		}
 
@@ -142,6 +145,7 @@ namespace Dasher
 			{
 				InitializeWorlds();
 			}
+			m_lightLevelButton.ManualUpdate();
 		}
 
 		void OnDisable()
@@ -155,8 +159,8 @@ namespace Dasher
 		#region States
 		private void InitStates()
 		{
-			m_introState = new FSM_State(null, null, Intro_levelPressed,true);
-			m_levelSelectState = new FSM_State(null, null, LvlSelect_levelPressed);
+			m_introState = new FSM_State(null, null,true);
+			m_levelSelectState = new FSM_State(null, null);
 			m_setingsState = new FSM_State(BeginSettings, EndSettings);
 			SetState(m_introState);
 		}
@@ -193,65 +197,37 @@ namespace Dasher
 		#endregion
 		#region LevelSelect
 		FSM_State m_levelSelectState;
-		private void LvlSelect_levelPressed()
+
+		[SerializeField]
+		LevelDescriptionButton m_lightLevelButton = null;
+
+		private LevelData m_currentLevelDisplayed = null;
+
+		public void OnLevelPressed(LevelData lvl, string levelName = "0-0")
+		{
+			if (m_currentLevelDisplayed != lvl)
+			{
+				var dataManager = MainProcess.Instance.DataManager;
+				if (dataManager.DoesProgressionAllowLevel(lvl.sceneName))
+				{
+					m_currentLevelDisplayed = lvl;
+					string title = string.Format("PLAY : {0}", levelName);
+					var bestTime = (Mathf.Max(lvl.currentBest, 0f)).ToString(TimeManager.c_timeDisplayFormat);
+					var champTime = (Mathf.Max(lvl.parTime, 0f)).ToString(TimeManager.c_timeDisplayFormat);
+					string best = string.Format("best\n{0}", bestTime);
+					string champ = string.Format("champ\n{0}", champTime);
+					m_lightLevelButton.FlashInInfo(title, best, champ);
+				}
+			}
+		}
+
+		public void NotifyLevelBackPressed()
 		{
 			m_menuAnimator.SetBool(c_a_select, false);
 			SetState(m_introState);
 		}
-
-
-		[SerializeField]
-		LevelInfoHolder m_levelInfo = null;
 		
-		private LevelData m_currentLevelDisplayed = null;
-		private LevelData m_levelToDisplay = null;
-		private string m_levelNameToDisplay = null;
-		public void OnLevelPressed(LevelData lvl, string levelName = "0-0")
-		{
-			if (m_currentLevelDisplayed == null)
-			{
-				m_menuAnimator.SetBool(c_a_info, true);
-				SetUpLevelInfo(lvl, levelName);
-			}
-			else if (m_currentLevelDisplayed == lvl)
-			{
-				m_menuAnimator.SetBool(c_a_info, false);
-				m_currentLevelDisplayed = null;
-			}
-			else
-			{
-				m_menuAnimator.SetBool(c_a_info, false);
-				m_levelToDisplay = lvl;
-				m_levelNameToDisplay = levelName;
-			}
-		}
-
-		public void NotifyFromLevelInfoAnimationEnded()
-		{
-			if (m_levelToDisplay != null)
-			{
-				SetUpLevelInfo(m_levelToDisplay, m_levelNameToDisplay);
-				m_levelToDisplay = null;
-				m_menuAnimator.SetBool(c_a_info, true);
-			}
-		}
-
-		const string c_bestTimePattern = "Best : {0}";
-		const string c_parTimePattern = "Champ : {0}";
-
-		private void SetUpLevelInfo(LevelData lvl, string levelName)
-		{
-			m_currentLevelDisplayed = lvl;
-
-			m_levelInfo.LevelTitle.text = levelName;
-
-			m_levelInfo.ParTime.text = string.Format(c_parTimePattern, lvl.parTime.ToString(TimeManager.c_timeDisplayFormat));
-
-			m_levelInfo.BestTime.text = string.Format(c_bestTimePattern, (Mathf.Max(lvl.currentBest,0f)).ToString(TimeManager.c_timeDisplayFormat));
-
-		}
-
-		private void OnLevelPlayPressed()
+		public void OnLevelPlayPressed()
 		{
 			if (m_currentLevelDisplayed != null)
 			{
