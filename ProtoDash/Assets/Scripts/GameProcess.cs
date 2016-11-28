@@ -310,7 +310,7 @@ namespace Dasher
 		{
 			if (m_deathZoneCounter > 0)
 			{
-				if (m_deathFrameCounter > m_allowedDeathFrame)
+				if (m_deathFrameCounter > m_allowedDeathFrame && !m_character.IsDashing())
 				{
 					OnDeath();
 					return;

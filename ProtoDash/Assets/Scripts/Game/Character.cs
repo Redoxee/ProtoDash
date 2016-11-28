@@ -583,6 +583,11 @@ namespace Dasher
 
 			body.transform.localRotation = Quaternion.identity;
 		}
+
+		public bool IsDashing()
+		{
+			return currentState == Dash;
+		}
 		#endregion
 
 		#region EndGame
