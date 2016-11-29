@@ -152,6 +152,7 @@ namespace Dasher
 		List<float> m_endEventsKeys = null;
 		int m_nextEventToShoot = 0;
 		float m_endEventTimer = 0f;
+		float m_currentTime, m_champTime;
 
 		public void NotifyEndLevelReached(bool isFirstTime, bool isNewBestTime, bool isNewparTime,float oldBestTime)
 		{
@@ -164,7 +165,7 @@ namespace Dasher
 			LevelData currentLevel = MainProcess.Instance.levelFlow.GetLevelData(GameProcess.CurrentLevelName);
 
 			m_currentTime = m_gameProcess.GameTime.CurrentLevelTime;
-			m_bestTime = currentLevel.currentBest;
+
 			m_champTime = currentLevel.parTime;
 
 			m_endLevelGUI.m_current.SetMainText("Time\n" + m_currentTime.ToString(TimeManager.c_timeDisplayFormat));
@@ -225,9 +226,6 @@ namespace Dasher
 			SetEndLevelEvents(isFirstTime,isNewBestTime, displayChampTime);
 			m_isEndLevel = true;
 		}
-
-		float m_currentTime, m_bestTime, m_champTime;
-
 
 		void SetEndLevelEvents(bool isFirstTime, bool isNewBestTime, bool displayChampTime)
 		{

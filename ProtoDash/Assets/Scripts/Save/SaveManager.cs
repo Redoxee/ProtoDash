@@ -70,9 +70,18 @@ namespace Dasher
 			}
 		}
 
+		static string s_prefixId = null;
+		public static string PrefixId { set { s_prefixId = value; } }
+
 		public static string GenerateUserId()
 		{
 			string result = "Id";
+			if (s_prefixId != null && s_prefixId != "")
+			{
+				result = s_prefixId + "_";
+				s_prefixId = null;
+			}
+
 			result += DateTime.Now.Ticks.ToString("X");
 
 			result += ((long)(Time.realtimeSinceStartup * Time.deltaTime)).ToString("X") ;
@@ -325,7 +334,6 @@ namespace Dasher
 			if (lvlIndex < 1)
 				return true;
 			LevelFlow flow = MainProcess.Instance.levelFlow;
-			var lvlData = flow.LevelList[lvlIndex];
 			if (flow.IsLevelFinished(lvlIndex))
 				return true;
 			else if (flow.IsLevelFinished(lvlIndex - 1))

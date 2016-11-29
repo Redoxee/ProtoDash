@@ -110,6 +110,7 @@
     <Compile Include="Assets\Scripts\MainMenu\AnimatableUI.cs" />
     <Compile Include="Assets\Scripts\MainMenu\LevelDescriptionButton.cs" />
     <Compile Include="Assets\Scripts\MainMenu\LevelListButton.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\ResetSavePopup.cs" />
     <Compile Include="Assets\Scripts\MainMenu\SettingsMenu.cs" />
     <Compile Include="Assets\Scripts\MainMenu\WorldHolder.cs" />
     <Compile Include="Assets\Scripts\MainMenuScript.cs" />

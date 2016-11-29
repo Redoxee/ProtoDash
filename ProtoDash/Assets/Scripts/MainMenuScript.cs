@@ -112,7 +112,11 @@ namespace Dasher
 					Image buttonImage = btnObject.GetComponent<Image>();
 					buttonImage.material = lightButtonMaterial;
 
-					bool isUnlocked = dataManager.DoesProgressionAllowLevel(levels[levelIndex].sceneName);
+					bool isUnlocked = true;
+					if (dataManager != null)
+					{
+						isUnlocked = dataManager.DoesProgressionAllowLevel(levels[levelIndex].sceneName);
+					}
 					if (isUnlocked)
 					{
 						var disableImage = btnObject.GetComponentInChildren<LevelListButton>();
