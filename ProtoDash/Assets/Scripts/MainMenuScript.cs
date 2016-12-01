@@ -209,7 +209,7 @@ namespace Dasher
 
 		public void OnLevelPressed(LevelData lvl, string levelName = "0-0")
 		{
-			if (m_currentLevelDisplayed != lvl)
+			//if (m_currentLevelDisplayed != lvl)
 			{
 				var dataManager = MainProcess.Instance.DataManager;
 				if (dataManager.DoesProgressionAllowLevel(lvl.sceneName))

@@ -17,6 +17,8 @@ namespace Dasher
 		[SerializeField]
 		Image m_flashImage = null;
 		Color m_flashColor = Color.white;
+		[SerializeField]
+		AnimationFlashing m_playButtonFlash = null;
 
 		[Header("Parameters")]
 		[SerializeField]
@@ -51,6 +53,8 @@ namespace Dasher
 			{
 				SetTexts(title, leftMessage, rightMessage);
 			}
+
+			m_playButtonFlash.StartAnimation();
 		}
 
 		public void SetTexts(string title, string leftMessage, string rightMessage)
