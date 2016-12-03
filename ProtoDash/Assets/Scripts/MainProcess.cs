@@ -5,11 +5,12 @@ using UnityEngine.SceneManagement;
 namespace Dasher
 {
 	public enum GameStates {
-		Error = 0,
-		Intro = 1,
-		MainMenu = 2,
-		InGame = 3,
-		Stats = 4,
+		Error,
+		Intro,
+		MainMenu,
+		InGame,
+		Stats,
+		Credits,
 	}
 
 	public class MainProcess : MonoBehaviour
@@ -89,6 +90,7 @@ namespace Dasher
 		const string c_mainMenuScene = "MainMenu";
 		const string c_gameSetupScene = "GameSetupScene";
 		const string c_statsScreen = "StatsScreen";
+		const string c_creditsScreen = "Credits";
 		string m_currenLevelScene = null;
 		int m_currentLevelIndex = -1;
 
@@ -111,6 +113,11 @@ namespace Dasher
 			if (m_gameState == GameStates.Stats)
 			{
 				SceneManager.UnloadScene(c_statsScreen);
+			}
+
+			if (m_gameState == GameStates.Credits)
+			{
+				SceneManager.UnloadScene(c_creditsScreen);
 			}
 		}
 
@@ -193,6 +200,17 @@ namespace Dasher
 			SceneManager.LoadScene(c_statsScreen, LoadSceneMode.Additive);
 		}
 
+		#endregion
+
+		#region Credits Screen
+
+		public void SwitchToCreditsScreen()
+		{
+			UnloadCurrentAdditionalScene();
+			SetState(GameStates.Credits);
+			SceneManager.LoadScene(c_creditsScreen, LoadSceneMode.Additive);
+		}
+		
 		#endregion
 
 		#region States
@@ -302,6 +320,16 @@ namespace Dasher
 			m_transitionCamera.gameObject.SetActive(true);
 			RequestTransition(() => {
 				SwitchToStatsScreen();
+				m_transitionAnimator.SetBool(c_transitionBool, false);
+				m_transitionCamera.gameObject.SetActive(false);
+			});
+		}
+
+		public void RequestSwitchToCredits()
+		{
+			m_transitionCamera.gameObject.SetActive(true);
+			RequestTransition(() => {
+				SwitchToCreditsScreen();
 				m_transitionAnimator.SetBool(c_transitionBool, false);
 				m_transitionCamera.gameObject.SetActive(false);
 			});

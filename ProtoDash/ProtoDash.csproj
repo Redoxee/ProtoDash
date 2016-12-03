@@ -75,6 +75,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\BackMenu.cs" />
     <Compile Include="Assets\Scripts\CameraColorSchemGraber.cs" />
     <Compile Include="Assets\Scripts\DasherAnalyticsManager.cs" />
     <Compile Include="Assets\Scripts\Data\BuildData.cs" />

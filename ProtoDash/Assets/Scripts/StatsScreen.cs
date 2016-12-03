@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 namespace Dasher
@@ -27,8 +27,11 @@ namespace Dasher
 
 		private int m_nbStats = 0;
 
+		private List<GameObject> m_allEntries = new List<GameObject>();
+
 		private void Setup()
 		{
+			m_allEntries.Clear();
 			m_nbStats = 0;
 			int levelCount = m_levelFlow.GetLevelCount();
 			int levelFinished = 0, levelChamp = 0;
@@ -106,6 +109,8 @@ namespace Dasher
 			item.transform.SetParent(m_container.transform, false);
 			Text text = item.GetComponentInChildren<Text>();
 			text.text = message;
+
+			m_allEntries.Add(item);
 			return item;
 		}
 
@@ -119,5 +124,45 @@ namespace Dasher
 		{
 			MainProcess.Instance.RequestSwitchToHome();
 		}
+
+		#region Animation
+		[SerializeField]
+		float m_initialDelay = .5f;
+		[SerializeField]
+		float m_interval = .5f;
+
+		float m_antimationTimer = 0f;
+		void Update()
+		{
+
+			var prevIndex = GetInterval(m_antimationTimer);
+			m_antimationTimer += Time.deltaTime;
+			var currentIndex = GetInterval(m_antimationTimer);
+
+			if (prevIndex != currentIndex)
+			{
+				var entryCount = m_allEntries.Count;
+				if (currentIndex < entryCount)
+				{
+					AnimationFlashing anim = m_allEntries[currentIndex].GetComponentInChildren<AnimationFlashing>();
+					anim.StartAnimation();
+				}
+				else
+				{
+					enabled = false;
+				}
+			}
+		}
+
+		int GetInterval(float ts)
+		{
+			ts -= m_initialDelay;
+			if(ts < 0 )
+				return -1;
+			int result = (int)(ts / m_interval);
+			return result;
+		}
+		
+		#endregion
 	}
 }

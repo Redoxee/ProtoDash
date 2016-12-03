@@ -254,6 +254,11 @@ namespace Dasher
 			m_menuAnimator.SetBool(c_a_settings, false);
 		}
 
+		public void OnCreditsPressed()
+		{
+			MainProcess.Instance.RequestSwitchToCredits();
+		}
+
 		#endregion
 		#endregion
 

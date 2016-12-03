@@ -230,7 +230,7 @@ namespace Dasher
 		void SetEndLevelEvents(bool isFirstTime, bool isNewBestTime, bool displayChampTime)
 		{
 
-			var ts = .05f;
+			var ts = .01f;
 			var timeGap = .25f;
 			var sg = .03f;
 
