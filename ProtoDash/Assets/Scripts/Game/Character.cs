@@ -239,7 +239,6 @@ namespace Dasher
 
 			m_inputManager.ManualUpdate();
 			updateSquish(Time.deltaTime);
-			updateBeak();
 			
 		}
 
@@ -359,6 +358,7 @@ namespace Dasher
 
 				float d = currentFacingVector.x * propulsionImpulse;
 				currentVelocity.x = Mathf.Clamp(currentVelocity.x + d, -maxPropulsion, maxPropulsion);
+
 			}
 			else
 			{
@@ -394,6 +394,7 @@ namespace Dasher
 				{
 					currentVelocity = isTouchingLeft ? wallJumpVector : mirroredWallJumpVector;
 					currentFacingVector.x = isTouchingLeft ? 1 : -1;
+					updateBeak();
 					currentVelocity *= wallJumpForce;
 					currentSquishY = 1.25f;
 					currentSquishX = 1.25f;
@@ -546,7 +547,12 @@ namespace Dasher
 			else if (m_dashVector.x < 0)
 			{
 				currentFacingVector.x = -1;
+				body.transform.localScale = new Vector3(-1,1,1);
 			}
+
+			Vector3 cPos = beak.transform.localPosition;
+			cPos.x = originalBeakX;
+			beak.transform.localPosition = cPos;
 
 			body.transform.localRotation = dashRotation;
 			currentSquishY = .35f;
@@ -582,6 +588,10 @@ namespace Dasher
 			m_inputManager.NotifyEndDash();
 
 			body.transform.localRotation = Quaternion.identity;
+			var scale = body.transform.localScale;
+			scale.x = Mathf.Abs(scale.x);
+			body.transform.localScale = scale; 
+			updateBeak();
 		}
 
 		public bool IsDashing()
@@ -681,7 +691,8 @@ namespace Dasher
 
 		private void updateSquish(float dt)
 		{
-			currentSquishX = FunctionUtils.damping(squishDampingFactor, currentSquishX, 1.0f, dt);
+			float xSign = Mathf.Sign(transform.localScale.x);
+			currentSquishX = FunctionUtils.damping(squishDampingFactor, Mathf.Abs(currentSquishX), 1.0f, dt);
 			currentSquishY = FunctionUtils.damping(squishDampingFactor, currentSquishY, 1.0f, dt);
 			body.transform.localScale = new Vector3(currentSquishX, currentSquishY, 1.0f);
 		}
