@@ -71,6 +71,8 @@ namespace Dasher
 		private Transform m_worldsParent = null;
 		[SerializeField]
 		private GameObject m_worldPrefab = null;
+		[SerializeField]
+		private Material m_levelChampMaterial = null;
 
 		public const string c_levelLabelPattern = "{0}-{1}";
 
@@ -116,6 +118,11 @@ namespace Dasher
 					if (dataManager != null)
 					{
 						isUnlocked = dataManager.DoesProgressionAllowLevel(levels[levelIndex].sceneName);
+						if (levelFlow.IsLevelChamp(levels[levelIndex].sceneName))
+						{
+							Image border = btnObject.GetComponent<Image>();
+							border.material = m_levelChampMaterial;
+						}
 					}
 					if (isUnlocked)
 					{

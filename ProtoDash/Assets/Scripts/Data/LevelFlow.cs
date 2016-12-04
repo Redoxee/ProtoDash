@@ -107,6 +107,11 @@ namespace Dasher
 			LevelData lvl = m_levelList[levelIndex];
 			return lvl.currentBest > 0 && lvl.currentBest < lvl.parTime;
 		}
+		public bool IsLevelChamp(string levelName)
+		{
+			return IsLevelChamp(GetLevelIndex(levelName));
+		}
+
 
 		public int GetLevelIndex(string levelName)
 		{

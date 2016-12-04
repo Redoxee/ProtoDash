@@ -896,6 +896,8 @@ MonoBehaviour:
   m_worldsParent: {fileID: 1354873229}
   m_worldPrefab: {fileID: 1000011163782448, guid: bd367650ccddcc341840740a747f4079,
     type: 2}
+  m_levelChampMaterial: {fileID: 2100000, guid: e251eb4635e755348bb5fec36022aeea,
+    type: 2}
   QuickStartLevelDisplay: {fileID: 1208586520}
   m_lightLevelButton: {fileID: 340122569}
 --- !u!4 &280667154
@@ -4338,7 +4340,7 @@ ParticleSystem:
   moveWithTransform: 1
   autoRandomSeed: 1
   scalingMode: 1
-  randomSeed: -117988502
+  randomSeed: -1133539255
   InitialModule:
     serializedVersion: 2
     enabled: 1
