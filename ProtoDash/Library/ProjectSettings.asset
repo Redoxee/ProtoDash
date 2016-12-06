@@ -180,7 +180,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: cea6829fe6f50e74fa25feeaa8f030de, type: 3}
+      m_Icon: {fileID: 2800000, guid: 9d02480f6004eea47a4babe9ccfe6936, type: 3}
       m_Width: 128
       m_Height: 128
   m_BuildTargetBatching: []
@@ -343,7 +343,8 @@ PlayerSettings:
   psp2UseDebugIl2cppLibs: 0
   psmSplashimage: {fileID: 0}
   spritePackerPolicy: 
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    1: DASHER_DEMO
   metroPackageName: ProtoDash
   metroPackageVersion: 
   metroCertificatePath: 

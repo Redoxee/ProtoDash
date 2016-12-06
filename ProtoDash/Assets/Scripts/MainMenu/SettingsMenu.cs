@@ -12,11 +12,15 @@ namespace Dasher
 		private Button m_deleteSaveButton = null;
 
 		[SerializeField]
-		private GameObject m_deletSavePopup = null;
+		private GameObject m_deleteSavePopup = null;
+
+		[SerializeField]
+		private GameObject m_secretDeleteSavePopup = null;
 
 		void Awake()
 		{
-			m_deletSavePopup.SetActive(false);
+			m_secretDeleteSavePopup.SetActive(false);
+			m_deleteSavePopup.SetActive(false);
 			enabled = false;
 
 			DasherSettings setting = MainProcess.Instance.DataManager.GetSettings();
@@ -36,6 +40,11 @@ namespace Dasher
 
 		public void OnDeleteSavePressed()
 		{
+			m_deleteSavePopup.SetActive(true);
+		}
+
+		public void DeleteSave()
+		{
 			var data = MainProcess.Instance.DataManager;
 			data.ClearSave();
 			MainProcess.Instance.RelaunchGame();
@@ -43,10 +52,10 @@ namespace Dasher
 
 		void DisplayCustomDeleteSavePopup()
 		{
-			m_deletSavePopup.SetActive(true);
+			m_secretDeleteSavePopup.SetActive(true);
 		}
 
-		const float c_deleteLongPressDuration = 10f;
+		const float c_deleteLongPressDuration = 5;
 		float m_deletePressTimer = -1f;
 
 		public void DeletePointerDown()
@@ -82,6 +91,11 @@ namespace Dasher
 			//{
 			//	DisplayCustomDeleteSavePopup();
 			//}
+		}
+
+		public void CancelDeleteSave()
+		{
+			m_deleteSavePopup.SetActive(false);
 		}
 	}
 }

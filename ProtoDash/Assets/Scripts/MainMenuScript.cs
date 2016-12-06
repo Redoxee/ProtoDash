@@ -115,6 +115,7 @@ namespace Dasher
 					buttonImage.material = lightButtonMaterial;
 
 					bool isUnlocked = true;
+#if !DASHER_DEMO
 					if (dataManager != null)
 					{
 						isUnlocked = dataManager.DoesProgressionAllowLevel(levels[levelIndex].sceneName);
@@ -124,6 +125,7 @@ namespace Dasher
 							border.material = m_levelChampMaterial;
 						}
 					}
+#endif
 					if (isUnlocked)
 					{
 						var disableImage = btnObject.GetComponentInChildren<LevelListButton>();
@@ -165,9 +167,9 @@ namespace Dasher
 			MainProcess.Instance.UnregisterMainMenu();
 		}
 
-		#endregion
+#endregion
 
-		#region States
+#region States
 		private void InitStates()
 		{
 			m_introState = new FSM_State(null, null,true);
@@ -176,7 +178,7 @@ namespace Dasher
 			SetState(m_introState);
 		}
 
-		#region Intro
+#region Intro
 		[SerializeField]
 		private Text QuickStartLevelDisplay = null;
 
@@ -205,8 +207,8 @@ namespace Dasher
 			MainProcess.Instance.RequestSwitchToStats();
 		}
 
-		#endregion
-		#region LevelSelect
+#endregion
+#region LevelSelect
 		FSM_State m_levelSelectState;
 
 		[SerializeField]
@@ -219,7 +221,9 @@ namespace Dasher
 			//if (m_currentLevelDisplayed != lvl)
 			{
 				var dataManager = MainProcess.Instance.DataManager;
+#if !DASHER_DEMO
 				if (dataManager.DoesProgressionAllowLevel(lvl.sceneName))
+#endif
 				{
 					m_currentLevelDisplayed = lvl;
 					string title = string.Format("PLAY : {0}", levelName);
@@ -246,9 +250,9 @@ namespace Dasher
 			}
 		}
 
-		#endregion
+#endregion
 
-		#region Settings
+#region Settings
 		FSM_State m_setingsState;
 
 		private void BeginSettings()
@@ -266,9 +270,9 @@ namespace Dasher
 			MainProcess.Instance.RequestSwitchToCredits();
 		}
 
-		#endregion
-		#endregion
+#endregion
+#endregion
 
-		#endregion
+#endregion
 	}
 }

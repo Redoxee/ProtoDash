@@ -136,7 +136,9 @@ namespace Dasher
 		public void NotifyLevelStart()
 		{
 			m_canvasHolder.gameObject.SetActive(true);
+#if !DASHER_DEMO
 			m_gameCanvas.gameObject.SetActive(true);
+#endif
 			m_pauseCanvas.gameObject.SetActive(false);
 			m_endCanvas.gameObject.SetActive(false);
 			m_failCanvas.gameObject.SetActive(false);
