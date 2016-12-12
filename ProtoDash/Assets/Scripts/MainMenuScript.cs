@@ -101,11 +101,10 @@ namespace Dasher
 				for (int lvl = 0; lvl < levels.Count; ++lvl)
 				{
 					GameObject btnObject = wh.AddLevelButton();
-
+					var objectDescriptor = btnObject.GetComponentInChildren<LevelListButton>();
 					string levelLabel = string.Format(c_levelLabelPattern, worldEnumerator.Current.Key, lvl + 1);
-					Text labelObject = btnObject.GetComponentInChildren<Text>();
 
-					labelObject.text = string.Format(levelLabel);
+					objectDescriptor.MainLabel.text = string.Format(levelLabel);
 
 					Button levelButton = btnObject.GetComponent<Button>();
 					int levelIndex = lvl;
@@ -123,13 +122,17 @@ namespace Dasher
 						{
 							Image border = btnObject.GetComponent<Image>();
 							border.material = m_levelChampMaterial;
+							objectDescriptor.ChampLabel.gameObject.SetActive(true);
+						}
+						else
+						{
+							objectDescriptor.ChampLabel.gameObject.SetActive(false);
 						}
 					}
 #endif
 					if (isUnlocked)
 					{
-						var disableImage = btnObject.GetComponentInChildren<LevelListButton>();
-						disableImage.DisableImage.SetActive(false);
+						objectDescriptor.DisableImage.SetActive(false);
 					}
 				}
 			}
