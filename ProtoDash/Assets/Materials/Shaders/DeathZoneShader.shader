@@ -36,7 +36,7 @@ Shader "Custom/DeathZone" {
 
 			struct v2f {
 				float4 vertex : SV_POSITION;
-				float4 worldPos : POSITIONT;
+				float4 worldPos : TEXCOORD0;
 			};
 
 			fixed4 _Color;

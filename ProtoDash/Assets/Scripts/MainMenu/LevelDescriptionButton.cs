@@ -32,11 +32,13 @@ namespace Dasher
 		float m_flashTimer = 0f;
 		float m_lastProgression = 0f;
 		Action m_peakAction = null;
+		
+		Image m_mainImage = null;
 
 		public void Initialize()
 		{
 			m_flashColor = m_flashImage.color;
-
+			m_mainImage = GetComponent<Image>();
 			enabled = false;
 		}
 
@@ -62,6 +64,11 @@ namespace Dasher
 			m_title.text = title;
 			m_bestTime.text = leftMessage;
 			m_champTime.text = rightMessage;
+		}
+
+		public void SetMainMaterial(Material mat)
+		{
+			m_mainImage.material = mat;
 		}
 
 		public void ManualUpdate()

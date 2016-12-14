@@ -23,6 +23,10 @@ namespace Dasher
 		{
 			return string.Format(c_levelNamePattern, world, indexInWorld);
 		}
+
+		public bool IsLevelChamp { get {
+				return currentBest > 0 && currentBest < parTime;
+			} }
 	}
 
 	public class LevelFlow : ScriptableObject

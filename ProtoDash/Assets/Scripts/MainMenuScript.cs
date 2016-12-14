@@ -72,6 +72,8 @@ namespace Dasher
 		[SerializeField]
 		private GameObject m_worldPrefab = null;
 		[SerializeField]
+		private Material m_levelNormalMaterial = null;
+		[SerializeField]
 		private Material m_levelChampMaterial = null;
 
 		public const string c_levelLabelPattern = "{0}-{1}";
@@ -235,6 +237,14 @@ namespace Dasher
 					string best = string.Format("best\n{0}", bestTime);
 					string champ = string.Format("champ\n{0}", champTime);
 					m_lightLevelButton.FlashInInfo(title, best, champ);
+
+					if (lvl.IsLevelChamp)
+					{
+						m_lightLevelButton.SetMainMaterial(m_levelChampMaterial);
+					}
+					else {
+						m_lightLevelButton.SetMainMaterial(m_levelNormalMaterial);
+					}
 				}
 			}
 		}

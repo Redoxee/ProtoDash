@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: WorldFinishedGolden
-  m_Shader: {fileID: 10761, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 8e299fa980368d94fb8cd9d494ba40db, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
@@ -151,7 +151,10 @@ Material:
     m_Colors:
     - first:
         name: _Color
-      second: {r: 0.9226715, g: 0.92758626, b: 0.5933824, a: 1}
+      second: {r: 0.71379316, g: 0.63599217, b: 0.0524848, a: 1}
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _SecondColor
+      second: {r: 0.84656143, g: 1, b: 0.75735295, a: 1}
