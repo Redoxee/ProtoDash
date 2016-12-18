@@ -12,39 +12,41 @@ namespace Dasher
 
 		[Header("Game UI")]
 		[SerializeField]
-		private GameCanvasHolder m_canvasHolder;
+		private GameCanvasHolder m_canvasHolder = null;
 
 
 		private GameObject m_gameCanvas;
 		private Text m_gameTimerText;
 		private SmartGauge m_gauge;
+		private GameObject m_pauseButton = null;
+		private Rect m_pauseRect;
 
 		[Space]
 		[Header("Pause")]
 		[SerializeField]
-		private GameObject m_pauseCanvas;
+		private GameObject m_pauseCanvas = null;
 		[SerializeField]
-		private Text m_pauseLevelLabelText;
+		private Text m_pauseLevelLabelText = null;
 		[SerializeField]
-		private Text m_pauseCurrentTimeText;
+		private Text m_pauseCurrentTimeText = null;
 		[SerializeField]
-		private Text m_pauseParTimeText;
+		private Text m_pauseParTimeText = null;
 
 		[Space]
 		[Header("End Level")]
 		[SerializeField]
-		private GameObject m_endCanvas;
+		private GameObject m_endCanvas = null;
 		[SerializeField]
-		private Text m_endLevelLabelText;
+		private Text m_endLevelLabelText = null;
 		[SerializeField]
 		EndLevelGUI m_endLevelGUI = null;
 		
 		[Space]
 		[Header("Death")]
 		[SerializeField]
-		private GameObject m_failCanvas;
+		private GameObject m_failCanvas = null;
 		[SerializeField]
-		private Text m_failLevelLabelText;
+		private Text m_failLevelLabelText = null;
 
 		[Space]
 		[Header("Intro")]
@@ -64,6 +66,17 @@ namespace Dasher
 			bool isLeftHanded = MainProcess.Instance.DataManager.GetSettings().isLefthanded;
 			var canvas = isLeftHanded ? m_canvasHolder.LeftCanvas:m_canvasHolder.RightCanvas;
 			m_gameCanvas = canvas;
+			m_pauseButton = m_gameCanvas.GetComponentInChildren<Button>().gameObject;
+			Vector2 ScreenSize = new Vector2(Screen.width, Screen.height);
+
+			RectTransform pTransform = (m_pauseButton.transform as RectTransform);
+			Rect buttonRect = pTransform.rect;
+			
+			float originx = ScreenSize.x * pTransform.anchorMax.x - pTransform.pivot.x * buttonRect.width  + pTransform.anchoredPosition.x;
+			float originy = ScreenSize.y * pTransform.anchorMax.y - pTransform.pivot.y * buttonRect.height + pTransform.anchoredPosition.y;
+
+			m_pauseRect = new Rect(originx,originy,buttonRect.width,buttonRect.height);
+
 			m_gauge = canvas.GetComponentInChildren<SmartGauge>();
 			m_gameTimerText = (isLeftHanded ? m_canvasHolder.LeftTimeText : m_canvasHolder.RightTimeText).GetComponentInChildren<Text>();
 			(isLeftHanded ? m_canvasHolder.RightCanvas : m_canvasHolder.LeftCanvas).SetActive(false);
@@ -138,6 +151,9 @@ namespace Dasher
 			m_canvasHolder.gameObject.SetActive(true);
 #if !DASHER_DEMO
 			m_gameCanvas.gameObject.SetActive(true);
+
+			//GameProcess.Instance.CurrentCharacter.InputManager.RegisterButton(m_pauseButton.transform as RectTransform);
+			GameProcess.Instance.CurrentCharacter.InputManager.RegisterButton(m_pauseRect);
 #endif
 			m_pauseCanvas.gameObject.SetActive(false);
 			m_endCanvas.gameObject.SetActive(false);

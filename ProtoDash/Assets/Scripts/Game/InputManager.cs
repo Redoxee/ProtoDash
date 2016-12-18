@@ -18,7 +18,19 @@ namespace Dasher
 		private int m_dashFrameCount = 0;
 
 		//[SerializeField]
-		//private List<RectTransform> m_bunttonList = new List<RectTransform>();
+		private List<Rect> m_buttonsList = new List<Rect>();
+		public void RegisterButton(Rect rect)
+		{
+			if (!m_buttonsList.Contains(rect))
+				m_buttonsList.Add(rect);
+		}
+		public void UnregisterButton(Rect rect)
+		{
+			var i = m_buttonsList.IndexOf(rect);
+			if (i > -1)
+				m_buttonsList.RemoveAt(i);
+		}
+
 
 		private Vector2 m_currentPointerPosition;
 
@@ -56,26 +68,42 @@ namespace Dasher
 			m_currentPointerPosition = Input.mousePosition;
 			m_squareSwipeInputTrigger = m_swipeInputDistance * m_swipeInputDistance;
 		}
+		bool IsInButtons(Vector2 pos)
+		{
+			int rectCount = m_buttonsList.Count;
+			for (int i = 0; i < rectCount; ++i)
+			{
+				var r = m_buttonsList[i];
+				
+				//if (RectTransformUtility.ScreenPointToWorldPointInRectangle(r, pos))
+				if (r.Contains(pos))
+						return true;
+			}
 
+			return false;
+		}
 		public void ManualUpdate()
 		{
 			m_isMousePressed = Input.GetMouseButton(0);
 			m_currentPointerPosition = Input.mousePosition;
 
-			if (Input.GetMouseButtonDown(0))
+			if (!IsInButtons(m_currentPointerPosition))
 			{
-				m_isMouseDown = true;
-				m_tapPosition = m_currentPointerPosition;
-			}
-			
-			Vector2 slideVector = m_tapPosition - m_currentPointerPosition;
-			slideVector.x *= m_screenRatio;
-			slideVector.y *= m_screenRatio;
+				if (Input.GetMouseButtonDown(0))
+				{
+					m_isMouseDown = true;
+					m_tapPosition = m_currentPointerPosition;
+				}
 
-			m_isSweeping = (!m_isMouseDown) && m_isMousePressed && m_squareSwipeInputTrigger < slideVector.sqrMagnitude;
-			if (m_isSweeping)
-			{
-				m_dashFrameCount = m_dashFrameBuffer;
+				Vector2 slideVector = m_tapPosition - m_currentPointerPosition;
+				slideVector.x *= m_screenRatio;
+				slideVector.y *= m_screenRatio;
+
+				m_isSweeping = (!m_isMouseDown) && m_isMousePressed && m_squareSwipeInputTrigger < slideVector.sqrMagnitude;
+				if (m_isSweeping)
+				{
+					m_dashFrameCount = m_dashFrameBuffer;
+				}
 			}
 		}
 

@@ -50,6 +50,7 @@ namespace Dasher
 		}
 		[SerializeField]
 		private InputManager m_inputManager = null;
+		public InputManager InputManager { get { return m_inputManager; } }
 
 		public bool isPaused = false;
 
