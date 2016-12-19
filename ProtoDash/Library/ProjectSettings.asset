@@ -95,13 +95,13 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleIdentifier: com.AntonMakeGames.Dasher
-  bundleVersion: 0.2
+  bundleVersion: 0.3
   preloadedAssets: []
   metroEnableIndependentInputSource: 0
   xboxOneDisableKinectGpuReservation: 0
   singlePassStereoRendering: 0
   protectGraphicsMemory: 0
-  AndroidBundleVersionCode: 2
+  AndroidBundleVersionCode: 3
   AndroidMinSdkVersion: 9
   AndroidPreferredInstallLocation: 1
   aotOptions: 
@@ -165,8 +165,8 @@ PlayerSettings:
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: 
-  AndroidKeyaliasName: 
+  AndroidKeystoreName: C:/Users/Anton/Documents/git/ProtoDash/ProtoDash/Dasher.keystore
+  AndroidKeyaliasName: release
   AndroidTVCompatibility: 0
   AndroidIsGame: 1
   androidEnableBanner: 0

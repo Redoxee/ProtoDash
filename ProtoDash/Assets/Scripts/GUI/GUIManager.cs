@@ -67,8 +67,8 @@ namespace Dasher
 			var canvas = isLeftHanded ? m_canvasHolder.LeftCanvas:m_canvasHolder.RightCanvas;
 			m_gameCanvas = canvas;
 			m_pauseButton = m_gameCanvas.GetComponentInChildren<Button>().gameObject;
-			Vector2 ScreenSize = new Vector2(Screen.width, Screen.height);
 
+			Vector2 ScreenSize = new Vector2(Screen.width, Screen.height);
 			RectTransform pTransform = (m_pauseButton.transform as RectTransform);
 			Rect buttonRect = pTransform.rect;
 			
