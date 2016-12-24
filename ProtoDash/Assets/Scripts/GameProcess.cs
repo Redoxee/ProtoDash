@@ -22,6 +22,7 @@ namespace Dasher
 		}
 
 		private TimeManager m_timeManager = new TimeManager();
+		private float m_currentChampTime = 0f;
 		public TimeManager GameTime { get { return m_timeManager;} }
 
 		private bool m_initFrameWait = false;
@@ -48,6 +49,10 @@ namespace Dasher
 		const float c_fullScreenScalerDepth = -1.5f;
 
 		#region EndAnimations
+
+		EndNode m_endNode = null;
+		public EndNode EndNode { set { m_endNode = value; } }
+
 		[SerializeField]
 		GameObject m_fakeEndNode = null;
 		FullScreenScaler m_endFakeScaller;
@@ -101,12 +106,21 @@ namespace Dasher
 				m_initFrameWait = false;
 				LevelStart();
 			}
+
+			float prevTime = m_timeManager.CurrentLevelTime;
 			m_timeManager.ManualFixedUpdate();
+			float currentTime = m_timeManager.CurrentLevelTime;
+
 			if (m_GUIManager != null)
 			{
 				m_GUIManager.ManualFixedUpdate();
 			}
 			FixedUpdateState();
+
+			if (prevTime < m_currentChampTime && currentTime >= m_currentChampTime)
+			{
+				m_endNode.NotifyChampTimeMissed();
+			}
 		}
 
 		void LateUpdate()
@@ -146,6 +160,16 @@ namespace Dasher
 			else
 			{
 				SetState(m_gamplayState);
+			}
+
+			if (CurrentLevelName != null)
+			{
+				LevelData currentLevelData = MainProcess.Instance.levelFlow.GetLevelData(CurrentLevelName);
+				m_currentChampTime = currentLevelData.parTime;
+			}
+			else
+			{
+				m_currentChampTime = float.MaxValue;
 			}
 		}
 
@@ -198,8 +222,7 @@ namespace Dasher
 				saveManager.NotifyEndRun(m_character.Traces.NbJumps, m_character.Traces.NbDashes);
 				saveManager.Save();
 			}
-
-			m_endNode = endNode;
+			
 			SetState(m_outroCharacterAnimationState);
 		}
 
@@ -310,7 +333,7 @@ namespace Dasher
 		{
 			if (m_deathZoneCounter > 0)
 			{
-				if (m_deathFrameCounter > m_allowedDeathFrame && !m_character.IsDashing())
+				if (m_deathFrameCounter > m_allowedDeathFrame && !m_character.IsInInvincibilityFrames())
 				{
 					OnDeath();
 					return;
@@ -384,8 +407,6 @@ namespace Dasher
 
 		#region Outro CharacterAnimation
 
-		private GameObject m_endNode;
-
 		private float m_outroCharacterDuration = 1f;
 		private float m_outroCharacterTimer = 0f;
 
@@ -434,12 +455,12 @@ namespace Dasher
 		private void OutroNode_begin()
 		{
 			m_outroNodeTimer = 0f;
-			m_endNode.SetActive(false);
+			m_endNode.gameObject.SetActive(false);
 			m_fakeEndNode.SetActive(true);
 			m_character.gameObject.SetActive(false);
 
 			var cs = MainProcess.Instance.m_colorScheme;
-			m_endFakeScaller.StartColor = cs.EndNode;
+			m_endFakeScaller.StartColor = m_endNode.CurrentColor;
 			m_endFakeScaller.EndColor = cs.EndLevelPanel;
 
 		}
@@ -477,7 +498,7 @@ namespace Dasher
 		private void Dying_Begin()
 		{
 			SaveManager dataManager = MainProcess.Instance.DataManager;
-			dataManager.NotifyEndRun(m_character.Traces.NbJumps, m_character.Traces.NbDashes);
+			dataManager.NotifyDeath(m_character.Traces.NbJumps, m_character.Traces.NbDashes);
 			dataManager.Save();
 			m_dyingTimer = 0f;
 			m_CameraS.NotifyDeath(m_deathPositionTarget);

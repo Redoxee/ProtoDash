@@ -21,6 +21,7 @@ table FlatGameSave {
 	TotalDashes:int=0;
 	LastPlayedLevel:string;
 	Settings:FlatSettings;
+	TotalDeaths:int=0;
 } 
  
 root_type FlatGameSave;

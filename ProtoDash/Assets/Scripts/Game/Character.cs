@@ -595,9 +595,15 @@ namespace Dasher
 			updateBeak();
 		}
 
-		public bool IsDashing()
+		const float c_dashInivincibility = .5f;
+		public bool IsInInvincibilityFrames()
 		{
-			return currentState == Dash;
+			if (currentState == Dash)
+			{
+				if (1.0f - dashProgression / dashDuration < c_dashInivincibility)
+					return true;
+			}
+			return false;
 		}
 		#endregion
 

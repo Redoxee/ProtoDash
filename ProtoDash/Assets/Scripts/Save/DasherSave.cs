@@ -77,6 +77,7 @@ public sealed class FlatGameSave : Table {
   public ArraySegment<byte>? GetLastPlayedLevelBytes() { return __vector_as_arraysegment(16); }
   public FlatSettings Settings { get { return GetSettings(new FlatSettings()); } }
   public FlatSettings GetSettings(FlatSettings obj) { int o = __offset(18); return o != 0 ? obj.__init(__indirect(o + bb_pos), bb) : null; }
+  public int TotalDeaths { get { int o = __offset(20); return o != 0 ? bb.GetInt(o + bb_pos) : (int)0; } }
 
   public static Offset<FlatGameSave> CreateFlatGameSave(FlatBufferBuilder builder,
       int Version = 0,
@@ -86,8 +87,10 @@ public sealed class FlatGameSave : Table {
       int TotalJumps = 0,
       int TotalDashes = 0,
       StringOffset LastPlayedLevelOffset = default(StringOffset),
-      Offset<FlatSettings> SettingsOffset = default(Offset<FlatSettings>)) {
-    builder.StartObject(8);
+      Offset<FlatSettings> SettingsOffset = default(Offset<FlatSettings>),
+      int TotalDeaths = 0) {
+    builder.StartObject(9);
+    FlatGameSave.AddTotalDeaths(builder, TotalDeaths);
     FlatGameSave.AddSettings(builder, SettingsOffset);
     FlatGameSave.AddLastPlayedLevel(builder, LastPlayedLevelOffset);
     FlatGameSave.AddTotalDashes(builder, TotalDashes);
@@ -99,7 +102,7 @@ public sealed class FlatGameSave : Table {
     return FlatGameSave.EndFlatGameSave(builder);
   }
 
-  public static void StartFlatGameSave(FlatBufferBuilder builder) { builder.StartObject(8); }
+  public static void StartFlatGameSave(FlatBufferBuilder builder) { builder.StartObject(9); }
   public static void AddVersion(FlatBufferBuilder builder, int Version) { builder.AddInt(0, Version, 0); }
   public static void AddUserId(FlatBufferBuilder builder, StringOffset UserIdOffset) { builder.AddOffset(1, UserIdOffset.Value, 0); }
   public static void AddLevelResults(FlatBufferBuilder builder, VectorOffset levelResultsOffset) { builder.AddOffset(2, levelResultsOffset.Value, 0); }
@@ -110,6 +113,7 @@ public sealed class FlatGameSave : Table {
   public static void AddTotalDashes(FlatBufferBuilder builder, int TotalDashes) { builder.AddInt(5, TotalDashes, 0); }
   public static void AddLastPlayedLevel(FlatBufferBuilder builder, StringOffset LastPlayedLevelOffset) { builder.AddOffset(6, LastPlayedLevelOffset.Value, 0); }
   public static void AddSettings(FlatBufferBuilder builder, Offset<FlatSettings> SettingsOffset) { builder.AddOffset(7, SettingsOffset.Value, 0); }
+  public static void AddTotalDeaths(FlatBufferBuilder builder, int TotalDeaths) { builder.AddInt(8, TotalDeaths, 0); }
   public static Offset<FlatGameSave> EndFlatGameSave(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<FlatGameSave>(o);

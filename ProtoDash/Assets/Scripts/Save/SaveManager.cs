@@ -7,7 +7,7 @@ using System;
 namespace Dasher
 {
 	public class SaveManager {
-		public const int c_SaveVersion = 7;
+		public const int c_SaveVersion = 8;
 		private DasherSavable m_savable;
 
 		#region Save mecanics
@@ -50,9 +50,11 @@ namespace Dasher
 				}
 
 				m_savable.m_TotalRuns = save.TotalRuns;
+				m_savable.m_TotalDeaths = save.TotalDeaths;
 				m_savable.m_TotalDashes = save.TotalDashes;
 				m_savable.m_TotalJumps = save.TotalJumps;
-				
+
+
 				m_savable.UserId = save.UserId;
 				m_savable.m_LastLevelPlayed = save.LastPlayedLevel;
 				if (save.Settings != null)
@@ -117,6 +119,7 @@ namespace Dasher
 			FlatGameSave.AddLevelResults(m_builder, levelsOffset);
 
 			FlatGameSave.AddTotalRuns(m_builder, m_savable.m_TotalRuns);
+			FlatGameSave.AddTotalDeaths(m_builder, m_savable.m_TotalDeaths);
 			FlatGameSave.AddTotalJumps(m_builder, m_savable.m_TotalJumps);
 			FlatGameSave.AddTotalDashes(m_builder, m_savable.m_TotalDashes);
 			FlatGameSave.AddLastPlayedLevel(m_builder, lastLevelPlayedOffset);
@@ -275,6 +278,12 @@ namespace Dasher
 			m_savable.m_TotalDashes += nbDashes;
 		}
 
+		public void NotifyDeath(int nbJumps, int nbDashes)
+		{
+			NotifyEndRun(nbJumps,nbDashes);
+			m_savable.m_TotalDeaths += 1;
+		}
+
 		public int GetTotalRuns()
 		{
 			return m_savable.m_TotalRuns;
@@ -288,6 +297,11 @@ namespace Dasher
 		public int GetTotalDashes()
 		{
 			return m_savable.m_TotalDashes;
+		}
+
+		public int GetTotalDeaths()
+		{
+			return m_savable.m_TotalDeaths;
 		}
 
 		public string LastLevelPlayed { get { return m_savable.m_LastLevelPlayed; } }
@@ -361,6 +375,7 @@ namespace Dasher
 		public Dictionary<string, LevelSavable> m_levels;
 
 		public int m_TotalRuns = 0;
+		public int m_TotalDeaths = 0;
 		public int m_TotalJumps = 0;
 		public int m_TotalDashes = 0;
 

@@ -16,6 +16,7 @@ namespace Dasher
 		const string c_ChampAllLevels = "Congratulation !\nYou are a champ on all levels!";
 		const string c_TotalTime = "Cumulated best Time : {0}";
 		const string c_NbRunLaunched = "Level launched : {0}";
+		const string c_NbDeaths = "Number of deaths : {0}";
 		const string c_NbJumps = "Number of jumps : {0}";
 		const string c_NbDash = "Number of dashes : {0}";
 
@@ -84,6 +85,12 @@ namespace Dasher
 			{
 				CreateItem(string.Format(c_NbRunLaunched, totalRuns));
 			}
+			int totalDeath = datas.GetTotalDeaths();
+			if (totalDeath > 0)
+			{
+				CreateItem(string.Format(c_NbDeaths, totalDeath));
+			}
+
 			int totalJumps = datas.GetTotalJumps();
 			if (totalJumps > 0)
 			{

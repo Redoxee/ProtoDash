@@ -16,14 +16,25 @@ namespace Dasher
 		private bool m_isInClosure = false;
 
 		private Material m_material;
+		public Color CurrentColor { get { return m_material.color; } }
 
+
+		[SerializeField]
+		private Color m_ChampMissedColor = Color.white;
 
 		void Awake()
 		{
 			m_material = GetComponent<Renderer>().material;
 			m_material.SetFloat(c_closure, 0f);
 		}
-		
+
+		void Start()
+		{
+			GameProcess gp = GameProcess.Instance;
+			if (gp != null)
+				gp.EndNode = this;
+		}
+
 		void Update()
 		{
 			float dt = Time.deltaTime;
@@ -53,6 +64,11 @@ namespace Dasher
 				GameProcess.Instance.NotifyEndLevelReached(gameObject);
 			}
 			m_isInClosure = true;
+		}
+
+		public void NotifyChampTimeMissed()
+		{
+			m_material.color = m_ChampMissedColor;
 		}
 	}
 }
