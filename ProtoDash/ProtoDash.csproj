@@ -98,6 +98,7 @@
     <Compile Include="Assets\Scripts\Game\GaugeScript.cs" />
     <Compile Include="Assets\Scripts\Game\InputManager.cs" />
     <Compile Include="Assets\Scripts\Game\JumpParticlesManager.cs" />
+    <Compile Include="Assets\Scripts\Game\Key.cs" />
     <Compile Include="Assets\Scripts\Game\PastTraceManager.cs" />
     <Compile Include="Assets\Scripts\Game\SmartGauge.cs" />
     <Compile Include="Assets\Scripts\Game\TraceManager.cs" />
@@ -147,6 +148,7 @@
     <None Include="Assets\Materials\Shaders\SimpleHexagon.shader" />
     <None Include="Assets\Materials\Shaders\SkyBoxShader.shader" />
     <None Include="Assets\Materials\Shaders\StripdUIShader.shader" />
+    <None Include="Assets\Materials\Shaders\TriCrossShader.shader" />
     <None Include="Assets\Materials\Shaders\TriangleShader.shader" />
     <None Include="Assets\Materials\Shaders\UnlitBGElementShader.shader" />
     <None Include="Assets\Materials\Shaders\UnlitWallShader.shader" />

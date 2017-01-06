@@ -41,7 +41,7 @@
 			fixed4 frag(v2f i) : COLOR
 			{
 				float4 col = _Color;
-				col.a *= 1.-_Smooth(length(i.uv), .495, .005);
+				col.a *= 1.-_Smooth(length(i.uv), .495, .015);
 				return col;
 			}
 			ENDCG
