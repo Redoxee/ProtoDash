@@ -1,7 +1,7 @@
 ﻿Shader "Unlit/Tricross"
 {
 	Properties{
-		_Color("Main Color", Color) = (1,1,1,1)
+		_Color("Color", Color) = (1,1,1,1)
 		_Stretch("Stretch", Float) = .3
 		_Radius("Radius",Float) = .075
 	}
@@ -74,7 +74,7 @@
 
 
 		float4 col = _Color;
-		col.a = f;
+		col.a *= f;
 		return col;
 	}
 

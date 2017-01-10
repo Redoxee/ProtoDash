@@ -46,7 +46,7 @@ namespace Dasher
 
 		#endregion
 
-		const float c_fullScreenScalerDepth = -1.5f;
+		const float c_fullScreenScalerDepth = -10;
 
 		#region EndAnimations
 

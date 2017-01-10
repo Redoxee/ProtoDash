@@ -94,11 +94,13 @@
     <Compile Include="Assets\Scripts\Game\AnimatedEnergyCost.cs" />
     <Compile Include="Assets\Scripts\Game\CameraScript.cs" />
     <Compile Include="Assets\Scripts\Game\Character.cs" />
+    <Compile Include="Assets\Scripts\Game\ComposedStretchableCircle.cs" />
     <Compile Include="Assets\Scripts\Game\FullScreenScaler.cs" />
     <Compile Include="Assets\Scripts\Game\GaugeScript.cs" />
     <Compile Include="Assets\Scripts\Game\InputManager.cs" />
     <Compile Include="Assets\Scripts\Game\JumpParticlesManager.cs" />
     <Compile Include="Assets\Scripts\Game\Key.cs" />
+    <Compile Include="Assets\Scripts\Game\KeyBlock.cs" />
     <Compile Include="Assets\Scripts\Game\PastTraceManager.cs" />
     <Compile Include="Assets\Scripts\Game\SmartGauge.cs" />
     <Compile Include="Assets\Scripts\Game\TraceManager.cs" />
@@ -135,6 +137,7 @@
     <None Include="Assets\Materials\Shaders\BackgroundShader.shader" />
     <None Include="Assets\Materials\Shaders\BicolorUIShader.shader" />
     <None Include="Assets\Materials\Shaders\CharacterShader.shader" />
+    <None Include="Assets\Materials\Shaders\CircleHalfShader.shader" />
     <None Include="Assets\Materials\Shaders\CircleShader.shader" />
     <None Include="Assets\Materials\Shaders\CompanionGauge.shader" />
     <None Include="Assets\Materials\Shaders\CrossShader.shader" />
@@ -143,6 +146,7 @@
     <None Include="Assets\Materials\Shaders\EndNodeLevel.shader" />
     <None Include="Assets\Materials\Shaders\ExtandableCircle.shader" />
     <None Include="Assets\Materials\Shaders\ExtensibleCircle.shader" />
+    <None Include="Assets\Materials\Shaders\FlatColor.shader" />
     <None Include="Assets\Materials\Shaders\GearShader.shader" />
     <None Include="Assets\Materials\Shaders\ShallowCircleShader.shader" />
     <None Include="Assets\Materials\Shaders\SimpleHexagon.shader" />

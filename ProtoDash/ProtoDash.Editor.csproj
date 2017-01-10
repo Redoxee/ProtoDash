@@ -125,6 +125,7 @@
     <None Include="Assets\Materials\Shaders\BackgroundShader.shader" />
     <None Include="Assets\Materials\Shaders\BicolorUIShader.shader" />
     <None Include="Assets\Materials\Shaders\CharacterShader.shader" />
+    <None Include="Assets\Materials\Shaders\CircleHalfShader.shader" />
     <None Include="Assets\Materials\Shaders\CircleShader.shader" />
     <None Include="Assets\Materials\Shaders\CompanionGauge.shader" />
     <None Include="Assets\Materials\Shaders\CrossShader.shader" />
@@ -133,6 +134,7 @@
     <None Include="Assets\Materials\Shaders\EndNodeLevel.shader" />
     <None Include="Assets\Materials\Shaders\ExtandableCircle.shader" />
     <None Include="Assets\Materials\Shaders\ExtensibleCircle.shader" />
+    <None Include="Assets\Materials\Shaders\FlatColor.shader" />
     <None Include="Assets\Materials\Shaders\GearShader.shader" />
     <None Include="Assets\Materials\Shaders\ShallowCircleShader.shader" />
     <None Include="Assets\Materials\Shaders\SimpleHexagon.shader" />

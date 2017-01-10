@@ -427,7 +427,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 480982, guid: 5871693b2b563774db9ef95207f48d96, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 480982, guid: 5871693b2b563774db9ef95207f48d96, type: 2}
       propertyPath: m_LocalPosition.z
@@ -460,6 +460,10 @@ Prefab:
     - target: {fileID: 171630, guid: 5871693b2b563774db9ef95207f48d96, type: 2}
       propertyPath: m_Name
       value: DeathZone (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 480982, guid: 5871693b2b563774db9ef95207f48d96, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5871693b2b563774db9ef95207f48d96, type: 2}
@@ -2139,7 +2143,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 429572, guid: 71eb9fabb2cd20247b19ddd7bd42ed65, type: 2}
       propertyPath: m_LocalScale.y
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 188114, guid: 71eb9fabb2cd20247b19ddd7bd42ed65, type: 2}
       propertyPath: m_Name
