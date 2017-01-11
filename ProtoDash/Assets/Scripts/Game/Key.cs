@@ -87,13 +87,26 @@ namespace Dasher
 			Initialize();
 		}
 
+#if UNITY_EDITOR
+		[SerializeField]
+		bool m_forceActivation = false;
+#endif
+
 		private void Update()
 		{
+#if UNITY_EDITOR
+			if (m_forceActivation)
+			{
+				Activate();
+				m_forceActivation = true;
+			}
+#endif
+
 			m_sigil.transform.rotation *= Quaternion.AngleAxis(Time.deltaTime * m_rotationSpeed, Vector3.forward);
 			UpdateAnimation();
 		}
 
-		private void OnTriggerEnter2D(Collider2D collision)
+		void Activate()
 		{
 			m_trigger.enabled = false;
 			StartAnimation();
@@ -103,7 +116,11 @@ namespace Dasher
 			{
 				m_activables[i].Activate(transform);
 			}
+		}
 
+		private void OnTriggerEnter2D(Collider2D collision)
+		{
+			Activate();
 		}
 
 #if UNITY_EDITOR
@@ -113,9 +130,14 @@ namespace Dasher
 			if (m_activables != null && m_activables.Count > 0)
 			{
 				var decal = m_activables[0].transform.localScale / 2;
+				var source = m_sigil.transform.position;
+				var tz = transform.position.z - 5;
+				source.z = tz;
 				for (int i = 0; i < m_activables.Count; ++i)
 				{
-					Debug.DrawLine(m_sigil.transform.position, m_activables[i].transform.position + decal,Color.grey);
+					var target = m_activables[i].transform.position + decal;
+					target.z = tz;
+					Debug.DrawLine(source, target, Color.blue);
 				}
 			}
 		}

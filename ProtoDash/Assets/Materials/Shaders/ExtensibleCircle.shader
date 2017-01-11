@@ -9,6 +9,9 @@
 		Blend SrcAlpha OneMinusSrcAlpha
 
 		Pass{
+			Stencil{
+				Comp always
+			}
 			CGPROGRAM
 
 			#pragma vertex vert

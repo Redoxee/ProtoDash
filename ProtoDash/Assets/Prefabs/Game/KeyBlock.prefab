@@ -188,7 +188,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011716748738}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -458,14 +458,20 @@ MonoBehaviour:
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-    - time: 0.5
+    - time: 0.35
       value: 1
-      inSlope: 4.612208
-      outSlope: 4.612208
+      inSlope: 5.470625
+      outSlope: -5.5124636
+      tangentMode: 1
+    - time: 0.7
+      value: 0
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+  m_stretchFlipPoint: 0.35
   m_scaleCurve:
     serializedVersion: 2
     m_Curve:
@@ -529,3 +535,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+  m_boxDeactivation: 0.65
+  m_chainDelay: 0.75
+  m_chainElements: []

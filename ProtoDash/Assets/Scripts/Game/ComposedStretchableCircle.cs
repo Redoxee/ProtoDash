@@ -24,6 +24,9 @@ namespace Dasher
 
 		public void SetTwoPoints(Vector3 start, Vector3 end)
 		{
+			start.z = transform.position.z;
+			end.z = transform.position.z;
+
 			transform.position = start;
 			float length = Vector3.Distance(start, end);
 			SetLength(length);
@@ -35,6 +38,8 @@ namespace Dasher
 
 		public void Orient(Vector3 start, Vector3 end)
 		{
+			start.z = transform.position.z;
+			end.z = transform.position.z;
 			transform.position = start;
 			SetLength(0f);
 			//transform.rotation = Quaternion.FromToRotation(Vector3.right, end - start);

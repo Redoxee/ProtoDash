@@ -15,11 +15,16 @@ namespace Dasher
 		[SerializeField]
 		ComposedStretchableCircle m_strechable = null;
 
+
+
 		[Header("Animation")]
 		[SerializeField]
 		float m_duration = 1f;
 		[SerializeField]
 		AnimationCurve m_strechCurve = null;
+		[SerializeField]
+		float m_stretchFlipPoint = .5f;
+
 		[SerializeField]
 		AnimationCurve m_scaleCurve = null;
 		[SerializeField]
@@ -32,6 +37,9 @@ namespace Dasher
 		const string c_stretchName = "_Stretch";
 		const string c_thicknessName = "_Radius";
 
+		[Header("BoxDeactivation")]
+		[SerializeField]
+		float m_boxDeactivation = .5f;
 		[Header("Chain")]
 		[SerializeField]
 		float m_chainDelay = .75f;
@@ -73,20 +81,11 @@ namespace Dasher
 					return;
 				}
 				var progression = Mathf.Min(1,m_timer / m_duration);
-				if (progression < .5)
+				if (progression >= m_stretchFlipPoint && oldProgression < m_stretchFlipPoint)
 				{
-					var p = progression;
-					m_strechable.SetLength(m_strechCurve.Evaluate(p) * m_targetLength);
+					m_strechable.Orient(m_end, m_start);
 				}
-				else
-				{
-					if (oldProgression < .5)
-					{
-						m_strechable.Orient(m_end, m_start);
-					}
-					float p =(float)( .5 - (progression - .5));
-					m_strechable.SetLength(m_strechCurve.Evaluate(p) * m_targetLength);
-				}
+				m_strechable.SetLength(m_strechCurve.Evaluate(progression) * m_targetLength);
 				m_mainGraphics.transform.localScale = Vector3.one * m_scaleCurve.Evaluate(progression);
 
 				m_sigilColor.a = m_sigilAlphaCurve.Evaluate(progression);
@@ -104,7 +103,12 @@ namespace Dasher
 		{
 			if (m_activationDelayTimer < m_chainDelay)
 			{
+				var old = m_activationDelayTimer;
 				m_activationDelayTimer += GameProcess.Instance.GameTime.GetGameFixedDeltaTime();
+				if (old < m_boxDeactivation && m_activationDelayTimer >= m_boxDeactivation)
+				{
+					m_collision.enabled = false;
+				}
 				if (m_activationDelayTimer >= m_chainDelay)
 				{
 					var count = m_chainElements.Count;
@@ -121,8 +125,6 @@ namespace Dasher
 
 		public void Activate(Transform source)
 		{
-			m_collision.enabled = false;
-
 			m_start = source.transform.position;
 			m_end = m_sigil.transform.position;
 			m_start.z = m_end.z - .5f;
@@ -141,9 +143,14 @@ namespace Dasher
 			if (m_chainElements != null && m_chainElements.Count > 0)
 			{
 				var decal = m_chainElements[0].transform.localScale / 2;
+				var source = m_sigil.transform.position;
+				var tz = transform.position.z - 5;
+				source.z = tz;
 				for (int i = 0; i < m_chainElements.Count; ++i)
 				{
-					Debug.DrawLine(m_sigil.transform.position, m_chainElements[i].transform.position + decal, Color.grey);
+					var target = m_chainElements[i].transform.position + decal;
+					target.z = tz;
+					Debug.DrawLine(source, target, Color.grey);
 				}
 			}
 		}
