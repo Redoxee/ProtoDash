@@ -150,7 +150,7 @@ namespace Dasher
 				{
 					var target = m_chainElements[i].transform.position + decal;
 					target.z = tz;
-					Debug.DrawLine(source, target, Color.grey);
+					Debug.DrawLine(source, target, Color.blue);
 				}
 			}
 		}

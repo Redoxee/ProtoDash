@@ -361,5 +361,27 @@ namespace Dasher
 		public MainMenuScript MainMenu { get { return m_mainMenuRef; } }
 
 		#endregion
+
+		#region Feedback
+		const string c_feedbackEmail = "antonmakegames@gmail.com";
+
+		public static void SimpleFeedback()
+		{
+			SendFeedback("I have some feedbacks on Dasher", "Here is what I have to say on Dasher: ");
+		}
+
+		static void SendFeedback(string header, string body = "")
+		{
+			string subject = EscapeURL(header);
+			body = EscapeURL(body);
+			Application.OpenURL("mailto:" + c_feedbackEmail + "?subject=" + subject + "&body=" + body);
+		}
+
+		static string EscapeURL(string url)
+		{
+			return WWW.EscapeURL(url).Replace("+", "%20");
+		}
+
+		#endregion
 	}
 }

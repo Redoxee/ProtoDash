@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a3b53599ec582c84b8af83077f314316, type: 3}
-  m_Name: MainLevelFlow
+  m_Name: Beta1LevelFlow
   m_EditorClassIdentifier: 
   m_levelList:
   - sceneObject: {fileID: 102900000, guid: 12143ebb1477140479131520c3e81f60, type: 3}
@@ -101,13 +101,4 @@ MonoBehaviour:
     parTime: 20
   - sceneObject: {fileID: 102900000, guid: 9c4fef06533f9e74f8e33783389c6a42, type: 3}
     sceneName: 021ThroughTheHeart
-    parTime: 15
-  - sceneObject: {fileID: 102900000, guid: b750427c78bc12d4e82726dcf4165111, type: 3}
-    sceneName: 033KeyIntro
-    parTime: 15
-  - sceneObject: {fileID: 102900000, guid: c7f3174ada6f04c438cc5671847aa3fe, type: 3}
-    sceneName: 034KeyBlockChainIntro
-    parTime: 15
-  - sceneObject: {fileID: 102900000, guid: 748dd6370d604784a80dfa68f81e6d6b, type: 3}
-    sceneName: 035SMBTribute
     parTime: 15

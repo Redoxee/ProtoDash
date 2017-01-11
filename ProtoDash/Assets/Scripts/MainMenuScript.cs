@@ -172,7 +172,7 @@ namespace Dasher
 			MainProcess.Instance.UnregisterMainMenu();
 		}
 
-#endregion
+		#endregion
 
 #region States
 		private void InitStates()
@@ -213,6 +213,7 @@ namespace Dasher
 		}
 
 #endregion
+
 #region LevelSelect
 		FSM_State m_levelSelectState;
 
@@ -283,9 +284,18 @@ namespace Dasher
 			MainProcess.Instance.RequestSwitchToCredits();
 		}
 
-#endregion
-#endregion
+		#endregion
+		#endregion
 
-#endregion
+		#region Feedbacks
+
+		public void FeedbackRequest()
+		{
+			MainProcess.SimpleFeedback();
+		}
+
+		#endregion
+
+		#endregion
 	}
 }

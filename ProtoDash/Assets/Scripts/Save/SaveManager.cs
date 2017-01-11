@@ -12,14 +12,27 @@ namespace Dasher
 
 		#region Save mecanics
 
+		static string SavePath
+		{
+			get
+			{
+				string path = Application.persistentDataPath;
+				if (true)//(path == "")
+				{
+					path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
+				}
+				return path;
+			}
+		}
+
 		public static string S_GetSaveName()
 		{
-			return Application.persistentDataPath + "/dSave";
+			return SavePath + "/dSave";
 		}
 
 		public static string S_GetLevelTraceFile(string lvlId)
 		{
-			return Application.persistentDataPath + "/Trace_" + lvlId;
+			return SavePath + "/Trace_" + lvlId;
 		}
 
 		private FlatBufferBuilder m_builder;
