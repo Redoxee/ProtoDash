@@ -367,7 +367,7 @@ namespace Dasher
 
 		public static void SimpleFeedback()
 		{
-			SendFeedback("I have some feedbacks on Dasher", "Here is what I have to say on Dasher: ");
+			SendFeedback("I have some feedback on Dasher", "");
 		}
 
 		static void SendFeedback(string header, string body = "")

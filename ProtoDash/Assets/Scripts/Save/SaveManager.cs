@@ -17,7 +17,7 @@ namespace Dasher
 			get
 			{
 				string path = Application.persistentDataPath;
-				if (true)//(path == "")
+				if (path == "")
 				{
 					path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
 				}

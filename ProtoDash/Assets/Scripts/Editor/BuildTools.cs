@@ -67,9 +67,16 @@ namespace DasherTool
 			var window = EditorWindow.GetWindow(typeof(BuildTools));
 			window.name = "Dasher Tool";
 		}
+		void Awake()
+		{
+
+			AssetDatabase.ImportAsset(DATA_PATH + MAIN_FLOW_NAME);
+			mainLevelFlow = AssetDatabase.LoadAssetAtPath<LevelFlow>(DATA_PATH + MAIN_FLOW_NAME);
+		}
 
 		void OnGUI()
 		{
+			mainLevelFlow = EditorGUILayout.ObjectField("Level flow", mainLevelFlow, typeof(LevelFlow), false) as LevelFlow;
 			if (GUILayout.Button("Setup Scenes in Build"))
 			{
 				SetSceneInProjects();
@@ -108,16 +115,14 @@ namespace DasherTool
 		void SetSceneInProjects()
 		{
 			EditorBuildSettingsScene[] buildScenes = EditorBuildSettings.scenes;
-			AssetDatabase.ImportAsset(DATA_PATH + MAIN_FLOW_NAME);
-			LevelFlow lf = AssetDatabase.LoadAssetAtPath<LevelFlow>(DATA_PATH + MAIN_FLOW_NAME);
 			UnityEngine.Debug.Log("Setting up level in build");
 
 			bool sceneAdded = false;
 			bool sceneNameChanged = false;
-			int levelCount = lf.GetLevelCount();
+			int levelCount = mainLevelFlow.GetLevelCount();
 			for (int i = 0; i < levelCount; ++i)
 			{
-				LevelData levelItem = lf.LevelList[i];
+				LevelData levelItem = mainLevelFlow.LevelList[i];
 				UnityEngine.Object sceneObject = levelItem.sceneObject;
 				string scenePath = GAME_SCENES_PATH + sceneObject.name + GAME_SCENE_EXTENSION;
 				int index = UnityEditor.ArrayUtility.FindIndex<EditorBuildSettingsScene>(buildScenes, (ebs) => { return ebs.path == scenePath; });
@@ -132,7 +137,7 @@ namespace DasherTool
 				if (sceneObject.name != levelItem.sceneName)
 				{
 					levelItem.sceneName = sceneObject.name;
-					lf.LevelList[i] = levelItem;
+					mainLevelFlow.LevelList[i] = levelItem;
 					sceneNameChanged = true;
 				}
 			}
@@ -142,7 +147,7 @@ namespace DasherTool
 			}
 			if (sceneNameChanged)
 			{
-				EditorUtility.SetDirty(lf);
+				EditorUtility.SetDirty(mainLevelFlow);
 				AssetDatabase.SaveAssets();
 			}
 		}
