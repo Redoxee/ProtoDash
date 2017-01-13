@@ -105,9 +105,18 @@ MonoBehaviour:
   - sceneObject: {fileID: 102900000, guid: b750427c78bc12d4e82726dcf4165111, type: 3}
     sceneName: 033KeyIntro
     parTime: 15
+  - sceneObject: {fileID: 102900000, guid: ed2fb1f77f91ade4189750b66277d6d6, type: 3}
+    sceneName: 038LargeBottle
+    parTime: 6
   - sceneObject: {fileID: 102900000, guid: c7f3174ada6f04c438cc5671847aa3fe, type: 3}
     sceneName: 034KeyBlockChainIntro
     parTime: 15
   - sceneObject: {fileID: 102900000, guid: 748dd6370d604784a80dfa68f81e6d6b, type: 3}
     sceneName: 035SMBTribute
+    parTime: 15
+  - sceneObject: {fileID: 102900000, guid: 4ed7cd62b4f1c3043b37a9e936d9f590, type: 3}
+    sceneName: 036WaterTower
+    parTime: 15
+  - sceneObject: {fileID: 102900000, guid: 69bc2d04e39bbbe4cbb4ff9d550b022d, type: 3}
+    sceneName: 037KeyToTheWallJump
     parTime: 15
