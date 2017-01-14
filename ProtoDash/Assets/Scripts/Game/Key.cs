@@ -77,7 +77,7 @@ namespace Dasher
 
 				if (m_timer >= m_duration)
 				{
-					enabled = false;
+					gameObject.SetActive(false);
 				}
 			}
 		}

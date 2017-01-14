@@ -19,6 +19,9 @@ namespace Dasher
 
 		[Header("Animation")]
 		[SerializeField]
+		bool m_IsSecret = false;
+
+		[SerializeField]
 		float m_duration = 1f;
 		[SerializeField]
 		AnimationCurve m_strechCurve = null;
@@ -80,17 +83,21 @@ namespace Dasher
 					gameObject.SetActive(false);
 					return;
 				}
-				var progression = Mathf.Min(1,m_timer / m_duration);
-				if (progression >= m_stretchFlipPoint && oldProgression < m_stretchFlipPoint)
-				{
-					m_strechable.Orient(m_end, m_start);
-				}
-				m_strechable.SetLength(m_strechCurve.Evaluate(progression) * m_targetLength);
-				m_mainGraphics.transform.localScale = Vector3.one * m_scaleCurve.Evaluate(progression);
 
-				m_sigilColor.a = m_sigilAlphaCurve.Evaluate(progression);
-				m_sigilMaterial.color = m_sigilColor;
-				m_sigilMaterial.SetFloat(c_stretchName, m_sigilCurve.Evaluate(progression));
+				if (!m_IsSecret)
+				{
+					var progression = Mathf.Min(1, m_timer / m_duration);
+					if (progression >= m_stretchFlipPoint && oldProgression < m_stretchFlipPoint)
+					{
+						m_strechable.Orient(m_end, m_start);
+					}
+					m_strechable.SetLength(m_strechCurve.Evaluate(progression) * m_targetLength);
+					m_mainGraphics.transform.localScale = Vector3.one * m_scaleCurve.Evaluate(progression);
+
+					m_sigilColor.a = m_sigilAlphaCurve.Evaluate(progression);
+					m_sigilMaterial.color = m_sigilColor;
+					m_sigilMaterial.SetFloat(c_stretchName, m_sigilCurve.Evaluate(progression));
+				}
 			}
 		}
 
@@ -125,13 +132,16 @@ namespace Dasher
 
 		public void Activate(Transform source)
 		{
-			m_start = source.transform.position;
-			m_end = m_sigil.transform.position;
-			m_start.z = m_end.z - .5f;
-			m_end.z = m_start.z;
-			m_strechable.gameObject.SetActive(true);
-			m_strechable.Orient(m_start, m_end);
-			m_targetLength = Vector3.Distance(m_start, m_end);
+			if (!m_IsSecret)
+			{
+				m_start = source.transform.position;
+				m_end = m_sigil.transform.position;
+				m_start.z = m_end.z - .5f;
+				m_end.z = m_start.z;
+				m_strechable.gameObject.SetActive(true);
+				m_strechable.Orient(m_start, m_end);
+				m_targetLength = Vector3.Distance(m_start, m_end);
+			}
 			m_timer = 0f;
 			m_activationDelayTimer = 0f;
 		}

@@ -715,6 +715,7 @@ namespace Dasher
 			{
 				savedVelocity = characterRB.velocity;
 				characterRB.isKinematic = true;
+				characterRB.velocity = Vector2.zero;
 				isPaused = true;
 			}
 			

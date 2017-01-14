@@ -337,14 +337,14 @@ namespace DasherTool
 
 		#region Colors
 
-		[MenuItem("Dasher/Create color data")]
-		static void S_CreateColorData()
-		{
-			UnityEngine.Debug.Log("Creating a new color data");
-			ColorScheme lf = ScriptableObject.CreateInstance<ColorScheme>();
-			AssetDatabase.CreateAsset(lf, DATA_PATH + "ColorScheme.Asset");
-			UnityEngine.Debug.Log("Color Data created");
-		}
+		//[MenuItem("Dasher/Create color data")]
+		//static void S_CreateColorData()
+		//{
+		//	UnityEngine.Debug.Log("Creating a new color data");
+		//	ColorScheme lf = ScriptableObject.CreateInstance<ColorScheme>();
+		//	AssetDatabase.CreateAsset(lf, DATA_PATH + "ColorScheme.Asset");
+		//	UnityEngine.Debug.Log("Color Data created");
+		//}
 		#endregion
 	}
 }
