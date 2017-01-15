@@ -333,12 +333,19 @@ namespace Dasher
 		{
 			if (m_deathZoneCounter > 0)
 			{
-				if (m_deathFrameCounter > m_allowedDeathFrame && !m_character.IsInInvincibilityFrames())
+				if (!m_character.IsInInvincibilityFrames())
 				{
-					OnDeath();
-					return;
+					if (m_deathFrameCounter > m_allowedDeathFrame)
+					{
+						OnDeath();
+						return;
+					}
+					m_deathFrameCounter += 1;
 				}
-				m_deathFrameCounter += 1;
+				else {
+					m_deathFrameCounter = 0;
+					m_firstDeathPosition = m_character.transform.position;
+				}
 			}
 			else
 			{
