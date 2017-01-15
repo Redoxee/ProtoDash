@@ -20,7 +20,13 @@ namespace DasherTool
 
 			list.elementHeightCallback = (index) =>
 			{
-				return elementOffset * 3f + 6f;
+				float nbFields = 3f;
+				if (index % LevelFlow.c_nbLevelInWorld == 0)
+				{
+					nbFields += 1f;
+				}
+
+				return elementOffset * nbFields + 6f;
 			};
 
 			list.drawElementCallback =
@@ -28,18 +34,29 @@ namespace DasherTool
 			{
 				var element = list.serializedProperty.GetArrayElementAtIndex(index);
 				rect.y += 2f;
+				int nbLine = 0;
+				if (index % LevelFlow.c_nbLevelInWorld == 0)
+				{
+					GUIStyle worldStyle = new GUIStyle();
+					worldStyle.fontStyle = FontStyle.Bold;
+					EditorGUI.LabelField(rect, string.Format("world : {0}", index / LevelFlow.c_nbLevelInWorld + 1), worldStyle);
+					nbLine += 1;
+				}
 
 				float fieldWidth = EditorGUIUtility.currentViewWidth - 60;
 				EditorGUI.LabelField(
-					new Rect(rect.x, rect.y + elementOffset * 0f, fieldWidth, EditorGUIUtility.singleLineHeight),
+					new Rect(rect.x, rect.y + elementOffset * nbLine, fieldWidth, EditorGUIUtility.singleLineHeight),
 					"Level : " + index.ToString("00")
 				);
+				nbLine += 1;
 				EditorGUI.PropertyField(
-					new Rect(rect.x, rect.y + elementOffset * 1f, fieldWidth, EditorGUIUtility.singleLineHeight),
+					new Rect(rect.x, rect.y + elementOffset * nbLine, fieldWidth, EditorGUIUtility.singleLineHeight),
 					element.FindPropertyRelative("sceneObject"), GUIContent.none);
+				nbLine += 1;
 				EditorGUI.PropertyField(
-					new Rect(rect.x, rect.y + elementOffset * 2f, fieldWidth, EditorGUIUtility.singleLineHeight),
+					new Rect(rect.x, rect.y + elementOffset * nbLine, fieldWidth, EditorGUIUtility.singleLineHeight),
 					element.FindPropertyRelative("parTime"), GUIContent.none);
+				nbLine += 1;
 			};
 		}
 
