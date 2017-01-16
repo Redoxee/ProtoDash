@@ -595,7 +595,7 @@ namespace Dasher
 			updateBeak();
 		}
 
-		const float c_dashInivincibility = .5f;
+		const float c_dashInivincibility = .525f;
 		public bool IsInInvincibilityFrames()
 		{
 			if (currentState == Dash)

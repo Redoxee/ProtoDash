@@ -340,12 +340,12 @@ namespace Dasher
 						OnDeath();
 						return;
 					}
-					m_deathFrameCounter += 1;
 				}
 				else {
-					m_deathFrameCounter = 0;
+					//m_deathFrameCounter = 0;
 					m_firstDeathPosition = m_character.transform.position;
 				}
+				m_deathFrameCounter += 1;
 			}
 			else
 			{

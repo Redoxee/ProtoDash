@@ -18,6 +18,7 @@ namespace DasherTool
 			window.name = "Scene setup Tool";
 		}
 
+
 		void OnGUI()
 		{
 			m_fogColor = EditorGUILayout.ColorField("Fog Color", m_fogColor);
@@ -37,6 +38,12 @@ namespace DasherTool
 			RenderSettings.fogMode = FogMode.Linear;
 			RenderSettings.fogStartDistance = m_fogNear;
 			RenderSettings.fogEndDistance = m_fogFar;
+		}
+
+		[MenuItem("Dasher/Time")]
+		static void TimeShortCut()
+		{
+			EditorApplication.ExecuteMenuItem("Edit/Project Settings/Time");
 		}
 	}
 }
