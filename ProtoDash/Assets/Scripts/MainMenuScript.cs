@@ -87,7 +87,6 @@ namespace Dasher
 			MainProcess mp = MainProcess.Instance;
 			mp.RegisterMainMenu(this);
 
-			Material lightButtonMaterial = mp.m_colorScheme.LightButtond_Material;
 			var levelFlow = mp.levelFlow;
 			var dataManager = mp.DataManager;
 			var structuredLevels = levelFlow.GetStructuredProgression();
@@ -113,7 +112,6 @@ namespace Dasher
 					levelButton.onClick.AddListener(() => { OnLevelPressed(levels[levelIndex], levelLabel); });
 
 					Image buttonImage = btnObject.GetComponent<Image>();
-					buttonImage.material = lightButtonMaterial;
 
 					bool isUnlocked = true;
 #if !DASHER_DEMO

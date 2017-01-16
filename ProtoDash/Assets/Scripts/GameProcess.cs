@@ -466,9 +466,11 @@ namespace Dasher
 			m_fakeEndNode.SetActive(true);
 			m_character.gameObject.SetActive(false);
 
-			var cs = MainProcess.Instance.m_colorScheme;
 			m_endFakeScaller.StartColor = m_endNode.CurrentColor;
-			m_endFakeScaller.EndColor = cs.EndLevelPanel;
+			if (m_GUIManager != null)
+			{
+				m_endFakeScaller.EndColor = m_GUIManager.EndLevelBackground;
+			}
 
 		}
 

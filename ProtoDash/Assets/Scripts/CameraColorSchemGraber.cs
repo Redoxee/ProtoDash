@@ -10,7 +10,6 @@ namespace Dasher
 		void Start()
 		{
 			Camera camera = GetComponent<Camera>();
-			camera.backgroundColor = MainProcess.Instance.m_colorScheme.MainBackGround;
 		}
 
 	}

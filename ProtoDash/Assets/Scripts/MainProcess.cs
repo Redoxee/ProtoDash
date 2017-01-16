@@ -28,8 +28,8 @@ namespace Dasher
 		[SerializeField]
 		public BuildData buildData;
 	
-		[SerializeField]
-		public ColorScheme m_colorScheme;
+		//[SerializeField]
+		//public ColorScheme m_colorScheme;
 
 		[SerializeField]
 		Camera m_transitionCamera;
@@ -59,8 +59,6 @@ namespace Dasher
 
 			m_saveManager = new SaveManager();
 			m_AnalyticsManager = new DasherAnalyticsManager();
-
-			m_colorScheme.SetColors();
 
 			if (SceneManager.GetActiveScene().name != c_mainScene)
 			{

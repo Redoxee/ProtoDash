@@ -40,6 +40,9 @@ namespace Dasher
 		private Text m_endLevelLabelText = null;
 		[SerializeField]
 		EndLevelGUI m_endLevelGUI = null;
+		[SerializeField]
+		Color m_endLevelBackGround = new Color(0.006896503f, 0.0045977007f, 0.2735632f, a: 0.9411765f);
+		public Color EndLevelBackground { get { return m_endLevelBackGround; } }
 		
 		[Space]
 		[Header("Death")]
