@@ -812,11 +812,6 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114000011799039732, guid: 89c844b092a03aa43a42d719c3029f33,
         type: 2}
-      propertyPath: m_chainDelay
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000011799039732, guid: 89c844b092a03aa43a42d719c3029f33,
-        type: 2}
       propertyPath: m_chainElements.Array.data[0]
       value: 
       objectReference: {fileID: 701778844}
@@ -901,6 +896,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114000011799039732, guid: 89c844b092a03aa43a42d719c3029f33,
+        type: 2}
+      propertyPath: m_chainElements.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4000014084709324, guid: 89c844b092a03aa43a42d719c3029f33, type: 2}
       propertyPath: m_LocalPosition.x
       value: 14
@@ -1196,6 +1196,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114000011799039732, guid: 89c844b092a03aa43a42d719c3029f33,
+        type: 2}
+      propertyPath: m_chainElements.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4000014084709324, guid: 89c844b092a03aa43a42d719c3029f33, type: 2}
       propertyPath: m_LocalPosition.x
       value: 10
@@ -1307,6 +1312,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114000011799039732, guid: 89c844b092a03aa43a42d719c3029f33,
+        type: 2}
+      propertyPath: m_chainElements.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4000014084709324, guid: 89c844b092a03aa43a42d719c3029f33, type: 2}
       propertyPath: m_LocalPosition.x
       value: 10
@@ -1363,6 +1373,11 @@ Prefab:
     - target: {fileID: 4000013967478750, guid: 89c844b092a03aa43a42d719c3029f33, type: 2}
       propertyPath: m_LocalScale.y
       value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011799039732, guid: 89c844b092a03aa43a42d719c3029f33,
+        type: 2}
+      propertyPath: m_strechDisapearPoint
+      value: 0.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 89c844b092a03aa43a42d719c3029f33, type: 2}

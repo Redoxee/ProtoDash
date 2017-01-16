@@ -127,5 +127,14 @@ MonoBehaviour:
     sceneName: 040KeyPits
     parTime: 15
   - sceneObject: {fileID: 102900000, guid: df8f97eba00b5b243ad0c5e759b178a3, type: 3}
-    sceneName: 040KeyPits
+    sceneName: 041Day9
+    parTime: 15
+  - sceneObject: {fileID: 102900000, guid: bc0817459d183ba4ca3cb48f35165663, type: 3}
+    sceneName: 042KeyChoices
+    parTime: 15
+  - sceneObject: {fileID: 102900000, guid: 1c2eb76638564aa4f8f7253731a71079, type: 3}
+    sceneName: 043KeyShaft
+    parTime: 15
+  - sceneObject: {fileID: 102900000, guid: 146b4703df0d3da46b0622e8835334a4, type: 3}
+    sceneName: 044TakingRisks
     parTime: 15

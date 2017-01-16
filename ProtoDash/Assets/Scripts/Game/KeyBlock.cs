@@ -25,20 +25,17 @@ namespace Dasher
 		float m_duration = 1f;
 		[SerializeField]
 		AnimationCurve m_strechCurve = null;
+		[Range(0,1)]
 		[SerializeField]
 		float m_stretchFlipPoint = .5f;
+		[Range(0, 1)]
+		[SerializeField]
+		float m_strechDisapearPoint = 1f;
 
 		[SerializeField]
 		AnimationCurve m_scaleCurve = null;
 		[SerializeField]
-		AnimationCurve m_sigilCurve = null;
-		[SerializeField]
-		AnimationCurve m_sigilAlphaCurve = null;
-
-		Material m_sigilMaterial = null;
-		Color m_sigilColor;
-		const string c_stretchName = "_Stretch";
-		const string c_thicknessName = "_Radius";
+		AnimationCurve m_sigilScaleCurve = null;
 
 		[Header("BoxDeactivation")]
 		[SerializeField]
@@ -55,6 +52,8 @@ namespace Dasher
 
 		float m_targetLength = 0;
 
+		bool m_wasActivated = false;
+
 		void Awake()
 		{
 			Initialize();
@@ -64,11 +63,6 @@ namespace Dasher
 		{
 			m_timer = m_duration + 1;
 			m_activationDelayTimer = m_chainDelay + 1;
-
-			var sigilRenderer = m_sigil.GetComponent<Renderer>();
-			m_sigilMaterial = new Material(sigilRenderer.material);
-			sigilRenderer.material = m_sigilMaterial;
-			m_sigilColor = m_sigilMaterial.color;
 		}
 
 		void UpdateAnimation()
@@ -84,20 +78,27 @@ namespace Dasher
 					return;
 				}
 
+				var progression = Mathf.Min(1, m_timer / m_duration);
 				if (!m_IsSecret)
 				{
-					var progression = Mathf.Min(1, m_timer / m_duration);
-					if (progression >= m_stretchFlipPoint && oldProgression < m_stretchFlipPoint)
+					if (progression <= m_strechDisapearPoint)
 					{
-						m_strechable.Orient(m_end, m_start);
+						if (progression >= m_stretchFlipPoint && oldProgression < m_stretchFlipPoint)
+						{
+							m_strechable.Orient(m_end, m_start);
+						}
+						m_strechable.SetLength(m_strechCurve.Evaluate(progression) * m_targetLength);
 					}
-					m_strechable.SetLength(m_strechCurve.Evaluate(progression) * m_targetLength);
-					m_mainGraphics.transform.localScale = Vector3.one * m_scaleCurve.Evaluate(progression);
-
-					m_sigilColor.a = m_sigilAlphaCurve.Evaluate(progression);
-					m_sigilMaterial.color = m_sigilColor;
-					m_sigilMaterial.SetFloat(c_stretchName, m_sigilCurve.Evaluate(progression));
+					else if (oldProgression <= m_strechDisapearPoint)
+					{
+						m_strechable.gameObject.SetActive(false);
+					}
 				}
+				var bodyScale = m_scaleCurve.Evaluate(progression);
+				m_mainGraphics.transform.localScale = new Vector3(bodyScale,bodyScale,1f);
+
+				var sigilScale = m_sigilScaleCurve.Evaluate(progression);
+				m_sigil.transform.localScale = new Vector3(sigilScale, sigilScale, 1f);
 			}
 		}
 
@@ -132,18 +133,22 @@ namespace Dasher
 
 		public void Activate(Transform source)
 		{
-			if (!m_IsSecret)
+			if (!m_wasActivated)
 			{
-				m_start = source.transform.position;
-				m_end = m_sigil.transform.position;
-				m_start.z = m_end.z - .5f;
-				m_end.z = m_start.z;
-				m_strechable.gameObject.SetActive(true);
-				m_strechable.Orient(m_start, m_end);
-				m_targetLength = Vector3.Distance(m_start, m_end);
+				if (!m_IsSecret)
+				{
+					m_start = source.transform.position;
+					m_end = m_sigil.transform.position;
+					m_start.z = m_end.z - .5f;
+					m_end.z = m_start.z;
+					m_strechable.gameObject.SetActive(true);
+					m_strechable.Orient(m_start, m_end);
+					m_targetLength = Vector3.Distance(m_start, m_end);
+				}
+				m_timer = 0f;
+				m_activationDelayTimer = 0f;
 			}
-			m_timer = 0f;
-			m_activationDelayTimer = 0f;
+			m_wasActivated = true;
 		}
 
 #if UNITY_EDITOR

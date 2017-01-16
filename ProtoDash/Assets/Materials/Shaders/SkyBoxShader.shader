@@ -58,7 +58,7 @@
 	{
 		float f = saturate(
 			pow(
-				length(i.uv),POWER
+				dot(i.uv,i.uv),POWER * .5
 			) 
 		);
 		return lerp(_Color,_Color2,f);
