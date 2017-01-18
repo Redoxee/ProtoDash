@@ -54,7 +54,7 @@ MonoBehaviour:
   m_skyMaterial: {fileID: 2100000, guid: 1e263c7fa8188e44480930325397ec57, type: 2}
   m_backElementsMaterial: {fileID: 2100000, guid: 007dfd71c1321e74aae895b6caedcc5d,
     type: 2}
-  m_bgCenter: {r: 1, g: 1, b: 1, a: 1}
+  m_bgCenter: {r: 0.015686275, g: 0, b: 0.11764706, a: 1}
   m_bgOuter: {r: 0.015686275, g: 0, b: 0.11764706, a: 1}
   m_elementsColors: {r: 0.0627451, g: 0, b: 0.34117648, a: 1}
   m_fogColor: {r: 0.015686275, g: 0, b: 0.11372549, a: 1}
