@@ -21,9 +21,6 @@ MonoBehaviour:
   - sceneObject: {fileID: 102900000, guid: d2d45e860eecac745bf52693eff38cba, type: 3}
     sceneName: 004DashIntro
     parTime: 10
-  - sceneObject: {fileID: 102900000, guid: 9e0df97bddd5f5641b668fb6e8e47210, type: 3}
-    sceneName: 024TrickyJumps
-    parTime: 15
   - sceneObject: {fileID: 102900000, guid: 8478ecac3eb56a648b7a9f600981b614, type: 3}
     sceneName: 003DeathPit
     parTime: 10
@@ -36,6 +33,9 @@ MonoBehaviour:
   - sceneObject: {fileID: 102900000, guid: 35131affaa210d34c871bf288337f211, type: 3}
     sceneName: 006Climb
     parTime: 20
+  - sceneObject: {fileID: 102900000, guid: 9e0df97bddd5f5641b668fb6e8e47210, type: 3}
+    sceneName: 024TrickyJumps
+    parTime: 15
   - sceneObject: {fileID: 102900000, guid: 28222288afd950f49a10fd20e656bc85, type: 3}
     sceneName: 007DashDown
     parTime: 10

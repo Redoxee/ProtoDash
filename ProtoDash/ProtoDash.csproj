@@ -95,6 +95,7 @@
     <Compile Include="Assets\Scripts\DasherAnalyticsManager.cs" />
     <Compile Include="Assets\Scripts\Data\BuildData.cs" />
     <Compile Include="Assets\Scripts\Data\LevelFlow.cs" />
+    <Compile Include="Assets\Scripts\Data\WorldDresser.cs" />
     <Compile Include="Assets\Scripts\ExpandableCircle.cs" />
     <Compile Include="Assets\Scripts\ExtensibleCircleManager.cs" />
     <Compile Include="Assets\Scripts\Extentions.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Assets\Scripts\Game\Key.cs" />
     <Compile Include="Assets\Scripts\Game\KeyBlock.cs" />
     <Compile Include="Assets\Scripts\Game\PastTraceManager.cs" />
+    <Compile Include="Assets\Scripts\Game\SceneEnvironementSetup.cs" />
     <Compile Include="Assets\Scripts\Game\SmartGauge.cs" />
     <Compile Include="Assets\Scripts\Game\TraceManager.cs" />
     <Compile Include="Assets\Scripts\Game\TraceObject.cs" />

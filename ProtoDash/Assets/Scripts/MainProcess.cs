@@ -23,7 +23,10 @@ namespace Dasher
 		GameStates m_gameState = GameStates.MainMenu;
 
 		[SerializeField]
-		public LevelFlow levelFlow;
+		public LevelFlow levelFlow = null;
+
+		[SerializeField]
+		public WorldDresser WorldDresser = null;
 
 		[SerializeField]
 		public BuildData buildData;

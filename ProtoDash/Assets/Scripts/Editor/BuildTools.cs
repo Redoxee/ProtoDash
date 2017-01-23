@@ -43,6 +43,18 @@ namespace DasherTool
 #endif
 		#endregion
 
+		#region CREATE WORLD DRESSER
+
+		const string c_worldDresserName = "WorldDresser.Asset";
+		[MenuItem("Dasher/Create World dresser")]
+		static void S_CreateLevelFlow()
+		{
+			WorldDresser lf = new WorldDresser();
+			AssetDatabase.CreateAsset(lf, DATA_PATH + c_worldDresserName);
+		}
+
+		#endregion
+
 		#region Create build data
 
 		const string BUILD_DATA_NAME = "BuildData.Asset";

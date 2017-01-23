@@ -32,6 +32,9 @@ public class ColorSetter : MonoBehaviour {
 
 		m_backElementsMaterial.SetColor(c_bgElementColor, m_elementsColors);
 
+		RenderSettings.fog = true;
 		RenderSettings.fogColor = m_fogColor;
+		RenderSettings.fogMode = FogMode.Linear;
+		RenderSettings.fogEndDistance = 1100;
 	}
 }

@@ -28,7 +28,7 @@ namespace Dasher
 		private bool m_initFrameWait = false;
 
 		private PastTraceManager m_pastTraceManagerRef = null;
-
+		
 		#region Character
 		private Character m_character;
 
@@ -78,6 +78,7 @@ namespace Dasher
 
 			m_deathDummyScaler = m_deathDummy.GetComponent<FullScreenScaler>();
 			m_deathDummy.SetActive(false);
+			
 		}
 
 		void OnDestroy()
