@@ -16,6 +16,7 @@ namespace Dasher
 		{
 			InitStates();
 			InitializeWorlds();
+			InitColors();
 		}
 
 		public void StartLevel(int levelIndex)
@@ -181,7 +182,7 @@ namespace Dasher
 			SetState(m_introState);
 		}
 
-#region Intro
+		#region Intro
 		[SerializeField]
 		private Text QuickStartLevelDisplay = null;
 
@@ -210,9 +211,10 @@ namespace Dasher
 			MainProcess.Instance.RequestSwitchToStats();
 		}
 
-#endregion
+		#endregion
 
-#region LevelSelect
+
+		#region LevelSelect
 		FSM_State m_levelSelectState;
 
 		[SerializeField]
@@ -264,7 +266,7 @@ namespace Dasher
 
 #endregion
 
-#region Settings
+		#region Settings
 		FSM_State m_setingsState;
 
 		private void BeginSettings()
@@ -283,6 +285,21 @@ namespace Dasher
 		}
 
 		#endregion
+		#endregion
+
+		#region Colors
+		void InitColors()
+		{
+			MainProcess mp = MainProcess.Instance;
+			LevelFlow lf = mp.levelFlow;
+			SaveManager sm = mp.DataManager;
+			string lastLevelPlayed = sm.LastLevelPlayed;
+			var worldIndex = lf.GetWorldAndRankPosition(lastLevelPlayed);
+			var dresser = mp.WorldDresser;
+			var dress = dresser.GetDressForWorld(worldIndex.Key);
+			dress.ColorSetter.ApplyColors();
+		}
+
 		#endregion
 
 		#region Feedbacks

@@ -124,6 +124,9 @@ namespace Dasher
 
 		public KeyValuePair<int,int> GetWorldAndRankPosition(string levelName)
 		{
+			if (levelName == null)
+				return new KeyValuePair<int, int>(0, 0);
+
 			var wc = m_structuredLevelFlow.Count;
 			for (int i = 0; i < wc; ++i)
 			{
