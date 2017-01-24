@@ -29,13 +29,13 @@ MonoBehaviour:
       type: 2}
     BackgroundPrefab: {fileID: 1000011832959504, guid: 69d06e8062f94b244ac0a0bc28535cc0,
       type: 2}
-  - ColorSetter: {fileID: 114873766678500530, guid: 22886dbe8162e024a9732b4fe3e4f095,
-      type: 2}
-    BackgroundPrefab: {fileID: 1823466845325692, guid: 971e5aca586672640b207406dd26ccb4,
-      type: 2}
   - ColorSetter: {fileID: 114508681384086436, guid: 387f5287124b1f34a8d81118b7d64e13,
       type: 2}
     BackgroundPrefab: {fileID: 1348539769040342, guid: 7c183476a561ca349a8f6a1615f0bf62,
+      type: 2}
+  - ColorSetter: {fileID: 114873766678500530, guid: 22886dbe8162e024a9732b4fe3e4f095,
+      type: 2}
+    BackgroundPrefab: {fileID: 1823466845325692, guid: 971e5aca586672640b207406dd26ccb4,
       type: 2}
   - ColorSetter: {fileID: 114089264167397988, guid: b85de644cbe43a24e96d897b5d201bfa,
       type: 2}
