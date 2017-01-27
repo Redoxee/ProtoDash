@@ -7,8 +7,8 @@ using System;
 namespace Dasher
 {
 	public class SaveManager {
-		public const int c_SaveVersion = 8;
-		private DasherSavable m_savable;
+		public const int c_SaveVersion = 9;
+		private DasherSavable m_savable = null;
 
 		#region Save mecanics
 
@@ -74,8 +74,11 @@ namespace Dasher
 				{
 					m_savable.m_settings.isLefthanded = save.Settings.LeftHandedMode;
 				}
+
+				ConvertSave(save.Version);
 			}
-			else
+
+			if(m_savable == null)
 			{
 				m_savable = new DasherSavable(0);
 			}
@@ -103,6 +106,19 @@ namespace Dasher
 			Debug.Log(result);
 			return result;
 		}
+
+		#region Convert Save
+		void ConvertSave(int version)
+		{
+			if (m_savable != null)
+			{
+				if (version < 9)
+				{
+					ClearSave();
+				}
+			}
+		}
+		#endregion
 
 		public void Save()
 		{

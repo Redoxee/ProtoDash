@@ -293,10 +293,10 @@ namespace Dasher
 			MainProcess mp = MainProcess.Instance;
 			LevelFlow lf = mp.levelFlow;
 			SaveManager sm = mp.DataManager;
-			string lastLevelPlayed = sm.LastLevelPlayed;
-			var worldIndex = lf.GetWorldAndRankPosition(lastLevelPlayed);
+			
+			var worldIndex = lf.GetMostInterestingLevel().world;
 			var dresser = mp.WorldDresser;
-			var dress = dresser.GetDressForWorld(worldIndex.Key);
+			var dress = dresser.GetDressForWorld(worldIndex);
 			dress.ColorSetter.ApplyColors();
 		}
 

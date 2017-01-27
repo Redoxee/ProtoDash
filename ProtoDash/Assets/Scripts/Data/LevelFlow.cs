@@ -27,6 +27,7 @@ namespace Dasher
 		public bool IsLevelChamp { get {
 				return currentBest > 0 && currentBest < parTime;
 			} }
+		public bool HasBeenFinished { get { return currentBest > 0; } }
 	}
 
 	public class LevelFlow : ScriptableObject
@@ -103,7 +104,7 @@ namespace Dasher
 
 		public bool IsLevelFinished(int levelIndex)
 		{
-			return m_levelList[levelIndex].currentBest > 0;
+			return m_levelList[levelIndex].HasBeenFinished;
 		}
 
 		public bool IsLevelChamp(int levelIndex)
@@ -142,6 +143,30 @@ namespace Dasher
 				}
 			}
 			return new KeyValuePair<int, int>(-1,-1);
+		}
+
+		public LevelData GetMostInterestingLevel()
+		{
+			LevelData result = m_levelList[0];
+			var levelCount = m_levelList.Count;
+			var levelIndex = 0;
+			while(levelIndex < levelCount)
+			{
+				result = m_levelList[levelIndex];
+				if (!result.HasBeenFinished)
+				{
+					break;
+				}
+				levelIndex += 1;
+			}
+			if (levelIndex >= levelCount && result.HasBeenFinished)
+			{
+				MainProcess mp = MainProcess.Instance;
+				string name = mp.DataManager.LastLevelPlayed;
+				result = GetLevelData(name);
+			}
+
+			return result;
 		}
 	}
 }
