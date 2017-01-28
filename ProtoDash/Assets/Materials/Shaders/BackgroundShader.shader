@@ -7,6 +7,7 @@ Shader "Unlit/BackgroundShader"
 		_MainTex ("Texture", 2D) = "white" {}
 		_MainColor ("Main Color", Color) = (0.3, .00, .50, 1.)
 		_CurrentPosition("Current Position", Vector) = (0,0,0,0)
+		_QueueOffset ("Queue offset",int) = 0
 	}
 	SubShader
 	{

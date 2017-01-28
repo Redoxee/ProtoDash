@@ -54,6 +54,12 @@ MonoBehaviour:
   m_skyMaterial: {fileID: 2100000, guid: 1e263c7fa8188e44480930325397ec57, type: 2}
   m_backElementsMaterial: {fileID: 2100000, guid: 007dfd71c1321e74aae895b6caedcc5d,
     type: 2}
+  m_backElementsMaterialFront: {fileID: 2100000, guid: ec40eeb571cf59c48a3e716c64239cf5,
+    type: 2}
+  m_backElementsMaterialMidle: {fileID: 2100000, guid: d3c684e13c12121459ee24989530d81b,
+    type: 2}
+  m_backElementsMaterialBack: {fileID: 2100000, guid: ee8c022b55beda340814842a18462c28,
+    type: 2}
   m_bgCenter: {r: 0.72156864, g: 0.72156864, b: 0.72156864, a: 1}
   m_bgOuter: {r: 0.01956809, g: 0, b: 0.0831643, a: 1}
   m_elementsColors: {r: 0.06907853, g: 0.06387066, b: 0.08600406, a: 1}

@@ -13,6 +13,13 @@ public class ColorSetter : MonoBehaviour {
 	const string c_skyOuter = "_Color2";
 	[SerializeField]
 	Material m_backElementsMaterial = null;
+	[SerializeField]
+	Material m_backElementsMaterialFront = null;
+	[SerializeField]
+	Material m_backElementsMaterialMidle = null;
+	[SerializeField]
+	Material m_backElementsMaterialBack = null;
+
 	const string c_bgElementColor = "_Color";
 
 	[Header("Colors")]
@@ -31,6 +38,9 @@ public class ColorSetter : MonoBehaviour {
 		m_skyMaterial.SetColor(c_skyOuter, m_bgOuter);
 
 		m_backElementsMaterial.SetColor(c_bgElementColor, m_elementsColors);
+		m_backElementsMaterialFront.SetColor(c_bgElementColor, m_elementsColors);
+		m_backElementsMaterialMidle.SetColor(c_bgElementColor, m_elementsColors);
+		m_backElementsMaterialBack.SetColor(c_bgElementColor, m_elementsColors);
 
 		RenderSettings.fog = true;
 		RenderSettings.fogColor = m_fogColor;
