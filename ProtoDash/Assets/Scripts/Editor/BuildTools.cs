@@ -102,6 +102,11 @@ namespace DasherTool
 				}
 			}
 
+			if(GUILayout.Button("Open Player settings"))
+			{
+				EditorApplication.ExecuteMenuItem("Edit/Project Settings/Player");
+			}
+
 			m_IncrementPatch		= GUILayout.Toggle(m_IncrementPatch			, "Auto Increment Patch");
 			m_isDevelopementBuild	= GUILayout.Toggle(m_isDevelopementBuild	, "Is Developpement Build");
 			m_androidAutoPlay		= GUILayout.Toggle(m_androidAutoPlay		, "Android Auto push");
@@ -117,10 +122,18 @@ namespace DasherTool
 				PushLastAndroidBuild();
 			}
 
-			if (GUILayout.Button("Build Web"))
+//			if (GUILayout.Button("Build Web"))
+//			{
+//				BuildForWeb(m_isDevelopementBuild, m_IncrementPatch);
+//			}
+
+			#if UNITY_EDITOR_OSX
+			if(GUILayout.Button("Build IOS"))
 			{
-				BuildForWeb(m_isDevelopementBuild, m_IncrementPatch);
+					BuildForIOS(m_isDevelopementBuild,m_IncrementPatch,m_androidAutoPlay);
+
 			}
+			#endif
 		}
 
 		#region Set scenes in builds
@@ -296,6 +309,54 @@ namespace DasherTool
 			Process.Start(info);
 		}
 
+		#endregion
+
+		#region IOS
+		
+		#if UNITY_EDITOR_OSX
+
+		const string IOS_path = "/users/antonroy/Desktop/";
+		const string IOS_folder = "DasherIOS";
+		public void BuildForIOS(bool isDebug,bool increment, bool autoRun)
+		{
+
+			string buildPath = IOS_path + IOS_folder + GetVersionName();
+
+			if(!Directory.Exists(buildPath))
+			{
+				Directory.CreateDirectory(buildPath);
+			}
+			string buildName = buildPath + "/" + GetVersionName();
+
+			string[] scenes = StandardSetup();
+			BuildOptions bo = GetOptions(isDebug);
+
+			if (autoRun)
+			{
+				bo = bo | BuildOptions.AutoRunPlayer;
+			}
+
+			UnityEngine.Debug.Log("IOS building : " + buildName);
+
+			string buildResult = BuildPipeline.BuildPlayer(scenes, buildName, BuildTarget.iOS,bo);
+
+			if (string.IsNullOrEmpty(buildResult))
+			{
+				UnityEngine.Debug.Log("IOS build complete : " + buildName);
+				m_lastBuildName = GetVersionName();
+
+				if (increment)
+				{
+					IncrementPatch();
+				}
+			}
+			else
+			{
+				UnityEngine.Debug.LogError("Error building IOS:\n" + buildResult);
+			}		
+		}
+
+		#endif
 		#endregion
 
 		#region Web
