@@ -60,6 +60,8 @@ namespace Dasher
 				return;
 			}
 
+			Application.targetFrameRate = 60;
+
 			m_saveManager = new SaveManager();
 			m_AnalyticsManager = new DasherAnalyticsManager();
 
