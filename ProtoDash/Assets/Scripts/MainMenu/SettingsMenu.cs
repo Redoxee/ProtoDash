@@ -23,10 +23,12 @@ namespace Dasher
 			m_deleteSavePopup.SetActive(false);
 			enabled = false;
 
-			DasherSettings setting = MainProcess.Instance.DataManager.GetSettings();
-			m_leftHandedMode.SetOn(setting.isLefthanded);
-
-			
+			MainProcess mp = MainProcess.Instance;
+			if (mp != null)
+			{
+				DasherSettings setting = mp.DataManager.GetSettings();
+				m_leftHandedMode.SetOn(setting.isLefthanded);
+			}
 		}
 
 		public void OnLeftHandToggle()

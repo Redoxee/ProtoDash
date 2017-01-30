@@ -377,6 +377,11 @@ namespace Dasher
 			MainProcess.Instance.RequestSwitchToHome();
 		}
 
+		public void GoToLevelSelect()
+		{
+			MainProcess.Instance.RequestSwitchToLevelSelect();
+		}
+
 		public void NextLevel()
 		{
 			MainProcess.Instance.RequestLaunchNextLevel();

@@ -9,13 +9,14 @@ namespace Dasher
 
 		private static int c_a_select = Animator.StringToHash("LevelSelect");
 		private static int c_a_settings = Animator.StringToHash("SettingsMenu");
+		private static int c_a_instantLevelSelect = Animator.StringToHash("InstantLevelSelect");
 		[SerializeField]
 		private Animator m_menuAnimator = null;
 
 		void Awake()
 		{
 			InitStates();
-			InitializeWorlds();
+			Initialize();
 			InitColors();
 		}
 
@@ -79,8 +80,10 @@ namespace Dasher
 
 		public const string c_levelLabelPattern = "{0}-{1}";
 
+		#region Initialization
+
 		private bool m_isinitialized = false;
-		private void InitializeWorlds()
+		private void Initialize()
 		{
 			if (m_isinitialized || MainProcess.Instance == null)
 				return;
@@ -93,6 +96,7 @@ namespace Dasher
 			var structuredLevels = levelFlow.GetStructuredProgression();
 			var worldEnumerator = structuredLevels.GetEnumerator();
 
+			#region World creation
 			while (worldEnumerator.MoveNext())
 			{
 				GameObject worldObject = Instantiate<GameObject>(m_worldPrefab);
@@ -137,6 +141,7 @@ namespace Dasher
 					}
 				}
 			}
+			#endregion
 
 			ScrollRect scrollRect = m_worldsParent.GetComponentInParent<ScrollRect>();
 			scrollRect.verticalNormalizedPosition = 0;
@@ -153,14 +158,34 @@ namespace Dasher
 			m_lightLevelButton.Initialize();
 			OnLevelPressed(structuredLevels[1][0], string.Format(c_levelLabelPattern, 1, 1));
 
+			InitColors();
+
 			m_isinitialized = true;
 		}
+		
+		#region Colors
+		void InitColors()
+		{
+			MainProcess mp = MainProcess.Instance;
+			if (mp == null)
+				return;
+			LevelFlow lf = mp.levelFlow;
+			SaveManager sm = mp.DataManager;
+
+			var worldIndex = lf.GetMostInterestingLevel().world;
+			var dresser = mp.WorldDresser;
+			var dress = dresser.GetDressForWorld(worldIndex);
+			dress.ColorSetter.ApplyColors();
+		}
+
+		#endregion
+		#endregion
 
 		void Update()
 		{
 			if (!m_isinitialized)
 			{
-				InitializeWorlds();
+				Initialize();
 			}
 			m_lightLevelButton.ManualUpdate();
 		}
@@ -287,19 +312,13 @@ namespace Dasher
 		#endregion
 		#endregion
 
-		#region Colors
-		void InitColors()
+		#region Shortcuts
+		public void InstantLevelSelection()
 		{
-			MainProcess mp = MainProcess.Instance;
-			LevelFlow lf = mp.levelFlow;
-			SaveManager sm = mp.DataManager;
-			
-			var worldIndex = lf.GetMostInterestingLevel().world;
-			var dresser = mp.WorldDresser;
-			var dress = dresser.GetDressForWorld(worldIndex);
-			dress.ColorSetter.ApplyColors();
+			m_menuAnimator.SetTrigger(c_a_instantLevelSelect);
+			m_menuAnimator.SetBool(c_a_select, true);
+			SetState(m_levelSelectState);
 		}
-
 		#endregion
 
 		#region Feedbacks

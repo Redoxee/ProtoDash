@@ -21,7 +21,7 @@ namespace DasherTool
 
 		private const string INTRO_SCENE_PATH = "Assets/Scenes/MainScene.unity";
 
-
+		private BuildData m_currentBuildData = null;
 		private LevelFlow mainLevelFlow;
 
 		private bool m_IncrementPatch = true;
@@ -88,6 +88,11 @@ namespace DasherTool
 
 		void OnGUI()
 		{
+			if (m_currentBuildData == null)
+			{
+				m_currentBuildData = GetBuildData();
+			}
+
 			mainLevelFlow = EditorGUILayout.ObjectField("Level flow", mainLevelFlow, typeof(LevelFlow), false) as LevelFlow;
 			if (GUILayout.Button("Setup Scenes in Build"))
 			{
@@ -98,19 +103,23 @@ namespace DasherTool
 			{
 				if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
 				{
-					EditorSceneManager.OpenScene(INTRO_SCENE_PATH,OpenSceneMode.Single);
+					EditorSceneManager.OpenScene(INTRO_SCENE_PATH, OpenSceneMode.Single);
 				}
 			}
 
-			if(GUILayout.Button("Open Player settings"))
+			if (GUILayout.Button("Open Player settings"))
 			{
 				EditorApplication.ExecuteMenuItem("Edit/Project Settings/Player");
 			}
 
-			m_IncrementPatch		= GUILayout.Toggle(m_IncrementPatch			, "Auto Increment Patch");
-			m_isDevelopementBuild	= GUILayout.Toggle(m_isDevelopementBuild	, "Is Developpement Build");
-			m_androidAutoPlay		= GUILayout.Toggle(m_androidAutoPlay		, "Android Auto push");
+			m_IncrementPatch = GUILayout.Toggle(m_IncrementPatch, "Auto Increment Patch");
+			m_isDevelopementBuild = GUILayout.Toggle(m_isDevelopementBuild, "Is Developpement Build");
+			m_androidAutoPlay = GUILayout.Toggle(m_androidAutoPlay, "Android Auto push");
 
+			if (m_currentBuildData != null)
+			{
+				GUILayout.Label("Next Build : " + GetVersionName(m_currentBuildData), EditorStyles.boldLabel);
+			}
 
 			if (GUILayout.Button("Build Android"))
 			{
@@ -198,19 +207,29 @@ namespace DasherTool
 			return scenes;
 		}
 
-		string GetVersionName()
+		BuildData GetBuildData()
 		{
-			BuildData bd = AssetDatabase.LoadAssetAtPath<BuildData>(DATA_PATH + BUILD_DATA_NAME);
+			return AssetDatabase.LoadAssetAtPath<BuildData>(DATA_PATH + BUILD_DATA_NAME);
+		}
+
+		string GetVersionName(BuildData buildData = null)
+		{
+			var bd = buildData;
+			if (bd == null)
+			{
+				bd = GetBuildData();
+			}
 			return string.Format(c_buildNameTemplate, bd.Version, bd.Revision, bd.Patch);
 		}
 
 		void IncrementPatch()
 		{
-			BuildData bd = AssetDatabase.LoadAssetAtPath<BuildData>(DATA_PATH + BUILD_DATA_NAME);
+			BuildData bd = GetBuildData();
 			//Undo.RecordObject(bd, "patchIncrement");
 			bd.Patch += 1;
 			EditorUtility.SetDirty(bd);
 			AssetDatabase.SaveAssets();
+			m_currentBuildData = bd;
 		}
 
 		//[MenuItem("Dasher/Debug Increment patch")]

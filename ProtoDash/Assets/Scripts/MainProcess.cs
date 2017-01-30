@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System;
 using UnityEngine.SceneManagement;
 
 namespace Dasher
@@ -131,6 +131,17 @@ namespace Dasher
 
 			SceneManager.LoadScene(c_mainMenuScene, LoadSceneMode.Additive);
 			SetState(GameStates.MainMenu);
+		}
+
+		public void SwitchToLevelSelect()
+		{
+			SwitchToHome();
+			m_waitingForMainMenu = _NotifyMainMenuInstantLevelSelect;
+		}
+
+		void _NotifyMainMenuInstantLevelSelect()
+		{
+			m_mainMenuRef.InstantLevelSelection();
 		}
 
 		public void LaunchLevel(int index)
@@ -318,6 +329,16 @@ namespace Dasher
 			});
 		}
 
+		public void RequestSwitchToLevelSelect()
+		{
+			m_transitionCamera.gameObject.SetActive(true);
+			RequestTransition(() => {
+				SwitchToLevelSelect();
+				m_transitionAnimator.SetBool(c_transitionBool, false);
+				m_transitionCamera.gameObject.SetActive(false);
+			});
+		}
+
 		public void RequestSwitchToStats()
 		{
 			m_transitionCamera.gameObject.SetActive(true);
@@ -343,6 +364,8 @@ namespace Dasher
 		#region Main menu reference
 
 		MainMenuScript m_mainMenuRef = null;
+		Action m_waitingForMainMenu = null;
+
 		public void RegisterMainMenu(MainMenuScript mm)
 		{
 			if (m_mainMenuRef != null)
@@ -350,6 +373,12 @@ namespace Dasher
 				Debug.LogWarning("Flow error : trying to register main menu script several time !");
 			}
 			m_mainMenuRef = mm;
+
+			if (m_waitingForMainMenu != null)
+			{
+				m_waitingForMainMenu();
+				m_waitingForMainMenu = null;
+			}
 		}
 
 		public void UnregisterMainMenu()
