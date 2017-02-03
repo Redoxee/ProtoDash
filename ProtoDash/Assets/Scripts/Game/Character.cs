@@ -113,11 +113,20 @@ namespace Dasher
 
 		private GameObject body;
 
+		private GameObject m_flashObject;
+		private Material m_flashMaterial;
+
 		private Renderer bodyRenderer;
 
 		[SerializeField]
 		private TraceManager traceManager = null;
 		public TraceManager Traces {  get { return traceManager; } }
+
+		[SerializeField]
+		AnimationCurve m_flashCurve = null;
+		[SerializeField]
+		float m_flashDuration = 1f;
+		float m_flashTimer = 0f;
 
 		private Vector3 currentFacingVector;
 
@@ -206,6 +215,9 @@ namespace Dasher
 			beak = body.transform.Find("Beak").gameObject;
 			bodyRenderer = body.GetComponent<Renderer>();
 
+			m_flashObject = body.transform.Find("Flash").gameObject;
+			m_flashMaterial = m_flashObject.GetComponent<Renderer>().material;
+
 			originalBeakX = beak.transform.localPosition.x;
 
 			currentFacingVector = new Vector3(1, 0, 0);
@@ -240,7 +252,7 @@ namespace Dasher
 
 			m_inputManager.ManualUpdate();
 			updateSquish(Time.deltaTime);
-			
+			UpdateFlash(Time.deltaTime);
 		}
 
 		public void ManualFixedUpdate()
@@ -685,6 +697,12 @@ namespace Dasher
 			currentEnergy = Mathf.Min(maxEnergyPoints, currentEnergy + refillRate * Time.fixedDeltaTime);
 		}
 
+		public void DashRefillPowerUp()
+		{
+			currentEnergy = maxEnergyPoints;
+			StartFlash();
+		}
+
 		private void updateBeak()
 		{
 			float bPos = originalBeakX * currentFacingVector.x;
@@ -702,6 +720,31 @@ namespace Dasher
 			currentSquishX = FunctionUtils.damping(squishDampingFactor, Mathf.Abs(currentSquishX), 1.0f, dt);
 			currentSquishY = FunctionUtils.damping(squishDampingFactor, currentSquishY, 1.0f, dt);
 			body.transform.localScale = new Vector3(currentSquishX, currentSquishY, 1.0f);
+		}
+
+		void UpdateFlash(float dt)
+		{
+			if (m_flashTimer < m_flashDuration)
+			{
+				m_flashTimer += dt;
+				var progression = Mathf.Clamp01(m_flashTimer / m_flashDuration);
+				m_flashMaterial.color = new Color(1f, 1f, 1f, m_flashCurve.Evaluate(progression));
+				if (m_flashTimer >= m_flashDuration)
+				{
+					EndFlash();
+				}
+			}
+		}
+
+		public void StartFlash()
+		{
+			m_flashObject.SetActive(true);
+			m_flashTimer = 0f;
+		}
+
+		public void EndFlash()
+		{
+			m_flashObject.SetActive(false);
 		}
 
 		public float getFacingSign()

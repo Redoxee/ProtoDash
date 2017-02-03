@@ -30,6 +30,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/006Climb.unity
   - enabled: 1
+    path: Assets/Scenes/Levels/024TrickyJumps.unity
+  - enabled: 1
     path: Assets/Scenes/Levels/007DashDown.unity
   - enabled: 1
     path: Assets/Scenes/Levels/023SimpleDashes.unity
@@ -38,7 +40,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/029GrindTower.unity
   - enabled: 1
-    path: Assets/Scenes/Levels/013ATopTheClockTower.unity
+    path: Assets/Scenes/Levels/028TrappedWallJumps.unity
   - enabled: 1
     path: Assets/Scenes/Levels/025DashUpUpUp.unity
   - enabled: 1
@@ -46,13 +48,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/010MissLeadingJump.unity
   - enabled: 1
-    path: Assets/Scenes/Levels/024TrickyJumps.unity
+    path: Assets/Scenes/Levels/026JumpsJumpsDash.unity
   - enabled: 1
     path: Assets/Scenes/Levels/011DontMessTheTransition.unity
   - enabled: 1
     path: Assets/Scenes/Levels/016ThroughTheFlames.unity
   - enabled: 1
-    path: Assets/Scenes/Levels/026JumpsJumpsDash.unity
+    path: Assets/Scenes/Levels/013ATopTheClockTower.unity
   - enabled: 1
     path: Assets/Scenes/Levels/017StressJump.unity
   - enabled: 1
@@ -70,19 +72,17 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/032MazeLike.unity
   - enabled: 1
-    path: Assets/Scenes/Levels/028TrappedWallJumps.unity
-  - enabled: 1
     path: Assets/Scenes/Levels/027SmallSpiral.unity
   - enabled: 1
     path: Assets/Scenes/Levels/021ThroughTheHeart.unity
   - enabled: 1
     path: Assets/Scenes/Levels/033KeyIntro.unity
   - enabled: 1
+    path: Assets/Scenes/Levels/038LargeBottle.unity
+  - enabled: 1
     path: Assets/Scenes/Levels/034KeyBlockChainIntro.unity
   - enabled: 1
     path: Assets/Scenes/Levels/035SMBTribute.unity
-  - enabled: 1
-    path: Assets/Scenes/Levels/038LargeBottle.unity
   - enabled: 1
     path: Assets/Scenes/Levels/036WaterTower.unity
   - enabled: 1
@@ -105,3 +105,5 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/046BlockingJumps.unity
   - enabled: 1
     path: Assets/Scenes/Levels/047OdlyShaped.unity
+  - enabled: 1
+    path: Assets/Scenes/Levels/048DashPowerUpIntro.unity

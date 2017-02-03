@@ -22,6 +22,15 @@ namespace Dasher
 		private Image m_costImage2;
 		private AnimatedEnergyCost m_animated2;
 
+		[SerializeField]
+		private GameObject m_flashObject;
+		private Material m_flashMaterial;
+		[SerializeField]
+		private float m_flashDuration = 1.5f;
+		[SerializeField]
+		private AnimationCurve m_flashCurve = null;
+		private float m_flashTimer = 0f;
+
 		private Image m_currentCostImage;
 		private AnimatedEnergyCost m_currentAnimated;
 
@@ -52,6 +61,10 @@ namespace Dasher
 			m_character = GameProcess.Instance.CurrentCharacter;
 			m_animated1.Reset();
 			m_animated2.Reset();
+
+			m_flashMaterial = m_flashObject.GetComponent<Image>().material;
+			m_flashObject.SetActive(false);
+			m_flashTimer = m_flashDuration + 1f;
 		}
 
 		void Update() {
@@ -80,6 +93,8 @@ namespace Dasher
 				}
 
 				m_previousFill = currentFill;
+
+				UpdateFlash();
 			}
 		}
 
@@ -94,6 +109,31 @@ namespace Dasher
 			{
 				m_currentCostImage = m_costImage2;
 				m_currentAnimated = m_animated2;
+			}
+		}
+
+		public void StartFlash()
+		{
+			m_flashTimer = 0f;
+			m_flashObject.SetActive(true);
+		}
+
+		public void EndFlash()
+		{
+			m_flashObject.SetActive(false);
+		}
+
+		void UpdateFlash()
+		{
+			if (m_flashTimer < m_flashDuration)
+			{
+				m_flashTimer += Time.deltaTime;
+				var progression =  Mathf.Clamp01(m_flashTimer/m_flashDuration);
+				m_flashMaterial.color = new Color(1f, 1f, 1f, m_flashCurve.Evaluate(progression));
+				if (m_flashTimer >= m_flashDuration)
+				{
+					EndFlash();
+				}
 			}
 		}
 	}

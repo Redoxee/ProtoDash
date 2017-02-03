@@ -2,24 +2,20 @@
 	{
 	Properties{
 		_Color("Main Color", Color) = (1,1,1,1)
+		_Stretch("Stretch", Float) = .3
+		_Radius("Radius",Float) = .09
 	}
 
-		SubShader{
-		Tags{
-			"Queue" = "Transparent"
-			"IgnoreProjector" = "True"
-			"RenderType" = "Transparent"
-			"PreviewType" = "Plane"
-		}
-		LOD 100
+	SubShader{
 
-		Cull Off
-		Lighting Off
-		ZWrite Off
-		ZTest[unity_GUIZTestMode]
+		Tags{ "Queue" = "Transparent" "RenderType" = "Transparent" }
 		Blend SrcAlpha OneMinusSrcAlpha
 
-		Pass{
+		Pass
+		{
+			Stencil{
+				Comp always
+			}
 		CGPROGRAM
 #pragma vertex vert
 #pragma fragment frag
@@ -38,6 +34,8 @@
 	};
 
 	fixed4 _Color;
+	float _Stretch;
+	float _Radius;
 	
 	#define _Smooth(p,r,s) smoothstep(-s, s, p-(r))
 	float sdSegment(in float2 p, in float2 a, in float2 b)
@@ -46,15 +44,7 @@
 		float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
 		return length(pa - ba*h);
 	}
-	// from http://iquilezles.org/www/articles/smin/smin.htm
-	// polynomial smooth min (k = 0.1);
-	float smin(float a, float b, float k)
-	{
-		float h = clamp(0.5 + 0.5*(b - a) / k, 0.0, 1.0);
-		return lerp(b, a, h) - k*h*(1.0 - h);
-	}
 
-#define Si .3
 
 	v2f vert(appdata_t v)
 	{
@@ -68,9 +58,9 @@
 
 	fixed4 frag(v2f i) : COLOR
 	{
-		float f = sdSegment(i.texcoord,float2(-Si,-Si),float2(Si,Si));
-		f = smin(f , sdSegment(i.texcoord, float2(-Si,Si), float2(Si,-Si)), .05);
-		f = _Smooth(.09, f, .004);
+		float f = sdSegment(abs(i.texcoord),float2(0,0),float2(_Stretch,_Stretch));
+
+		f = _Smooth(_Radius, f, .03);
 
 		float4 col = _Color;
 		col.a *= f;

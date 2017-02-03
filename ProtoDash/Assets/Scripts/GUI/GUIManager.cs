@@ -404,5 +404,14 @@ namespace Dasher
 		}
 
 		#endregion
+
+		#region Dash Flash
+
+		public void FlashDashGauge()
+		{
+			m_gauge.StartFlash();
+		}
+
+		#endregion
 	}
 }

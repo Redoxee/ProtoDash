@@ -413,6 +413,15 @@ namespace Dasher
 		}
 		#endregion
 
+		#region Dash Refill
+		public void NotifyDashRefill()
+		{
+			m_character.DashRefillPowerUp();
+			if(m_GUIManager != null)
+				m_GUIManager.FlashDashGauge();
+		}
+		#endregion
+
 		#region Outro CharacterAnimation
 
 		private float m_outroCharacterDuration = 1f;

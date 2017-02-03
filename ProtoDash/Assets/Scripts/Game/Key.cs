@@ -101,8 +101,8 @@ namespace Dasher
 				m_forceActivation = true;
 			}
 #endif
-
-			m_sigil.transform.rotation *= Quaternion.AngleAxis(Time.deltaTime * m_rotationSpeed, Vector3.forward);
+			var dt = GameProcess.Instance.GameTime.GetGameDeltaTime();
+			m_sigil.transform.rotation *= Quaternion.AngleAxis(dt * m_rotationSpeed, Vector3.forward);
 			UpdateAnimation();
 		}
 

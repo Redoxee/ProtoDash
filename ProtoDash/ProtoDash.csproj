@@ -100,10 +100,12 @@
     <Compile Include="Assets\Scripts\GUI\GUIManager.cs" />
     <Compile Include="Assets\Scripts\GUI\GameCanvasHolder.cs" />
     <Compile Include="Assets\Scripts\GUI\TimeDisplayCapsule.cs" />
+    <Compile Include="Assets\Scripts\Game\AnimatedCross.cs" />
     <Compile Include="Assets\Scripts\Game\AnimatedEnergyCost.cs" />
     <Compile Include="Assets\Scripts\Game\CameraScript.cs" />
     <Compile Include="Assets\Scripts\Game\Character.cs" />
     <Compile Include="Assets\Scripts\Game\ComposedStretchableCircle.cs" />
+    <Compile Include="Assets\Scripts\Game\DashRefill.cs" />
     <Compile Include="Assets\Scripts\Game\FullScreenScaler.cs" />
     <Compile Include="Assets\Scripts\Game\GaugeScript.cs" />
     <Compile Include="Assets\Scripts\Game\InputManager.cs" />
