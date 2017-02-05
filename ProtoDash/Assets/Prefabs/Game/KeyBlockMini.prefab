@@ -446,7 +446,7 @@ MonoBehaviour:
   m_collision: {fileID: 61484658136923180}
   m_strechable: {fileID: 114721443813666986}
   m_IsSecret: 0
-  m_duration: 1
+  m_duration: 0.8
   m_strechCurve:
     serializedVersion: 2
     m_Curve:
@@ -521,56 +521,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  m_sigilCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0.29999995
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 0.7
-      value: 0.29999995
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 0
-      inSlope: -3.0017238
-      outSlope: -3.0017238
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  m_sigilAlphaCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-    - serializedVersion: 2
-      time: 0.5
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1.005
-      value: 0
-      inSlope: -1.980198
-      outSlope: -1.980198
-      tangentMode: 34
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  m_boxDeactivation: 0.65
-  m_chainDelay: 0.75
+  m_boxDeactivation: 0.55
+  m_chainDelay: 0.65
   m_chainElements: []
 --- !u!114 &114721443813666986
 MonoBehaviour:

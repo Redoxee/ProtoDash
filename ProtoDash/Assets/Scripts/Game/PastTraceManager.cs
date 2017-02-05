@@ -76,7 +76,9 @@ namespace Dasher
 			if (pastTrace != null)
 			{
 				m_pastTrace = pastTrace;
+#if !DASHER_DEMO
 				SetupFromPast();
+#endif
 			}
 		}
 

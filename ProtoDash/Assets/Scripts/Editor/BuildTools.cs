@@ -16,10 +16,14 @@ namespace DasherTool
 	{
 		private const string DATA_PATH = "Assets/Data/";
 		private const string MAIN_FLOW_NAME = "MainLevelFlow.Asset";
+		private const string GLOBAL_LEVEL_FLOW_NAME = "CurrentLevelFlow.Asset";
 		private const string GAME_SCENES_PATH = "Assets/Scenes/Levels/";
 		private const string GAME_SCENE_EXTENSION = ".unity";
 
 		private const string INTRO_SCENE_PATH = "Assets/Scenes/MainScene.unity";
+
+		private const string DEMO_DEFINE = "DASHER_DEMO";
+		private const string NO_UI_DEFINE = "DASHER_NO_UI";
 
 		private BuildData m_currentBuildData = null;
 		private LevelFlow mainLevelFlow;
@@ -27,6 +31,8 @@ namespace DasherTool
 		private bool m_IncrementPatch = true;
 		private bool m_isDevelopementBuild = false;
 		private bool m_androidAutoPlay = true;
+		private bool m_isDemo = false;
+		private bool m_noUI = false;
 
 		#region Create flow
 
@@ -86,6 +92,21 @@ namespace DasherTool
 			mainLevelFlow = AssetDatabase.LoadAssetAtPath<LevelFlow>(DATA_PATH + MAIN_FLOW_NAME);
 		}
 
+		void CopyToCurrentLevelFlow(LevelFlow source)
+		{
+			AssetDatabase.ImportAsset(DATA_PATH + GLOBAL_LEVEL_FLOW_NAME);
+			var currentLevelFlow = AssetDatabase.LoadAssetAtPath<LevelFlow>(DATA_PATH + GLOBAL_LEVEL_FLOW_NAME);
+
+			currentLevelFlow.LevelList.Clear();
+			for (int i = 0; i < source.LevelList.Count; ++i)
+			{
+				currentLevelFlow.LevelList.Add(source.LevelList[i]);
+			}
+			EditorUtility.SetDirty(currentLevelFlow);
+			AssetDatabase.SaveAssets();
+
+		}
+
 		void OnGUI()
 		{
 			if (m_currentBuildData == null)
@@ -115,6 +136,8 @@ namespace DasherTool
 			m_IncrementPatch = GUILayout.Toggle(m_IncrementPatch, "Auto Increment Patch");
 			m_isDevelopementBuild = GUILayout.Toggle(m_isDevelopementBuild, "Is Developpement Build");
 			m_androidAutoPlay = GUILayout.Toggle(m_androidAutoPlay, "Android Auto push");
+			m_isDemo = GUILayout.Toggle(m_isDemo, "Is Demo");
+			m_noUI = GUILayout.Toggle(m_noUI, "Hide UI");
 
 			if (m_currentBuildData != null)
 			{
@@ -184,6 +207,8 @@ namespace DasherTool
 				EditorUtility.SetDirty(mainLevelFlow);
 				AssetDatabase.SaveAssets();
 			}
+
+			CopyToCurrentLevelFlow(mainLevelFlow);
 		}
 		#endregion
 
@@ -270,16 +295,40 @@ namespace DasherTool
 			string buildName = buildPath + "/" + GetVersionName() + c_androidExtension;
 
 			string[] scenes = StandardSetup();
-			BuildOptions bo = GetOptions(isDebug);
+			BuildOptions options = GetOptions(isDebug);
 
 			if (autoRun)
 			{
-				bo = bo | BuildOptions.AutoRunPlayer;
+				options = options | BuildOptions.AutoRunPlayer;
 			}
 
 			UnityEngine.Debug.Log("Android building : " + buildName);
 
-			string buildResult = BuildPipeline.BuildPlayer(scenes, buildName, BuildTarget.Android,bo);
+			var prevSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android);
+			var currentSymbols = "";
+			if (m_isDemo)
+			{
+				currentSymbols = DEMO_DEFINE;
+			}
+			if (m_noUI)
+			{
+				if (currentSymbols.Length > 0)
+				{
+					currentSymbols += ";";
+				}
+				currentSymbols += NO_UI_DEFINE;
+			}
+			PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, currentSymbols);
+
+			/* * * * * * * *
+			 * Actualbuild *
+			 * * * * * * * */
+			string buildResult = BuildPipeline.BuildPlayer(scenes, buildName, BuildTarget.Android,options);
+
+			if (m_isDemo)
+			{
+				PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, prevSymbols);
+			}
 
 			if (string.IsNullOrEmpty(buildResult))
 			{

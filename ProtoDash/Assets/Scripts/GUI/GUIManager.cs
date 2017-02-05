@@ -152,7 +152,7 @@ namespace Dasher
 		public void NotifyLevelStart()
 		{
 			m_canvasHolder.gameObject.SetActive(true);
-#if !DASHER_DEMO
+#if !DASHER_NO_UI
 			m_gameCanvas.gameObject.SetActive(true);
 
 			//GameProcess.Instance.CurrentCharacter.InputManager.RegisterButton(m_pauseButton.transform as RectTransform);

@@ -65,7 +65,6 @@ namespace Dasher
 
 				t.trace.SetMaterials(jumpMaterial, dashMaterial, deathMaterial);
 			}
-
 			m_jumpCounter = 0;
 			m_dashesCounter = 0;
 
