@@ -159,3 +159,6 @@ MonoBehaviour:
   - sceneObject: {fileID: 102900000, guid: b83fab6b2cc8cea468729b6db601efa8, type: 3}
     sceneName: 051LavaTower
     parTime: 25
+  - sceneObject: {fileID: 102900000, guid: a15e69e62d878ee419a93917835237c5, type: 3}
+    sceneName: 052TowerFalling
+    parTime: 20
