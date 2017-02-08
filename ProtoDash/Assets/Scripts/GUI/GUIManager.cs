@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿//#define DASHER_DEMO
+//#define DASHER_NO_UI
+
+using UnityEngine;
 using UnityEngine.UI;
 
 using System;
