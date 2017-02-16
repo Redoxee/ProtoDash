@@ -140,7 +140,7 @@ MonoBehaviour:
     parTime: 15
   - sceneObject: {fileID: 102900000, guid: de21f0d605882bc4c84958725bbb95c6, type: 3}
     sceneName: 045JumpTheKeys
-    parTime: 15
+    parTime: 20
   - sceneObject: {fileID: 102900000, guid: 2da77dad877dd094e81e942a8631e885, type: 3}
     sceneName: 046BlockingJumps
     parTime: 15
@@ -173,10 +173,16 @@ MonoBehaviour:
     parTime: 25
   - sceneObject: {fileID: 102900000, guid: 0c88b7a51e8f65c49beac313c2723b17, type: 3}
     sceneName: 056UpDownAllAround
-    parTime: 16
+    parTime: 20
   - sceneObject: {fileID: 102900000, guid: f930ba399ce710d40921946216d9f5d5, type: 3}
     sceneName: 057Squigglido
     parTime: 20
   - sceneObject: {fileID: 102900000, guid: cb0c42354ed73fe4c82ff8f1582c2595, type: 3}
     sceneName: 058DangerousLeap
     parTime: 10
+  - sceneObject: {fileID: 102900000, guid: 9c3410516c6c0dc4fb5c57d83b69921e, type: 3}
+    sceneName: 059BigU
+    parTime: 10
+  - sceneObject: {fileID: 102900000, guid: 440ba337e35b81d439f45288703e1cd7, type: 3}
+    sceneName: 059Diagonals
+    parTime: 15
