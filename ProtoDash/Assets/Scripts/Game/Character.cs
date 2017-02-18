@@ -30,6 +30,7 @@ namespace Dasher
 		State Dash;
 		State EndGame;
 		State Dead;
+		State Magnetized;
 
 		private void _InitializeStates()
 		{
@@ -38,6 +39,7 @@ namespace Dasher
 			Dash	= new State("Dash", _StartDash, _GameplayDash, _EndDash);
 			EndGame = new State("EndGame", _BeginEndGame, _UpdateEndGame, _EndEndGame);
 			Dead	= new State("Dead"	, _BeginDead, _UpdateDead, _EndDead);
+			Magnetized = new State("Magnetized", _BeginMagnetized, _UpdateMagnetized, _EndMagnetized);
 		}
 
 		private void _SetState(State newState)
@@ -682,7 +684,56 @@ namespace Dasher
 			m_endTargetPosition = deathPosition;
 			_SetState(Dead);
 		}
-		
+
+		#endregion
+
+		#region Magnetized
+
+		Vector2 m_magnetizedPosition;
+		float m_magnetizedForce = 10f;
+		float m_magnetizedTimer = -1f;
+		const float c_magnetizedDuration = .4f;
+		const float c_magnetizedSlowFactor = .88f;
+
+		void _BeginMagnetized(State prevState)
+		{
+			m_gravityFactor = 0f;
+		}
+
+		Vector2 _UpdateMagnetized(Vector2 currentVelocity)
+		{
+			float dt = Time.fixedDeltaTime;
+			m_magnetizedTimer -= dt;
+			Vector2 dir = m_magnetizedPosition - new Vector2(transform.position.x, transform.position.y);
+			float m = dir.magnitude;
+
+			if (m_magnetizedTimer <= 0)
+			{
+				if (!isTouchingDown)
+				{
+					_SetState(Jump);
+				}
+				else
+				{
+					_SetState(Idle);
+				}
+			}
+
+			return (currentVelocity + Mathf.Pow(m * m_magnetizedForce, 2f) * dir.normalized * dt) * c_magnetizedSlowFactor;
+		}
+
+		void _EndMagnetized()
+		{
+			m_gravityFactor = 1f;
+		}
+
+		void StartMagnetize(Vector2 position)
+		{
+			m_magnetizedPosition = position;
+			m_magnetizedTimer = c_magnetizedDuration;
+			_SetState(Magnetized);
+		}
+
 		#endregion
 
 		#endregion
@@ -697,10 +748,11 @@ namespace Dasher
 			currentEnergy = Mathf.Min(maxEnergyPoints, currentEnergy + refillRate * Time.fixedDeltaTime);
 		}
 
-		public void DashRefillPowerUp()
+		public void DashRefillPowerUp(Vector2 refillPosition)
 		{
 			currentEnergy = maxEnergyPoints;
 			StartFlash();
+			StartMagnetize(refillPosition);
 		}
 
 		private void updateBeak()

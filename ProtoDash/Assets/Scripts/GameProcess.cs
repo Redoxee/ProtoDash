@@ -414,9 +414,9 @@ namespace Dasher
 		#endregion
 
 		#region Dash Refill
-		public void NotifyDashRefill()
+		public void NotifyDashRefill(Vector2 position)
 		{
-			m_character.DashRefillPowerUp();
+			m_character.DashRefillPowerUp(position);
 			if(m_GUIManager != null)
 				m_GUIManager.FlashDashGauge();
 		}

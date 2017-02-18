@@ -27,7 +27,7 @@ namespace Dasher
 
 		void ActivatePowerUp()
 		{
-			GameProcess.Instance.NotifyDashRefill();
+			GameProcess.Instance.NotifyDashRefill(transform.position);
 
 			m_timer = 0f;
 			m_animated.FadeOut();
