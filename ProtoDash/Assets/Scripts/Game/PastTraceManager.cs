@@ -1,7 +1,4 @@
-﻿//#define DASHER_DEMO
-//#define DASHER_NO_UI
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 namespace Dasher
@@ -79,7 +76,7 @@ namespace Dasher
 			if (pastTrace != null)
 			{
 				m_pastTrace = pastTrace;
-#if !DASHER_DEMO
+#if !DASHER_NO_TRACE_RECORD
 				SetupFromPast();
 #endif
 			}

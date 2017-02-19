@@ -23,6 +23,7 @@ namespace DasherTool
 		private const string INTRO_SCENE_PATH = "Assets/Scenes/MainScene.unity";
 
 		private const string DEMO_DEFINE = "DASHER_DEMO";
+		private const string NO_TRACE_RECORD_DEFINE = "DASHER_NO_TRACE_RECORD";
 		private const string NO_UI_DEFINE = "DASHER_NO_UI";
 
 		private BuildData m_currentBuildData = null;
@@ -33,6 +34,7 @@ namespace DasherTool
 		private bool m_androidAutoPlay = true;
 		private bool m_isDemo = false;
 		private bool m_noUI = false;
+		private bool m_noTraceRecord = false;
 
 		#region Create flow
 
@@ -136,8 +138,10 @@ namespace DasherTool
 			m_IncrementPatch = GUILayout.Toggle(m_IncrementPatch, "Auto Increment Patch");
 			m_isDevelopementBuild = GUILayout.Toggle(m_isDevelopementBuild, "Is Developpement Build");
 			m_androidAutoPlay = GUILayout.Toggle(m_androidAutoPlay, "Android Auto push");
+			
 			m_isDemo = GUILayout.Toggle(m_isDemo, "Is Demo");
 			m_noUI = GUILayout.Toggle(m_noUI, "Hide UI");
+			m_noTraceRecord = GUILayout.Toggle(m_noTraceRecord, "No Past Trace");
 
 			if (m_currentBuildData != null)
 			{
@@ -318,6 +322,15 @@ namespace DasherTool
 				}
 				currentSymbols += NO_UI_DEFINE;
 			}
+			if (m_noTraceRecord)
+			{
+				if (currentSymbols.Length > 0)
+				{
+					currentSymbols += ";";
+				}
+				currentSymbols += NO_TRACE_RECORD_DEFINE;
+			}
+			
 			PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, currentSymbols);
 
 			/* * * * * * * *
