@@ -146,17 +146,14 @@ namespace Dasher
 			ScrollRect scrollRect = m_worldsParent.GetComponentInParent<ScrollRect>();
 			scrollRect.verticalNormalizedPosition = 0;
 
-			string currentLevel = mp.DataManager.LastLevelPlayed;
-			if (currentLevel == null)
-			{
-				currentLevel = levelFlow.LevelList[0].sceneName;
-			}
+			var level = levelFlow.GetMostInterestingLevel();
+			string levelName = level.sceneName;
 
-			var cl = levelFlow.GetWorldAndRankPosition(currentLevel);
-			QuickStartLevelDisplay.text = string.Format(c_levelLabelPattern, cl.Key, cl.Value);
+			
+			QuickStartLevelDisplay.text = string.Format(c_levelLabelPattern, level.world + 1, level.indexInWorld + 1);
 
 			m_lightLevelButton.Initialize();
-			OnLevelPressed(structuredLevels[1][0], string.Format(c_levelLabelPattern, 1, 1));
+			OnLevelPressed(level, string.Format(c_levelLabelPattern, level.world + 1, level.indexInWorld + 1));
 
 			InitColors();
 
