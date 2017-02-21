@@ -219,8 +219,8 @@ namespace Dasher
 					saveManager.SetTraceForLevel(CurrentLevelName, m_pastTraceManagerRef.GetCurrentRecording());
 					saveManager.SaveLevelTrace(CurrentLevelName);
 				}
-				saveManager.IncrementLestLevelPlayed();
-				saveManager.NotifyEndRun(m_character.Traces.NbJumps, m_character.Traces.NbDashes);
+				saveManager.IncrementLastLevelPlayed();
+				saveManager.NotifyEndRun(m_character.Traces.NbJumps, m_character.Traces.NbDashes,CurrentLevelName);
 				saveManager.Save();
 			}
 			

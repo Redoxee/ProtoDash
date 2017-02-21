@@ -7,7 +7,7 @@ using System;
 namespace Dasher
 {
 	public class SaveManager {
-		public const int c_SaveVersion = 9;
+		public const int c_SaveVersion = 10;
 		private DasherSavable m_savable = null;
 
 		#region Save mecanics
@@ -54,6 +54,7 @@ namespace Dasher
 					var level = new DasherSavable.LevelSavable();
 					level.bestTime = lvlSave.BestTime;
 					level.nbTry = lvlSave.NbTry;
+					level.nbComplete = lvlSave.NbComplete;
 					m_savable.m_levels[lvlSave.LevelId] = level;
 					LevelData lvlData = flow.GetLevelData(lvlSave.LevelId);
 					if (lvlData != null)
@@ -133,7 +134,7 @@ namespace Dasher
 				var current = levelsEnumerator.Current;
 				var level = current.Value;
 				var idOffset = m_builder.CreateString(current.Key);
-				var lvlOffset = FlatLevelSave.CreateFlatLevelSave(m_builder, idOffset,level.bestTime,level.nbTry);
+				var lvlOffset = FlatLevelSave.CreateFlatLevelSave(m_builder, idOffset,level.bestTime,level.nbTry,level.nbComplete);
 				offsetTable[i++] = lvlOffset;
 			}
 			
@@ -265,6 +266,15 @@ namespace Dasher
 			return m_savable.m_levels[levelId].nbTry;
 		}
 
+		public int GetLevelSuccessCount(string levelId)
+		{
+			if (!m_savable.m_levels.ContainsKey(levelId))
+			{
+				return 0;
+			}
+			return m_savable.m_levels[levelId].nbComplete;
+		}
+
 		public void SetLevelTime(string levelId, float time)
 		{
 
@@ -301,10 +311,14 @@ namespace Dasher
 			lvl.nbTry += 1;
 		}
 
-		public void NotifyEndRun(int nbJumps, int nbDashes)
+		public void NotifyEndRun(int nbJumps, int nbDashes, string levelSuccess = null)
 		{
 			m_savable.m_TotalJumps += nbJumps;
 			m_savable.m_TotalDashes += nbDashes;
+			if (levelSuccess != null)
+			{
+				m_savable.m_levels[levelSuccess].nbComplete += 1;
+			}
 		}
 
 		public void NotifyDeath(int nbJumps, int nbDashes)
@@ -361,7 +375,7 @@ namespace Dasher
 			m_savable.m_settings.isLefthanded = isLeftHanded;
 		}
 
-		public void IncrementLestLevelPlayed()
+		public void IncrementLastLevelPlayed()
 		{
 			var flow = MainProcess.Instance.levelFlow;
 			
@@ -398,6 +412,7 @@ namespace Dasher
 		public class LevelSavable {
 			public float bestTime = -1f;
 			public int nbTry = 0;
+			public int nbComplete = 0;
 		}
 		public string UserId = null;
 

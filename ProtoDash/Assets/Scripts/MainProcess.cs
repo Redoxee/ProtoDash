@@ -11,6 +11,7 @@ namespace Dasher
 		InGame,
 		Stats,
 		Credits,
+		SecretStats,
 	}
 
 	public class MainProcess : MonoBehaviour
@@ -94,6 +95,7 @@ namespace Dasher
 		const string c_gameSetupScene = "GameSetupScene";
 		const string c_statsScreen = "StatsScreen";
 		const string c_creditsScreen = "Credits";
+		const string c_secretStatsScreen = "SecretStatsScreen";
 		string m_currenLevelScene = null;
 		int m_currentLevelIndex = -1;
 
@@ -121,6 +123,10 @@ namespace Dasher
 			if (m_gameState == GameStates.Credits)
 			{
 				SceneManager.UnloadScene(c_creditsScreen);
+			}
+			if (m_gameState == GameStates.SecretStats)
+			{
+				SceneManager.UnloadScene(c_secretStatsScreen);
 			}
 		}
 
@@ -207,7 +213,7 @@ namespace Dasher
 
 		#region StatsScreen
 
-		public void SwitchToStatsScreen()
+		void SwitchToStatsScreen()
 		{
 			UnloadCurrentAdditionalScene();
 			SetState(GameStates.Stats);
@@ -218,13 +224,23 @@ namespace Dasher
 
 		#region Credits Screen
 
-		public void SwitchToCreditsScreen()
+		void SwitchToCreditsScreen()
 		{
 			UnloadCurrentAdditionalScene();
 			SetState(GameStates.Credits);
 			SceneManager.LoadScene(c_creditsScreen, LoadSceneMode.Additive);
 		}
-		
+
+		#endregion
+
+		#region SecretStats
+		void SwitchToSecretStats()
+		{
+			UnloadCurrentAdditionalScene();
+			SetState(GameStates.SecretStats);
+			SceneManager.LoadScene(c_secretStatsScreen, LoadSceneMode.Additive);
+		}
+
 		#endregion
 
 		#region States
@@ -359,6 +375,17 @@ namespace Dasher
 			});
 		}
 
+		public void RequestSwitchToSecretStats()
+		{
+			m_transitionCamera.gameObject.SetActive(true);
+			RequestTransition(() =>
+			{
+				SwitchToSecretStats();
+				m_transitionAnimator.SetBool(c_transitionBool, false);
+				m_transitionCamera.gameObject.SetActive(false);
+			});
+		}
+
 		#endregion
 
 		#region Main menu reference
@@ -402,7 +429,7 @@ namespace Dasher
 			SendFeedback("I have some feedback on Dasher", "");
 		}
 
-		static void SendFeedback(string header, string body = "")
+		public static void SendFeedback(string header, string body = "")
 		{
 			string subject = EscapeURL(header);
 			body = EscapeURL(body);

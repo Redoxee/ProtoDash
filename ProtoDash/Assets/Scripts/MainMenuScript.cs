@@ -149,11 +149,12 @@ namespace Dasher
 			var level = levelFlow.GetMostInterestingLevel();
 			string levelName = level.sceneName;
 
-			
-			QuickStartLevelDisplay.text = string.Format(c_levelLabelPattern, level.world + 1, level.indexInWorld + 1);
+			string currentLevelLabel = string.Format(c_levelLabelPattern, level.world, level.indexInWorld);
+
+			QuickStartLevelDisplay.text = currentLevelLabel;
 
 			m_lightLevelButton.Initialize();
-			OnLevelPressed(level, string.Format(c_levelLabelPattern, level.world + 1, level.indexInWorld + 1));
+			OnLevelPressed(level, currentLevelLabel);
 
 			InitColors();
 

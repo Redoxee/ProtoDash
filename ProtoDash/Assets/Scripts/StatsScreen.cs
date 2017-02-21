@@ -101,11 +101,16 @@ namespace Dasher
 			{
 				CreateItem(string.Format(c_NbDash, totalDashes));
 			}
-			
+
 
 			if (m_nbStats == 0)
 			{
 				CreateItem(c_noStats);
+			}
+			else
+			{
+				var btn = m_allEntries[0].GetComponentInChildren<Button>();
+				btn.onClick.AddListener(OnTap);
 			}
 		}
 
@@ -169,7 +174,31 @@ namespace Dasher
 			int result = (int)(ts / m_interval);
 			return result;
 		}
-		
+
 		#endregion
+
+		#region SecretCode
+		float m_tapTimeStamp = -1f;
+		int m_tapCounter = 0;
+		const float c_tapTime = .5f;
+		const int c_tapToSecrets = 6;
+
+		void OnTap()
+		{
+			var ct = Time.time;
+			if (ct - m_tapTimeStamp < c_tapTime)
+				m_tapCounter += 1;
+			else
+				m_tapCounter = 1;
+			m_tapTimeStamp = ct;
+			if (m_tapCounter > c_tapToSecrets)
+			{
+				MainProcess.Instance.RequestSwitchToSecretStats();
+			}
+
+		}
+
+		#endregion
+
 	}
 }
