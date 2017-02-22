@@ -16,13 +16,16 @@ public sealed class FlatLevelSave : Table {
   public float BestTime { get { int o = __offset(6); return o != 0 ? bb.GetFloat(o + bb_pos) : (float)0.0f; } }
   public int NbTry { get { int o = __offset(8); return o != 0 ? bb.GetInt(o + bb_pos) : (int)0; } }
   public int NbComplete { get { int o = __offset(10); return o != 0 ? bb.GetInt(o + bb_pos) : (int)0; } }
+  public int NbFail { get { int o = __offset(12); return o != 0 ? bb.GetInt(o + bb_pos) : (int)0; } }
 
   public static Offset<FlatLevelSave> CreateFlatLevelSave(FlatBufferBuilder builder,
       StringOffset LevelIdOffset = default(StringOffset),
       float BestTime = 0.0f,
       int NbTry = 0,
-      int NbComplete = 0) {
-    builder.StartObject(4);
+      int NbComplete = 0,
+      int NbFail = 0) {
+    builder.StartObject(5);
+    FlatLevelSave.AddNbFail(builder, NbFail);
     FlatLevelSave.AddNbComplete(builder, NbComplete);
     FlatLevelSave.AddNbTry(builder, NbTry);
     FlatLevelSave.AddBestTime(builder, BestTime);
@@ -30,11 +33,12 @@ public sealed class FlatLevelSave : Table {
     return FlatLevelSave.EndFlatLevelSave(builder);
   }
 
-  public static void StartFlatLevelSave(FlatBufferBuilder builder) { builder.StartObject(4); }
+  public static void StartFlatLevelSave(FlatBufferBuilder builder) { builder.StartObject(5); }
   public static void AddLevelId(FlatBufferBuilder builder, StringOffset LevelIdOffset) { builder.AddOffset(0, LevelIdOffset.Value, 0); }
   public static void AddBestTime(FlatBufferBuilder builder, float BestTime) { builder.AddFloat(1, BestTime, 0.0f); }
   public static void AddNbTry(FlatBufferBuilder builder, int NbTry) { builder.AddInt(2, NbTry, 0); }
   public static void AddNbComplete(FlatBufferBuilder builder, int NbComplete) { builder.AddInt(3, NbComplete, 0); }
+  public static void AddNbFail(FlatBufferBuilder builder, int NbFail) { builder.AddInt(4, NbFail, 0); }
   public static Offset<FlatLevelSave> EndFlatLevelSave(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<FlatLevelSave>(o);

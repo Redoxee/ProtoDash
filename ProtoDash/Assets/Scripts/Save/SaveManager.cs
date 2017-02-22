@@ -7,7 +7,7 @@ using System;
 namespace Dasher
 {
 	public class SaveManager {
-		public const int c_SaveVersion = 10;
+		public const int c_SaveVersion = 11;
 		private DasherSavable m_savable = null;
 
 		#region Save mecanics
@@ -55,6 +55,7 @@ namespace Dasher
 					level.bestTime = lvlSave.BestTime;
 					level.nbTry = lvlSave.NbTry;
 					level.nbComplete = lvlSave.NbComplete;
+					level.nbFail = lvlSave.NbFail;
 					m_savable.m_levels[lvlSave.LevelId] = level;
 					LevelData lvlData = flow.GetLevelData(lvlSave.LevelId);
 					if (lvlData != null)
@@ -134,7 +135,7 @@ namespace Dasher
 				var current = levelsEnumerator.Current;
 				var level = current.Value;
 				var idOffset = m_builder.CreateString(current.Key);
-				var lvlOffset = FlatLevelSave.CreateFlatLevelSave(m_builder, idOffset,level.bestTime,level.nbTry,level.nbComplete);
+				var lvlOffset = FlatLevelSave.CreateFlatLevelSave(m_builder, idOffset,level.bestTime,level.nbTry,level.nbComplete,level.nbFail);
 				offsetTable[i++] = lvlOffset;
 			}
 			
@@ -275,6 +276,15 @@ namespace Dasher
 			return m_savable.m_levels[levelId].nbComplete;
 		}
 
+		public int GetLevelFailCount(string levelId)
+		{
+			if (!m_savable.m_levels.ContainsKey(levelId))
+			{
+				return 0;
+			}
+			return m_savable.m_levels[levelId].nbFail;
+		}
+
 		public void SetLevelTime(string levelId, float time)
 		{
 
@@ -311,19 +321,23 @@ namespace Dasher
 			lvl.nbTry += 1;
 		}
 
-		public void NotifyEndRun(int nbJumps, int nbDashes, string levelSuccess = null)
+		public void NotifyEndRun(int nbJumps, int nbDashes, string levelId,bool isSuccess)
 		{
 			m_savable.m_TotalJumps += nbJumps;
 			m_savable.m_TotalDashes += nbDashes;
-			if (levelSuccess != null)
+			if (isSuccess)
 			{
-				m_savable.m_levels[levelSuccess].nbComplete += 1;
+				m_savable.m_levels[levelId].nbComplete += 1;
+			}
+			else
+			{
+				m_savable.m_levels[levelId].nbFail += 1;
 			}
 		}
 
-		public void NotifyDeath(int nbJumps, int nbDashes)
+		public void NotifyDeath(int nbJumps, int nbDashes,string levelId)
 		{
-			NotifyEndRun(nbJumps,nbDashes);
+			NotifyEndRun(nbJumps,nbDashes, levelId, false);
 			m_savable.m_TotalDeaths += 1;
 		}
 
@@ -413,6 +427,7 @@ namespace Dasher
 			public float bestTime = -1f;
 			public int nbTry = 0;
 			public int nbComplete = 0;
+			public int nbFail = 0;
 		}
 		public string UserId = null;
 

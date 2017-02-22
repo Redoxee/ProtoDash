@@ -7,6 +7,7 @@ table FlatLevelSave {
 	BestTime:float = 0; 
 	NbTry:int = 0;
 	NbComplete:int = 0;
+	NbFail:int = 0;
 }
 
 table FlatSettings {

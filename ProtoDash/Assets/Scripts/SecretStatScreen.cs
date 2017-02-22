@@ -45,11 +45,12 @@ namespace Dasher
 				if (isLevelUnlocked)
 				{
 					var tryCount = saveManager.GetLevelTryCount(lvlId);
-					var completeCount = saveManager.GetLevelSuccessCount(lvlId);
+					var completeCount	= saveManager.GetLevelSuccessCount(lvlId);
+					var failCount		= saveManager.GetLevelFailCount(lvlId);
 					var bestTime = saveManager.GetLevelTime(lvlId);
 					if (tryCount < 1)
 						bestTime = -1;
-					displayBuilder.AppendFormat("Tries {0}, Success {1}, Fail {2}, Best {3}",tryCount,completeCount,tryCount - completeCount,bestTime.ToString("##.###")).Append("\n");
+					displayBuilder.AppendFormat("Tries {0}, Success {1}, Fail {2}, Best {3}",tryCount,completeCount,failCount,bestTime.ToString("##.###")).Append("\n");
 				}
 				else
 				{

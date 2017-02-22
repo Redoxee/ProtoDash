@@ -220,7 +220,7 @@ namespace Dasher
 					saveManager.SaveLevelTrace(CurrentLevelName);
 				}
 				saveManager.IncrementLastLevelPlayed();
-				saveManager.NotifyEndRun(m_character.Traces.NbJumps, m_character.Traces.NbDashes,CurrentLevelName);
+				saveManager.NotifyEndRun(m_character.Traces.NbJumps, m_character.Traces.NbDashes, CurrentLevelName, true);
 				saveManager.Save();
 			}
 			
@@ -516,9 +516,13 @@ namespace Dasher
 
 		private void Dying_Begin()
 		{
-			SaveManager dataManager = MainProcess.Instance.DataManager;
-			dataManager.NotifyDeath(m_character.Traces.NbJumps, m_character.Traces.NbDashes);
-			dataManager.Save();
+			if (CurrentLevelName != null)
+			{
+				SaveManager dataManager = MainProcess.Instance.DataManager;
+				dataManager.NotifyDeath(m_character.Traces.NbJumps, m_character.Traces.NbDashes,CurrentLevelName);
+				dataManager.Save();
+			}
+
 			m_dyingTimer = 0f;
 			m_CameraS.NotifyDeath(m_deathPositionTarget);
 			m_character.NotifyDying(m_deathPositionTarget, m_firstDeathPosition);
