@@ -388,6 +388,13 @@ MonoBehaviour:
   airEnergyRecoveryPoints: 30
   currentEnergy: 100
   traceManager: {fileID: 11446340}
+  m_flashCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_flashDuration: 1
   isTouchingDown: 0
   isTouchingRight: 0
   isTouchingLeft: 0
@@ -1199,7 +1206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81e206edd19109d43a34d2e23b6fe961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_swipeInputDistance: 0.05
+  m_swipeInputDistance: 0.1
   m_swipeDeadZone: 0.35
 --- !u!114 &114000014041820748
 MonoBehaviour:
