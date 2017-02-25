@@ -7,7 +7,7 @@ using System;
 namespace Dasher
 {
 	public class SaveManager {
-		public const int c_SaveVersion = 11;
+		public const int c_SaveVersion = 12;
 		private DasherSavable m_savable = null;
 
 		#region Save mecanics
