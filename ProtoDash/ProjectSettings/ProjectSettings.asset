@@ -440,7 +440,7 @@ PlayerSettings:
   webGLUseWasm: 0
   webGLCompressionFormat: 1
   scriptingDefineSymbols:
-    1: 
+    1: DASHER_NO_TRACE_RECORD;DASHER_NO_UI
     7: 
   platformArchitecture:
     iOS: 2
