@@ -5,16 +5,16 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{46EEB145-CF6E-5073-E257-5FE21B8C2C80}</ProjectGuid>
+    <ProjectGuid>{B3BD862B-7D4D-AE0D-1FE1-E6D599DA97E1}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
-    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityProjectType>GamePlugins:3</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>5.5.1f1</UnityVersion>
     <RootNamespace></RootNamespace>
@@ -108,74 +108,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="ProtoDash.Plugins.csproj">
-      <Project>{B3BD862B-7D4D-AE0D-1FE1-E6D599DA97E1}</Project>
-      <Name>ProtoDash.Plugins</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Assets\Scripts\BackMenu.cs" />
-    <Compile Include="Assets\Scripts\CameraColorSchemGraber.cs" />
-    <Compile Include="Assets\Scripts\DasherAnalyticsManager.cs" />
-    <Compile Include="Assets\Scripts\Data\BuildData.cs" />
-    <Compile Include="Assets\Scripts\Data\LevelFlow.cs" />
-    <Compile Include="Assets\Scripts\Data\WorldDresser.cs" />
-    <Compile Include="Assets\Scripts\ExpandableCircle.cs" />
-    <Compile Include="Assets\Scripts\ExtensibleCircleManager.cs" />
-    <Compile Include="Assets\Scripts\Extentions.cs" />
-    <Compile Include="Assets\Scripts\FPSMeter.cs" />
-    <Compile Include="Assets\Scripts\FunctionUtils.cs" />
-    <Compile Include="Assets\Scripts\GUI\DasherToggleButton.cs" />
-    <Compile Include="Assets\Scripts\GUI\EndLevelGUI.cs" />
-    <Compile Include="Assets\Scripts\GUI\GUIManager.cs" />
-    <Compile Include="Assets\Scripts\GUI\GameCanvasHolder.cs" />
-    <Compile Include="Assets\Scripts\GUI\TimeDisplayCapsule.cs" />
-    <Compile Include="Assets\Scripts\Game\AnimatedCross.cs" />
-    <Compile Include="Assets\Scripts\Game\AnimatedEnergyCost.cs" />
-    <Compile Include="Assets\Scripts\Game\CameraScript.cs" />
-    <Compile Include="Assets\Scripts\Game\Character.cs" />
-    <Compile Include="Assets\Scripts\Game\ComposedStretchableCircle.cs" />
-    <Compile Include="Assets\Scripts\Game\DashRefill.cs" />
-    <Compile Include="Assets\Scripts\Game\FullScreenScaler.cs" />
-    <Compile Include="Assets\Scripts\Game\GaugeScript.cs" />
-    <Compile Include="Assets\Scripts\Game\InputManager.cs" />
-    <Compile Include="Assets\Scripts\Game\JumpParticlesManager.cs" />
-    <Compile Include="Assets\Scripts\Game\Key.cs" />
-    <Compile Include="Assets\Scripts\Game\KeyBlock.cs" />
-    <Compile Include="Assets\Scripts\Game\PastTraceManager.cs" />
-    <Compile Include="Assets\Scripts\Game\SceneEnvironementSetup.cs" />
-    <Compile Include="Assets\Scripts\Game\SmartGauge.cs" />
-    <Compile Include="Assets\Scripts\Game\TraceManager.cs" />
-    <Compile Include="Assets\Scripts\Game\TraceObject.cs" />
-    <Compile Include="Assets\Scripts\Game\TutorialAnimator.cs" />
-    <Compile Include="Assets\Scripts\Game\World\ColorSetter.cs" />
-    <Compile Include="Assets\Scripts\Game\World\DeathZone.cs" />
-    <Compile Include="Assets\Scripts\Game\World\EndNode.cs" />
-    <Compile Include="Assets\Scripts\GameProcess.cs" />
-    <Compile Include="Assets\Scripts\GoHomeScript.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\AnimatableAnimationController.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\AnimatableScreen.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\AnimatableUI.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\AnimationFlashing.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\LevelDescriptionButton.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\LevelListButton.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\ResetSavePopup.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\SettingsMenu.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\WorldHolder.cs" />
-    <Compile Include="Assets\Scripts\MainMenuScript.cs" />
-    <Compile Include="Assets\Scripts\MainProcess.cs" />
-    <Compile Include="Assets\Scripts\MainProcessInstaciator.cs" />
-    <Compile Include="Assets\Scripts\MainSharedScene\TransitionCanvasBehaviour.cs" />
-    <Compile Include="Assets\Scripts\PerfRuler.cs" />
-    <Compile Include="Assets\Scripts\Save\DasherSave.cs" />
-    <Compile Include="Assets\Scripts\Save\DasherTrace.cs" />
-    <Compile Include="Assets\Scripts\Save\SaveManager.cs" />
-    <Compile Include="Assets\Scripts\SecretStatScreen.cs" />
-    <Compile Include="Assets\Scripts\StatsScreen.cs" />
-    <Compile Include="Assets\Scripts\Tests\AnimationSandbox.cs" />
-    <Compile Include="Assets\Scripts\Tests\ExtensibleCircleTester.cs" />
-    <Compile Include="Assets\Scripts\TimeManager.cs" />
-    <Compile Include="Assets\Scripts\Tool\Singleton.cs" />
+    <Compile Include="Assets\Plugins\UnityPurchasing\script\ComboBox.cs" />
+    <Compile Include="Assets\Plugins\UnityPurchasing\script\Demo\DemoInventory.cs" />
+    <Compile Include="Assets\Plugins\UnityPurchasing\script\IAPButton.cs" />
+    <Compile Include="Assets\Plugins\UnityPurchasing\script\IAPDemo.cs" />
+    <Compile Include="Assets\Plugins\UnityPurchasing\script\PurchasingCheck.cs" />
+    <Compile Include="Assets\Plugins\UnityPurchasing\script\UnibillDemo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Materials\Shaders\ArrowShader.shader" />

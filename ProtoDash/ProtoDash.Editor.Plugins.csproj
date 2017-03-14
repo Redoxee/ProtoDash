@@ -5,16 +5,16 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{46EEB145-CF6E-5073-E257-5FE21B8C2C80}</ProjectGuid>
+    <ProjectGuid>{8768A96C-6E01-4B26-0B98-53CC8D0CAE0C}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-Editor-firstpass</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
-    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityProjectType>EditorPlugins:7</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>5.5.1f1</UnityVersion>
     <RootNamespace></RootNamespace>
@@ -52,17 +52,47 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>Library\UnityAssemblies\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.EditorTestsRunner">
+      <HintPath>Library\UnityAssemblies\UnityEditor.EditorTestsRunner.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>Library\UnityAssemblies\UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.Networking">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.PlaymodeTestsRunner">
+      <HintPath>Library\UnityAssemblies\UnityEditor.PlaymodeTestsRunner.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.PlaymodeTestsRunner">
       <HintPath>Library\UnityAssemblies\UnityEngine.PlaymodeTestsRunner.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.TreeEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.TreeEditor.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Analytics">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.HoloLens">
+      <HintPath>Library\UnityAssemblies\UnityEditor.HoloLens.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
@@ -70,11 +100,29 @@
     <Reference Include="UnityEngine.Purchasing">
       <HintPath>Library\UnityAssemblies\UnityEngine.Purchasing.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.VR">
+      <HintPath>Library\UnityAssemblies\UnityEditor.VR.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.VR">
       <HintPath>Library\UnityAssemblies\UnityEngine.VR.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor">
-      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    <Reference Include="UnityEditor.Graphs">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Android.Extensions">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Android.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WebGL.Extensions">
+      <HintPath>Library\UnityAssemblies\UnityEditor.WebGL.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+      <HintPath>Library\UnityAssemblies\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+      <HintPath>Library\UnityAssemblies\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -112,70 +160,13 @@
       <Project>{B3BD862B-7D4D-AE0D-1FE1-E6D599DA97E1}</Project>
       <Name>ProtoDash.Plugins</Name>
     </ProjectReference>
+    <ProjectReference Include="ProtoDash.csproj">
+      <Project>{46EEB145-CF6E-5073-E257-5FE21B8C2C80}</Project>
+      <Name>ProtoDash</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\BackMenu.cs" />
-    <Compile Include="Assets\Scripts\CameraColorSchemGraber.cs" />
-    <Compile Include="Assets\Scripts\DasherAnalyticsManager.cs" />
-    <Compile Include="Assets\Scripts\Data\BuildData.cs" />
-    <Compile Include="Assets\Scripts\Data\LevelFlow.cs" />
-    <Compile Include="Assets\Scripts\Data\WorldDresser.cs" />
-    <Compile Include="Assets\Scripts\ExpandableCircle.cs" />
-    <Compile Include="Assets\Scripts\ExtensibleCircleManager.cs" />
-    <Compile Include="Assets\Scripts\Extentions.cs" />
-    <Compile Include="Assets\Scripts\FPSMeter.cs" />
-    <Compile Include="Assets\Scripts\FunctionUtils.cs" />
-    <Compile Include="Assets\Scripts\GUI\DasherToggleButton.cs" />
-    <Compile Include="Assets\Scripts\GUI\EndLevelGUI.cs" />
-    <Compile Include="Assets\Scripts\GUI\GUIManager.cs" />
-    <Compile Include="Assets\Scripts\GUI\GameCanvasHolder.cs" />
-    <Compile Include="Assets\Scripts\GUI\TimeDisplayCapsule.cs" />
-    <Compile Include="Assets\Scripts\Game\AnimatedCross.cs" />
-    <Compile Include="Assets\Scripts\Game\AnimatedEnergyCost.cs" />
-    <Compile Include="Assets\Scripts\Game\CameraScript.cs" />
-    <Compile Include="Assets\Scripts\Game\Character.cs" />
-    <Compile Include="Assets\Scripts\Game\ComposedStretchableCircle.cs" />
-    <Compile Include="Assets\Scripts\Game\DashRefill.cs" />
-    <Compile Include="Assets\Scripts\Game\FullScreenScaler.cs" />
-    <Compile Include="Assets\Scripts\Game\GaugeScript.cs" />
-    <Compile Include="Assets\Scripts\Game\InputManager.cs" />
-    <Compile Include="Assets\Scripts\Game\JumpParticlesManager.cs" />
-    <Compile Include="Assets\Scripts\Game\Key.cs" />
-    <Compile Include="Assets\Scripts\Game\KeyBlock.cs" />
-    <Compile Include="Assets\Scripts\Game\PastTraceManager.cs" />
-    <Compile Include="Assets\Scripts\Game\SceneEnvironementSetup.cs" />
-    <Compile Include="Assets\Scripts\Game\SmartGauge.cs" />
-    <Compile Include="Assets\Scripts\Game\TraceManager.cs" />
-    <Compile Include="Assets\Scripts\Game\TraceObject.cs" />
-    <Compile Include="Assets\Scripts\Game\TutorialAnimator.cs" />
-    <Compile Include="Assets\Scripts\Game\World\ColorSetter.cs" />
-    <Compile Include="Assets\Scripts\Game\World\DeathZone.cs" />
-    <Compile Include="Assets\Scripts\Game\World\EndNode.cs" />
-    <Compile Include="Assets\Scripts\GameProcess.cs" />
-    <Compile Include="Assets\Scripts\GoHomeScript.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\AnimatableAnimationController.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\AnimatableScreen.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\AnimatableUI.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\AnimationFlashing.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\LevelDescriptionButton.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\LevelListButton.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\ResetSavePopup.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\SettingsMenu.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\WorldHolder.cs" />
-    <Compile Include="Assets\Scripts\MainMenuScript.cs" />
-    <Compile Include="Assets\Scripts\MainProcess.cs" />
-    <Compile Include="Assets\Scripts\MainProcessInstaciator.cs" />
-    <Compile Include="Assets\Scripts\MainSharedScene\TransitionCanvasBehaviour.cs" />
-    <Compile Include="Assets\Scripts\PerfRuler.cs" />
-    <Compile Include="Assets\Scripts\Save\DasherSave.cs" />
-    <Compile Include="Assets\Scripts\Save\DasherTrace.cs" />
-    <Compile Include="Assets\Scripts\Save\SaveManager.cs" />
-    <Compile Include="Assets\Scripts\SecretStatScreen.cs" />
-    <Compile Include="Assets\Scripts\StatsScreen.cs" />
-    <Compile Include="Assets\Scripts\Tests\AnimationSandbox.cs" />
-    <Compile Include="Assets\Scripts\Tests\ExtensibleCircleTester.cs" />
-    <Compile Include="Assets\Scripts\TimeManager.cs" />
-    <Compile Include="Assets\Scripts\Tool\Singleton.cs" />
+    <Compile Include="Assets\Plugins\UnityPurchasing\Editor\IAPButtonEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Materials\Shaders\ArrowShader.shader" />
