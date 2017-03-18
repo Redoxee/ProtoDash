@@ -69,7 +69,7 @@ namespace Dasher
 		{
 			if (m_timer < m_duration)
 			{
-				var oldTime = m_timer;
+				//var oldTime = m_timer;
 				var oldProgression = m_timer / m_duration;
 				m_timer += GameProcess.Instance.GameTime.GetGameDeltaTime();
 				if (m_timer >= m_duration && m_activationDelayTimer > m_chainDelay)

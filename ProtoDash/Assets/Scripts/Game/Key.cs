@@ -5,8 +5,8 @@ namespace Dasher
 {
 	public class Key : MonoBehaviour
 	{
-		[SerializeField]
-		GameObject m_background = null;
+		//[SerializeField]
+		//GameObject m_background = null;
 
 		[SerializeField]
 		GameObject m_sigil = null;
@@ -65,7 +65,7 @@ namespace Dasher
 		{
 			if (m_timer < m_duration)
 			{
-				var oldTimer = m_timer;
+				//var oldTimer = m_timer;
 				TimeManager tm = GameProcess.Instance.GameTime;
 
 				m_timer += tm.GetGameDeltaTime();

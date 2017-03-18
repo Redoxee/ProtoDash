@@ -8,8 +8,8 @@ namespace Dasher
 		[SerializeField]
 		private DasherToggleButton m_leftHandedMode = null;
 
-		[SerializeField]
-		private Button m_deleteSaveButton = null;
+		//[SerializeField]
+		//private Button m_deleteSaveButton = null;
 
 		[SerializeField]
 		private GameObject m_deleteSavePopup = null;

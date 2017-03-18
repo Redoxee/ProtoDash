@@ -10,6 +10,11 @@ namespace Dasher
 		public const int c_SaveVersion = 12;
 		private DasherSavable m_savable = null;
 
+		public const int c_storyUnlocked = 141418;
+		public const int c_storyLocked = 49862;
+
+		public const int c_storyBlockade = 2;
+
 		#region Save mecanics
 
 		static string SavePath
@@ -69,13 +74,13 @@ namespace Dasher
 				m_savable.m_TotalDashes = save.TotalDashes;
 				m_savable.m_TotalJumps = save.TotalJumps;
 
-
 				m_savable.UserId = save.UserId;
 				m_savable.m_LastLevelPlayed = save.LastPlayedLevel;
 				if (save.Settings != null)
 				{
 					m_savable.m_settings.isLefthanded = save.Settings.LeftHandedMode;
 				}
+				m_savable.m_IsStoryQuestUnlocked = save.MainStoryUnlocked;
 
 				ConvertSave(save.Version);
 			}
@@ -155,6 +160,7 @@ namespace Dasher
 			FlatGameSave.AddTotalDashes(m_builder, m_savable.m_TotalDashes);
 			FlatGameSave.AddLastPlayedLevel(m_builder, lastLevelPlayedOffset);
 			FlatGameSave.AddSettings(m_builder, settingsOffset);
+			FlatGameSave.AddMainStoryUnlocked(m_builder, m_savable.m_IsStoryQuestUnlocked);
 
 			var gameOffset = FlatGameSave.EndFlatGameSave(m_builder);
 
@@ -407,7 +413,14 @@ namespace Dasher
 			LevelFlow flow = MainProcess.Instance.levelFlow;
 			if (flow.IsLevelFinished(lvlIndex))
 				return true;
-			else if (flow.IsLevelFinished(lvlIndex - 1))
+			var level = flow.GetLevelData(lvlIndex);
+			if (level.world > c_storyBlockade)
+			{
+				if (!IsMainStoryUnlocked)
+					return false;
+			}
+
+			if (flow.IsLevelFinished(lvlIndex - 1))
 				return true;
 			return false;
 		}
@@ -416,6 +429,12 @@ namespace Dasher
 		{
 			LevelFlow flow = MainProcess.Instance.levelFlow;
 			return DoesProgressionAllowLevel(flow.GetLevelIndex(levelName));
+		}
+
+		public bool IsMainStoryUnlocked
+		{
+			get { return m_savable.m_IsStoryQuestUnlocked == c_storyUnlocked; }
+			set { m_savable.m_IsStoryQuestUnlocked = value ? c_storyUnlocked : c_storyLocked; }
 		}
 
 		#endregion
@@ -441,6 +460,8 @@ namespace Dasher
 		public string m_LastLevelPlayed = null;
 
 		public DasherSettings m_settings;
+
+		public int m_IsStoryQuestUnlocked = SaveManager.c_storyLocked;
 
 		public DasherSavable(int nbLevels)
 		{

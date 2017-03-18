@@ -104,19 +104,17 @@ namespace Dasher
 				WorldHolder wh = worldObject.GetComponent<WorldHolder>();
 
 				List<LevelData> levels = worldEnumerator.Current.Value;
-				for (int lvl = 0; lvl < levels.Count; ++lvl)
+				for (int levelIndex = 0; levelIndex < levels.Count; ++levelIndex)
 				{
 					GameObject btnObject = wh.AddLevelButton();
 					var objectDescriptor = btnObject.GetComponentInChildren<LevelListButton>();
-					string levelLabel = string.Format(c_levelLabelPattern, worldEnumerator.Current.Key, lvl + 1);
+					string levelLabel = levels[levelIndex].GetLevelLabel();
 
 					objectDescriptor.MainLabel.text = string.Format(levelLabel);
 
 					Button levelButton = btnObject.GetComponent<Button>();
-					int levelIndex = lvl;
-					levelButton.onClick.AddListener(() => { OnLevelPressed(levels[levelIndex], levelLabel); });
-
-					Image buttonImage = btnObject.GetComponent<Image>();
+					var capturedIndex = levelIndex;
+					levelButton.onClick.AddListener(() => { OnLevelPressed(levels[capturedIndex], levelLabel); });
 
 					bool isUnlocked = true;
 #if !DASHER_DEMO
@@ -147,9 +145,8 @@ namespace Dasher
 			scrollRect.verticalNormalizedPosition = 0;
 
 			var level = levelFlow.GetMostInterestingLevel();
-			string levelName = level.sceneName;
 
-			string currentLevelLabel = string.Format(c_levelLabelPattern, level.world, level.indexInWorld);
+			string currentLevelLabel = level.GetLevelLabel();
 
 			QuickStartLevelDisplay.text = currentLevelLabel;
 

@@ -24,6 +24,7 @@ table FlatGameSave {
 	LastPlayedLevel:string;
 	Settings:FlatSettings;
 	TotalDeaths:int=0;
+	MainStoryUnlocked:int=0;
 } 
  
 root_type FlatGameSave;

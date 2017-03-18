@@ -46,6 +46,10 @@ namespace Dasher
 		private DasherAnalyticsManager m_AnalyticsManager;
 		public DasherAnalyticsManager AnalyticsManager { get { return m_AnalyticsManager; } }
 
+		ShopManager m_shopManager;
+
+		public ShopManager ShopManager { get { return m_shopManager; } }
+
 		#region Monobehaviour
 
 		void Awake()
@@ -76,6 +80,11 @@ namespace Dasher
 			{
 				SwitchToHome();
 			}
+		}
+
+		void Start()
+		{
+			m_shopManager = new ShopManager();
 		}
 
 		void Update()
@@ -185,9 +194,15 @@ namespace Dasher
 		public void LaunchNextLevel()
 		{
 			int levelIndex = m_currentLevelIndex + 1;
+			
 			if (levelIndex < 0 || levelIndex == levelFlow.GetLevelCount())
 			{
 				SwitchToStatsScreen(); 
+			}
+			var levelData = levelFlow.GetLevelData(levelIndex);
+			if (levelData.world > SaveManager.c_storyBlockade && ! m_saveManager.IsMainStoryUnlocked)
+			{
+				SwitchToLevelSelect();
 			}
 			else
 			{

@@ -768,7 +768,7 @@ namespace Dasher
 
 		private void updateSquish(float dt)
 		{
-			float xSign = Mathf.Sign(transform.localScale.x);
+			//float xSign = Mathf.Sign(transform.localScale.x);
 			currentSquishX = FunctionUtils.damping(squishDampingFactor, Mathf.Abs(currentSquishX), 1.0f, dt);
 			currentSquishY = FunctionUtils.damping(squishDampingFactor, currentSquishY, 1.0f, dt);
 			body.transform.localScale = new Vector3(currentSquishX, currentSquishY, 1.0f);

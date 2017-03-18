@@ -5,8 +5,8 @@ namespace Dasher
 {
 	public class ComposedStretchableCircle : MonoBehaviour
 	{
-		[SerializeField]
-		GameObject m_left = null;
+		//[SerializeField]
+		//GameObject m_left = null;
 		[SerializeField]
 		GameObject m_center = null;
 		[SerializeField]

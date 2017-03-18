@@ -21,7 +21,7 @@ namespace Dasher
 
 		public string GetLevelLabel()
 		{
-			return string.Format(c_levelNamePattern, world, indexInWorld);
+			return string.Format(c_levelNamePattern, world + 1, indexInWorld);
 		}
 
 		public bool IsLevelChamp { get {
@@ -63,12 +63,17 @@ namespace Dasher
 			return null;
 		}
 
+		public LevelData GetLevelData(int levelIndex)
+		{
+			return m_levelList[levelIndex];
+		}
+
 		private void InitializeWorldInLevels()
 		{
 			int count = m_levelList.Count;
 			for (int i = 0; i < count; ++i)
 			{
-				m_levelList[i].world = i / c_nbLevelInWorld + 1;
+				m_levelList[i].world = i / c_nbLevelInWorld;
 			}
 		}
 
