@@ -3,6 +3,7 @@
 		[PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
 		_Color("Main Color", Color) = (1,1,1,1)
 		_SecondColor("Second Color", Color) = (1,1,1,1)
+		_ThirdColor("Third Color", Color) = (1,1,1,1)
 
 		_StencilComp("Stencil Comparison", Float) = 8
 		_Stencil("Stencil ID", Float) = 0
@@ -13,7 +14,7 @@
 		_ColorMask("Color Mask", Float) = 15
 
 	}
-
+	 
 	SubShader{
 		Tags{
 		"Queue" = "Transparent"
@@ -41,7 +42,6 @@
 		}
 			CGPROGRAM
 
-
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma target 2.0
@@ -61,6 +61,7 @@
 
 			fixed4 _Color;
 			fixed4 _SecondColor;
+			float4 _ThirdColor;
 
 			// Parameters
 #define FREQUENCE .025
@@ -69,8 +70,6 @@
 #define THIKNESS .04
 #define SMOOTHNESS .001
 			//
-
-
 
 #define _Smooth(p,r,s) smoothstep(-s, s, p-(r))
 #define time  _Time.x * SPEED
@@ -94,10 +93,10 @@
 				float stripes = frac(i.worldPos.x * FREQUENCE + i.worldPos.y * TILT + time); // frequence tilt and animation
 				stripes = _Smooth(_thikness, abs(stripes - .5), SMOOTHNESS); // boldness
 				
-				float a = tex2D(_MainTex, i.texcoord).a;
-				fixed4 col = lerp(_Color, _SecondColor, stripes);
-				col.a = a;
-				return col;
+				float shape = tex2D(_MainTex, i.texcoord).a;
+				fixed4 col = lerp(_SecondColor, _ThirdColor, stripes);
+				col.a = shape ;
+				return col * _Color;
 			}
 			ENDCG
 		}

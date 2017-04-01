@@ -13,7 +13,6 @@ namespace Dasher
 		public const int c_storyUnlocked = 141418;
 		public const int c_storyLocked = 49862;
 
-		public const int c_storyBlockade = 2;
 
 		#region Save mecanics
 
@@ -414,7 +413,7 @@ namespace Dasher
 			if (flow.IsLevelFinished(lvlIndex))
 				return true;
 			var level = flow.GetLevelData(lvlIndex);
-			if (level.world > c_storyBlockade)
+			if (level.world > ShopManager.c_storyBlockade)
 			{
 				if (!IsMainStoryUnlocked)
 					return false;

@@ -200,7 +200,7 @@ namespace Dasher
 				SwitchToStatsScreen(); 
 			}
 			var levelData = levelFlow.GetLevelData(levelIndex);
-			if (levelData.world > SaveManager.c_storyBlockade && ! m_saveManager.IsMainStoryUnlocked)
+			if (levelData.world > ShopManager.c_storyBlockade && ! m_saveManager.IsMainStoryUnlocked)
 			{
 				SwitchToLevelSelect();
 			}
@@ -437,7 +437,7 @@ namespace Dasher
 		#endregion
 
 		#region Feedback
-		const string c_feedbackEmail = "antonmakegames@gmail.com";
+		const string c_feedbackEmail = "antonmakesgames@gmail.com";
 
 		public static void SimpleFeedback()
 		{

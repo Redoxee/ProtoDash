@@ -158,6 +158,7 @@
     <Compile Include="Assets\Scripts\MainMenu\AnimationFlashing.cs" />
     <Compile Include="Assets\Scripts\MainMenu\LevelDescriptionButton.cs" />
     <Compile Include="Assets\Scripts\MainMenu\LevelListButton.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\LevelWallAnimator.cs" />
     <Compile Include="Assets\Scripts\MainMenu\ResetSavePopup.cs" />
     <Compile Include="Assets\Scripts\MainMenu\SettingsMenu.cs" />
     <Compile Include="Assets\Scripts\MainMenu\WorldHolder.cs" />

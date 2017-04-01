@@ -77,6 +77,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - first:
+        name: _Alpha
+      second: 1
+    - first:
         name: _BumpScale
       second: 1
     - first:
@@ -151,10 +154,13 @@ Material:
     m_Colors:
     - first:
         name: _Color
-      second: {r: 0.71379316, g: 0.63599217, b: 0.0524848, a: 1}
+      second: {r: 1, g: 1, b: 1, a: 1}
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _SecondColor
-      second: {r: 0.84656143, g: 1, b: 0.75735295, a: 1}
+      second: {r: 0.7137255, g: 0.63529414, b: 0.050980393, a: 1}
+    - first:
+        name: _ThirdColor
+      second: {r: 0.84705883, g: 1, b: 0.75686276, a: 1}

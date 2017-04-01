@@ -11,7 +11,8 @@ namespace Dasher
 	{
 		public static ShopManager Instance { get { return MainProcess.Instance.ShopManager; } }
 
-		const string c_mainSku = "com.antonmakegames.dasher.quest";
+		const string c_mainSku = "com.antonmakesgames.dasher.quest";
+		public const int c_storyBlockade = 2;
 
 		public ShopManager()
 		{
@@ -43,6 +44,11 @@ namespace Dasher
 		public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e)
 		{
 			throw new NotImplementedException();
+		}
+
+		public void PurchaseMainQuest()
+		{
+
 		}
 	}
 }

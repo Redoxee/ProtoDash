@@ -68,11 +68,19 @@ namespace Dasher
 			SetState(m_introState);
 		}
 
+		public void OnLevelWallPressed()
+		{
+			m_levelWallAnimator.StartAnimation();
+			ShopManager.Instance.PurchaseMainQuest();
+		}
+
 		#region Worlds
 		[SerializeField]
 		private Transform m_worldsParent = null;
 		[SerializeField]
 		private GameObject m_worldPrefab = null;
+		[SerializeField]
+		private GameObject m_storyWallPrefab = null;
 		[SerializeField]
 		private Material m_levelNormalMaterial = null;
 		[SerializeField]
@@ -80,6 +88,8 @@ namespace Dasher
 
 		public const string c_levelLabelPattern = "{0}-{1}";
 
+
+		public LevelWallAnimator m_levelWallAnimator;
 		#region Initialization
 
 		private bool m_isinitialized = false;
@@ -92,18 +102,49 @@ namespace Dasher
 			mp.RegisterMainMenu(this);
 
 			var levelFlow = mp.levelFlow;
+
+			PopulateWorld(mp);
+
+			ScrollRect scrollRect = m_worldsParent.GetComponentInParent<ScrollRect>();
+			scrollRect.verticalNormalizedPosition = 0;
+
+			var level = levelFlow.GetMostInterestingLevel();
+
+			string currentLevelLabel = level.GetLevelLabel();
+
+			QuickStartLevelDisplay.text = currentLevelLabel;
+
+			m_lightLevelButton.Initialize();
+			OnLevelPressed(level, currentLevelLabel);
+
+			InitColors();
+
+			m_isinitialized = true;
+		}
+
+		void PopulateWorld(MainProcess mp)
+		{
+
+			var levelFlow = mp.levelFlow;
 			var dataManager = mp.DataManager;
 			var structuredLevels = levelFlow.GetStructuredProgression();
 			var worldEnumerator = structuredLevels.GetEnumerator();
 
+			var shopManager = mp.ShopManager;
+			var wallIndex = ShopManager.c_storyBlockade;
+
 			#region World creation
-			while (worldEnumerator.MoveNext())
+
+			 
+			foreach(var currentWorld in structuredLevels)
 			{
 				GameObject worldObject = Instantiate<GameObject>(m_worldPrefab);
 				worldObject.transform.SetParent(m_worldsParent, false);
 				WorldHolder wh = worldObject.GetComponent<WorldHolder>();
 
-				List<LevelData> levels = worldEnumerator.Current.Value;
+				var currentWorldIndex = currentWorld.Key;
+
+				List<LevelData> levels = currentWorld.Value;
 				for (int levelIndex = 0; levelIndex < levels.Count; ++levelIndex)
 				{
 					GameObject btnObject = wh.AddLevelButton();
@@ -138,26 +179,19 @@ namespace Dasher
 						objectDescriptor.DisableImage.SetActive(false);
 					}
 				}
+
+				if (currentWorldIndex -1 == wallIndex && !dataManager.IsMainStoryUnlocked)
+				{
+					var wallInstance = Instantiate(m_storyWallPrefab);
+					wallInstance.transform.SetParent(m_worldsParent, false);
+					Button wallButton = wallInstance.GetComponentInChildren<Button>();
+					wallButton.onClick.AddListener(OnLevelWallPressed);
+					m_levelWallAnimator = wallInstance.GetComponent<LevelWallAnimator>();
+				}
 			}
 			#endregion
-
-			ScrollRect scrollRect = m_worldsParent.GetComponentInParent<ScrollRect>();
-			scrollRect.verticalNormalizedPosition = 0;
-
-			var level = levelFlow.GetMostInterestingLevel();
-
-			string currentLevelLabel = level.GetLevelLabel();
-
-			QuickStartLevelDisplay.text = currentLevelLabel;
-
-			m_lightLevelButton.Initialize();
-			OnLevelPressed(level, currentLevelLabel);
-
-			InitColors();
-
-			m_isinitialized = true;
 		}
-		
+
 		#region Colors
 		void InitColors()
 		{
@@ -183,6 +217,11 @@ namespace Dasher
 				Initialize();
 			}
 			m_lightLevelButton.ManualUpdate();
+
+			if (m_levelWallAnimator.IsAnimating)
+			{
+				m_levelWallAnimator.UpdateAnimation();
+			}
 		}
 
 		void OnDisable()
