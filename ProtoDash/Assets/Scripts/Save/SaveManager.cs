@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿//#define DASHER_NO_IAP
+
+using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
 using FlatBuffers;
@@ -432,11 +434,18 @@ namespace Dasher
 
 		public bool IsMainStoryUnlocked
 		{
-			get { return m_savable.m_IsStoryQuestUnlocked == c_storyUnlocked; }
+			get
+			{
+#if !DASHER_NO_IAP
+				return m_savable.m_IsStoryQuestUnlocked == c_storyUnlocked;
+#else
+				return true;
+#endif
+			}
 			set { m_savable.m_IsStoryQuestUnlocked = value ? c_storyUnlocked : c_storyLocked; }
 		}
 
-		#endregion
+#endregion
 	}
 
 	public class DasherSavable

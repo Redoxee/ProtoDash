@@ -108,6 +108,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Plugins\UnityPurchasing\generated\AppleTangle.cs" />
+    <Compile Include="Assets\Plugins\UnityPurchasing\generated\GooglePlayTangle.cs" />
     <Compile Include="Assets\Plugins\UnityPurchasing\script\ComboBox.cs" />
     <Compile Include="Assets\Plugins\UnityPurchasing\script\Demo\DemoInventory.cs" />
     <Compile Include="Assets\Plugins\UnityPurchasing\script\IAPButton.cs" />

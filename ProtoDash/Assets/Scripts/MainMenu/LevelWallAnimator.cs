@@ -44,11 +44,12 @@ namespace Dasher
 
 		} 
 
-		public void StartAnimation()
+		public void StartAnimation(Action endAnimationAction = null)
 		{
 			m_timer = 0f;
 			m_startScaleHeight = m_layoutElement.preferredHeight;
 			m_button.interactable = false;
+			m_endAnimationAction = endAnimationAction;
 		}
 
 		public void UpdateAnimation()

@@ -25,6 +25,7 @@ namespace DasherTool
 		private const string DEMO_DEFINE = "DASHER_DEMO";
 		private const string NO_TRACE_RECORD_DEFINE = "DASHER_NO_TRACE_RECORD";
 		private const string NO_UI_DEFINE = "DASHER_NO_UI";
+		private const string NO_IAP_DEFINE = "DASHER_NO_IAP";
 
 		private BuildData m_currentBuildData = null;
 		private LevelFlow mainLevelFlow;

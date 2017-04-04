@@ -70,8 +70,13 @@ namespace Dasher
 
 		public void OnLevelWallPressed()
 		{
-			m_levelWallAnimator.StartAnimation();
-			ShopManager.Instance.PurchaseMainQuest();
+			ShopManager.Instance.PurchaseMainQuest(OnMainQuestPurchased);
+			//m_levelWallAnimator.StartAnimation(UnlockNextStoryLevelIfNeeded);
+		}
+
+		void OnMainQuestPurchased()
+		{
+			m_levelWallAnimator.StartAnimation(UnlockNextStoryLevelIfNeeded);
 		}
 
 		#region Worlds
@@ -93,6 +98,7 @@ namespace Dasher
 		#region Initialization
 
 		private bool m_isinitialized = false;
+
 		private void Initialize()
 		{
 			if (m_isinitialized || MainProcess.Instance == null)
@@ -105,8 +111,7 @@ namespace Dasher
 
 			PopulateWorld(mp);
 
-			ScrollRect scrollRect = m_worldsParent.GetComponentInParent<ScrollRect>();
-			scrollRect.verticalNormalizedPosition = 0;
+			StartCoroutine(ScrollWorldTo(1));
 
 			var level = levelFlow.GetMostInterestingLevel();
 
@@ -118,9 +123,17 @@ namespace Dasher
 			OnLevelPressed(level, currentLevelLabel);
 
 			InitColors();
-
 			m_isinitialized = true;
 		}
+
+		System.Collections.IEnumerator ScrollWorldTo(float y)
+		{
+			yield return new WaitForEndOfFrame();
+			ScrollRect scrollRect = m_worldsParent.GetComponentInParent<ScrollRect>();
+			scrollRect.verticalNormalizedPosition = y;
+		}
+
+		List<List<LevelListButton>> m_storyLevelButtons;
 
 		void PopulateWorld(MainProcess mp)
 		{
@@ -135,48 +148,54 @@ namespace Dasher
 
 			#region World creation
 
-			 
-			foreach(var currentWorld in structuredLevels)
+			m_storyLevelButtons = new List<List<LevelListButton>>();
+			foreach (var currentWorld in structuredLevels)
 			{
 				GameObject worldObject = Instantiate<GameObject>(m_worldPrefab);
 				worldObject.transform.SetParent(m_worldsParent, false);
 				WorldHolder wh = worldObject.GetComponent<WorldHolder>();
+
+				var buttonList = new List<LevelListButton>();
+				m_storyLevelButtons.Add(buttonList); 
 
 				var currentWorldIndex = currentWorld.Key;
 
 				List<LevelData> levels = currentWorld.Value;
 				for (int levelIndex = 0; levelIndex < levels.Count; ++levelIndex)
 				{
+					var lvlData = levels[levelIndex];
 					GameObject btnObject = wh.AddLevelButton();
-					var objectDescriptor = btnObject.GetComponentInChildren<LevelListButton>();
-					string levelLabel = levels[levelIndex].GetLevelLabel();
+					var levelButtonDesc = btnObject.GetComponentInChildren<LevelListButton>();
+					buttonList.Add(levelButtonDesc);
+					string levelLabel = lvlData.GetLevelLabel();
 
-					objectDescriptor.MainLabel.text = string.Format(levelLabel);
+					levelButtonDesc.bindedLevel = lvlData;
+					levelButtonDesc.MainLabel.text = string.Format(levelLabel);
 
 					Button levelButton = btnObject.GetComponent<Button>();
 					var capturedIndex = levelIndex;
-					levelButton.onClick.AddListener(() => { OnLevelPressed(levels[capturedIndex], levelLabel); });
-
+					levelButton.onClick.AddListener(() => { OnLevelPressed(lvlData, levelLabel); });
+					
 					bool isUnlocked = true;
 #if !DASHER_DEMO
 					if (dataManager != null)
 					{
-						isUnlocked = dataManager.DoesProgressionAllowLevel(levels[levelIndex].sceneName);
-						if (levelFlow.IsLevelChamp(levels[levelIndex].sceneName))
+						isUnlocked = dataManager.DoesProgressionAllowLevel(lvlData.sceneName);
+						if (levelFlow.IsLevelChamp(lvlData.sceneName))
 						{
 							Image border = btnObject.GetComponent<Image>();
 							border.material = m_levelChampMaterial;
-							objectDescriptor.ChampLabel.gameObject.SetActive(true);
+							levelButtonDesc.ChampLabel.gameObject.SetActive(true);
 						}
 						else
 						{
-							objectDescriptor.ChampLabel.gameObject.SetActive(false);
+							levelButtonDesc.ChampLabel.gameObject.SetActive(false);
 						}
 					}
 #endif
 					if (isUnlocked)
 					{
-						objectDescriptor.DisableImage.SetActive(false);
+						levelButtonDesc.DisableImage.SetActive(false);
 					}
 				}
 
@@ -190,6 +209,18 @@ namespace Dasher
 				}
 			}
 			#endregion
+		}
+
+		void UnlockNextStoryLevelIfNeeded()
+		{
+			ShopManager sm = ShopManager.Instance;
+			var pervLevel = m_storyLevelButtons[ShopManager.c_storyBlockade][m_storyLevelButtons[ShopManager.c_storyBlockade].Count - 1];
+			var nextLevel = m_storyLevelButtons[ShopManager.c_storyBlockade + 1][0];
+			LevelFlow levelFlow = MainProcess.Instance.levelFlow;
+			if (pervLevel.bindedLevel.HasBeenFinished)
+			{
+				nextLevel.DisableImage.SetActive(false);
+			}
 		}
 
 		#region Colors
@@ -218,7 +249,7 @@ namespace Dasher
 			}
 			m_lightLevelButton.ManualUpdate();
 
-			if (m_levelWallAnimator.IsAnimating)
+			if (m_levelWallAnimator != null && m_levelWallAnimator.IsAnimating)
 			{
 				m_levelWallAnimator.UpdateAnimation();
 			}

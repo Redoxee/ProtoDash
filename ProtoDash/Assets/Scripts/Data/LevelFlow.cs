@@ -152,10 +152,11 @@ namespace Dasher
 
 		public LevelData GetMostInterestingLevel()
 		{
+			SaveManager saveManager = MainProcess.Instance.DataManager;
 			LevelData result = m_levelList[0];
 			var levelCount = m_levelList.Count;
 			var levelIndex = 0;
-			while(levelIndex < levelCount)
+			while(levelIndex < levelCount && saveManager.DoesProgressionAllowLevel(levelIndex))
 			{
 				result = m_levelList[levelIndex];
 				if (!result.HasBeenFinished)
@@ -166,8 +167,7 @@ namespace Dasher
 			}
 			if (levelIndex >= levelCount && result.HasBeenFinished)
 			{
-				MainProcess mp = MainProcess.Instance;
-				string name = mp.DataManager.LastLevelPlayed;
+				string name = saveManager.LastLevelPlayed;
 				result = GetLevelData(name);
 			}
 

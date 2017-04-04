@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 namespace Dasher
 {
@@ -7,5 +8,7 @@ namespace Dasher
 		public Text MainLabel = null;
 		public Text ChampLabel = null;
 		public GameObject DisableImage = null;
+		[NonSerialized]
+		public LevelData bindedLevel = null;
 	}
 }
