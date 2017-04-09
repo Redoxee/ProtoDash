@@ -10,12 +10,22 @@ namespace Dasher
 {
 	public class ShopManager : IStoreListener
 	{
-		public static ShopManager Instance { get { return MainProcess.Instance.ShopManager; } }
+		public static ShopManager Instance { get {
+				return MainProcess.Instance.ShopManager;
+			} }
 
 		const string c_mainSku = "com.antonmakesgames.dasher.mainstory";
 		public const int c_storyBlockade = 2;
 
+		IStoreController m_controller;
+		IExtensionProvider m_extensions;
+		public bool IsInitialized { get { return m_controller != null; } }
+
+		Action<bool> m_shopInitializationAction = null;
+		public Action<bool> ShopInitializationCallBack { set { m_shopInitializationAction = value; } }
+
 		Action m_onMainQuestPurchasedAction = null;
+		Action m_onMainQuestPurchaseErrorAction = null;
 
 		public ShopManager()
 		{
@@ -25,23 +35,32 @@ namespace Dasher
 			UnityPurchasing.Initialize(this,builder);
 		}
 
-		IStoreController m_controller;
-		IExtensionProvider m_extensions;
 
 		public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
 		{
 			m_controller = controller;
 			m_extensions = extensions;
+			if (m_shopInitializationAction != null)
+			{
+				m_shopInitializationAction(true);
+			}
 		}
 
 		public void OnInitializeFailed(InitializationFailureReason error)
 		{
 			Debug.LogError("Shop init error : " + error.ToString());
+			if (m_shopInitializationAction != null)
+			{
+				m_shopInitializationAction(false);
+			}
 		}
 
 		public void OnPurchaseFailed(Product i, PurchaseFailureReason p)
 		{
-			throw new NotImplementedException();
+			if (m_onMainQuestPurchaseErrorAction != null)
+			{
+				m_onMainQuestPurchaseErrorAction();
+			}
 		}
 
 		public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e)
@@ -93,10 +112,11 @@ namespace Dasher
 			return PurchaseProcessingResult.Complete;
 		}
 
-		public void PurchaseMainQuest(Action onPurchaseComplete)
+		public void PurchaseMainQuest(Action onPurchaseComplete, Action onPurchaseError)
 		{
 			m_controller.InitiatePurchase(c_mainSku);
 			m_onMainQuestPurchasedAction = onPurchaseComplete;
+			m_onMainQuestPurchaseErrorAction = onPurchaseError;
 		}
 	}
 }

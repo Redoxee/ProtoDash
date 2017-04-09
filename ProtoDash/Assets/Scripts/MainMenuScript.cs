@@ -70,7 +70,7 @@ namespace Dasher
 
 		public void OnLevelWallPressed()
 		{
-			ShopManager.Instance.PurchaseMainQuest(OnMainQuestPurchased);
+			ShopManager.Instance.PurchaseMainQuest(OnMainQuestPurchased, OnPurchaseError);
 			//m_levelWallAnimator.StartAnimation(UnlockNextStoryLevelIfNeeded);
 		}
 
@@ -112,6 +112,8 @@ namespace Dasher
 			PopulateWorld(mp);
 
 			StartCoroutine(ScrollWorldTo(1));
+
+			mp.ShopManager.ShopInitializationCallBack = ShopInitialized;
 
 			var level = levelFlow.GetMostInterestingLevel();
 
@@ -206,6 +208,7 @@ namespace Dasher
 					Button wallButton = wallInstance.GetComponentInChildren<Button>();
 					wallButton.onClick.AddListener(OnLevelWallPressed);
 					m_levelWallAnimator = wallInstance.GetComponent<LevelWallAnimator>();
+					
 				}
 			}
 			#endregion
@@ -259,6 +262,7 @@ namespace Dasher
 		{
 			m_isinitialized = false;
 			MainProcess.Instance.UnregisterMainMenu();
+			ShopManager.Instance.ShopInitializationCallBack = null;
 		}
 
 		#endregion
@@ -373,6 +377,27 @@ namespace Dasher
 		{
 			MainProcess.Instance.RequestSwitchToCredits();
 		}
+
+
+		#region PurchaseError
+		void ShopInitialized(bool success)
+		{
+			if (!success)
+			{
+				var wallText = m_levelWallAnimator.GetComponentInChildren<Text>();
+				wallText.text = "Hmmm, there is a problem :(";
+			}
+		}
+
+		[SerializeField]
+		PurchaseErrorPopup m_purchaseErrorPopup = null;
+
+		void OnPurchaseError()
+		{
+			m_purchaseErrorPopup.ShowPopup();
+		}
+		
+		#endregion
 
 		#endregion
 		#endregion

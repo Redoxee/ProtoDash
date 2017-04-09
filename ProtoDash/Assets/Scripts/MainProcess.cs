@@ -68,6 +68,7 @@ namespace Dasher
 			Application.targetFrameRate = 60;
 
 			m_saveManager = new SaveManager();
+			m_shopManager = new ShopManager();
 			m_AnalyticsManager = new DasherAnalyticsManager();
 
 			if (SceneManager.GetActiveScene().name != c_mainScene)
@@ -80,11 +81,6 @@ namespace Dasher
 			{
 				SwitchToHome();
 			}
-		}
-
-		void Start()
-		{
-			m_shopManager = new ShopManager();
 		}
 
 		void Update()
