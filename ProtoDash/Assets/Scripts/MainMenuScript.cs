@@ -285,12 +285,9 @@ namespace Dasher
 			MainProcess mp = MainProcess.Instance;
 			SaveManager save = mp.DataManager;
 			string levelToStart = save.LastLevelPlayed;
-			int levelIndex = 0;
-			if (levelToStart != null)
-			{
-				levelIndex = mp.levelFlow.GetLevelIndex(levelToStart);
-			}
-			StartLevel(levelIndex);
+			LevelData lvlData = mp.levelFlow.GetMostInterestingLevel();
+			
+			MainProcess.Instance.RequestLevelLaunch(lvlData);
 		}
 
 		FSM_State m_introState;

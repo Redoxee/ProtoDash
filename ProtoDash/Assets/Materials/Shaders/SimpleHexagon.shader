@@ -1,4 +1,6 @@
-﻿Shader "Unlit/SimpleHexagon"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Unlit/SimpleHexagon"
 {
 	Properties
 	{
@@ -45,7 +47,7 @@
 			v2f vert (appdata v)
 			{
 				v2f o;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = v.uv - float2(.5, .5);
 
 				return o;

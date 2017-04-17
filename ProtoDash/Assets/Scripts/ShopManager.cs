@@ -72,7 +72,7 @@ namespace Dasher
 			// Prepare the validator with the secrets we prepared in the Editor
 			// obfuscation window.
 			var validator = new CrossPlatformValidator(GooglePlayTangle.Data(),
-				AppleTangle.Data(), Application.bundleIdentifier);
+				AppleTangle.Data(), Application.identifier);
 			bool mainQuestUnlocked = false;
 			try
 			{

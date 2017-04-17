@@ -66,6 +66,11 @@ namespace DasherTool
 
 		#region Create build data
 
+		[MenuItem("Tools/Time")]
+		static void S_GoToTime()
+		{
+			EditorApplication.ExecuteMenuItem("Edit/Project Settings/Time");
+		}
 		const string BUILD_DATA_NAME = "BuildData.Asset";
 #if CREATE_BUILD_DATA
 
