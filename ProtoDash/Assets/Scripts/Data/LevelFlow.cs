@@ -170,6 +170,10 @@ namespace Dasher
 				string name = saveManager.LastLevelPlayed;
 				result = GetLevelData(name);
 			}
+			if (result == null)
+			{
+				result = m_levelList[0];
+			}
 
 			return result;
 		}

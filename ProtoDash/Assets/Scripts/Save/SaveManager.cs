@@ -146,7 +146,8 @@ namespace Dasher
 			}
 			
 			var userIdOffset = m_builder.CreateString(m_savable.UserId);
-			var lastLevelPlayedOffset = m_builder.CreateString(m_savable.m_LastLevelPlayed);
+			string lastLevelPlayed = m_savable.m_LastLevelPlayed != null ? m_savable.m_LastLevelPlayed : "";
+			var lastLevelPlayedOffset = m_builder.CreateString(lastLevelPlayed);
 			var levelsOffset = FlatGameSave.CreateLevelResultsVector(m_builder, offsetTable);
 			var settingsOffset = FlatSettings.CreateFlatSettings(m_builder, m_savable.m_settings.isLefthanded);
 	

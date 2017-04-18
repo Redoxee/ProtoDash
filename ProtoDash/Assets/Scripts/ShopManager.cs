@@ -31,7 +31,13 @@ namespace Dasher
 		{
 			var module = StandardPurchasingModule.Instance();
 			ConfigurationBuilder builder = ConfigurationBuilder.Instance(module);
-			builder.AddProduct(c_mainSku, ProductType.NonConsumable);
+			ProductType productType = ProductType.NonConsumable;
+
+#if DASHER_IAP_CANCELABLE
+			productType = ProductType.Consumable;
+#endif
+
+			builder.AddProduct(c_mainSku, productType);
 			UnityPurchasing.Initialize(this,builder);
 		}
 
@@ -44,6 +50,14 @@ namespace Dasher
 			{
 				m_shopInitializationAction(true);
 			}
+			Debug.LogFormat("Is MainQuest Owned : {0}", IsMainQuestOwned());
+#if DASHER_IAP_CANCELABLE
+			if (IsMainQuestOwned())
+			{
+				var product = m_controller.products.WithID(c_mainSku);
+				m_controller.ConfirmPendingPurchase(product);
+			}
+#endif
 		}
 
 		public void OnInitializeFailed(InitializationFailureReason error)
@@ -57,6 +71,7 @@ namespace Dasher
 
 		public void OnPurchaseFailed(Product i, PurchaseFailureReason p)
 		{
+			Debug.LogFormat("Purchase failed : {0}", p);
 			if (m_onMainQuestPurchaseErrorAction != null)
 			{
 				m_onMainQuestPurchaseErrorAction();
@@ -66,14 +81,13 @@ namespace Dasher
 		public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e)
 		{
 			bool validPurchase = true; // Presume valid for platforms with no R.V.
-
+			Debug.LogFormat("Purchase success : {0}", e);
 			// Unity IAP's validation logic is only included on these platforms.
 #if UNITY_ANDROID || UNITY_IOS
 			// Prepare the validator with the secrets we prepared in the Editor
 			// obfuscation window.
 			var validator = new CrossPlatformValidator(GooglePlayTangle.Data(),
 				AppleTangle.Data(), Application.identifier);
-			bool mainQuestUnlocked = false;
 			try
 			{
 				// On Google Play, result has a single product ID.
@@ -88,16 +102,17 @@ namespace Dasher
 					Debug.Log(productReceipt.transactionID);
 				}
 			}
-			catch (IAPSecurityException)
+			catch (IAPSecurityException exception)
 			{
-				Debug.Log("Invalid receipt, not unlocking content");
+				Debug.LogFormat("Invalid receipt, not unlocking content : {0}" , exception);
 				validPurchase = false;
 			}
 #endif
 
 			if (validPurchase)
 			{
-				if (String.Equals(e.purchasedProduct.definition.id, c_mainSku, StringComparison.Ordinal))
+				Debug.Log("Valide purchase !");
+				//if (String.Equals(e.purchasedProduct.definition.id, c_mainSku, StringComparison.Ordinal))
 				{
 					var saveManager = MainProcess.Instance.DataManager;
 					saveManager.IsMainStoryUnlocked = true;
@@ -108,6 +123,11 @@ namespace Dasher
 					}
 				}
 			}
+			else
+			{
+				Debug.Log("Purchase non valide :(");
+			}
+
 
 			return PurchaseProcessingResult.Complete;
 		}
@@ -118,5 +138,12 @@ namespace Dasher
 			m_onMainQuestPurchasedAction = onPurchaseComplete;
 			m_onMainQuestPurchaseErrorAction = onPurchaseError;
 		}
+
+		public bool IsMainQuestOwned()
+		{
+			var product = m_controller.products.WithID(c_mainSku);
+			return product.hasReceipt;
+		}
+		
 	}
 }

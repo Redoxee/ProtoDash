@@ -26,6 +26,7 @@ namespace DasherTool
 		private const string NO_TRACE_RECORD_DEFINE = "DASHER_NO_TRACE_RECORD";
 		private const string NO_UI_DEFINE = "DASHER_NO_UI";
 		private const string NO_IAP_DEFINE = "DASHER_NO_IAP";
+		private const string IAP_CANCEL_DEFINE = "DASHER_IAP_CANCELABLE";
 
 		private BuildData m_currentBuildData = null;
 		private LevelFlow mainLevelFlow;
@@ -36,6 +37,8 @@ namespace DasherTool
 		private bool m_isDemo = false;
 		private bool m_noUI = false;
 		private bool m_noTraceRecord = false;
+		private bool m_no_iap = false;
+		private bool m_iap_cancelable = false;
 
 		#region Create flow
 
@@ -115,6 +118,7 @@ namespace DasherTool
 
 		}
 
+		Vector2 m_scrollPosition = new Vector2(0, 0);
 		void OnGUI()
 		{
 			if (m_currentBuildData == null)
@@ -122,6 +126,7 @@ namespace DasherTool
 				m_currentBuildData = GetBuildData();
 			}
 
+			m_scrollPosition = GUILayout.BeginScrollView(m_scrollPosition);
 			mainLevelFlow = EditorGUILayout.ObjectField("Level flow", mainLevelFlow, typeof(LevelFlow), false) as LevelFlow;
 			if (GUILayout.Button("Setup Scenes in Build"))
 			{
@@ -144,10 +149,11 @@ namespace DasherTool
 			m_IncrementPatch = GUILayout.Toggle(m_IncrementPatch, "Auto Increment Patch");
 			m_isDevelopementBuild = GUILayout.Toggle(m_isDevelopementBuild, "Is Developpement Build");
 			m_androidAutoPlay = GUILayout.Toggle(m_androidAutoPlay, "Android Auto push");
-			
 			m_isDemo = GUILayout.Toggle(m_isDemo, "Is Demo");
 			m_noUI = GUILayout.Toggle(m_noUI, "Hide UI");
 			m_noTraceRecord = GUILayout.Toggle(m_noTraceRecord, "No Past Trace");
+			m_no_iap = GUILayout.Toggle(m_no_iap, "No IAP");
+			m_iap_cancelable = GUILayout.Toggle(m_iap_cancelable, "IAP Cancelable");
 
 			if (m_currentBuildData != null)
 			{
@@ -164,18 +170,19 @@ namespace DasherTool
 				PushLastAndroidBuild();
 			}
 
-//			if (GUILayout.Button("Build Web"))
-//			{
-//				BuildForWeb(m_isDevelopementBuild, m_IncrementPatch);
-//			}
+			//			if (GUILayout.Button("Build Web"))
+			//			{
+			//				BuildForWeb(m_isDevelopementBuild, m_IncrementPatch);
+			//			}
 
-			#if UNITY_EDITOR_OSX
+#if UNITY_EDITOR_OSX
 			if(GUILayout.Button("Build IOS"))
 			{
 					BuildForIOS(m_isDevelopementBuild,m_IncrementPatch,m_androidAutoPlay);
 
 			}
-			#endif
+#endif
+			GUILayout.EndScrollView();
 		}
 
 		#region Set scenes in builds
@@ -336,7 +343,23 @@ namespace DasherTool
 				}
 				currentSymbols += NO_TRACE_RECORD_DEFINE;
 			}
-			
+			if (m_no_iap)
+			{
+				if (currentSymbols.Length > 0)
+				{
+					currentSymbols += ";";
+				}
+				currentSymbols += NO_IAP_DEFINE;
+			}
+			if (m_iap_cancelable)
+			{
+				if (currentSymbols.Length > 0)
+				{
+					currentSymbols += ";";
+				}
+				currentSymbols += IAP_CANCEL_DEFINE;
+			}
+
 			PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, currentSymbols);
 
 			/* * * * * * * *
