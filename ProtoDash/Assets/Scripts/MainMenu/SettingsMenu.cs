@@ -29,6 +29,10 @@ namespace Dasher
 				DasherSettings setting = mp.DataManager.GetSettings();
 				m_leftHandedMode.SetOn(setting.isLefthanded);
 			}
+
+#if DASHER_IAP_CANCELABLE
+			CreateResetIAPButton();
+#endif
 		}
 
 		public void OnLeftHandToggle()
@@ -99,5 +103,32 @@ namespace Dasher
 		{
 			m_deleteSavePopup.SetActive(false);
 		}
+
+		#region Debug IAP
+		void CreateResetIAPButton()
+		{
+#if DASHER_IAP_CANCELABLE
+			var parent = transform.FindChild("Settingspanel").FindChild("Content");
+			var source = parent.FindChild("Credits");
+			var resetIAP = Instantiate(source);
+			resetIAP.SetParent(parent, false);
+			var button = resetIAP.GetComponent<Button>();
+			button.onClick.RemoveAllListeners();
+			button.onClick.AddListener(RequestResetIAP);
+			var text = resetIAP.GetComponentInChildren<Text>();
+			text.text = "Reset IAP";
+#endif
+		}
+
+		void RequestResetIAP()
+		{
+
+#if DASHER_IAP_CANCELABLE
+			Debug.Log("Reseting IAP !!!");
+			ShopManager.Instance.CancelIAPPurchase();
+#endif
+		}
+
+		#endregion
 	}
 }

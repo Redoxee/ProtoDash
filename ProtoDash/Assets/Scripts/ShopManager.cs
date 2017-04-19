@@ -50,14 +50,12 @@ namespace Dasher
 			{
 				m_shopInitializationAction(true);
 			}
-			Debug.LogFormat("Is MainQuest Owned : {0}", IsMainQuestOwned());
-#if DASHER_IAP_CANCELABLE
 			if (IsMainQuestOwned())
 			{
-				var product = m_controller.products.WithID(c_mainSku);
-				m_controller.ConfirmPendingPurchase(product);
+				var saveManager = MainProcess.Instance.DataManager;
+				saveManager.IsMainStoryUnlocked = true;
+				saveManager.Save();
 			}
-#endif
 		}
 
 		public void OnInitializeFailed(InitializationFailureReason error)
@@ -72,6 +70,20 @@ namespace Dasher
 		public void OnPurchaseFailed(Product i, PurchaseFailureReason p)
 		{
 			Debug.LogFormat("Purchase failed : {0}", p);
+			if (p == PurchaseFailureReason.DuplicateTransaction)
+			{
+				if (IsMainQuestOwned())
+				{
+					if (m_onMainQuestPurchasedAction != null)
+					{
+						m_onMainQuestPurchasedAction();
+						var saveManager = MainProcess.Instance.DataManager;
+						saveManager.IsMainStoryUnlocked = true;
+						saveManager.Save();
+					}
+					return;
+				}
+			}
 			if (m_onMainQuestPurchaseErrorAction != null)
 			{
 				m_onMainQuestPurchaseErrorAction();
@@ -144,6 +156,21 @@ namespace Dasher
 			var product = m_controller.products.WithID(c_mainSku);
 			return product.hasReceipt;
 		}
-		
+
+		public void CancelIAPPurchase()
+		{
+#if DASHER_IAP_CANCELABLE
+			//if (IsMainQuestOwned())
+			{
+				var product = m_controller.products.WithID(c_mainSku);
+				m_controller.ConfirmPendingPurchase(product);
+
+				var saveManager = MainProcess.Instance.DataManager;
+				saveManager.IsMainStoryUnlocked = false;
+				saveManager.Save();
+			}
+#endif
+		}
+
 	}
 }
