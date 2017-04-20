@@ -29,17 +29,9 @@ MonoBehaviour:
       type: 2}
     BackgroundPrefab: {fileID: 1000011832959504, guid: 69d06e8062f94b244ac0a0bc28535cc0,
       type: 2}
-  - ColorSetter: {fileID: 114508681384086436, guid: 387f5287124b1f34a8d81118b7d64e13,
-      type: 2}
-    BackgroundPrefab: {fileID: 1348539769040342, guid: 7c183476a561ca349a8f6a1615f0bf62,
-      type: 2}
   - ColorSetter: {fileID: 114873766678500530, guid: 22886dbe8162e024a9732b4fe3e4f095,
       type: 2}
     BackgroundPrefab: {fileID: 1823466845325692, guid: 971e5aca586672640b207406dd26ccb4,
-      type: 2}
-  - ColorSetter: {fileID: 114089264167397988, guid: b85de644cbe43a24e96d897b5d201bfa,
-      type: 2}
-    BackgroundPrefab: {fileID: 1000011832959504, guid: 69d06e8062f94b244ac0a0bc28535cc0,
       type: 2}
   - ColorSetter: {fileID: 114479687953618630, guid: f8d2a5b949505904986d793cc2515145,
       type: 2}
@@ -48,4 +40,20 @@ MonoBehaviour:
   - ColorSetter: {fileID: 114508681384086436, guid: 387f5287124b1f34a8d81118b7d64e13,
       type: 2}
     BackgroundPrefab: {fileID: 1348539769040342, guid: 7c183476a561ca349a8f6a1615f0bf62,
+      type: 2}
+  - ColorSetter: {fileID: 114122633821824512, guid: 1fce926c01919194ba2f0f155517c13e,
+      type: 2}
+    BackgroundPrefab: {fileID: 1686334246584226, guid: b3078838db06e464282c2cf0ac3d1164,
+      type: 2}
+  - ColorSetter: {fileID: 114742953107207548, guid: 8c14296db12b78245a83f4098b2c53b4,
+      type: 2}
+    BackgroundPrefab: {fileID: 1686334246584226, guid: b3078838db06e464282c2cf0ac3d1164,
+      type: 2}
+  - ColorSetter: {fileID: 114722764421849436, guid: deecf43a949ed444fa1706df5e2c87f8,
+      type: 2}
+    BackgroundPrefab: {fileID: 1348539769040342, guid: 7c183476a561ca349a8f6a1615f0bf62,
+      type: 2}
+  - ColorSetter: {fileID: 114898368229139672, guid: a8784473d4bfe324b8df4d6ffbf9b838,
+      type: 2}
+    BackgroundPrefab: {fileID: 1000011832959504, guid: 69d06e8062f94b244ac0a0bc28535cc0,
       type: 2}

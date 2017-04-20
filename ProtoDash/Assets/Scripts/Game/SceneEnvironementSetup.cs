@@ -23,7 +23,7 @@ namespace Dasher
 			var ranks = levelFlow.GetWorldAndRankPosition(mp.CurrentLevel);
 			var worldIndex = ranks.Key;
 			var dresser = mp.WorldDresser;
-			var dress = dresser.GetDressForWorld(worldIndex);
+			var dress = dresser.GetDressForWorld(worldIndex - 1);
 			if (dress != null)
 			{
 				var colors = dress.ColorSetter;
