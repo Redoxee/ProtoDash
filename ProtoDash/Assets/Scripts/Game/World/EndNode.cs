@@ -61,6 +61,9 @@ namespace Dasher
 		{
 			if (col.gameObject.tag == "Player")
 			{
+#if UNITY_EDITOR
+				Debug.LogFormat("Time : {0}", Time.realtimeSinceStartup);
+#endif
 				GameProcess.Instance.NotifyEndLevelReached(gameObject);
 			}
 			m_isInClosure = true;
