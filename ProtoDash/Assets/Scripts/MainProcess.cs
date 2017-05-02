@@ -193,7 +193,8 @@ namespace Dasher
 			
 			if (levelIndex < 0 || levelIndex == levelFlow.GetLevelCount())
 			{
-				SwitchToStatsScreen(); 
+				SwitchToStatsScreen();
+				return;
 			}
 			var levelData = levelFlow.GetLevelData(levelIndex);
 			if (levelData.world > ShopManager.c_storyBlockade && ! m_saveManager.IsMainStoryUnlocked)
