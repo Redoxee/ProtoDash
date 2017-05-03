@@ -179,6 +179,8 @@
     <Compile Include="Assets\Scripts\StatsScreen.cs" />
     <Compile Include="Assets\Scripts\Tests\AnimationSandbox.cs" />
     <Compile Include="Assets\Scripts\Tests\ExtensibleCircleTester.cs" />
+    <Compile Include="Assets\Scripts\Tests\Folicule.cs" />
+    <Compile Include="Assets\Scripts\Tests\HairBehavior.cs" />
     <Compile Include="Assets\Scripts\TimeManager.cs" />
     <Compile Include="Assets\Scripts\Tool\Singleton.cs" />
   </ItemGroup>
