@@ -66,9 +66,9 @@ Shader "Custom/CharacterShader"
 				float d = distance(i.uv, float2(.5, .5));
 				
 				float f = 1. - smoothstep(.49, .51, d);
-				f -= 1. - smoothstep(B, B + .02, d);
-				float p = (_Progression * B);
-				f += 1. - smoothstep(p, p + .02, d);
+				//f -= 1. - smoothstep(B, B + .02, d);
+				//float p = (_Progression * B);
+				//f += 1. - smoothstep(p, p + .02, d);
 
 				float4 col = _ThresholdColor1;
 				col = lerp(col, _ThresholdColor2, step(_ThresholdValue1, _Progression));

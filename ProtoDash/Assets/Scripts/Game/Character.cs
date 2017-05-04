@@ -111,9 +111,11 @@ namespace Dasher
 
 		private Rigidbody2D characterRB;
 
-		private GameObject beak;
+		private Transform beak;
+		private Transform eye;
 
 		private GameObject body;
+
 
 		private GameObject m_flashObject;
 		private Material m_flashMaterial;
@@ -173,6 +175,7 @@ namespace Dasher
 		private bool isInEarlyJumpRange = false;
 
 		private float originalBeakX = 0.0f;
+		private Vector3 originalEyePosition;
 
 
 		private float squishDampingFactor = .075f;
@@ -214,13 +217,15 @@ namespace Dasher
 
 
 			body = transform.Find("Body").gameObject;
-			beak = body.transform.Find("Beak").gameObject;
+			beak = body.transform.Find("Beak");
+			eye = body.transform.Find("Eye");
 			bodyRenderer = body.GetComponent<Renderer>();
 
 			m_flashObject = body.transform.Find("Flash").gameObject;
 			m_flashMaterial = m_flashObject.GetComponent<Renderer>().material;
 
-			originalBeakX = beak.transform.localPosition.x;
+			originalBeakX = beak.localPosition.x;
+			originalEyePosition = eye.localPosition;
 
 			currentFacingVector = new Vector3(1, 0, 0);
 			_InitializeDashCosts();
@@ -567,10 +572,17 @@ namespace Dasher
 
 			Vector3 cPos = beak.transform.localPosition;
 			cPos.x = originalBeakX;
-			beak.transform.localPosition = cPos;
+			beak.localPosition = cPos;
+
+			cPos = originalEyePosition;
+			if (m_dashVector.x < 0)
+			{
+				cPos.y *= -1;
+			}
+			eye.localPosition = cPos;
 
 			body.transform.localRotation = dashRotation;
-			currentSquishY = .35f;
+			currentSquishY = .25f;
 		}
 
 		private Vector2 _GameplayDash(Vector2 currentVelocity)
@@ -763,6 +775,11 @@ namespace Dasher
 			{
 				cPos.x = bPos;
 				beak.transform.localPosition = cPos;
+
+				cPos = originalEyePosition;
+				cPos.x *=  currentFacingVector.x;
+				//cPos.y *= (currentFacingVector.x < 0) ? -1 : 1;
+				eye.localPosition = cPos;
 			}
 		}
 
