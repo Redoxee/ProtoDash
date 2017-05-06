@@ -778,9 +778,11 @@ namespace Dasher
 
 				cPos = originalEyePosition;
 				cPos.x *=  currentFacingVector.x;
-				//cPos.y *= (currentFacingVector.x < 0) ? -1 : 1;
+
 				eye.localPosition = cPos;
 			}
+			float scx = (currentFacingVector.x >= 0) ? 1 : -1;
+			
 		}
 
 		private void updateSquish(float dt)
