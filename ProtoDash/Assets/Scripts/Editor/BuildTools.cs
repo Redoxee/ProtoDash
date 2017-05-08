@@ -292,6 +292,67 @@ namespace DasherTool
 			} 
 			return bo;
 		}
+		#region Symbols
+
+		string m_cachedSymbols = null;
+
+		void SetSymbols()
+		{
+			if (m_cachedSymbols == null)
+				return;
+
+			m_cachedSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android);
+			var currentSymbols = "";
+			if (m_isDemo)
+			{
+				currentSymbols = DEMO_DEFINE;
+			}
+			if (m_noUI)
+			{
+				if (currentSymbols.Length > 0)
+				{
+					currentSymbols += ";";
+				}
+				currentSymbols += NO_UI_DEFINE;
+			}
+			if (m_noTraceRecord)
+			{
+				if (currentSymbols.Length > 0)
+				{
+					currentSymbols += ";";
+				}
+				currentSymbols += NO_TRACE_RECORD_DEFINE;
+			}
+			if (m_no_iap)
+			{
+				if (currentSymbols.Length > 0)
+				{
+					currentSymbols += ";";
+				}
+				currentSymbols += NO_IAP_DEFINE;
+			}
+			if (m_iap_cancelable)
+			{
+				if (currentSymbols.Length > 0)
+				{
+					currentSymbols += ";";
+				}
+				currentSymbols += IAP_CANCEL_DEFINE;
+			}
+
+			PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, currentSymbols);
+
+		}
+
+		void RestoreSymbols()
+		{
+			if (m_cachedSymbols == null)
+				return;
+			PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, m_cachedSymbols);
+			m_cachedSymbols = null;
+		}
+
+		#endregion
 
 		#region Platforms
 
@@ -447,9 +508,10 @@ namespace DasherTool
 			}
 
 			UnityEngine.Debug.Log("IOS building : " + buildName);
+			//SetSymbols ();
 
 			string buildResult = BuildPipeline.BuildPlayer(scenes, buildName, BuildTarget.iOS,bo);
-
+			//RestoreSymbols ();
 			if (string.IsNullOrEmpty(buildResult))
 			{
 				UnityEngine.Debug.Log("IOS build complete : " + buildName);

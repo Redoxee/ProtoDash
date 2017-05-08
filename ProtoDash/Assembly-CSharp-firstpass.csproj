@@ -6,10 +6,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{FD652CA3-1030-2783-702D-D9893C1A4C0A}</ProjectGuid>
+    <ProjectGuid>{278938BC-646E-170E-472D-95A4BFEC77BF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>Assets</BaseDirectory>
@@ -46,72 +46,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\BackMenu.cs" />
-     <Compile Include="Assets\Scripts\DasherAnalyticsManager.cs" />
-     <Compile Include="Assets\Scripts\Data\BuildData.cs" />
-     <Compile Include="Assets\Scripts\Data\LevelFlow.cs" />
-     <Compile Include="Assets\Scripts\Data\WorldDresser.cs" />
-     <Compile Include="Assets\Scripts\ExpandableCircle.cs" />
-     <Compile Include="Assets\Scripts\ExtensibleCircleManager.cs" />
-     <Compile Include="Assets\Scripts\Extentions.cs" />
-     <Compile Include="Assets\Scripts\FPSMeter.cs" />
-     <Compile Include="Assets\Scripts\FunctionUtils.cs" />
-     <Compile Include="Assets\Scripts\GUI\DasherToggleButton.cs" />
-     <Compile Include="Assets\Scripts\GUI\EndLevelGUI.cs" />
-     <Compile Include="Assets\Scripts\GUI\GUIManager.cs" />
-     <Compile Include="Assets\Scripts\GUI\GameCanvasHolder.cs" />
-     <Compile Include="Assets\Scripts\GUI\TimeDisplayCapsule.cs" />
-     <Compile Include="Assets\Scripts\Game\AnimatedCross.cs" />
-     <Compile Include="Assets\Scripts\Game\AnimatedEnergyCost.cs" />
-     <Compile Include="Assets\Scripts\Game\CameraScript.cs" />
-     <Compile Include="Assets\Scripts\Game\Character.cs" />
-     <Compile Include="Assets\Scripts\Game\ComposedStretchableCircle.cs" />
-     <Compile Include="Assets\Scripts\Game\DashRefill.cs" />
-     <Compile Include="Assets\Scripts\Game\FullScreenScaler.cs" />
-     <Compile Include="Assets\Scripts\Game\GaugeScript.cs" />
-     <Compile Include="Assets\Scripts\Game\InputManager.cs" />
-     <Compile Include="Assets\Scripts\Game\JumpParticlesManager.cs" />
-     <Compile Include="Assets\Scripts\Game\Key.cs" />
-     <Compile Include="Assets\Scripts\Game\KeyBlock.cs" />
-     <Compile Include="Assets\Scripts\Game\PastTraceManager.cs" />
-     <Compile Include="Assets\Scripts\Game\SceneEnvironementSetup.cs" />
-     <Compile Include="Assets\Scripts\Game\SmartGauge.cs" />
-     <Compile Include="Assets\Scripts\Game\TraceManager.cs" />
-     <Compile Include="Assets\Scripts\Game\TraceObject.cs" />
-     <Compile Include="Assets\Scripts\Game\TutorialAnimator.cs" />
-     <Compile Include="Assets\Scripts\Game\World\ColorSetter.cs" />
-     <Compile Include="Assets\Scripts\Game\World\DeathZone.cs" />
-     <Compile Include="Assets\Scripts\Game\World\EndNode.cs" />
-     <Compile Include="Assets\Scripts\GameProcess.cs" />
-     <Compile Include="Assets\Scripts\GoHomeScript.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\AnimatableAnimationController.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\AnimatableScreen.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\AnimatableUI.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\AnimationFlashing.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\LevelDescriptionButton.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\LevelListButton.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\LevelWallAnimator.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\PurchaseErrorPopup.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\ResetSavePopup.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\SettingsMenu.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\WorldHolder.cs" />
-     <Compile Include="Assets\Scripts\MainMenuScript.cs" />
-     <Compile Include="Assets\Scripts\MainProcess.cs" />
-     <Compile Include="Assets\Scripts\MainProcessInstaciator.cs" />
-     <Compile Include="Assets\Scripts\MainSharedScene\TransitionCanvasBehaviour.cs" />
-     <Compile Include="Assets\Scripts\PerfRuler.cs" />
-     <Compile Include="Assets\Scripts\Save\DasherSave.cs" />
-     <Compile Include="Assets\Scripts\Save\DasherTrace.cs" />
-     <Compile Include="Assets\Scripts\Save\SaveManager.cs" />
-     <Compile Include="Assets\Scripts\SecretStatScreen.cs" />
-     <Compile Include="Assets\Scripts\ShopManager.cs" />
-     <Compile Include="Assets\Scripts\StatsScreen.cs" />
-     <Compile Include="Assets\Scripts\Tests\AnimationSandbox.cs" />
-     <Compile Include="Assets\Scripts\Tests\ExtensibleCircleTester.cs" />
-     <Compile Include="Assets\Scripts\Tests\Folicule.cs" />
-     <Compile Include="Assets\Scripts\Tests\HairBehavior.cs" />
-     <Compile Include="Assets\Scripts\TimeManager.cs" />
-     <Compile Include="Assets\Scripts\Tool\Singleton.cs" />
+     <Compile Include="Assets\Plugins\UnityPurchasing\generated\AppleTangle.cs" />
+     <Compile Include="Assets\Plugins\UnityPurchasing\generated\GooglePlayTangle.cs" />
+     <Compile Include="Assets\Plugins\UnityPurchasing\script\ComboBox.cs" />
+     <Compile Include="Assets\Plugins\UnityPurchasing\script\Demo\DemoInventory.cs" />
+     <Compile Include="Assets\Plugins\UnityPurchasing\script\IAPButton.cs" />
+     <Compile Include="Assets\Plugins\UnityPurchasing\script\IAPDemo.cs" />
+     <Compile Include="Assets\Plugins\UnityPurchasing\script\PurchasingCheck.cs" />
      <None Include="Assets\Materials\Shaders\UnlitWallShader.shader" />
      <None Include="Assets\Materials\Shaders\CircleShader.shader" />
      <None Include="Assets\Materials\Shaders\TriCrossShader.shader" />
@@ -183,10 +124,6 @@
  <Reference Include="winrt">
  <HintPath>/Users/antonroy/Git/ProtoDash/ProtoDash/Assets/Plugins/UnityPurchasing/winrt/winrt.dll</HintPath>
  </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{278938BC-646E-170E-472D-95A4BFEC77BF}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

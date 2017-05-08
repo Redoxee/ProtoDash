@@ -6,10 +6,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{FD652CA3-1030-2783-702D-D9893C1A4C0A}</ProjectGuid>
+    <ProjectGuid>{831DF424-74E8-71AF-DE04-75BCC0A11A5B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-Editor-firstpass</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>Assets</BaseDirectory>
@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_0;UNITY_5_6;UNITY_5;UNITY_PURCHASING;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;ENABLE_VIDEO;ENABLE_RUNTIME_GI;ENABLE_SUBSTANCE;ENABLE_GAMECENTER;ENABLE_NETWORK;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_IOS_NATIVE_CRASH_REPORTING;PLAYERCONNECTION_LISTENS_FIXED_PORT;DEBUGGER_LISTENS_FIXED_PORT;PLATFORM_SUPPORTS_ADS_ID;SUPPORT_ENVIRONMENT_VARIABLES;PLATFORM_SUPPORTS_PROFILER;PLATFORM_HAS_NO_SUPPORT_FOR_BUCKET_ALLOCATOR;STRICTCPP_NEW_DELETE_SIGNATURES;HAS_NEON_SKINNIG;UNITY_GFX_USE_PLATFORM_VSYNC;UNITY_INPUT_SIMULATE_EVENTS;PLATFORM_ALWAYS_USES_STDOUT_FOR_LOG;ENABLE_VR;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;UNITY_IOS;UNITY_IPHONE;UNITY_IPHONE_API;SUPPORT_MULTIPLE_DISPLAYS;ENABLE_IL2CPP;NET_2_0_SUBSET;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_OSX;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_IOS_ON_DEMAND_RESOURCES;ENABLE_IOS_APP_SLICING;UNITY_HAS_GOOGLEVR</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_0;UNITY_5_6;UNITY_5;UNITY_PURCHASING;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;ENABLE_VIDEO;ENABLE_RUNTIME_GI;ENABLE_SUBSTANCE;ENABLE_GAMECENTER;ENABLE_NETWORK;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_IOS_NATIVE_CRASH_REPORTING;PLAYERCONNECTION_LISTENS_FIXED_PORT;DEBUGGER_LISTENS_FIXED_PORT;PLATFORM_SUPPORTS_ADS_ID;SUPPORT_ENVIRONMENT_VARIABLES;PLATFORM_SUPPORTS_PROFILER;PLATFORM_HAS_NO_SUPPORT_FOR_BUCKET_ALLOCATOR;STRICTCPP_NEW_DELETE_SIGNATURES;HAS_NEON_SKINNIG;UNITY_GFX_USE_PLATFORM_VSYNC;UNITY_INPUT_SIMULATE_EVENTS;PLATFORM_ALWAYS_USES_STDOUT_FOR_LOG;ENABLE_VR;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;UNITY_IOS;UNITY_IPHONE;UNITY_IPHONE_API;SUPPORT_MULTIPLE_DISPLAYS;ENABLE_IL2CPP;NET_2_0_SUBSET;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_OSX;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_IOS_ON_DEMAND_RESOURCES;ENABLE_IOS_APP_SLICING;UNITY_HAS_GOOGLEVR;ENABLE_DUCK_TYPING</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -46,72 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\BackMenu.cs" />
-     <Compile Include="Assets\Scripts\DasherAnalyticsManager.cs" />
-     <Compile Include="Assets\Scripts\Data\BuildData.cs" />
-     <Compile Include="Assets\Scripts\Data\LevelFlow.cs" />
-     <Compile Include="Assets\Scripts\Data\WorldDresser.cs" />
-     <Compile Include="Assets\Scripts\ExpandableCircle.cs" />
-     <Compile Include="Assets\Scripts\ExtensibleCircleManager.cs" />
-     <Compile Include="Assets\Scripts\Extentions.cs" />
-     <Compile Include="Assets\Scripts\FPSMeter.cs" />
-     <Compile Include="Assets\Scripts\FunctionUtils.cs" />
-     <Compile Include="Assets\Scripts\GUI\DasherToggleButton.cs" />
-     <Compile Include="Assets\Scripts\GUI\EndLevelGUI.cs" />
-     <Compile Include="Assets\Scripts\GUI\GUIManager.cs" />
-     <Compile Include="Assets\Scripts\GUI\GameCanvasHolder.cs" />
-     <Compile Include="Assets\Scripts\GUI\TimeDisplayCapsule.cs" />
-     <Compile Include="Assets\Scripts\Game\AnimatedCross.cs" />
-     <Compile Include="Assets\Scripts\Game\AnimatedEnergyCost.cs" />
-     <Compile Include="Assets\Scripts\Game\CameraScript.cs" />
-     <Compile Include="Assets\Scripts\Game\Character.cs" />
-     <Compile Include="Assets\Scripts\Game\ComposedStretchableCircle.cs" />
-     <Compile Include="Assets\Scripts\Game\DashRefill.cs" />
-     <Compile Include="Assets\Scripts\Game\FullScreenScaler.cs" />
-     <Compile Include="Assets\Scripts\Game\GaugeScript.cs" />
-     <Compile Include="Assets\Scripts\Game\InputManager.cs" />
-     <Compile Include="Assets\Scripts\Game\JumpParticlesManager.cs" />
-     <Compile Include="Assets\Scripts\Game\Key.cs" />
-     <Compile Include="Assets\Scripts\Game\KeyBlock.cs" />
-     <Compile Include="Assets\Scripts\Game\PastTraceManager.cs" />
-     <Compile Include="Assets\Scripts\Game\SceneEnvironementSetup.cs" />
-     <Compile Include="Assets\Scripts\Game\SmartGauge.cs" />
-     <Compile Include="Assets\Scripts\Game\TraceManager.cs" />
-     <Compile Include="Assets\Scripts\Game\TraceObject.cs" />
-     <Compile Include="Assets\Scripts\Game\TutorialAnimator.cs" />
-     <Compile Include="Assets\Scripts\Game\World\ColorSetter.cs" />
-     <Compile Include="Assets\Scripts\Game\World\DeathZone.cs" />
-     <Compile Include="Assets\Scripts\Game\World\EndNode.cs" />
-     <Compile Include="Assets\Scripts\GameProcess.cs" />
-     <Compile Include="Assets\Scripts\GoHomeScript.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\AnimatableAnimationController.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\AnimatableScreen.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\AnimatableUI.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\AnimationFlashing.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\LevelDescriptionButton.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\LevelListButton.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\LevelWallAnimator.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\PurchaseErrorPopup.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\ResetSavePopup.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\SettingsMenu.cs" />
-     <Compile Include="Assets\Scripts\MainMenu\WorldHolder.cs" />
-     <Compile Include="Assets\Scripts\MainMenuScript.cs" />
-     <Compile Include="Assets\Scripts\MainProcess.cs" />
-     <Compile Include="Assets\Scripts\MainProcessInstaciator.cs" />
-     <Compile Include="Assets\Scripts\MainSharedScene\TransitionCanvasBehaviour.cs" />
-     <Compile Include="Assets\Scripts\PerfRuler.cs" />
-     <Compile Include="Assets\Scripts\Save\DasherSave.cs" />
-     <Compile Include="Assets\Scripts\Save\DasherTrace.cs" />
-     <Compile Include="Assets\Scripts\Save\SaveManager.cs" />
-     <Compile Include="Assets\Scripts\SecretStatScreen.cs" />
-     <Compile Include="Assets\Scripts\ShopManager.cs" />
-     <Compile Include="Assets\Scripts\StatsScreen.cs" />
-     <Compile Include="Assets\Scripts\Tests\AnimationSandbox.cs" />
-     <Compile Include="Assets\Scripts\Tests\ExtensibleCircleTester.cs" />
-     <Compile Include="Assets\Scripts\Tests\Folicule.cs" />
-     <Compile Include="Assets\Scripts\Tests\HairBehavior.cs" />
-     <Compile Include="Assets\Scripts\TimeManager.cs" />
-     <Compile Include="Assets\Scripts\Tool\Singleton.cs" />
+     <Compile Include="Assets\Plugins\UnityPurchasing\Editor\IAPButtonEditor.cs" />
      <None Include="Assets\Materials\Shaders\UnlitWallShader.shader" />
      <None Include="Assets\Materials\Shaders\CircleShader.shader" />
      <None Include="Assets\Materials\Shaders\TriCrossShader.shader" />
@@ -135,11 +70,23 @@
      <None Include="Assets\Materials\Shaders\UnlitBGElementShader.shader" />
      <None Include="Assets\Materials\Shaders\DeathZoneShader.shader" />
      <None Include="Assets\Materials\Shaders\ExtensibleCircle.shader" />
+ <Reference Include="UnityEditor.Advertisements">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEditor.UI">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Networking">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.TestRunner">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/TestRunner/Editor/UnityEditor.TestRunner.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.TestRunner">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
@@ -147,8 +94,17 @@
  <Reference Include="nunit.framework">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/TestRunner/nunit.framework.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEditor.TreeEditor">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/TreeEditor/Editor/UnityEditor.TreeEditor.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.Analytics">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Analytics">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/Editor/UnityEditor.Analytics.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.HoloLens">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityHoloLens/Editor/UnityEditor.HoloLens.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
@@ -156,8 +112,26 @@
  <Reference Include="UnityEngine.Purchasing">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEditor.Purchasing">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityPurchasing/Editor/UnityEditor.Purchasing.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.VR">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Graphs">
+ <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEditor.Graphs.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Android.Extensions">
+ <HintPath>/Applications/Unity/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions">
+ <HintPath>/Applications/Unity/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.OSXStandalone.Extensions">
+ <HintPath>/Applications/Unity/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="FlatBuffers">
  <HintPath>/Users/antonroy/Git/ProtoDash/ProtoDash/Assets/Plugins/FlatBuffers.dll</HintPath>
