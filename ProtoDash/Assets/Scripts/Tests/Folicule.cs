@@ -26,14 +26,14 @@ namespace Dasher
 
 			var currentDamp = StartDamp;
 			Transform currentTarget = m_childNode.transform;
-			var currentScale = Vector3.one * scaleDecreaseFactor;
+			var currentScale = DampDecreaseFactor;
 
 			for (int i = 0; i < BodyCount; ++i)
 			{
 				var child = Instantiate(m_hairPrefab, currentTarget.position, currentTarget.rotation);
 				var hair = child.GetComponentInChildren<HairBehavior>();
 				hair.m_dampLoose = currentDamp;
-				hair.transform.localScale = currentScale;
+				hair.transform.localScale *= currentScale;
 				hair.m_target = currentTarget;
 
 				m_childs.Add(child);

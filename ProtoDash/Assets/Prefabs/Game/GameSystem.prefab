@@ -997,7 +997,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1539914195614722}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4657701424830954}
@@ -1451,7 +1451,7 @@ MonoBehaviour:
   BodyCount: 5
   StartDamp: 0.015
   DampDecreaseFactor: 1
-  scaleDecreaseFactor: 0.65
+  scaleDecreaseFactor: 0.6
   m_watched: {fileID: 11412342}
 --- !u!114 &114632264232193980
 MonoBehaviour:
@@ -1470,7 +1470,7 @@ MonoBehaviour:
   BodyCount: 5
   StartDamp: 0.015
   DampDecreaseFactor: 1
-  scaleDecreaseFactor: 0.65
+  scaleDecreaseFactor: 0.6
   m_watched: {fileID: 11412342}
 --- !u!114 &114967948520187136
 MonoBehaviour:
@@ -1489,7 +1489,7 @@ MonoBehaviour:
   BodyCount: 5
   StartDamp: 0.015
   DampDecreaseFactor: 1
-  scaleDecreaseFactor: 0.65
+  scaleDecreaseFactor: 0.6
   m_watched: {fileID: 11412342}
 --- !u!124 &124000013094005290
 Behaviour:
@@ -1551,7 +1551,7 @@ SpriteRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: 90f97fdc99da2354cb608b3b96f3fa59, type: 2}
+  - {fileID: 2100000, guid: a3884085f3d17f7428589084abaade81, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1570,7 +1570,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9f78244dc2b082046a241343e4852bab, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 51b7d74fbb250ea4ab8c9587084d2cf4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
