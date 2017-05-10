@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: ad6208a1f51584a4aa6b72152e30afcd
-timeCreated: 1484778789
+guid: 24c3568b017de664cb62b218d83265be
+timeCreated: 1494439440
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -13,7 +13,7 @@ ModelImporter:
     3300000: default
     4300000: default
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -22,6 +22,8 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -53,8 +55,8 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 0
-    tangentImportMode: 3
+    normalImportMode: 2
+    tangentImportMode: 2
   importAnimation: 1
   copyAvatar: 0
   humanDescription:

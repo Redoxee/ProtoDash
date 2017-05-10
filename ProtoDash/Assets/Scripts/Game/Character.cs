@@ -120,7 +120,7 @@ namespace Dasher
 		private GameObject m_flashObject;
 		private Material m_flashMaterial;
 
-		private Renderer bodyRenderer;
+		//private Renderer bodyRenderer;
 
 		[SerializeField]
 		private TraceManager traceManager = null;
@@ -219,7 +219,7 @@ namespace Dasher
 			body = transform.Find("Body").gameObject;
 			beak = body.transform.Find("Beak");
 			eye = body.transform.Find("Eye");
-			bodyRenderer = body.GetComponent<Renderer>();
+			//bodyRenderer = body.GetComponent<Renderer>();
 
 			m_flashObject = body.transform.Find("Flash").gameObject;
 			m_flashMaterial = m_flashObject.GetComponent<Renderer>().material;
@@ -280,7 +280,7 @@ namespace Dasher
 			updateDashInput();
 			m_inputManager.ManualFixedUpdate();
 
-			bodyRenderer.material.SetFloat("_Progression", currentEnergy / maxEnergyPoints);
+			//bodyRenderer.material.SetFloat("_Progression", currentEnergy / maxEnergyPoints);
 		}
 
 		const uint NB_RAYCHECK = 3;
