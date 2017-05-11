@@ -152,6 +152,7 @@
     <Compile Include="Assets\Scripts\Game\TutorialAnimator.cs" />
     <Compile Include="Assets\Scripts\Game\World\ColorSetter.cs" />
     <Compile Include="Assets\Scripts\Game\World\DeathZone.cs" />
+    <Compile Include="Assets\Scripts\Game\World\DecoratorHolder.cs" />
     <Compile Include="Assets\Scripts\Game\World\EndNode.cs" />
     <Compile Include="Assets\Scripts\GameProcess.cs" />
     <Compile Include="Assets\Scripts\GoHomeScript.cs" />

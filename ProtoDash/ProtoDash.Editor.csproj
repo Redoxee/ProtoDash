@@ -173,6 +173,7 @@
     <Compile Include="Assets\MissingPushNotificationEntitlementRemover\Editor\MissingPushNotificationEntitlementRemover.cs" />
     <Compile Include="Assets\Scripts\Editor\BuildTools.cs" />
     <Compile Include="Assets\Scripts\Editor\ColorSetterDrawer.cs" />
+    <Compile Include="Assets\Scripts\Editor\DecoratorInspector.cs" />
     <Compile Include="Assets\Scripts\Editor\LevelFlowDrawer.cs" />
     <Compile Include="Assets\Scripts\Editor\SceneSetupTools.cs" />
   </ItemGroup>
