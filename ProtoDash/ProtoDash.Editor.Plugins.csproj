@@ -154,6 +154,9 @@
     <Reference Include="winrt">
       <HintPath>Assets\Plugins\UnityPurchasing\winrt\winrt.dll</HintPath>
     </Reference>
+    <Reference Include="Facebook">
+      <HintPath>Assets\Plugins\UnityPurchasing\Bin\Facebook\Facebook.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="ProtoDash.Plugins.csproj">

@@ -154,6 +154,9 @@
     <Reference Include="winrt">
       <HintPath>Assets\Plugins\UnityPurchasing\winrt\winrt.dll</HintPath>
     </Reference>
+    <Reference Include="Facebook">
+      <HintPath>Assets\Plugins\UnityPurchasing\Bin\Facebook\Facebook.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="ProtoDash.Plugins.csproj">
@@ -170,7 +173,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\MissingPushNotificationEntitlementRemover\Editor\MissingPushNotificationEntitlementRemover.cs" />
+    <Compile Include="Assets\Editor\MissingPushNotificationEntitlementRemover.cs" />
     <Compile Include="Assets\Scripts\Editor\BuildTools.cs" />
     <Compile Include="Assets\Scripts\Editor\ColorSetterDrawer.cs" />
     <Compile Include="Assets\Scripts\Editor\DecoratorInspector.cs" />

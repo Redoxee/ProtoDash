@@ -109,6 +109,9 @@
     <Reference Include="winrt">
       <HintPath>Assets\Plugins\UnityPurchasing\winrt\winrt.dll</HintPath>
     </Reference>
+    <Reference Include="Facebook">
+      <HintPath>Assets\Plugins\UnityPurchasing\Bin\Facebook\Facebook.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Plugins\UnityPurchasing\generated\AppleTangle.cs" />
