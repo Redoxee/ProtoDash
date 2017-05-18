@@ -108,8 +108,8 @@ namespace Dasher
 		void CreateResetIAPButton()
 		{
 #if DASHER_IAP_CANCELABLE
-			var parent = transform.FindChild("Settingspanel").FindChild("Content");
-			var source = parent.FindChild("Credits");
+			var parent = transform.Find("Settingspanel").Find("Content");
+			var source = parent.Find("Credits");
 			var resetIAP = Instantiate(source);
 			resetIAP.SetParent(parent, false);
 			var button = resetIAP.GetComponent<Button>();

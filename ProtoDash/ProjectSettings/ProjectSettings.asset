@@ -79,6 +79,7 @@ PlayerSettings:
   forceSingleInstance: 0
   resizableWindow: 0
   useMacAppStoreValidation: 0
+  macAppStoreCategory: public.app-category.games
   gpuSkinning: 0
   graphicsJobs: 0
   xboxPIXTextureCapture: 0
@@ -212,6 +213,7 @@ PlayerSettings:
   iOSMetalForceHardShadows: 0
   metalEditorSupport: 1
   metalAPIValidation: 1
+  iOSRenderExtraFrameOnPause: 1
   appleDeveloperTeamID: P9DDFGWGZ9
   iOSManualSigningProvisioningProfileID: 
   tvOSManualSigningProvisioningProfileID: 
@@ -219,8 +221,8 @@ PlayerSettings:
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: 
-  AndroidKeyaliasName: 
+  AndroidKeystoreName: C:/Users/Anton/Documents/git/ProtoDash/ProtoDash/Dasher.keystore
+  AndroidKeyaliasName: release
   AndroidTVCompatibility: 0
   AndroidIsGame: 1
   androidEnableBanner: 0
@@ -316,6 +318,7 @@ PlayerSettings:
   wiiUGamePadStartupScreen: {fileID: 0}
   wiiUDrcBufferDisabled: 0
   wiiUProfilerLibPath: 
+  playModeTestRunnerEnabled: 0
   actionOnDotNetUnhandledException: 1
   enableInternalProfiler: 0
   logObjCUncaughtExceptions: 1
@@ -563,7 +566,7 @@ PlayerSettings:
   webGLCompressionFormat: 1
   scriptingDefineSymbols:
     1: DASHER_NO_TRACE_RECORD;DASHER_NO_UI
-    7: 
+    7: DASHER_IAP_CANCELABLE
   platformArchitecture:
     iOS: 2
   scriptingBackend:
