@@ -125,6 +125,11 @@ namespace Dasher
 			OnLevelPressed(level, currentLevelLabel);
 
 			InitColors();
+
+#if !(UNITY_IOS)
+			m_restorePurchaseButton.SetActive(false);
+#endif
+
 			m_isinitialized = true;
 		}
 
@@ -148,7 +153,7 @@ namespace Dasher
 			var shopManager = mp.ShopManager;
 			var wallIndex = ShopManager.c_storyBlockade;
 
-			#region World creation
+#region World creation
 
 			m_storyLevelButtons = new List<List<LevelListButton>>();
 			foreach (var currentWorld in structuredLevels)
@@ -211,7 +216,7 @@ namespace Dasher
 					
 				}
 			}
-			#endregion
+#endregion
 		}
 
 		void UnlockNextStoryLevelIfNeeded()
@@ -226,7 +231,7 @@ namespace Dasher
 			}
 		}
 
-		#region Colors
+#region Colors
 		void InitColors()
 		{
 			MainProcess mp = MainProcess.Instance;
@@ -241,8 +246,8 @@ namespace Dasher
 			dress.ColorSetter.ApplyColors();
 		}
 
-		#endregion
-		#endregion
+#endregion
+#endregion
 
 		void Update()
 		{
@@ -265,7 +270,7 @@ namespace Dasher
 			ShopManager.Instance.ShopInitializationCallBack = null;
 		}
 
-		#endregion
+#endregion
 
 #region States
 		private void InitStates()
@@ -276,7 +281,7 @@ namespace Dasher
 			SetState(m_introState);
 		}
 
-		#region Intro
+#region Intro
 		[SerializeField]
 		private Text QuickStartLevelDisplay = null;
 
@@ -302,10 +307,10 @@ namespace Dasher
 			MainProcess.Instance.RequestSwitchToStats();
 		}
 
-		#endregion
+#endregion
 
 
-		#region LevelSelect
+#region LevelSelect
 		FSM_State m_levelSelectState;
 
 		[SerializeField]
@@ -357,8 +362,10 @@ namespace Dasher
 
 #endregion
 
-		#region Settings
+#region Settings
 		FSM_State m_setingsState;
+		[SerializeField]
+		GameObject m_restorePurchaseButton = null;
 
 		private void BeginSettings()
 		{
@@ -375,8 +382,12 @@ namespace Dasher
 			MainProcess.Instance.RequestSwitchToCredits();
 		}
 
+		public void OnRestorePurchasePressed()
+		{
+			ShopManager.Instance.RequestRestorePurchase();
+		}
 
-		#region PurchaseError
+#region PurchaseError
 		void ShopInitialized(bool success)
 		{
 			if (!success)
@@ -394,29 +405,30 @@ namespace Dasher
 			m_purchaseErrorPopup.ShowPopup();
 		}
 		
-		#endregion
+#endregion
 
-		#endregion
-		#endregion
+#endregion
 
-		#region Shortcuts
+#endregion
+
+#region Shortcuts
 		public void InstantLevelSelection()
 		{
 			m_menuAnimator.SetTrigger(c_a_instantLevelSelect);
 			m_menuAnimator.SetBool(c_a_select, true);
 			SetState(m_levelSelectState);
 		}
-		#endregion
+#endregion
 
-		#region Feedbacks
+#region Feedbacks
 
 		public void FeedbackRequest()
 		{
 			MainProcess.SimpleFeedback();
 		}
 
-		#endregion
+#endregion
 
-		#endregion
+#endregion
 	}
 }

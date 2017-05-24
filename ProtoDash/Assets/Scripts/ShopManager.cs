@@ -157,6 +157,25 @@ namespace Dasher
 			return product.hasReceipt;
 		}
 
+		public void RequestRestorePurchase()
+		{
+#if UNITY_IOS || UNITY_EDITOR
+			m_extensions.GetExtension<IAppleExtensions>().RestoreTransactions(result => {
+				if (result)
+				{
+					Debug.Log("RestorePurchase success !");
+					// This does not mean anything was restored,
+					// merely that the restoration process succeeded.
+				}
+				else
+				{
+					Debug.Log("Restore purchase failed !!!");
+					// Restoration failed.
+				}
+			});
+#endif
+		}
+
 		public void CancelIAPPurchase()
 		{
 #if DASHER_IAP_CANCELABLE
