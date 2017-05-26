@@ -566,7 +566,7 @@ PlayerSettings:
   webGLCompressionFormat: 1
   scriptingDefineSymbols:
     1: DASHER_NO_TRACE_RECORD;DASHER_NO_UI
-    7: 
+    7: DASHER_NO_IAP
   platformArchitecture:
     iOS: 2
   scriptingBackend:
