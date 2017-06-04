@@ -178,6 +178,7 @@
     <Compile Include="Assets\Scripts\Editor\ColorSetterDrawer.cs" />
     <Compile Include="Assets\Scripts\Editor\DecoratorInspector.cs" />
     <Compile Include="Assets\Scripts\Editor\LevelFlowDrawer.cs" />
+    <Compile Include="Assets\Scripts\Editor\LocaGenerator.cs" />
     <Compile Include="Assets\Scripts\Editor\SceneSetupTools.cs" />
   </ItemGroup>
   <ItemGroup>

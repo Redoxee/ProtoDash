@@ -159,6 +159,8 @@
     <Compile Include="Assets\Scripts\Game\World\EndNode.cs" />
     <Compile Include="Assets\Scripts\GameProcess.cs" />
     <Compile Include="Assets\Scripts\GoHomeScript.cs" />
+    <Compile Include="Assets\Scripts\Loca\LocaObject.cs" />
+    <Compile Include="Assets\Scripts\Loca\SimpleTextLocalizer.cs" />
     <Compile Include="Assets\Scripts\MainMenu\AnimatableAnimationController.cs" />
     <Compile Include="Assets\Scripts\MainMenu\AnimatableScreen.cs" />
     <Compile Include="Assets\Scripts\MainMenu\AnimatableUI.cs" />
@@ -174,6 +176,7 @@
     <Compile Include="Assets\Scripts\MainProcess.cs" />
     <Compile Include="Assets\Scripts\MainProcessInstaciator.cs" />
     <Compile Include="Assets\Scripts\MainSharedScene\TransitionCanvasBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Misc\SerializableDictionary.cs" />
     <Compile Include="Assets\Scripts\PerfRuler.cs" />
     <Compile Include="Assets\Scripts\Save\DasherSave.cs" />
     <Compile Include="Assets\Scripts\Save\DasherTrace.cs" />

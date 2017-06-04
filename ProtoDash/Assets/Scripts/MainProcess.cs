@@ -31,7 +31,10 @@ namespace Dasher
 
 		[SerializeField]
 		public BuildData buildData;
-	
+
+		[SerializeField]
+		LocaObject m_localization;
+		public LocaObject Localization { get { return m_localization; } }
 		//[SerializeField]
 		//public ColorScheme m_colorScheme;
 

@@ -38,7 +38,9 @@ namespace Dasher
 #endif
 
 			builder.AddProduct(c_mainSku, productType);
+#if !UNITY_EDITOR && !DASHER_NO_IAP
 			UnityPurchasing.Initialize(this,builder);
+#endif
 		}
 
 

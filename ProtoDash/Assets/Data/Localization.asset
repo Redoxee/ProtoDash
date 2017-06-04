@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e46ced516bfb15f42979840a10c5f201, type: 3}
+  m_Name: Localization
+  m_EditorClassIdentifier: 
+  m_loca:
+    keys: 0000000001000000
+    values:
+    - keys: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f000000200000002100000022000000230000002400000025000000260000002700000028000000290000002a0000002b0000002c0000002d0000002e0000002f000000300000003100000032000000330000003400000035000000360000003700000038000000390000003a0000003b0000003c0000003d0000003e0000003f000000
+      values:
+      - Air Dasher
+      - 'Jump and dash as fast as you can Easy to play, hard to master This is Air
+        Dasher '
+      - 'Air Dasher is pure platforming fun.  Challenge all your skills.  Tap to jump.
+        Swipe to dash. That''s it! You know how to play! Play the first levels for
+        free without any ad. Buy once and enjoy 60 levels of fluid gameplay! '
+      - ' Do you like the game? Have you seen a bug? Do you think it could be improved?
+        Please tell me.'
+      - Thanks and have fun!
+      - ' Site : https://antonoti.itch.io/dasher Twitter : @redoxee Email: antonmakesgames@gmail.com'
+      - 
+      - Tap to Jump
+      - Tap to wall jump
+      - Swipe to dash
+      - 18 Ad-free levels buy once play 42 more levels!
+      - Are you skilled enough?
+      - The full story
+      - Get access to the 60 levels
+      - 
+      - By Anton @redoxee
+      - Play x - x
+      - Levels
+      - Stats
+      - Settings
+      - Feedbacks
+      - Rate Me
+      - Back
+      - Champ
+      - Best
+      - GET THE FULL EXPERIENCE
+      - WHOOPS Something went wrong
+      - Ok
+      - Credits
+      - Left hand mode
+      - ON
+      - OFF
+      - Delete Save
+      - Are you sure ?
+      - yes
+      - no
+      - Restore Purchase
+      - 
+      - You've beaten {0} out of {1} levels
+      - Congratulation !\nYou've beaten all the levels
+      - No stats yet! Finish a level and come back
+      - You are a champ on {0} levels
+      - 'Cumulated best Time : {0}'
+      - 'Level launched : {0}'
+      - 'Number of deaths : {0}'
+      - 'Number of jumps : {0}'
+      - 'Number of dashes : {0}'
+      - Tap to start
+      - TAP
+      - SWIPE
+      - 'Current :  {0}'
+      - 'Champ : {0}'
+      - RETRY
+      - RESUME
+      - NEXT
+      - Finished!
+      - First time!
+      - New best
+      - You're a Champ!
+      - FAIL
+      - Languages
+      - English
+      - Chinese
+    - keys: 
+      values: []
+  CurrentLoca: 0

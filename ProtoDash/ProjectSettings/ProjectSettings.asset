@@ -77,7 +77,7 @@ PlayerSettings:
   usePlayerLog: 1
   bakeCollisionMeshes: 0
   forceSingleInstance: 0
-  resizableWindow: 0
+  resizableWindow: 1
   useMacAppStoreValidation: 0
   macAppStoreCategory: public.app-category.games
   gpuSkinning: 0
@@ -565,7 +565,7 @@ PlayerSettings:
   webGLUseWasm: 0
   webGLCompressionFormat: 1
   scriptingDefineSymbols:
-    1: DASHER_NO_TRACE_RECORD;DASHER_NO_UI
+    1: 
     7: DASHER_NO_IAP
   platformArchitecture:
     iOS: 2
