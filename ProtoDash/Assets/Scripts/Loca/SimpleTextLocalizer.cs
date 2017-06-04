@@ -9,7 +9,9 @@ namespace Dasher
 	public class SimpleTextLocalizer : MonoBehaviour
 	{
 		[SerializeField]
-		int m_locaKey;
+		int m_locaKey = -1;
+
+		public int LocaKey { get{ return m_locaKey; } set { m_locaKey = value; } }
 
 		void Start()
 		{

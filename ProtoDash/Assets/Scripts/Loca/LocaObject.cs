@@ -30,12 +30,16 @@ namespace Dasher
 			{
 				return CurrentLang.dictionary[index];
 			}
-			return DefaultLang.dictionary[index];
+			if(DefaultLang.dictionary.ContainsKey(index))
+				return DefaultLang.dictionary[index];
+			return null;
 		}
 
 		public string GetText(int index, LocaLanguage lang)
 		{
-			return m_loca.dictionary[(int)lang].dictionary[index];
+			if(m_loca.dictionary[(int)lang].dictionary.ContainsKey(index))
+				return m_loca.dictionary[(int)lang].dictionary[index];
+			return null;
 		}
 	}
 }

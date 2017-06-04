@@ -59,6 +59,7 @@ namespace Dasher
 
 
 				loca.m_loca.dictionary[(int)LocaLanguage.English].dictionary[index] = parse[1];
+				loca.m_loca.dictionary[(int)LocaLanguage.Chinese].dictionary[index] = parse[3];
 			}
 			LocaObject old = AssetDatabase.LoadAssetAtPath<LocaObject>(c_locaAssetPath);
 			if (old != null)
@@ -71,6 +72,8 @@ namespace Dasher
 			{
 				AssetDatabase.CreateAsset(loca, c_locaAssetPath);
 			}
+
+			Debug.LogFormat("Locca created successfully : {0}", lines.Length);
 		}
 	}
 }
