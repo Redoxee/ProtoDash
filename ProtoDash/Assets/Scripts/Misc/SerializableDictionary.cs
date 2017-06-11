@@ -45,4 +45,16 @@ abstract public class SerializableDictionary<K, V> : ISerializationCallbackRecei
 				i++;
 			}
 	}
+
+	public V this[K key]
+	{
+
+		get {
+			return dictionary[key];
+		}
+		set
+		{
+			dictionary[key] = value;
+		}
+	}
 }

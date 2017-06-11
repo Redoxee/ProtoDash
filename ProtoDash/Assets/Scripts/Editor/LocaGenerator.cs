@@ -48,18 +48,20 @@ namespace Dasher
 
 			LocaObject loca = LocaObject.CreateInstance<LocaObject>();
 			loca.m_loca = LocaCollection.New<LocaCollection>();
-			loca.m_loca.dictionary[(int)LocaLanguage.English] = LocaDictionary.New<LocaDictionary>();
-			loca.m_loca.dictionary[(int)LocaLanguage.Chinese] = LocaDictionary.New<LocaDictionary>();
-
+			loca[LocaLanguage.English] = LocaDictionary.New<LocaDictionary>();
+			loca[LocaLanguage.ChineseSimplified] = LocaDictionary.New<LocaDictionary>();
+			loca[LocaLanguage.ChineseTraditional] = LocaDictionary.New<LocaDictionary>();
+			
 			int index = 1;
 			for (; index < lines.Length; ++index)
 			{
 				string line = lines[index];
+				line = line.Replace("\\n", "\n");
 				string[] parse = line.Split('\t');
-
-
-				loca.m_loca.dictionary[(int)LocaLanguage.English].dictionary[index] = parse[1];
-				loca.m_loca.dictionary[(int)LocaLanguage.Chinese].dictionary[index] = parse[3];
+				int locaKey = index + 1; //Linecounting in excel / google sheet start at 1
+				loca[LocaLanguage.English][locaKey] = parse[1];
+				loca[LocaLanguage.ChineseSimplified][locaKey] = parse[3];
+				loca[LocaLanguage.ChineseTraditional][locaKey] = parse[4];
 			}
 			LocaObject old = AssetDatabase.LoadAssetAtPath<LocaObject>(c_locaAssetPath);
 			if (old != null)

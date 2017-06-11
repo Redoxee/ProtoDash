@@ -74,6 +74,8 @@ namespace Dasher
 			m_shopManager = new ShopManager();
 			m_AnalyticsManager = new DasherAnalyticsManager();
 
+			m_localization.CurrentLoca = LocaLanguage.English;
+
 			if (SceneManager.GetActiveScene().name != c_mainScene)
 			{
 				Scene mainScene = SceneManager.GetSceneByName(c_mainScene);

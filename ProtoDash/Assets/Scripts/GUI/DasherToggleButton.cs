@@ -13,9 +13,14 @@ namespace Dasher
 		[Multiline]
 		[SerializeField]
 		string m_activeLabel = "on";
+		const int c_onKey = 32;
+		[SerializeField]
+		int m_baseLocaKey = 0;
+
 		[Multiline]
 		[SerializeField]
 		string m_deactiveLabel = "off";
+		const int c_offKey = 33;
 
 		private bool m_state = false;
 		public bool State {get {return m_state;} }
@@ -23,7 +28,7 @@ namespace Dasher
 		private Material m_borderMaterial;
 		private Text m_text;
 
-		void Awake()
+		void Start()
 		{
 			var img = GetComponent<Image>();
 			m_borderMaterial = new Material(img.material);
@@ -36,8 +41,11 @@ namespace Dasher
 		{
 			if (newState != m_state || force)
 			{
+				var loca = MainProcess.Instance.Localization;
+				string text = loca.GetText(m_baseLocaKey);
+				text += '\n' + (newState ? loca.GetText(c_onKey) : loca.GetText(c_offKey));
 				m_borderMaterial.color = newState ? m_activatedColor : m_deactiveColor;
-				m_text.text = newState ? m_activeLabel : m_deactiveLabel;
+				m_text.text = text;
 				m_state = newState;
 			}
 		}

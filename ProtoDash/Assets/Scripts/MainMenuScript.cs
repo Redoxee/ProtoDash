@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Dasher
 {
@@ -328,11 +329,17 @@ namespace Dasher
 #endif
 				{
 					m_currentLevelDisplayed = lvl;
-					string title = string.Format("PLAY : {0}", levelName);
+					var loca = MainProcess.Instance.Localization;
+					StringBuilder builder = new StringBuilder();
+					builder.Append(loca.GetText(18)).Append(" : ").Append(levelName);
+					string title = builder.ToString();
 					var bestTime = (Mathf.Max(lvl.currentBest, 0f)).ToString(TimeManager.c_timeDisplayFormat);
 					var champTime = (Mathf.Max(lvl.parTime, 0f)).ToString(TimeManager.c_timeDisplayFormat);
-					string best = string.Format("best\n{0}", bestTime);
-					string champ = string.Format("champ\n{0}", champTime);
+
+					builder = new StringBuilder();
+					string best = builder.Append(loca.GetText(26)).Append('\n').Append(bestTime).ToString();
+					builder = new StringBuilder();
+					string champ = builder.Append(loca.GetText(25)).Append('\n').Append(champTime).ToString();
 					m_lightLevelButton.FlashInInfo(title, best, champ);
 
 					if (lvl.IsLevelChamp)
