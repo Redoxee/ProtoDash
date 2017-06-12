@@ -67,6 +67,8 @@ namespace Dasher
 		[SerializeField]
 		public Text m_debugFPS;
 
+		LocaObject m_localization = null;
+
 		void Awake()
 		{
 			bool isLeftHanded = MainProcess.Instance.DataManager.GetSettings().isLefthanded;
@@ -77,7 +79,9 @@ namespace Dasher
 			Vector2 ScreenSize = new Vector2(Screen.width, Screen.height);
 			RectTransform pTransform = (m_pauseButton.transform as RectTransform);
 			Rect buttonRect = pTransform.rect;
-			
+
+			m_localization = MainProcess.Instance.Localization;
+
 			float originx = ScreenSize.x * pTransform.anchorMax.x - pTransform.pivot.x * buttonRect.width  + pTransform.anchoredPosition.x;
 			float originy = ScreenSize.y * pTransform.anchorMax.y - pTransform.pivot.y * buttonRect.height + pTransform.anchoredPosition.y;
 
@@ -137,8 +141,8 @@ namespace Dasher
 			float time = m_gameProcess.GameTime.CurrentLevelTime;
 			float parTime = currentLevel.parTime;
 
-			m_pauseCurrentTimeText.text = "Current :\n" + time.ToString(TimeManager.c_timeDisplayFormat);
-			m_pauseParTimeText.text = "Champ :\n" + parTime.ToString(TimeManager.c_timeDisplayFormat);
+			m_pauseCurrentTimeText.text = string.Format(m_localization.GetText(53), time.ToString(TimeManager.c_timeDisplayFormat));
+			m_pauseParTimeText.text = string.Format(m_localization.GetText(54), parTime.ToString(TimeManager.c_timeDisplayFormat));
 
 			m_gameCanvas.gameObject.SetActive(false);
 			m_pauseCanvas.gameObject.SetActive(true);
@@ -192,9 +196,9 @@ namespace Dasher
 
 			m_champTime = currentLevel.parTime;
 
-			m_endLevelGUI.m_current.SetMainText("Time\n" + m_currentTime.ToString(TimeManager.c_timeDisplayFormat));
-			m_endLevelGUI.m_best.SetMainText("Best\n" + oldBestTime.ToString(TimeManager.c_timeDisplayFormat));
-			m_endLevelGUI.m_champ.SetMainText("Champ\n" + m_champTime.ToString(TimeManager.c_timeDisplayFormat));
+			m_endLevelGUI.m_current.SetMainText(string.Format(m_localization.GetText(68), m_currentTime.ToString(TimeManager.c_timeDisplayFormat)));
+			m_endLevelGUI.m_best.SetMainText(m_localization.GetText(26) + "\n" + oldBestTime.ToString(TimeManager.c_timeDisplayFormat));
+			m_endLevelGUI.m_champ.SetMainText(m_localization.GetText(25) + "\n" + m_champTime.ToString(TimeManager.c_timeDisplayFormat));
 
 			var bestTimeDifference = m_currentTime - oldBestTime ;
 			var isChampTime = m_currentTime <= currentLevel.parTime;
@@ -205,11 +209,11 @@ namespace Dasher
 			}
 			else
 			{
-				m_endLevelGUI.m_best.SetAdditionalText("New Best");
+				m_endLevelGUI.m_best.SetAdditionalText(m_localization.GetText(60));
 				m_endLevelGUI.m_best.SetMainText(m_currentTime.ToString(TimeManager.c_timeDisplayFormat));
 
-				m_endLevelGUI.m_current.SetAdditionalText("First time!");
-				m_endLevelGUI.m_current.SetMainText("Finished!");
+				m_endLevelGUI.m_current.SetAdditionalText(m_localization.GetText(59));
+				m_endLevelGUI.m_current.SetMainText(m_localization.GetText(58));
 
 				m_endLevelGUI.m_current.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Good);
 				m_endLevelGUI.m_best.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Good);
@@ -219,7 +223,7 @@ namespace Dasher
 			{
 				if (isNewBestTime)
 				{
-					m_endLevelGUI.m_current.SetAdditionalText("New Best!");
+					m_endLevelGUI.m_current.SetAdditionalText(m_localization.GetText(60));
 					m_endLevelGUI.m_current.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Good);
 					m_endLevelGUI.m_best.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Good);
 				}
@@ -235,7 +239,7 @@ namespace Dasher
 				}
 			}
 
-			m_endLevelGUI.m_champ.SetAdditionalText("You're a Champ!");
+			m_endLevelGUI.m_champ.SetAdditionalText(m_localization.GetText(61));
 			if (isChampTime)
 			{
 				m_endLevelGUI.m_champ.SetBackBorderState(TimeDisplayCapsule.CapsuleSuccessState.Good);

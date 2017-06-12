@@ -54,5 +54,20 @@ namespace Dasher
 				return m_loca[(int)lang].dictionary[index];
 			return null;
 		}
+
+		public static LocaLanguage GetLocaFromSys()
+		{
+			var sysLang = Application.systemLanguage;
+			switch (sysLang)
+			{
+				case SystemLanguage.Chinese:
+				case SystemLanguage.ChineseSimplified:
+					return LocaLanguage.ChineseSimplified;
+				case SystemLanguage.ChineseTraditional:
+					return LocaLanguage.ChineseTraditional;
+			}
+
+			return LocaLanguage.English;
+		}
 	}
 }
