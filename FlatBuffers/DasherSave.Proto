@@ -12,6 +12,7 @@ table FlatLevelSave {
 
 table FlatSettings {
 	LeftHandedMode:bool = false;
+	CurrentLocaSelected:int=-1;
 }
 
 table FlatGameSave {

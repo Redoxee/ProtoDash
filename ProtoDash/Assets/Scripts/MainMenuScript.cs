@@ -394,6 +394,11 @@ namespace Dasher
 			ShopManager.Instance.RequestRestorePurchase();
 		}
 
+		public void OnLanguagePressed()
+		{
+			MainProcess.Instance.RequestSwitchLocalization();
+		}
+
 #region PurchaseError
 		void ShopInitialized(bool success)
 		{

@@ -80,6 +80,7 @@ namespace Dasher
 				if (save.Settings != null)
 				{
 					m_savable.m_settings.isLefthanded = save.Settings.LeftHandedMode;
+					m_savable.m_settings.SelectedLanguage = save.Settings.CurrentLocaSelected;
 				}
 				m_savable.m_IsStoryQuestUnlocked = save.MainStoryUnlocked;
 
@@ -149,7 +150,11 @@ namespace Dasher
 			string lastLevelPlayed = m_savable.m_LastLevelPlayed != null ? m_savable.m_LastLevelPlayed : "";
 			var lastLevelPlayedOffset = m_builder.CreateString(lastLevelPlayed);
 			var levelsOffset = FlatGameSave.CreateLevelResultsVector(m_builder, offsetTable);
-			var settingsOffset = FlatSettings.CreateFlatSettings(m_builder, m_savable.m_settings.isLefthanded);
+
+
+			bool isLeftHanded = m_savable.m_settings.isLefthanded;
+			int selectedLanguage = m_savable.m_settings.SelectedLanguage;
+			var settingsOffset = FlatSettings.CreateFlatSettings(m_builder, m_savable.m_settings.isLefthanded,selectedLanguage);
 	
 			FlatGameSave.StartFlatGameSave(m_builder);
 			FlatGameSave.AddVersion(m_builder,c_SaveVersion);
@@ -397,6 +402,22 @@ namespace Dasher
 			m_savable.m_settings.isLefthanded = isLeftHanded;
 		}
 
+		public LocaLanguage CurrentLanguage
+		{
+			get
+			{
+				if (m_savable.m_settings.SelectedLanguage >= 0)
+					return (LocaLanguage)m_savable.m_settings.SelectedLanguage;
+				return LocaObject.GetLocaFromSys();
+			}
+
+			set
+			{
+				m_savable.m_settings.SelectedLanguage = (int)value;
+				Save();
+			}
+		}
+
 		public void IncrementLastLevelPlayed()
 		{
 			var flow = MainProcess.Instance.levelFlow;
@@ -482,10 +503,12 @@ namespace Dasher
 	public struct DasherSettings
 	{
 		public bool isLefthanded;
+		public int SelectedLanguage;
 
-		public DasherSettings(bool leftHand = false)
+		public DasherSettings(bool leftHand = false, int selectedLanguage = -1)
 		{
 			isLefthanded = leftHand;
+			SelectedLanguage = selectedLanguage;
 		}
 	}
 }

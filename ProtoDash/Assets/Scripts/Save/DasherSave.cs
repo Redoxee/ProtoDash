@@ -51,16 +51,20 @@ public sealed class FlatSettings : Table {
   public FlatSettings __init(int _i, ByteBuffer _bb) { bb_pos = _i; bb = _bb; return this; }
 
   public bool LeftHandedMode { get { int o = __offset(4); return o != 0 ? 0!=bb.Get(o + bb_pos) : (bool)false; } }
+  public int CurrentLocaSelected { get { int o = __offset(6); return o != 0 ? bb.GetInt(o + bb_pos) : (int)-1; } }
 
   public static Offset<FlatSettings> CreateFlatSettings(FlatBufferBuilder builder,
-      bool LeftHandedMode = false) {
-    builder.StartObject(1);
+      bool LeftHandedMode = false,
+      int CurrentLocaSelected = -1) {
+    builder.StartObject(2);
+    FlatSettings.AddCurrentLocaSelected(builder, CurrentLocaSelected);
     FlatSettings.AddLeftHandedMode(builder, LeftHandedMode);
     return FlatSettings.EndFlatSettings(builder);
   }
 
-  public static void StartFlatSettings(FlatBufferBuilder builder) { builder.StartObject(1); }
+  public static void StartFlatSettings(FlatBufferBuilder builder) { builder.StartObject(2); }
   public static void AddLeftHandedMode(FlatBufferBuilder builder, bool LeftHandedMode) { builder.AddBool(0, LeftHandedMode, false); }
+  public static void AddCurrentLocaSelected(FlatBufferBuilder builder, int CurrentLocaSelected) { builder.AddInt(1, CurrentLocaSelected, -1); }
   public static Offset<FlatSettings> EndFlatSettings(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<FlatSettings>(o);

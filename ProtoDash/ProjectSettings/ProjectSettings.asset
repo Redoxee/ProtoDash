@@ -122,7 +122,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 0.17
+  bundleVersion: 1.1
   preloadedAssets: []
   metroInputSource: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -146,8 +146,9 @@ PlayerSettings:
     iOS: com.AntonMakesGames.Dasher
     tvOS: com.AntonMakesGames.Dasher
   buildNumber:
-    iOS: 1
-  AndroidBundleVersionCode: 17
+    Standalone: 18
+    iOS: 18
+  AndroidBundleVersionCode: 18
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 25
   AndroidPreferredInstallLocation: 1
@@ -566,7 +567,7 @@ PlayerSettings:
   webGLCompressionFormat: 1
   scriptingDefineSymbols:
     1: 
-    7: DASHER_NO_IAP;DASHER_NO_TRACE_RECORD
+    7: 
   platformArchitecture:
     iOS: 2
   scriptingBackend:

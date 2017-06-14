@@ -12,6 +12,7 @@ namespace Dasher
 		Stats,
 		Credits,
 		SecretStats,
+		LocalizationSelect,
 	}
 
 	public class MainProcess : MonoBehaviour
@@ -33,18 +34,18 @@ namespace Dasher
 		public BuildData buildData;
 
 		[SerializeField]
-		LocaObject m_localization;
+		LocaObject m_localization = null;
 		public LocaObject Localization { get { return m_localization; } }
 		//[SerializeField]
 		//public ColorScheme m_colorScheme;
 
 		[SerializeField]
-		Camera m_transitionCamera;
+		Camera m_transitionCamera = null;
 
 		[SerializeField]
-		GameObject InputInterceptionLayer;
+		GameObject InputInterceptionLayer = null;
 		[SerializeField]
-		Animator m_transitionAnimator;
+		Animator m_transitionAnimator = null;
 
 		private DasherAnalyticsManager m_AnalyticsManager;
 		public DasherAnalyticsManager AnalyticsManager { get { return m_AnalyticsManager; } }
@@ -74,7 +75,7 @@ namespace Dasher
 			m_shopManager = new ShopManager();
 			m_AnalyticsManager = new DasherAnalyticsManager();
 
-			m_localization.CurrentLoca = LocaLanguage.English;
+			m_localization.CurrentLoca = m_saveManager.CurrentLanguage;
 
 			if (SceneManager.GetActiveScene().name != c_mainScene)
 			{
@@ -105,6 +106,7 @@ namespace Dasher
 		const string c_gameSetupScene = "GameSetupScene";
 		const string c_statsScreen = "StatsScreen";
 		const string c_creditsScreen = "Credits";
+		const string c_localizationScreen = "LocalizationSelect";
 		const string c_secretStatsScreen = "SecretStatsScreen";
 		string m_currenLevelScene = null;
 		int m_currentLevelIndex = -1;
@@ -137,6 +139,10 @@ namespace Dasher
 			if (m_gameState == GameStates.SecretStats)
 			{
 				SceneManager.UnloadScene(c_secretStatsScreen);
+			}
+			if (m_gameState == GameStates.LocalizationSelect)
+			{
+				SceneManager.UnloadScene(c_localizationScreen);
 			}
 		}
 
@@ -246,6 +252,17 @@ namespace Dasher
 			UnloadCurrentAdditionalScene();
 			SetState(GameStates.Credits);
 			SceneManager.LoadScene(c_creditsScreen, LoadSceneMode.Additive);
+		}
+
+		#endregion
+
+		#region Localization screen
+
+		void SwitchToLocalizationScreen()
+		{
+			UnloadCurrentAdditionalScene();
+			SetState(GameStates.LocalizationSelect);
+			SceneManager.LoadScene(c_localizationScreen, LoadSceneMode.Additive);
 		}
 
 		#endregion
@@ -387,6 +404,16 @@ namespace Dasher
 			m_transitionCamera.gameObject.SetActive(true);
 			RequestTransition(() => {
 				SwitchToCreditsScreen();
+				m_transitionAnimator.SetBool(c_transitionBool, false);
+				m_transitionCamera.gameObject.SetActive(false);
+			});
+		}
+
+		public void RequestSwitchLocalization()
+		{
+			m_transitionCamera.gameObject.SetActive(true);
+			RequestTransition(() => {
+				SwitchToLocalizationScreen();
 				m_transitionAnimator.SetBool(c_transitionBool, false);
 				m_transitionCamera.gameObject.SetActive(false);
 			});
