@@ -69,14 +69,24 @@ namespace Dasher
 			SetState(m_introState);
 		}
 
+		bool m_isProcessingPurchase = false;
+
 		public void OnLevelWallPressed()
 		{
-			ShopManager.Instance.PurchaseMainQuest(OnMainQuestPurchased, OnPurchaseError);
-			//m_levelWallAnimator.StartAnimation(UnlockNextStoryLevelIfNeeded);
+			if (!m_isProcessingPurchase)
+			{
+				ShopManager.Instance.PurchaseMainQuest(OnMainQuestPurchased, OnPurchaseError);
+				//m_levelWallAnimator.StartAnimation(UnlockNextStoryLevelIfNeeded);
+
+				var wallText = m_levelWallAnimator.GetComponentInChildren<Text>();
+				wallText.text = "...";
+				m_isProcessingPurchase = true;
+			}
 		}
 
 		void OnMainQuestPurchased()
 		{
+			m_isProcessingPurchase = false;
 			m_levelWallAnimator.StartAnimation(UnlockNextStoryLevelIfNeeded);
 		}
 
@@ -414,7 +424,11 @@ namespace Dasher
 
 		void OnPurchaseError()
 		{
+			m_isProcessingPurchase = false;
 			m_purchaseErrorPopup.ShowPopup();
+
+			var wallText = m_levelWallAnimator.GetComponentInChildren<Text>();
+			wallText.text = MainProcess.Instance.Localization.GetText(27);
 		}
 		
 #endregion
