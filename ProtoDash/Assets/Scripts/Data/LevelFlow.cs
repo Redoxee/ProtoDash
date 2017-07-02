@@ -18,7 +18,7 @@ namespace Dasher
 		private const string c_levelNamePattern = "{0}-{1}";
 		[NonSerialized]
 		public int indexInWorld = -1;
-
+		
 		public string GetLevelLabel()
 		{
 			return string.Format(c_levelNamePattern, world + 1, indexInWorld);
@@ -33,6 +33,8 @@ namespace Dasher
 	public class LevelFlow : ScriptableObject
 	{
 		public const int c_nbLevelInWorld = 6;
+		public const int c_nbOriginalLevelNumber = 60;
+		public const int c_nbOriginalWorld = 10;
 
 		private bool m_isInitialized = false;
 		private void Initialize(bool force = false)
@@ -104,6 +106,8 @@ namespace Dasher
 
 		public int GetLevelCount()
 		{
+			if (!IsOriginalLevelAllChamped())
+				return c_nbOriginalLevelNumber;
 			return m_levelList.Count;
 		}
 
@@ -117,9 +121,20 @@ namespace Dasher
 			LevelData lvl = m_levelList[levelIndex];
 			return lvl.currentBest > 0 && lvl.currentBest < lvl.parTime;
 		}
+
 		public bool IsLevelChamp(string levelName)
 		{
 			return IsLevelChamp(GetLevelIndex(levelName));
+		}
+
+		public bool IsOriginalLevelAllChamped()
+		{
+			for (int i = 0; i < c_nbOriginalLevelNumber; ++i)
+			{
+				if (!IsLevelChamp(i))
+					return false;
+			}
+			return true;
 		}
 
 

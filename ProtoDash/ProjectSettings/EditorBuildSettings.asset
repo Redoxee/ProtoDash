@@ -25,7 +25,7 @@ EditorBuildSettings:
     guid: b5a7b60083d2d2b4d99e340c978e48d7
   - enabled: 1
     path: Assets/Scenes/LocalizationSelect.unity
-    guid: 00000000000000000000000000000000
+    guid: e478872f8e4a09e4d9bb8b198fc75c36
   - enabled: 1
     path: Assets/Scenes/Levels/001TheBasics.unity
     guid: 12143ebb1477140479131520c3e81f60
@@ -171,7 +171,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/050DashChallenge.unity
     guid: c3239e019a46fea408887689ebbb8bd7
   - enabled: 1
-    path: Assets/Scenes/Levels/051LavaTower.unity
+    path: Assets/Scenes/Levels/069LavaTowerRevers.unity
     guid: b83fab6b2cc8cea468729b6db601efa8
   - enabled: 1
     path: Assets/Scenes/Levels/052TowerFalling.unity
@@ -218,3 +218,21 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/063AirDasher.unity
     guid: e26b928274075ab47b2533f3024092f9
+  - enabled: 1
+    path: Assets/Scenes/Levels/067ThroughTheHeartRevers.unity
+    guid: 65bc05c47f72225438cf2218d51392e5
+  - enabled: 1
+    path: Assets/Scenes/Levels/051LavaTower.unity
+    guid: e3841ae5527823545bec14a57c3bc7d2
+  - enabled: 1
+    path: Assets/Scenes/Levels/071DiagonalsRevers.unity
+    guid: bd2ffb8495c187c47a2f5af7ac465c22
+  - enabled: 1
+    path: Assets/Scenes/Levels/072KeyToTheWallJumpRevers.unity
+    guid: 04ae2b2a0b96c6c45b86e9f8f0414a18
+  - enabled: 1
+    path: Assets/Scenes/Levels/070FresksRevers.unity
+    guid: e1aad3f1912a7ed439cbcc979d3a7da4
+  - enabled: 1
+    path: Assets/Scenes/Levels/068JumpTheKeysRevers.unity
+    guid: e37506c55321b2a4788527e2c7fc003c

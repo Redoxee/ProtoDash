@@ -171,7 +171,7 @@ MonoBehaviour:
   - sceneObject: {fileID: 102900000, guid: 4ed7cd62b4f1c3043b37a9e936d9f590, type: 3}
     sceneName: 036WaterTower
     parTime: 10
-  - sceneObject: {fileID: 102900000, guid: b83fab6b2cc8cea468729b6db601efa8, type: 3}
+  - sceneObject: {fileID: 102900000, guid: e3841ae5527823545bec14a57c3bc7d2, type: 3}
     sceneName: 051LavaTower
     parTime: 30
   - sceneObject: {fileID: 102900000, guid: 440ba337e35b81d439f45288703e1cd7, type: 3}
@@ -191,4 +191,22 @@ MonoBehaviour:
     parTime: 24
   - sceneObject: {fileID: 102900000, guid: be21bd8258545a4428276351998615be, type: 3}
     sceneName: 061LongMonster
+    parTime: 60
+  - sceneObject: {fileID: 102900000, guid: bd2ffb8495c187c47a2f5af7ac465c22, type: 3}
+    sceneName: 071DiagonalsRevers
+    parTime: 60
+  - sceneObject: {fileID: 102900000, guid: 04ae2b2a0b96c6c45b86e9f8f0414a18, type: 3}
+    sceneName: 072KeyToTheWallJumpRevers
+    parTime: 60
+  - sceneObject: {fileID: 102900000, guid: b83fab6b2cc8cea468729b6db601efa8, type: 3}
+    sceneName: 069LavaTowerRevers
+    parTime: 60
+  - sceneObject: {fileID: 102900000, guid: e1aad3f1912a7ed439cbcc979d3a7da4, type: 3}
+    sceneName: 070FresksRevers
+    parTime: 60
+  - sceneObject: {fileID: 102900000, guid: e37506c55321b2a4788527e2c7fc003c, type: 3}
+    sceneName: 068JumpTheKeysRevers
+    parTime: 60
+  - sceneObject: {fileID: 102900000, guid: 65bc05c47f72225438cf2218d51392e5, type: 3}
+    sceneName: 067ThroughTheHeartRevers
     parTime: 60

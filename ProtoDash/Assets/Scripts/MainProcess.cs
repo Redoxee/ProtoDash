@@ -201,8 +201,10 @@ namespace Dasher
 		public void LaunchNextLevel()
 		{
 			int levelIndex = m_currentLevelIndex + 1;
-			
-			if (levelIndex < 0 || levelIndex == levelFlow.GetLevelCount())
+
+			bool bonusBlock = (levelIndex >= LevelFlow.c_nbOriginalLevelNumber) && !levelFlow.IsOriginalLevelAllChamped();
+
+			if (levelIndex < 0 || levelIndex == levelFlow.GetLevelCount() || bonusBlock)
 			{
 				SwitchToStatsScreen();
 				return;

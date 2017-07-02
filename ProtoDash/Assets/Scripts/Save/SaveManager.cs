@@ -442,7 +442,9 @@ namespace Dasher
 				if (!IsMainStoryUnlocked)
 					return false;
 			}
-
+			if (lvlIndex >= LevelFlow.c_nbOriginalLevelNumber)
+				if (!flow.IsOriginalLevelAllChamped())
+					return false;
 			if (flow.IsLevelFinished(lvlIndex - 1))
 				return true;
 			return false;

@@ -169,6 +169,15 @@ namespace Dasher
 			m_storyLevelButtons = new List<List<LevelListButton>>();
 			foreach (var currentWorld in structuredLevels)
 			{
+				var currentWorldIndex = currentWorld.Key;
+				if (currentWorldIndex > LevelFlow.c_nbOriginalWorld)
+				{
+					if (!levelFlow.IsOriginalLevelAllChamped())
+					{
+						break;
+					}
+				}
+
 				GameObject worldObject = Instantiate<GameObject>(m_worldPrefab);
 				worldObject.transform.SetParent(m_worldsParent, false);
 				WorldHolder wh = worldObject.GetComponent<WorldHolder>();
@@ -176,7 +185,6 @@ namespace Dasher
 				var buttonList = new List<LevelListButton>();
 				m_storyLevelButtons.Add(buttonList); 
 
-				var currentWorldIndex = currentWorld.Key;
 
 				List<LevelData> levels = currentWorld.Value;
 				for (int levelIndex = 0; levelIndex < levels.Count; ++levelIndex)
