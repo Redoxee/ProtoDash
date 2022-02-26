@@ -426,14 +426,14 @@ namespace DasherTool
 			/* * * * * * * *
 			 * Actualbuild *
 			 * * * * * * * */
-			string buildResult = BuildPipeline.BuildPlayer(scenes, buildName, BuildTarget.Android,options);
+			var buildResult = BuildPipeline.BuildPlayer(scenes, buildName, BuildTarget.Android,options);
 
 			if (m_isDemo)
 			{
 				PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, prevSymbols);
 			}
 
-			if (string.IsNullOrEmpty(buildResult))
+			if (buildResult.summary.totalErrors == 0)
 			{
 				UnityEngine.Debug.Log("Android build complete : " + buildName);
 				m_lastBuildName = GetVersionName();
@@ -547,9 +547,9 @@ namespace DasherTool
 			string[] scenes = StandardSetup();
 			BuildOptions bo = GetOptions(isDebug);
 
-			string buildResult = BuildPipeline.BuildPlayer(scenes, buildName, BuildTarget.WebGL, bo);
+			var buildResult = BuildPipeline.BuildPlayer(scenes, buildName, BuildTarget.WebGL, bo);
 
-			if (string.IsNullOrEmpty(buildResult))
+			if (buildResult.summary.totalErrors == 0)
 			{
 				UnityEngine.Debug.Log("Web build complete" + buildName);
 				if (increment)

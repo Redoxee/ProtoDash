@@ -50,10 +50,6 @@ namespace Dasher
 		private DasherAnalyticsManager m_AnalyticsManager;
 		public DasherAnalyticsManager AnalyticsManager { get { return m_AnalyticsManager; } }
 
-		ShopManager m_shopManager;
-
-		public ShopManager ShopManager { get { return m_shopManager; } }
-
 		#region Monobehaviour
 
 		void Awake()
@@ -72,7 +68,6 @@ namespace Dasher
 			Application.targetFrameRate = 60;
 
 			m_saveManager = new SaveManager();
-			m_shopManager = new ShopManager();
 			m_AnalyticsManager = new DasherAnalyticsManager();
 
 			m_localization.CurrentLoca = m_saveManager.CurrentLanguage;
@@ -115,34 +110,34 @@ namespace Dasher
 		{
 			if (m_gameState == GameStates.InGame)
 			{
-				SceneManager.UnloadScene(c_gameSetupScene);
+				SceneManager.UnloadSceneAsync(c_gameSetupScene);
 				if (!keepLevel)
 				{
-					SceneManager.UnloadScene(m_currenLevelScene);
+					SceneManager.UnloadSceneAsync(m_currenLevelScene);
 				}
 			}
 
 			if (m_gameState == GameStates.MainMenu)
 			{
-				SceneManager.UnloadScene(c_mainMenuScene);
+				SceneManager.UnloadSceneAsync(c_mainMenuScene);
 			}
 
 			if (m_gameState == GameStates.Stats)
 			{
-				SceneManager.UnloadScene(c_statsScreen);
+				SceneManager.UnloadSceneAsync(c_statsScreen);
 			}
 
 			if (m_gameState == GameStates.Credits)
 			{
-				SceneManager.UnloadScene(c_creditsScreen);
+				SceneManager.UnloadSceneAsync(c_creditsScreen);
 			}
 			if (m_gameState == GameStates.SecretStats)
 			{
-				SceneManager.UnloadScene(c_secretStatsScreen);
+				SceneManager.UnloadSceneAsync(c_secretStatsScreen);
 			}
 			if (m_gameState == GameStates.LocalizationSelect)
 			{
-				SceneManager.UnloadScene(c_localizationScreen);
+				SceneManager.UnloadSceneAsync(c_localizationScreen);
 			}
 		}
 
@@ -208,16 +203,9 @@ namespace Dasher
 			{
 				SwitchToStatsScreen();
 				return;
-			}
-			var levelData = levelFlow.GetLevelData(levelIndex);
-			if (levelData.world > ShopManager.c_storyBlockade && ! m_saveManager.IsMainStoryUnlocked)
-			{
-				SwitchToLevelSelect();
-			}
-			else
-			{
-				LaunchLevel(levelIndex);
-			}
+            }
+            
+			LaunchLevel(levelIndex);
 		}
 
 		public string CurrentLevel { get { return m_currenLevelScene; } }
@@ -484,7 +472,7 @@ namespace Dasher
 
 		static string EscapeURL(string url)
 		{
-			return WWW.EscapeURL(url).Replace("+", "%20");
+			return UnityEngine.Networking.UnityWebRequest.EscapeURL(url).Replace("+", "%20");
 		}
 
 		#endregion

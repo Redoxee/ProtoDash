@@ -437,11 +437,6 @@ namespace Dasher
 			if (flow.IsLevelFinished(lvlIndex))
 				return true;
 			var level = flow.GetLevelData(lvlIndex);
-			if (level.world > ShopManager.c_storyBlockade)
-			{
-				if (!IsMainStoryUnlocked)
-					return false;
-			}
 			if (lvlIndex >= LevelFlow.c_nbOriginalLevelNumber)
 				if (!flow.IsOriginalLevelAllChamped())
 					return false;
@@ -454,19 +449,6 @@ namespace Dasher
 		{
 			LevelFlow flow = MainProcess.Instance.levelFlow;
 			return DoesProgressionAllowLevel(flow.GetLevelIndex(levelName));
-		}
-
-		public bool IsMainStoryUnlocked
-		{
-			get
-			{
-#if !DASHER_NO_IAP
-				return m_savable.m_IsStoryQuestUnlocked == c_storyUnlocked;
-#else
-				return true;
-#endif
-			}
-			set { m_savable.m_IsStoryQuestUnlocked = value ? c_storyUnlocked : c_storyLocked; }
 		}
 
 #endregion

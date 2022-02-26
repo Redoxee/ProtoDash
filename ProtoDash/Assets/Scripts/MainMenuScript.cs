@@ -71,25 +71,6 @@ namespace Dasher
 
 		bool m_isProcessingPurchase = false;
 
-		public void OnLevelWallPressed()
-		{
-			if (!m_isProcessingPurchase)
-			{
-				ShopManager.Instance.PurchaseMainQuest(OnMainQuestPurchased, OnPurchaseError);
-				//m_levelWallAnimator.StartAnimation(UnlockNextStoryLevelIfNeeded);
-
-				var wallText = m_levelWallAnimator.GetComponentInChildren<Text>();
-				wallText.text = "...";
-				m_isProcessingPurchase = true;
-			}
-		}
-
-		void OnMainQuestPurchased()
-		{
-			m_isProcessingPurchase = false;
-			m_levelWallAnimator.StartAnimation(UnlockNextStoryLevelIfNeeded);
-		}
-
 		#region Worlds
 		[SerializeField]
 		private Transform m_worldsParent = null;
@@ -123,8 +104,6 @@ namespace Dasher
 			PopulateWorld(mp);
 
 			StartCoroutine(ScrollWorldTo(1));
-
-			mp.ShopManager.ShopInitializationCallBack = ShopInitialized;
 
 			var level = levelFlow.GetMostInterestingLevel();
 
@@ -160,9 +139,6 @@ namespace Dasher
 			var dataManager = mp.DataManager;
 			var structuredLevels = levelFlow.GetStructuredProgression();
 			var worldEnumerator = structuredLevels.GetEnumerator();
-
-			var shopManager = mp.ShopManager;
-			var wallIndex = ShopManager.c_storyBlockade;
 
 #region World creation
 
@@ -224,30 +200,8 @@ namespace Dasher
 						levelButtonDesc.DisableImage.SetActive(false);
 					}
 				}
-
-				if (currentWorldIndex -1 == wallIndex && !dataManager.IsMainStoryUnlocked)
-				{
-					var wallInstance = Instantiate(m_storyWallPrefab);
-					wallInstance.transform.SetParent(m_worldsParent, false);
-					Button wallButton = wallInstance.GetComponentInChildren<Button>();
-					wallButton.onClick.AddListener(OnLevelWallPressed);
-					m_levelWallAnimator = wallInstance.GetComponent<LevelWallAnimator>();
-					
-				}
 			}
 #endregion
-		}
-
-		void UnlockNextStoryLevelIfNeeded()
-		{
-			ShopManager sm = ShopManager.Instance;
-			var pervLevel = m_storyLevelButtons[ShopManager.c_storyBlockade][m_storyLevelButtons[ShopManager.c_storyBlockade].Count - 1];
-			var nextLevel = m_storyLevelButtons[ShopManager.c_storyBlockade + 1][0];
-			LevelFlow levelFlow = MainProcess.Instance.levelFlow;
-			if (pervLevel.bindedLevel.HasBeenFinished)
-			{
-				nextLevel.DisableImage.SetActive(false);
-			}
 		}
 
 #region Colors
@@ -286,7 +240,6 @@ namespace Dasher
 		{
 			m_isinitialized = false;
 			MainProcess.Instance.UnregisterMainMenu();
-			ShopManager.Instance.ShopInitializationCallBack = null;
 		}
 
 #endregion
@@ -405,11 +358,6 @@ namespace Dasher
 		public void OnCreditsPressed()
 		{
 			MainProcess.Instance.RequestSwitchToCredits();
-		}
-
-		public void OnRestorePurchasePressed()
-		{
-			ShopManager.Instance.RequestRestorePurchase();
 		}
 
 		public void OnLanguagePressed()
