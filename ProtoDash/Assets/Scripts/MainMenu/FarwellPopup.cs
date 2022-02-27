@@ -11,7 +11,17 @@ namespace Dasher
 
         private void Awake()
         {
-            SetDisplay(true);
+            LevelFlow levelFlow = MainProcess.Instance.levelFlow;
+            int currentLevelIndex = levelFlow.GetLevelIndex(levelFlow.GetMostInterestingLevel().sceneName);
+            int numberOfLevels = MainProcess.Instance.levelFlow.LevelList.Count;
+            if (currentLevelIndex > numberOfLevels - 2)
+            {
+                this.SetDisplay(true);
+            }
+            else
+            {
+                this.SetDisplay(false);
+            }
         }
 
         private void SetDisplay(bool display)
@@ -36,6 +46,11 @@ namespace Dasher
 #endif
 
             Application.OpenURL(url);
+        }
+
+        public void OnClosePressed()
+        {
+            this.SetDisplay(false);
         }
     }
 }
